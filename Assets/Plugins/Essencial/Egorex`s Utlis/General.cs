@@ -57,25 +57,9 @@ public class General : MonoBehaviour
         return Vector2.zero;
     }
 
-    public static List<Vector2> Get4MainDirections2D()
-    {
-        return new List<Vector2>{
-            Vector2.right,
-            Vector2.left,
-            Vector2.up,
-            Vector2.down
-        };
-    }
+    public static readonly Vector2[] MainDirections2D = { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
 
-    public static List<Vector3> Get4MainDirections3D()
-    {
-        return new List<Vector3>{
-            Vector3.right,
-            Vector3.left,
-            Vector3.forward,
-            Vector3.back
-        };
-    }
+    public static readonly Vector3[] MainDirections3D = { Vector3.right, Vector3.left, Vector3.forward, Vector3.back };
 
     public static float GetAngleFromVector(Vector2 dir)
     {
@@ -92,16 +76,15 @@ public class General : MonoBehaviour
         return Mouse.current.position.ReadValue();
     }
 
-    public static Vector3 GetMouseWorldPos()
+    public static Vector2 GetMouseWorldPos()
     {
         return GetMouseWorldPos(GetMousePos());
     }
 
-    public static Vector3 GetMouseWorldPos(Vector3 mousePos)
+    public static Vector2 GetMouseWorldPos(Vector2 mousePos)
     {
         Debug.Assert(Camera.main != null, "Camera.main == null");
         var pos = Camera.main.ScreenToWorldPoint(mousePos);
-        pos.z = 0;
         return pos;
     }
 
@@ -205,22 +188,9 @@ public class General : MonoBehaviour
 
     public static ObjectRoot GetObjectRoot(Transform transform, bool mustBeFound = true)
     {
-        var checkedTransform = transform;
-        ObjectRoot objectRoot;
-        while (true){
-            if (checkedTransform.TryGetComponent(out objectRoot)){
-                break;
-            }
-            checkedTransform = checkedTransform.parent;
-            if (checkedTransform != null){
-                continue;
-            }
-            if (mustBeFound){
-                Debug.LogError("Object Root not found", transform);
-            }
-            break;
-        }
-        return objectRoot;
+        ObjectRoot root = transform.GetComponentInParent<ObjectRoot>();
+        if (mustBeFound && root == null) Debug.LogError("Object Root not found", transform);
+        return root;
     }
 
     public static Vector2 GetClosestPos(Vector2 centerPos, List<Vector2> poses)

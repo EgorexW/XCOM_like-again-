@@ -4,21 +4,11 @@ using UnityEngine.Events;
 
 public abstract class UIElement : MonoBehaviour
 {
-    public bool hideOnStart;
-
+    public bool IsVisible => gameObject.activeSelf;
+    
     [FoldoutGroup("Events")] public UnityEvent onShow;
 
     [FoldoutGroup("Events")] public UnityEvent onHide;
-
-    protected void Start()
-    {
-        if (hideOnStart){
-            Hide();
-        }
-        else{
-            Show();
-        }
-    }
 
     public virtual void Show()
     {

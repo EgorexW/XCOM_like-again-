@@ -27,21 +27,54 @@ public static class MyExtentions
         }
         return obj;
     }
-
-    public static T WeightedRandom<T, TNr>(this Dictionary<T, TNr> list) where TNr : IConvertible
+    
+    public static T WeightedRandom<T>(this Dictionary<T, float> list)
     {
-        float totalWeight = 0;
-
-        foreach (var weightedChance in list) totalWeight += Mathf.Max(Convert.ToSingle(weightedChance.Value), 0);
-
-        var roll = UnityEngine.Random.Range(0, totalWeight);
-
-        foreach (var weightedChance in list){
-            if (roll <= Convert.ToSingle(weightedChance.Value)){
-                return weightedChance.Key;
-            }
-            roll -= Convert.ToSingle(weightedChance.Value);
+        float totalWeight = 0f;
+        
+        foreach (var kvp in list) 
+        {
+            totalWeight += Mathf.Max(kvp.Value, 0f);
         }
+
+        float roll = UnityEngine.Random.Range(0f, totalWeight);
+
+        foreach (var kvp in list)
+        {
+            float weight = Mathf.Max(kvp.Value, 0f);
+            if (roll <= weight)
+            {
+                return kvp.Key;
+            }
+            roll -= weight;
+        }
+        
+        Debug.LogWarning("Invalid Weights");
+        return default;
+    }
+    
+    public static T WeightedRandom<T>(this Dictionary<T, int> list)
+    {
+        int totalWeight = 0;
+    
+        foreach (var kvp in list) 
+        {
+            totalWeight += Mathf.Max(kvp.Value, 0);
+        }
+        
+        int roll = UnityEngine.Random.Range(0, totalWeight);
+
+        foreach (var kvp in list)
+        {
+            int weight = Mathf.Max(kvp.Value, 0);
+
+            if (roll < weight)
+            {
+                return kvp.Key;
+            }
+            roll -= weight;
+        }
+    
         Debug.LogWarning("Invalid Weights");
         return default;
     }

@@ -28,7 +28,7 @@ public class Grid<TGridObject>{
         for (var x = 0; x < gridArray.GetLength(0); x++)
         for (var y = 0; y < gridArray.GetLength(1); y++)
             gridArray[x, y] = createGridObject(this, x, y);
-
+        
         for (var x = 0; x < gridArray.GetLength(0); x++)
         for (var y = 0; y < gridArray.GetLength(1); y++){
             General.WorldText(
@@ -61,9 +61,9 @@ public class Grid<TGridObject>{
         return new Vector3(x, y) * cellSize + originPosition;
     }
 
-    void GetXY(Vector3 worldPosition, out int x, out int y){
-        x = Mathf.FloorToInt((worldPosition - originPosition).x / cellSize);
-        y = Mathf.FloorToInt((worldPosition - originPosition).y / cellSize);
+    void GetXY(Vector2 worldPosition, out int x, out int y){
+        x = Mathf.FloorToInt((worldPosition.x - originPosition.x) / cellSize);
+        y = Mathf.FloorToInt((worldPosition.y - originPosition.y) / cellSize);
     }
 
     public void SetGridObject(int x, int y, TGridObject value){
@@ -75,13 +75,7 @@ public class Grid<TGridObject>{
         }
     }
 
-    public void TriggerGridObjectChanged(int x, int y){
-        if (OnGridObjectChanged != null){
-            OnGridObjectChanged(this, new OnGridObjectChangedEventArgs{ x = x, y = y });
-        }
-    }
-
-    public void SetGridObject(Vector3 worldPosition, TGridObject value){
+    public void SetGridObject(Vector2 worldPosition, TGridObject value){
         int x, y;
         GetXY(worldPosition, out x, out y);
         SetGridObject(x, y, value);
@@ -91,12 +85,15 @@ public class Grid<TGridObject>{
         if (x >= 0 && y >= 0 && x < width && y < height){
             return gridArray[x, y];
         }
+        Debug.LogWarning("Trying to get grid object out of bounds");
         return default;
     }
 
-    public TGridObject GetGridObject(Vector3 worldPosition){
+    public TGridObject GetGridObject(Vector2 worldPosition){
         int x, y;
+        Debug.Log($"Getting grid object at world position: {worldPosition}");
         GetXY(worldPosition, out x, out y);
+        Debug.Log($"Calculated grid coordinates: X: {x}, Y: {y}");
         return GetGridObject(x, y);
     }
 }
