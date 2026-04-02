@@ -10,11 +10,11 @@ public class Grid<TGridObject>{
         public int y;
     }
 
-    readonly int width;
-    readonly int height;
-    readonly float cellSize;
-    readonly Vector3 originPosition;
-    readonly TGridObject[,] gridArray;
+    public readonly int width;
+    public readonly int height;
+    public readonly float cellSize;
+    public readonly Vector3 originPosition;
+    public readonly TGridObject[,] gridArray;
 
     public Grid(int width, int height, float cellSize, Vector3 originPosition,
         Func<Grid<TGridObject>, int, int, TGridObject> createGridObject){
@@ -28,33 +28,6 @@ public class Grid<TGridObject>{
         for (var x = 0; x < gridArray.GetLength(0); x++)
         for (var y = 0; y < gridArray.GetLength(1); y++)
             gridArray[x, y] = createGridObject(this, x, y);
-        
-        for (var x = 0; x < gridArray.GetLength(0); x++)
-        for (var y = 0; y < gridArray.GetLength(1); y++){
-            General.WorldText(
-                gridArray[x, y]?.ToString(), 
-                (Vector2)(GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f), 
-                30f, 
-                100f, 
-                Color.white
-            );
-            Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
-            Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
-        }
-        Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-        Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
-    }
-
-    public int GetWidth(){
-        return width;
-    }
-
-    public int GetHeight(){
-        return height;
-    }
-
-    public float GetCellSize(){
-        return cellSize;
     }
 
     public Vector3 GetWorldPosition(int x, int y){
@@ -62,8 +35,8 @@ public class Grid<TGridObject>{
     }
 
     void GetXY(Vector2 worldPosition, out int x, out int y){
-        x = Mathf.FloorToInt((worldPosition.x - originPosition.x) / cellSize);
-        y = Mathf.FloorToInt((worldPosition.y - originPosition.y) / cellSize);
+        x = Mathf.RoundToInt((worldPosition.x - originPosition.x) / cellSize);
+        y = Mathf.RoundToInt((worldPosition.y - originPosition.y) / cellSize);
     }
 
     public void SetGridObject(int x, int y, TGridObject value){
@@ -91,9 +64,9 @@ public class Grid<TGridObject>{
 
     public TGridObject GetGridObject(Vector2 worldPosition){
         int x, y;
-        Debug.Log($"Getting grid object at world position: {worldPosition}");
+        // Debug.Log($"Getting grid object at world position: {worldPosition}");
         GetXY(worldPosition, out x, out y);
-        Debug.Log($"Calculated grid coordinates: X: {x}, Y: {y}");
+        // Debug.Log($"Calculated grid coordinates: X: {x}, Y: {y}");
         return GetGridObject(x, y);
     }
 }

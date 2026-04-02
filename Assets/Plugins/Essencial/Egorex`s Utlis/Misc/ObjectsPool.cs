@@ -7,8 +7,6 @@ public class ObjectsPool : UIElement
 {
     [SerializeField] protected GameObject prefab;
 
-    [SerializeField] bool sendMessageInsteadOfDeactivate;
-
     [FoldoutGroup("Events")] public UnityEvent<GameObject> onCreateObject = new();
 
     readonly List<GameObject> activeObjs = new();
@@ -53,7 +51,10 @@ public class ObjectsPool : UIElement
         var obj = inactiveObjs.Dequeue();
         obj.SetActive(true);
         activeObjs.Add(obj);
-        obj.SendMessage("OnObjectPoolActivate", SendMessageOptions.DontRequireReceiver);
+        if (obj.TryGetComponent(out IPoolable poolable)) 
+        {
+            poolable.OnPoolActivate();
+        }
         return obj;
     }
 
@@ -66,19 +67,18 @@ public class ObjectsPool : UIElement
         if (obj == null || !activeObjs.Contains(obj)){
             return;
         }
-        if (sendMessageInsteadOfDeactivate){
-            Debug.Log("Sending OnObjectPoolDeactivate to " + obj.name, obj);
-            obj.SendMessage("OnObjectPoolDeactivate", SendMessageOptions.RequireReceiver);
+        if (obj.TryGetComponent(out IPoolable poolable)) 
+        {
+            poolable.OnPoolDeactivate();
         }
-        else{
-            obj.SetActive(false);
-        }
+        obj.SetActive(false);
         activeObjs.Remove(obj);
         inactiveObjs.Enqueue(obj);
     }
 
-    public void Clear()
+    public override void Hide()
     {
+        base.Hide();
         SetCount(0);
     }
 
@@ -104,4 +104,9 @@ public class ObjectsPool : UIElement
         newObj.SendMessage("OnObjectPoolCreate", SendMessageOptions.DontRequireReceiver);
         return newObj;
     }
+}
+
+public interface IPoolable{
+    void OnPoolActivate();
+    void OnPoolDeactivate();
 }

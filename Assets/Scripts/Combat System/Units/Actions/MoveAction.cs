@@ -1,6 +1,8 @@
 using UnityEngine;
 
 public class MoveAction : UnitAction{
+    [SerializeField] int range = 2;
+    
     CombatGridNode targetNode;
 
     protected override void OnExecute(){
@@ -16,6 +18,15 @@ public class MoveAction : UnitAction{
             return false;
         }
         if (targetNode.IsOccupied){
+            return false;
+        }
+        if (!unit.Node.InStraightLine(targetNode)){
+            return false;
+        }
+        if (unit.Node.GetDistance(targetNode) > range){
+            return false;
+        }
+        if (!unit.Node.LineUnobstructed(targetNode)){
             return false;
         }
         return true;
