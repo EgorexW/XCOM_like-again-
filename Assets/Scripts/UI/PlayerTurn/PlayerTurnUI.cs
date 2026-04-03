@@ -48,20 +48,19 @@ public class PlayerTurnUI : UIElement{
         if (!IsVisible){
             return;
         }
-        if (EventSystem.current.IsPointerOverGameObject()){
-            return;
-        }
         if (actionTargetingUI.IsVisible){
             actionTargetingUI.OnSelect(General.GetMouseWorldPos());
         }
-        foreach (var collider in GetCollidersUnderMouse()){
-            // Debug.Log("Collider under mouse: " + collider.name, collider);
-            var unit = General.GetComponentFromCollider<CombatUnit>(collider);
-            if (unit == null){
-                continue;
+        else{
+            foreach (var collider in GetCollidersUnderMouse()){
+                // Debug.Log("Collider under mouse: " + collider.name, collider);
+                var unit = General.GetComponentFromCollider<CombatUnit>(collider);
+                if (unit == null){
+                    continue;
+                }
+                // Debug.Log("CombatUnit under mouse: " + unit.name, unit);
+                SelectUnit(unit);
             }
-            // Debug.Log("CombatUnit under mouse: " + unit.name, unit);
-            SelectUnit(unit);
         }
     }
 

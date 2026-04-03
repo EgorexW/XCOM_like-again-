@@ -1,10 +1,8 @@
 using UnityEngine;
 
-public class AttackAction : UnitAction{
+public class AttackAction : TargetedUnitAction{
     [SerializeField] int range = 10;
     [SerializeField] float damage = 1;
-    
-    CombatGridNode targetNode;
 
     protected override void OnExecute(){
         var targetObjects = targetNode.GetCombatObjects();
@@ -16,15 +14,14 @@ public class AttackAction : UnitAction{
         }
     }
 
-    public override void SetTarget(Vector2 pos){
-        targetNode = unit.Grid.GetNode(pos);
-    }
-
-    protected override bool HasValidTarget(){
-        if (targetNode == null){
+    protected override bool IsValidTarget(CombatGridNode node){
+        if (!base.IsValidTarget(node)){
             return false;
         }
-        var targetObjects = targetNode.GetCombatObjects();
+        if (node == unit.Node){
+            return false;
+        }
+        var targetObjects = node.GetCombatObjects();
         bool foundTarget = false;
         foreach (var targetObj in targetObjects){
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();
@@ -36,12 +33,12 @@ public class AttackAction : UnitAction{
         if (!foundTarget){
             return false;
         }
-        if (unit.Node.GetDistance(targetNode) > range){
+        if (unit.Node.GetDistance(node) > range){
             return false;
         }
-        // if (!unit.Node.LineUnobstructed(targetNode)){
-        //     return false;
-        // }
+        if (!unit.Node.LineUnobstructed(node)){
+            return false;
+        }
         return true;
     }
 }

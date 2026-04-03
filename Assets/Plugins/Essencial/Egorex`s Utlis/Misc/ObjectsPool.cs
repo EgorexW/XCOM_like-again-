@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ObjectsPool : UIElement
+public class ObjectsPool : CountUI
 {
     [SerializeField] protected GameObject prefab;
 
@@ -36,9 +36,9 @@ public class ObjectsPool : UIElement
         prefab = transform.GetChild(0).gameObject;
     }
 
-    public void SetCount(int count)
+    public override void SetCount(int count)
     {
-        Show();
+        base.SetCount(count);
         while (activeObjs.Count > count) RemoveObject();
         while (activeObjs.Count < count) AddObject();
     }

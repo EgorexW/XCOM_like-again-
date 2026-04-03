@@ -63,19 +63,15 @@ public class CombatGrid : MonoBehaviour
     }
 }
 
-public class CombatGridNode{
+public class CombatGridNode : GridNode{
     public readonly CombatGrid grid;
-    public readonly int x;
-    public readonly int y;
 
     List<ICombatObject> combatObjects;
     
     public bool IsOccupied => combatObjects.Find(co => co.OccupiesTile) != null;
 
-    public CombatGridNode(CombatGrid grid, int x, int y){
+    public CombatGridNode(CombatGrid grid, int x, int y) : base(x,y){
         this.grid = grid;
-        this.x = x;
-        this.y = y;
         combatObjects = new List<ICombatObject>();
     }
 
@@ -92,11 +88,6 @@ public class CombatGridNode{
     public List<ICombatObject> GetCombatObjects(){
         return combatObjects.Copy();
     }
-
-    public Vector2Int GetPos(){
-        return new Vector2Int(x, y);
-    }
-
 }
 
 public static class CombatGridExtensions{
@@ -164,18 +155,12 @@ public static class CombatGridExtensions{
             // 1. Grab the Horizontal Corner
             int cornerX1 = x + stepX;
             int cornerY1 = y;
-            if ((cornerX1 != node1.x || cornerY1 != node1.y) && (cornerX1 != node2.x || cornerY1 != node2.y))
-            {
-                nodes.Add(node1.grid.GetNode(new Vector2Int(cornerX1, cornerY1)));
-            }
+            nodes.Add(node1.grid.GetNode(new Vector2Int(cornerX1, cornerY1)));
 
             // 2. Grab the Vertical Corner
             int cornerX2 = x;
             int cornerY2 = y + stepY;
-            if ((cornerX2 != node1.x || cornerY2 != node1.y) && (cornerX2 != node2.x || cornerY2 != node2.y))
-            {
-                nodes.Add(node1.grid.GetNode(new Vector2Int(cornerX2, cornerY2)));
-            }
+            nodes.Add(node1.grid.GetNode(new Vector2Int(cornerX2, cornerY2)));
 
             // 3. Finally, move the main tracker diagonally
             x += stepX;

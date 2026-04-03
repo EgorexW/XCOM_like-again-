@@ -1,32 +1,29 @@
 using UnityEngine;
 
-public class MoveAction : UnitAction{
+public class MoveAction : TargetedUnitAction{
     [SerializeField] int range = 2;
-    
-    CombatGridNode targetNode;
 
     protected override void OnExecute(){
         unit.MoveTo(targetNode);
     }
 
-    public override void SetTarget(Vector2 pos){
-        targetNode = unit.Grid.GetNode(pos);
-    }
-
-    protected override bool HasValidTarget(){
-        if (targetNode == null){
+    protected override bool IsValidTarget(CombatGridNode node){
+        if (!base.IsValidTarget(node)){
             return false;
         }
-        if (targetNode.IsOccupied){
+        if (node.IsOccupied){
             return false;
         }
-        if (!unit.Node.InStraightLine(targetNode)){
+        if (node == unit.Node){
             return false;
         }
-        if (unit.Node.GetDistance(targetNode) > range){
+        if (!unit.Node.InStraightLine(node)){
             return false;
         }
-        if (!unit.Node.LineUnobstructed(targetNode)){
+        if (unit.Node.GetDistance(node) > range){
+            return false;
+        }
+        if (!unit.Node.LineUnobstructed(node)){
             return false;
         }
         return true;

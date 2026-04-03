@@ -1,13 +1,15 @@
+using System;
+using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public abstract class UnitAction : MonoBehaviour{
-    public CombatUnit unit;
-    
-    [SerializeField] int cost = 1;
-    
-    public string Name => gameObject.name;
+    [SerializeField] public string Name;
+    [SerializeField] float cost = 1;
 
-    public virtual int GetCost(){
+    [HideInEditorMode][ReadOnly] public CombatUnit unit;
+
+    public virtual float GetCost(){
         return cost;
     }
 
@@ -21,21 +23,21 @@ public abstract class UnitAction : MonoBehaviour{
     }
 
     protected abstract void OnExecute();
-    public abstract void SetTarget(Vector2 pos);
 
     protected virtual bool CanExecute(){
         if (unit.ActionPoints < cost){
             Debug.Log($"Cannot execute action {Name} for unit {unit.name}, not enough action points. Current AP: {unit.ActionPoints}, required AP: {cost}");
             return false;
         }
-        if (!HasValidTarget()){
-            Debug.Log($"Cannot execute action {Name} for unit {unit.name}, invalid target.");
-            return false;
-        }
         return true;
     }
 
-    protected virtual bool HasValidTarget(){
-        return true;
+    [Button]
+    void ResetName(){
+        Name = gameObject.name;
+    }
+
+    void Reset(){
+        ResetName();
     }
 }

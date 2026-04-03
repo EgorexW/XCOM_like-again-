@@ -46,5 +46,5 @@ public interface ICombatObject{
 }
 
 public abstract class CombatComponent : MonoBehaviour{
-    public CombatObject combatObject;
+    [HideInEditorMode][ReadOnly] public CombatObject combatObject;
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class ActionTargetingUI : UIElement{
     [BoxGroup("References")][Required][SerializeField] TextMeshProUGUI actionNameText;
     [BoxGroup("References")][Required][SerializeField] Button confirmButton;
     [BoxGroup("References")][Required][SerializeField] Button cancelButton;
+    [BoxGroup("References")][Required][SerializeField] GridUI gridUI;
 
     UnitAction action;
 
@@ -33,10 +35,25 @@ public class ActionTargetingUI : UIElement{
     public void Show(UnitAction action){
         base.Show();
         this.action = action;
+        if (action is TargetedUnitAction targetedAction){
+            confirmButton.interactable = false;
+            gridUI.ShowMarks<CombatGridNode>(action.unit.Grid.Grid, targetedAction.GetValidTargets());
+        }
+        else{
+            confirmButton.interactable = true;
+        }
         actionNameText.SetText(action.Name);
     }
 
     public void OnSelect(Vector2 pos){
-        action.SetTarget(pos);
+        if (action is TargetedUnitAction targetedAction){
+            bool isValid = targetedAction.SetTarget(pos);
+            confirmButton.interactable = isValid;
+        }
+    }
+
+    public override void Hide(){
+        base.Hide();
+        gridUI.HideMarks();
     }
 }

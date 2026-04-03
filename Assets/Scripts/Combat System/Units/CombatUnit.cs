@@ -1,17 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CombatUnit : CombatObject{
-    [SerializeField] int defaultActionPoints = 2;
-    [SerializeField] List<UnitAction> unitActions;
+    [SerializeField] float defaultActionPoints = 2;
 
     public List<UnitAction> UnitActions => unitActions.Copy();
     public float ActionPoints => actionPoints;
 
-    int actionPoints;
+    [SerializeField][HideInEditorMode] List<UnitAction> unitActions;
+    [SerializeField][HideInEditorMode] float actionPoints;
     
     void Awake(){
+        unitActions = GetComponentsInChildren<UnitAction>().ToList();
         foreach (var action in unitActions){
             action.unit = this;
         }
@@ -19,16 +22,11 @@ public class CombatUnit : CombatObject{
 
     public void OnStartTurn(){
         actionPoints = defaultActionPoints;
-        Debug.Log($"Unit {name} starts turn with {actionPoints} action points.");
     }
 
     public void OnEndTurn(){ }
 
-    void Reset(){
-        unitActions = new List<UnitAction>(GetComponents<UnitAction>());
-    }
-
-    public void SpendActionPoints(int cost){
+    public void SpendActionPoints(float cost){
         if (cost > actionPoints){
             Debug.LogWarning($"Unit {name} does not have enough action points to spend {cost}. Current AP: {actionPoints}");
             actionPoints = 0;

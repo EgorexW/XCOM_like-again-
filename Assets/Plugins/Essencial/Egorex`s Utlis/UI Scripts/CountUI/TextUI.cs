@@ -37,7 +37,7 @@ public class TextUI : CountUI
         text = GetComponent<TextMeshProUGUI>();
     }
 
-    public override void SetCount(float count)
+    public virtual void SetCount(float count)
     {
         if (format == null){
             Awake();

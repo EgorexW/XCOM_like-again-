@@ -2,6 +2,7 @@ using Nrjwolf.Tools.AttachAttributes;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
@@ -33,8 +34,21 @@ public class InputHandler : MonoBehaviour
                 break;
         }
     }
+    
+    private bool _selectTriggeredThisFrame;
 
-    void OnSelectPerformed(){
-        playerTurnUI.OnSelect();
+    public void OnSelectPerformed() 
+    {
+        _selectTriggeredThisFrame = true; 
+    }
+
+    private void Update() 
+    {
+        if (_selectTriggeredThisFrame) 
+        {
+            _selectTriggeredThisFrame = false;
+            if (EventSystem.current.IsPointerOverGameObject()) return; 
+            playerTurnUI.OnSelect();
+        }
     }
 }
