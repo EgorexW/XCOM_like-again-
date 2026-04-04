@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class CombatObject : MonoBehaviour, ICombatObject{
-    public CombatGridNode Node{ get; set; }
+    [SerializeField] bool occupiesTile = true;
     
+    public CombatGridNode Node{ get; set; }
     public GameObject GameObject => gameObject;
-    public bool OccupiesTile => true;
+    public bool OccupiesTile => occupiesTile;
     public CombatGrid Grid => Node.grid;
 
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();

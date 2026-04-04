@@ -24,7 +24,9 @@ public class CombatUnit : CombatObject{
         actionPoints = defaultActionPoints;
     }
 
-    public void OnEndTurn(){ }
+    public void OnEndTurn(){
+        actionPoints = 0;
+    }
 
     public void SpendActionPoints(float cost){
         if (cost > actionPoints){

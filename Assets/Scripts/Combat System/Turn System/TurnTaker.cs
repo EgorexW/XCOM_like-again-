@@ -7,20 +7,18 @@ public abstract class TurnTaker : MonoBehaviour, ITurnTaker{
     public int Priority => priority;
     public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
 
-    [FoldoutGroup("Events")]
-    public UnityEvent onStartTurn;
+    [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn{ get; } = new();
 
-    [FoldoutGroup("Events")]
-    public UnityEvent onEndTurn;
+    [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn{ get; } = new();
 
-    public virtual void OnEndTurn(){
+    public virtual void EndTurn(){
         Debug.Log($"{this} ended their turn.");
-        onEndTurn.Invoke();
+        onEndTurn.Invoke(this);
     }
 
-    public virtual void OnStartTurn(){
+    public virtual void StartTurn(){
         Debug.Log($"{this} started turn.");
-        onStartTurn.Invoke();
+        onStartTurn.Invoke(this);
     }
     public void CompleteTurn(){
         OnTurnCompleted?.Invoke(this);

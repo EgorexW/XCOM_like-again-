@@ -11,6 +11,7 @@ public class InputHandler : MonoBehaviour
     [GetComponent] [SerializeField] PlayerInput playerInput;
     
     [BoxGroup("References")][Required][SerializeField] PlayerTurnUI playerTurnUI;
+    [BoxGroup("References")][Required][SerializeField] CameraMovement cameraMovement;
 
     void Awake()
     {
@@ -29,12 +30,20 @@ public class InputHandler : MonoBehaviour
             case "Select":
                 OnSelectPerformed();
                 break;
+            case "Move":
+                OnMovePerformed(obj);
+                break;
             default:
                 Debug.LogWarning("Unhandled action: " + obj.action.name);
                 break;
         }
     }
-    
+
+    void OnMovePerformed(InputAction.CallbackContext callbackContext){
+        var value = callbackContext.ReadValue<Vector2>();
+        
+    }
+
     private bool _selectTriggeredThisFrame;
 
     public void OnSelectPerformed() 
@@ -51,4 +60,8 @@ public class InputHandler : MonoBehaviour
             playerTurnUI.OnSelect();
         }
     }
+}
+
+class CameraMovement : MonoBehaviour{
+    
 }

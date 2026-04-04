@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,15 +6,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
-
-[Flags]
-public enum Direction
-{
-    Left = 1 << 0,
-    Right = 1 << 1,
-    Up = 1 << 2,
-    Down = 1 << 3
-}
 
 public class General : MonoBehaviour
 {
@@ -40,21 +30,6 @@ public class General : MonoBehaviour
     public static void CallAfterSeconds(UnityAction action, float seconds = 0)
     {
         GetInstance().StartCoroutine(CallAfterSecondsCoroutine(action, seconds));
-    }
-
-    public static Vector2 DirToVector(Direction direction)
-    {
-        switch (direction){
-            case Direction.Left:
-                return Vector2.left;
-            case Direction.Right:
-                return Vector2.right;
-            case Direction.Up:
-                return Vector2.up;
-            case Direction.Down:
-                return Vector2.down;
-        }
-        return Vector2.zero;
     }
 
     public static readonly Vector2[] MainDirections2D = { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
@@ -292,6 +267,7 @@ public class General : MonoBehaviour
         }
         return components;
     }
+
 }
 
 public interface INamed

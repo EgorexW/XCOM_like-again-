@@ -2,10 +2,10 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class PlayerTurnTaker : UnitsTurnTaker{
-    public override void OnEndTurn(){
-        base.OnEndTurn();
+    public override void EndTurn(){
+        base.EndTurn();
     }
-    public override void OnStartTurn(){
-        base.OnStartTurn();
+    public override void StartTurn(){
+        base.StartTurn();
     }
 }

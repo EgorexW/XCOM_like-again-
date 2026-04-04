@@ -6,14 +6,14 @@ public class UnitsTurnTaker : TurnTaker{
     
     public List<CombatUnit> Units => units.Copy();
     
-    public override void OnEndTurn(){
-        base.OnEndTurn();
+    public override void EndTurn(){
+        base.EndTurn();
         foreach (CombatUnit unit in units){
             unit.OnEndTurn();
         }
     }
-    public override void OnStartTurn(){
-        base.OnStartTurn();
+    public override void StartTurn(){
+        base.StartTurn();
         foreach (CombatUnit unit in units){
             unit.OnStartTurn();
         }

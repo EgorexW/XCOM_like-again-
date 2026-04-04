@@ -39,12 +39,12 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
     }
 
     public void NextTurn(){
-        CurrentTurnTaker?.OnEndTurn();
+        CurrentTurnTaker?.EndTurn();
         index++;
         if (index >= TurnTakersCount){
             index = 0;
         }
-        CurrentTurnTaker?.OnStartTurn();
+        CurrentTurnTaker?.StartTurn();
     }
 
 }
@@ -52,8 +52,11 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
 public interface ITurnTaker{
     public int Priority { get; }
     public UnityAction<ITurnTaker> OnTurnCompleted { get; set; }
-    void OnEndTurn();
-    void OnStartTurn();
+    void EndTurn();
+    void StartTurn();
+    // void CompleteTurn();
+    public UnityEvent<ITurnTaker> onStartTurn{ get; }
+    public UnityEvent<ITurnTaker> onEndTurn{ get; }
 }
 
 public interface ITurnSystem{

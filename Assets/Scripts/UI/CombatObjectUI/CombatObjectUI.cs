@@ -17,7 +17,7 @@ class CombatObjectUI : UIElement{
             healthComponentUI.Show(healthComponent);
         }
         else{
-            combatUnitUI.Hide();
+            healthComponentUI.Hide();
         }
         if (combatObject is CombatUnit unit){
             combatUnitUI.Show(unit);

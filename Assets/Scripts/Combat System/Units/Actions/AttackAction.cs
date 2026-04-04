@@ -36,7 +36,7 @@ public class AttackAction : TargetedUnitAction{
         if (unit.Node.GetDistance(node) > range){
             return false;
         }
-        if (!unit.Node.LineUnobstructed(node)){
+        if (!unit.Node.CanAttack(node)){
             return false;
         }
         return true;

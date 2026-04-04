@@ -7,22 +7,40 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerTurnUI : UIElement{
-    [BoxGroup("External References")][Required][SerializeField] PlayerTurnTaker playerTurnTaker;
+    [BoxGroup("External References")][Required][SerializeField] List<PlayerTurnTaker> playerTurnTakers;
     
     [BoxGroup("Internal References")][Required][SerializeField] ActionsUI actionsUI;
     [BoxGroup("Internal References")][Required][SerializeField] ActionTargetingUI  actionTargetingUI;
     [BoxGroup("Internal References")][Required][SerializeField] Button endTurnButton;
     
     [ShowInInspector] CombatUnit selectedUnit;
+    [ShowInInspector] PlayerTurnTaker currentTurnTaker;
 
     void Awake(){
         Hide();
-        playerTurnTaker.onStartTurn.AddListener(Show);
-        playerTurnTaker.onEndTurn.AddListener(Hide);
-        endTurnButton.onClick.AddListener(playerTurnTaker.CompleteTurn);
+        foreach (var playerTurnTaker in playerTurnTakers){
+            playerTurnTaker.onStartTurn.AddListener(ShowTurnTaker);
+            playerTurnTaker.onEndTurn.AddListener(Hide);
+        }
+        endTurnButton.onClick.AddListener(CompleteTurn);
         actionsUI.onActionSelected.AddListener(OnActionSelected);
         actionTargetingUI.onConfirm.AddListener(OnActionTargetConfirmed);
         actionTargetingUI.onCancel.AddListener(OnActionCanceled);
+    }
+
+    void Hide(ITurnTaker arg0){
+        Hide();
+    }
+
+    void ShowTurnTaker(ITurnTaker arg0){
+        currentTurnTaker = arg0 as PlayerTurnTaker;
+        Show();
+    }
+
+    void CompleteTurn(){
+        if (currentTurnTaker != null){
+            currentTurnTaker.CompleteTurn();
+        }
     }
 
     void OnActionCanceled(){
@@ -65,7 +83,7 @@ public class PlayerTurnUI : UIElement{
     }
 
     void SelectUnit(CombatUnit unit){
-        if (!playerTurnTaker.Units.Contains(unit)){
+        if (!currentTurnTaker.Units.Contains(unit)){
             Debug.LogWarning($"Cannot select unit {unit.name}, it is not controlled by the player.");
             return;
         }
