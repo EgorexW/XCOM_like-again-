@@ -150,9 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac25ceb0a464c17b9b3209afe506e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoverComponent
-  combatObject: {fileID: 0}
   direction: 2
   coverSprite: {fileID: 1487447143790949270}
+  adjacentCoverPrefab: {fileID: 7086092485035440313}
 --- !u!1 &8720106548867897963
 GameObject:
   m_ObjectHideFlags: 0

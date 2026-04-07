@@ -1,0 +1,3 @@
+[*.cs]
+# Enforce protected modifiers for Unity messages
+dotnet_diagnostic.UNT0021.severity = warning

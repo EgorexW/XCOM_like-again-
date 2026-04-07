@@ -26,6 +26,15 @@ public class InputHandler : MonoBehaviour
         if (obj.action.actionMap.name != "Player"){
             return;
         }
+        if (obj.action.name.StartsWith("Slot"))
+        {
+            string numberStr = obj.action.name.Replace("Slot", "");
+            if (int.TryParse(numberStr, out int slotNumber))
+            {
+                OnActionSlotPerformed(slotNumber);
+            }
+            return;
+        }
         switch (obj.action.name){
             case "Select":
                 OnSelectPerformed();
@@ -33,15 +42,27 @@ public class InputHandler : MonoBehaviour
             case "Move":
                 OnMovePerformed(obj);
                 break;
+            case "Confirm":
+                OnConfirmPerformed();
+                break;
             default:
                 Debug.LogWarning("Unhandled action: " + obj.action.name);
                 break;
         }
     }
 
+    void OnActionSlotPerformed(int slot){
+        slot -= 1; // Convert to 0-based index
+        playerTurnUI.OnSlotSelected(slot);
+    }
+
+    void OnConfirmPerformed(){
+        playerTurnUI.OnConfirm();
+    }
+
     void OnMovePerformed(InputAction.CallbackContext callbackContext){
         var value = callbackContext.ReadValue<Vector2>();
-        
+        cameraMovement.SetMovementInput(value);
     }
 
     private bool _selectTriggeredThisFrame;
@@ -60,8 +81,4 @@ public class InputHandler : MonoBehaviour
             playerTurnUI.OnSelect();
         }
     }
-}
-
-class CameraMovement : MonoBehaviour{
-    
 }

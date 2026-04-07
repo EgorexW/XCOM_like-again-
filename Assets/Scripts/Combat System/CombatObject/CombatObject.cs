@@ -7,13 +7,14 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     [SerializeField] bool occupiesTile = true;
     
     public CombatGridNode Node{ get; set; }
-    public GameObject GameObject => gameObject;
+    public Vector3 WorldPosition => transform.position;
     public bool OccupiesTile => occupiesTile;
-    public CombatGrid Grid => Node.grid;
 
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
+    [FoldoutGroup("Events")] public UnityEvent onInit{ get; } = new();
+    public string Name => name;
 
-    void Awake(){
+    protected virtual void Awake(){
         foreach (var combatComponent in GetComponentsInChildren<CombatComponent>()){
             combatComponent.combatObject = this;
         }
@@ -21,14 +22,11 @@ public class CombatObject : MonoBehaviour, ICombatObject{
 
     public T GetCombatComponent<T>() where T : CombatComponent{
         var component = GetComponentInChildren<T>();
-        if (component != null){
-            component.combatObject = this;
-        }
         return component;
     }
-    public void MoveTo(CombatGridNode targetPos){
-        Node.grid.PlaceCombatObject(this, targetPos.GetPos());
-        transform.position = new Vector3(targetPos.x, targetPos.y, transform.position.z);
+    public void MoveTo(CombatGridNode targetNode){
+        targetNode.grid.PlaceCombatObject(this, targetNode.GetPos());
+        transform.position = new Vector3(targetNode.x, targetNode.y, transform.position.z);
     }
 
     public void Remove(){
@@ -39,13 +37,22 @@ public class CombatObject : MonoBehaviour, ICombatObject{
 
 public interface ICombatObject{
     CombatGridNode Node{ get; set; }
-    GameObject GameObject{ get; }
+    Vector3 WorldPosition { get; }
     bool OccupiesTile{ get; }
     T GetCombatComponent<T>() where T : CombatComponent;
     public UnityEvent<ICombatObject> onRemove{ get; }
-
+    public UnityEvent onInit{ get; }
+    string Name{ get; }
+    public void MoveTo(CombatGridNode targetNode);
+    public void Remove();
 }
 
 public abstract class CombatComponent : MonoBehaviour{
-    [HideInEditorMode][ReadOnly] public CombatObject combatObject;
+    public ICombatObject combatObject;
+}
+
+public static class CombatObjectExtensions{
+    public static CombatGrid Grid(this ICombatObject combatObject){
+        return combatObject.Node.grid;
+    }
 }

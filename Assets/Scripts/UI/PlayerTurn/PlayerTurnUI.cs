@@ -105,4 +105,18 @@ public class PlayerTurnUI : UIElement{
         // Debug.Log("Colliders under mouse: " + collider2Ds.Count);
         return collider2Ds;
     }
+
+    public void OnConfirm(){
+        if (!IsVisible){
+            return;
+        }
+        actionTargetingUI.OnConfirm();
+    }
+
+    public void OnSlotSelected(int slot){
+        if (!IsVisible){
+            return;
+        }
+        actionsUI.SelectSlot(slot);
+    }
 }

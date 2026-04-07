@@ -28,7 +28,10 @@ public class ActionTargetingUI : UIElement{
         onCancel.Invoke();
     }
 
-    void OnConfirm(){
+    public void OnConfirm(){
+        if (!IsVisible){
+            return;
+        }
         onConfirm.Invoke(action);
     }
     
@@ -37,7 +40,7 @@ public class ActionTargetingUI : UIElement{
         this.action = action;
         if (action is TargetedUnitAction targetedAction){
             confirmButton.interactable = false;
-            gridUI.ShowMarks<CombatGridNode>(action.unit.Grid.Grid, targetedAction.GetValidTargets());
+            gridUI.ShowMarks<CombatGridNode>(action.unit.Grid().Grid, targetedAction.GetValidTargets());
         }
         else{
             confirmButton.interactable = true;

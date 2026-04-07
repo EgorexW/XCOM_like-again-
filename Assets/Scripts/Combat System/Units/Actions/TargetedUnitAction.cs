@@ -32,13 +32,13 @@ public abstract class TargetedUnitAction : UnitAction{
     }
 
     public bool SetTarget(Vector2 pos){
-        var node = unit.Grid.GetNode(pos);
+        var node = unit.Grid().GetNode(pos);
         return SetTarget(node);
     }
 
     public virtual List<CombatGridNode> GetValidTargets(){
         var list = new List<CombatGridNode>();
-        foreach (var node in unit.Grid.Grid.gridArray){
+        foreach (var node in unit.Grid().Grid.gridArray){
             if (IsValidTarget(node)){
                 list.Add(node);
             }

@@ -18,8 +18,7 @@ public class CombatSystem : MonoBehaviour
 
     public void AddCombatObject(ICombatObject combatObject){
         combatObjects.Add(combatObject);
-        combatGrid.PlaceCombatObject(combatObject, General.RoundVector(combatObject.GameObject.transform.position));
-        combatObject.GameObject.transform.position = new Vector3(combatObject.Node.x, combatObject.Node.y, combatObject.GameObject.transform.position.z);
+        combatObject.MoveTo(combatGrid.GetNode(combatObject.WorldPosition));
         combatObject.onRemove.AddListener(RemoveCombatObject);
     }
 
@@ -29,6 +28,9 @@ public class CombatSystem : MonoBehaviour
     }
 
     public void StartCombat(){
+        foreach (ICombatObject combatObject in combatObjects){
+            combatObject.onInit.Invoke();
+        }
         turnSystem.NextTurn();
         onCombatStarted.Invoke();
     }

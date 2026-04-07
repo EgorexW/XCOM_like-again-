@@ -24,6 +24,7 @@ public class HealthComponent : CombatComponent{
     }
 
     void Die(){
+        Debug.Log($"{combatObject.Name} died.", combatObject as Object);
         combatObject.Remove();
     }
 }

@@ -8,9 +8,12 @@ class ActionsUI : UIElement{
 
     [FoldoutGroup("Events")]
     public UnityEvent<UnitAction> onActionSelected;
+
+    CombatUnit unit;
     
-    public void Show(CombatUnit unit){
+    public void Show(CombatUnit newUnit){
         base.Show();
+        unit = newUnit;
         var actions = unit.UnitActions;
         actionsPool.SetCount(actions.Count);
         for (int i = 0; i < actions.Count; i++){
@@ -22,5 +25,18 @@ class ActionsUI : UIElement{
     void OnActionSelected(UnitAction action){
         Debug.Log("Selected action: " + action.Name, action);
         onActionSelected.Invoke(action);
+    }
+
+    public void SelectSlot(int slot){
+        if (unit == null){
+            return;
+        }
+        var actions = unit.UnitActions;
+        if (slot < 0 || slot >= actions.Count){
+            Debug.LogWarning($"Invalid action slot {slot}. Unit {unit.name} has {actions.Count} actions.");
+            return;
+        }
+        var action = actions[slot];
+        OnActionSelected(action);
     }
 }
