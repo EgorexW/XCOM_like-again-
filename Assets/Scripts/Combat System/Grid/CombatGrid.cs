@@ -1,39 +1,31 @@
-using System;
-using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CombatGrid : MonoBehaviour
-{
+public class CombatGrid : MonoBehaviour{
     [SerializeField] int width = 100;
     [SerializeField] int height = 100;
-        
-    private Grid<CombatGridNode> grid;
-    
-    public Grid<CombatGridNode> Grid => grid;
+
+    public Grid<CombatGridNode> Grid{ get; private set; }
 
     [FoldoutGroup("Events")] public UnityEvent<CombatGridNode> onCombatGridNodeChanged = new();
 
-    protected void Awake()
-    {
-        grid = new Grid<CombatGridNode>(width, height, 1f, Vector3.zero, 
-            (Grid<CombatGridNode> g, int x, int y) => new CombatGridNode(this, x, y)
+    protected void Awake(){
+        Grid = new Grid<CombatGridNode>(width, height, 1f, Vector3.zero,
+            (g, x, y) => new CombatGridNode(this, x, y)
         );
-        
-        grid.OnGridObjectChanged += Grid_OnGridObjectChanged;
+
+        Grid.OnGridObjectChanged += Grid_OnGridObjectChanged;
     }
 
-    protected void OnDestroy()
-    {
-        if (grid != null)
-        {
-            grid.OnGridObjectChanged -= Grid_OnGridObjectChanged;
+    protected void OnDestroy(){
+        if (Grid != null){
+            Grid.OnGridObjectChanged -= Grid_OnGridObjectChanged;
         }
     }
 
     void Grid_OnGridObjectChanged(object sender, Grid<CombatGridNode>.OnGridObjectChangedEventArgs e){
-        CombatGridNode node = grid.GetGridObject(e.x, e.y);
+        var node = Grid.GetGridObject(e.x, e.y);
         onCombatGridNodeChanged.Invoke(node);
     }
 
@@ -41,7 +33,7 @@ public class CombatGrid : MonoBehaviour
         if (combatObject.Node != null){
             combatObject.Node.RemoveCombatObject(combatObject);
         }
-        var newNode = grid.GetGridObject(pos.x, pos.y);
+        var newNode = Grid.GetGridObject(pos.x, pos.y);
         newNode.AddCombatObject(combatObject);
         combatObject.Node = newNode;
     }
@@ -51,7 +43,7 @@ public class CombatGrid : MonoBehaviour
     }
 
     public CombatGridNode GetNode(Vector2 pos){
-        return grid.GetGridObject(pos);
+        return Grid.GetGridObject(pos);
     }
 
     public void RemoveCombatObject(ICombatObject arg0){

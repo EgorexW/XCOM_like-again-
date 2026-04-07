@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ObjectWithValueExtentions
-{
-    public static ObjectWithValue<T> GetWeightedRoll<T>(this List<ObjectWithValue<T>> weightedChances)
-    {
+public static class ObjectWithValueExtentions{
+    public static ObjectWithValue<T> GetWeightedRoll<T>(this List<ObjectWithValue<T>> weightedChances){
         ObjectWithValue<T> win = null;
         float totalWeight = 0;
 

@@ -4,27 +4,22 @@ using System.IO;
 using System.Text.RegularExpressions;
 using UnityEditor;
 
-namespace UnitySweeper
-{
-    public class ShaderReferenceCollection : IReferenceCollection
-    {
+namespace UnitySweeper{
+    public class ShaderReferenceCollection : IReferenceCollection{
         // shader name / shader file guid
         readonly Dictionary<string, string> shaderFileList = new();
         List<CollectionData> references = new();
 
-        public void Init(List<CollectionData> refs)
-        {
+        public void Init(List<CollectionData> refs){
             references = refs;
         }
 
-        public void CollectionFiles()
-        {
+        public void CollectionFiles(){
             CollectionShaderFiles();
             CheckReference();
         }
 
-        void CollectionShaderFiles()
-        {
+        void CollectionShaderFiles(){
             var shaderFiles = Directory.GetFiles("Assets", "*.shader", SearchOption.AllDirectories);
             foreach (var shaderFilePath in shaderFiles){
                 var code = File.ReadAllText(shaderFilePath);
@@ -52,8 +47,7 @@ namespace UnitySweeper
             }
         }
 
-        void CheckReference()
-        {
+        void CheckReference(){
             foreach (var shader in shaderFileList){
                 var shaderFilePath = AssetDatabase.GUIDToAssetPath(shader.Value);
                 if (!File.Exists(shaderFilePath)){

@@ -2,19 +2,16 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
-{
+public class Timer : MonoBehaviour{
     public bool run = true;
     TextMeshProUGUI text;
     float time;
 
-    protected void Awake()
-    {
+    protected void Awake(){
         text = GetComponent<TextMeshProUGUI>();
     }
 
-    protected void Update()
-    {
+    protected void Update(){
         if (!run){
             return;
         }
@@ -22,18 +19,15 @@ public class Timer : MonoBehaviour
         text.text = GetTimeString();
     }
 
-    public string GetTimeString()
-    {
+    public string GetTimeString(){
         return ConvertTimeToString(time);
     }
 
-    public float GetTimeFloat()
-    {
+    public float GetTimeFloat(){
         return time;
     }
 
-    public static string ConvertTimeToString(float time)
-    {
+    public static string ConvertTimeToString(float time){
         var timeSpan = TimeSpan.FromSeconds(time);
         return timeSpan.ToString("mm':'ss':'f");
     }

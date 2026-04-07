@@ -22,7 +22,7 @@ public class AttackAction : TargetedUnitAction{
             return false;
         }
         var targetObjects = node.GetCombatObjects();
-        bool foundTarget = false;
+        var foundTarget = false;
         foreach (var targetObj in targetObjects){
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();
             if (healthComp != null){

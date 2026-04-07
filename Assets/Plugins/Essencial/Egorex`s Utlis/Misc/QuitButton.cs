@@ -4,17 +4,14 @@ using UnityEngine.UI;
 using UnityEditor.Events;
 #endif
 
-public class QuitButton : MonoBehaviour
-{
-    protected void Awake()
-    {
+public class QuitButton : MonoBehaviour{
+    protected void Awake(){
         if (Application.platform == RuntimePlatform.WebGLPlayer || Application.platform == RuntimePlatform.OSXEditor){
             Destroy(gameObject);
         }
     }
 #if UNITY_EDITOR
-    protected void Reset()
-    {
+    protected void Reset(){
         if (!TryGetComponent<Button>(out var button)){
             return;
         }
@@ -27,8 +24,7 @@ public class QuitButton : MonoBehaviour
 
 #endif
 
-    void Play()
-    {
+    void Play(){
         Application.Quit();
     }
 }

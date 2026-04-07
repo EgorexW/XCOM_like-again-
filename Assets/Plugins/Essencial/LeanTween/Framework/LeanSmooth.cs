@@ -16,8 +16,7 @@
  *     Debug.Log("Smoothed y:" + fromY + " vec3:" + fromVec3 + " color:" + fromColor);<br />
  *     @class LeanSmooth
  */
-public class LeanSmooth
-{
+public class LeanSmooth{
     /**
      * <summary>Moves one value towards another (eases in and out to destination with no overshoot)</summary>
      * @method LeanSmooth.damp (float)
@@ -32,8 +31,7 @@ public class LeanSmooth
      * Debug.Log("current:"+followVar);
      */
     public static float damp(float current, float target, ref float currentVelocity, float smoothTime,
-        float maxSpeed = -1f, float deltaTime = -1f)
-    {
+        float maxSpeed = -1f, float deltaTime = -1f){
         if (deltaTime < 0f){
             deltaTime = Time.deltaTime;
         }
@@ -73,8 +71,7 @@ public class LeanSmooth
      * Debug.Log("current:"+transform.position);
      */
     public static Vector3 damp(Vector3 current, Vector3 target, ref Vector3 currentVelocity, float smoothTime,
-        float maxSpeed = -1f, float deltaTime = -1f)
-    {
+        float maxSpeed = -1f, float deltaTime = -1f){
         var x = damp(current.x, target.x, ref currentVelocity.x, smoothTime, maxSpeed, deltaTime);
         var y = damp(current.y, target.y, ref currentVelocity.y, smoothTime, maxSpeed, deltaTime);
         var z = damp(current.z, target.z, ref currentVelocity.z, smoothTime, maxSpeed, deltaTime);
@@ -98,8 +95,7 @@ public class LeanSmooth
      *     Debug.Log("current:"+fromColor);
      */
     public static Color damp(Color current, Color target, ref Color currentVelocity, float smoothTime,
-        float maxSpeed = -1f, float deltaTime = -1f)
-    {
+        float maxSpeed = -1f, float deltaTime = -1f){
         var r = damp(current.r, target.r, ref currentVelocity.r, smoothTime, maxSpeed, deltaTime);
         var g = damp(current.g, target.g, ref currentVelocity.g, smoothTime, maxSpeed, deltaTime);
         var b = damp(current.b, target.b, ref currentVelocity.b, smoothTime, maxSpeed, deltaTime);
@@ -124,8 +120,7 @@ public class LeanSmooth
      * Debug.Log("current:"+followVar);
      */
     public static float spring(float current, float target, ref float currentVelocity, float smoothTime,
-        float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f)
-    {
+        float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f){
         if (deltaTime < 0f){
             deltaTime = Time.deltaTime;
         }
@@ -161,8 +156,7 @@ public class LeanSmooth
      * Debug.Log("current:"+transform.position);
      */
     public static Vector3 spring(Vector3 current, Vector3 target, ref Vector3 currentVelocity, float smoothTime,
-        float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f)
-    {
+        float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f){
         var x = spring(current.x, target.x, ref currentVelocity.x, smoothTime, maxSpeed, deltaTime, friction,
             accelRate);
         var y = spring(current.y, target.y, ref currentVelocity.y, smoothTime, maxSpeed, deltaTime, friction,
@@ -191,8 +185,7 @@ public class LeanSmooth
      *     Debug.Log("current:"+fromColor);
      */
     public static Color spring(Color current, Color target, ref Color currentVelocity, float smoothTime,
-        float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f)
-    {
+        float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f){
         var r = spring(current.r, target.r, ref currentVelocity.r, smoothTime, maxSpeed, deltaTime, friction,
             accelRate);
         var g = spring(current.g, target.g, ref currentVelocity.g, smoothTime, maxSpeed, deltaTime, friction,
@@ -216,8 +209,7 @@ public class LeanSmooth
      * followVar = LeanSmooth.linear(followVar, destinationVar, 50f);\n
      * Debug.Log("current:"+followVar);
      */
-    public static float linear(float current, float target, float moveSpeed, float deltaTime = -1f)
-    {
+    public static float linear(float current, float target, float moveSpeed, float deltaTime = -1f){
         if (deltaTime < 0f){
             deltaTime = Time.deltaTime;
         }
@@ -248,8 +240,7 @@ public class LeanSmooth
      * transform.position = LeanSmooth.linear(transform.position, followTrans.position, 50f);\n
      * Debug.Log("current:"+transform.position);
      */
-    public static Vector3 linear(Vector3 current, Vector3 target, float moveSpeed, float deltaTime = -1f)
-    {
+    public static Vector3 linear(Vector3 current, Vector3 target, float moveSpeed, float deltaTime = -1f){
         var x = linear(current.x, target.x, moveSpeed, deltaTime);
         var y = linear(current.y, target.y, moveSpeed, deltaTime);
         var z = linear(current.z, target.z, moveSpeed, deltaTime);
@@ -270,8 +261,7 @@ public class LeanSmooth
      *     ().material.color, 50f);\n
      *     Debug.Log("current:"+fromColor);
      */
-    public static Color linear(Color current, Color target, float moveSpeed)
-    {
+    public static Color linear(Color current, Color target, float moveSpeed){
         var r = linear(current.r, target.r, moveSpeed);
         var g = linear(current.g, target.g, moveSpeed);
         var b = linear(current.b, target.b, moveSpeed);
@@ -298,8 +288,7 @@ public class LeanSmooth
      */
     public static float bounceOut(float current, float target, ref float currentVelocity, float smoothTime,
         float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f,
-        float hitDamping = 0.9f)
-    {
+        float hitDamping = 0.9f){
         if (deltaTime < 0f){
             deltaTime = Time.deltaTime;
         }
@@ -345,8 +334,7 @@ public class LeanSmooth
      */
     public static Vector3 bounceOut(Vector3 current, Vector3 target, ref Vector3 currentVelocity, float smoothTime,
         float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f,
-        float hitDamping = 0.9f)
-    {
+        float hitDamping = 0.9f){
         var x = bounceOut(current.x, target.x, ref currentVelocity.x, smoothTime, maxSpeed, deltaTime, friction,
             accelRate, hitDamping);
         var y = bounceOut(current.y, target.y, ref currentVelocity.y, smoothTime, maxSpeed, deltaTime, friction,
@@ -377,8 +365,7 @@ public class LeanSmooth
      */
     public static Color bounceOut(Color current, Color target, ref Color currentVelocity, float smoothTime,
         float maxSpeed = -1f, float deltaTime = -1f, float friction = 2f, float accelRate = 0.5f,
-        float hitDamping = 0.9f)
-    {
+        float hitDamping = 0.9f){
         var r = bounceOut(current.r, target.r, ref currentVelocity.r, smoothTime, maxSpeed, deltaTime, friction,
             accelRate, hitDamping);
         var g = bounceOut(current.g, target.g, ref currentVelocity.g, smoothTime, maxSpeed, deltaTime, friction,

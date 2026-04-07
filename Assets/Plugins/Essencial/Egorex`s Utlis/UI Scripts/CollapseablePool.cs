@@ -5,7 +5,7 @@ using UnityEngine;
 class CollapseablePool : CountUI{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool heartsPool;
     [BoxGroup("References")] [Required] [SerializeField] GameObject collapsedUI;
-    [BoxGroup("References")][Required][SerializeField] TextMeshProUGUI healthText;
+    [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] int collapseAmount = 4;
 
     public override void SetCount(int value){

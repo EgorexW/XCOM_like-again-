@@ -8,10 +8,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public static class RuntimePreviewGenerator
-{
-    class CameraSetup
-    {
+public static class RuntimePreviewGenerator{
+    class CameraSetup{
         Vector3 position;
         Quaternion rotation;
 
@@ -26,8 +24,7 @@ public static class RuntimePreviewGenerator
 
         RenderTexture targetTexture;
 
-        public void GetSetup(Camera camera)
-        {
+        public void GetSetup(Camera camera){
             position = camera.transform.position;
             rotation = camera.transform.rotation;
 
@@ -43,8 +40,7 @@ public static class RuntimePreviewGenerator
             targetTexture = camera.targetTexture;
         }
 
-        public void ApplySetup(Camera camera)
-        {
+        public void ApplySetup(Camera camera){
             camera.transform.position = position;
             camera.transform.rotation = rotation;
 
@@ -134,27 +130,23 @@ public static class RuntimePreviewGenerator
     public static bool MarkTextureNonReadable{ get; set; } = true;
 
     public static Texture2D GenerateMaterialPreview(Material material, PrimitiveType previewPrimitive, int width = 64,
-        int height = 64)
-    {
+        int height = 64){
         return GenerateMaterialPreviewInternal(material, previewPrimitive, null, null, width, height);
     }
 
     public static Texture2D GenerateMaterialPreviewWithShader(Material material, PrimitiveType previewPrimitive,
-        Shader shader, string replacementTag, int width = 64, int height = 64)
-    {
+        Shader shader, string replacementTag, int width = 64, int height = 64){
         return GenerateMaterialPreviewInternal(material, previewPrimitive, shader, replacementTag, width, height);
     }
 
 #if UNITY_2018_2_OR_NEWER
     public static void GenerateMaterialPreviewAsync(Action<Texture2D> callback, Material material,
-        PrimitiveType previewPrimitive, int width = 64, int height = 64)
-    {
+        PrimitiveType previewPrimitive, int width = 64, int height = 64){
         GenerateMaterialPreviewInternal(material, previewPrimitive, null, null, width, height, callback);
     }
 
     public static void GenerateMaterialPreviewWithShaderAsync(Action<Texture2D> callback, Material material,
-        PrimitiveType previewPrimitive, Shader shader, string replacementTag, int width = 64, int height = 64)
-    {
+        PrimitiveType previewPrimitive, Shader shader, string replacementTag, int width = 64, int height = 64){
         GenerateMaterialPreviewInternal(material, previewPrimitive, shader, replacementTag, width, height, callback);
     }
 #endif
@@ -189,31 +181,27 @@ public static class RuntimePreviewGenerator
     }
 
     public static Texture2D GenerateModelPreview(Transform model, int width = 64, int height = 64,
-        bool shouldCloneModel = false, bool shouldIgnoreParticleSystems = true)
-    {
+        bool shouldCloneModel = false, bool shouldIgnoreParticleSystems = true){
         return GenerateModelPreviewInternal(model, null, null, width, height, shouldCloneModel,
             shouldIgnoreParticleSystems);
     }
 
     public static Texture2D GenerateModelPreviewWithShader(Transform model, Shader shader, string replacementTag,
-        int width = 64, int height = 64, bool shouldCloneModel = false, bool shouldIgnoreParticleSystems = true)
-    {
+        int width = 64, int height = 64, bool shouldCloneModel = false, bool shouldIgnoreParticleSystems = true){
         return GenerateModelPreviewInternal(model, shader, replacementTag, width, height, shouldCloneModel,
             shouldIgnoreParticleSystems);
     }
 
 #if UNITY_2018_2_OR_NEWER
     public static void GenerateModelPreviewAsync(Action<Texture2D> callback, Transform model, int width = 64,
-        int height = 64, bool shouldCloneModel = false, bool shouldIgnoreParticleSystems = true)
-    {
+        int height = 64, bool shouldCloneModel = false, bool shouldIgnoreParticleSystems = true){
         GenerateModelPreviewInternal(model, null, null, width, height, shouldCloneModel, shouldIgnoreParticleSystems,
             callback);
     }
 
     public static void GenerateModelPreviewWithShaderAsync(Action<Texture2D> callback, Transform model, Shader shader,
         string replacementTag, int width = 64, int height = 64, bool shouldCloneModel = false,
-        bool shouldIgnoreParticleSystems = true)
-    {
+        bool shouldIgnoreParticleSystems = true){
         GenerateModelPreviewInternal(model, shader, replacementTag, width, height, shouldCloneModel,
             shouldIgnoreParticleSystems, callback);
     }
@@ -367,8 +355,7 @@ public static class RuntimePreviewGenerator
 #if UNITY_2018_2_OR_NEWER
                 if (asyncCallback != null){
                     AsyncGPUReadback.Request(renderTexture, 0,
-                        m_backgroundColor.a < 1f ? TextureFormat.RGBA32 : TextureFormat.RGB24, asyncResult =>
-                        {
+                        m_backgroundColor.a < 1f ? TextureFormat.RGBA32 : TextureFormat.RGB24, asyncResult => {
                             try{
                                 result = new Texture2D(width, height,
                                     m_backgroundColor.a < 1f ? TextureFormat.RGBA32 : TextureFormat.RGB24, false);
@@ -465,8 +452,7 @@ public static class RuntimePreviewGenerator
 
     // Calculates AABB bounds of the target object (AABB will include its child objects)
     public static bool CalculateBounds(Transform target, bool shouldIgnoreParticleSystems, Quaternion cameraRotation,
-        out Bounds bounds)
-    {
+        out Bounds bounds){
         renderersList.Clear();
         target.GetComponentsInChildren(renderersList);
 
@@ -530,8 +516,7 @@ public static class RuntimePreviewGenerator
     }
 
     // Moves camera in a way such that it will encapsulate bounds perfectly
-    public static void CalculateCameraPosition(Camera camera, Bounds bounds, float padding = 0f)
-    {
+    public static void CalculateCameraPosition(Camera camera, Bounds bounds, float padding = 0f){
         var cameraTR = camera.transform;
 
         var cameraDirection = cameraTR.forward;
@@ -662,8 +647,7 @@ public static class RuntimePreviewGenerator
     }
 
     // Returns whether or not the given point is the outermost point in the given direction among all points of the bounds
-    static bool IsOutermostPointInDirection(int pointIndex, Vector3 direction)
-    {
+    static bool IsOutermostPointInDirection(int pointIndex, Vector3 direction){
         var point = boundingBoxPoints[pointIndex];
         for (var i = 0; i < boundingBoxPoints.Length; i++)
             if (i != pointIndex && Vector3.Dot(direction, boundingBoxPoints[i] - point) > 0){
@@ -675,8 +659,7 @@ public static class RuntimePreviewGenerator
 
     // Credit: https://stackoverflow.com/a/32410473/2373034
     // Returns the intersection line of the 2 planes
-    static Ray GetPlanesIntersection(Plane p1, Plane p2)
-    {
+    static Ray GetPlanesIntersection(Plane p1, Plane p2){
         var p3Normal = Vector3.Cross(p1.normal, p2.normal);
         var det = p3Normal.sqrMagnitude;
 
@@ -688,8 +671,7 @@ public static class RuntimePreviewGenerator
     // Credit: http://wiki.unity3d.com/index.php/3d_Math_functions
     // Returns the edge points of the closest line segment between 2 lines
     static void FindClosestPointsOnTwoLines(Ray line1, Ray line2, out Vector3 closestPointLine1,
-        out Vector3 closestPointLine2)
-    {
+        out Vector3 closestPointLine2){
         var line1Direction = line1.direction;
         var line2Direction = line2.direction;
 
@@ -710,8 +692,7 @@ public static class RuntimePreviewGenerator
         closestPointLine2 = line2.origin + line2Direction * t;
     }
 
-    static void SetupCamera()
-    {
+    static void SetupCamera(){
         if (PreviewRenderCamera){
             cameraSetup.GetSetup(PreviewRenderCamera);
 
@@ -728,8 +709,7 @@ public static class RuntimePreviewGenerator
         renderCamera.clearFlags = m_backgroundColor.a < 1f ? CameraClearFlags.Depth : CameraClearFlags.Color;
     }
 
-    static bool IsStatic(Transform obj)
-    {
+    static bool IsStatic(Transform obj){
         if (obj.gameObject.isStatic){
             return true;
         }
@@ -742,22 +722,19 @@ public static class RuntimePreviewGenerator
         return false;
     }
 
-    static void SetLayerRecursively(Transform obj)
-    {
+    static void SetLayerRecursively(Transform obj){
         obj.gameObject.layer = PREVIEW_LAYER;
         for (var i = 0; i < obj.childCount; i++)
             SetLayerRecursively(obj.GetChild(i));
     }
 
-    static void GetLayerRecursively(Transform obj)
-    {
+    static void GetLayerRecursively(Transform obj){
         layersList.Add(obj.gameObject.layer);
         for (var i = 0; i < obj.childCount; i++)
             GetLayerRecursively(obj.GetChild(i));
     }
 
-    static void SetLayerRecursively(Transform obj, ref int index)
-    {
+    static void SetLayerRecursively(Transform obj, ref int index){
         obj.gameObject.layer = layersList[index++];
         for (var i = 0; i < obj.childCount; i++)
             SetLayerRecursively(obj.GetChild(i), ref index);

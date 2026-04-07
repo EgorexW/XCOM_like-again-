@@ -3,30 +3,26 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public interface IValue
-{
+public interface IValue{
     UnityEvent<ValueChangeCallback> OnValueChanged{ get; }
     float GetValue();
     Vector2 GetMinMax();
     void SetValue(float newValue);
 }
 
-public struct ValueChangeCallback
-{
+public struct ValueChangeCallback{
     public float newValue;
     public float previousValue;
     public float diff => newValue - previousValue;
 
-    public ValueChangeCallback(float value, float previousValueTmp)
-    {
+    public ValueChangeCallback(float value, float previousValueTmp){
         newValue = value;
         previousValue = previousValueTmp;
     }
 }
 
 [Serializable]
-public class Value : IValue
-{
+public class Value : IValue{
     public bool log;
 
     public string name;
@@ -37,18 +33,15 @@ public class Value : IValue
 
     public UnityEvent<ValueChangeCallback> OnValueChanged => onValueChanged;
 
-    public float GetValue()
-    {
+    public float GetValue(){
         return value;
     }
 
-    public Vector2 GetMinMax()
-    {
+    public Vector2 GetMinMax(){
         return minMax;
     }
 
-    public void SetValue(float newValue)
-    {
+    public void SetValue(float newValue){
         if (log){
             Debug.Log($"Setting {name} value to {newValue}");
         }
@@ -60,33 +53,28 @@ public class Value : IValue
         onValueChanged.Invoke(new ValueChangeCallback(value, previousValue));
     }
 
-    public void SetMinMax(Vector2 minMax)
-    {
+    public void SetMinMax(Vector2 minMax){
         this.minMax = minMax;
         SetValue(value);
     }
 }
 
-public static class ValueExtentions
-{
-    public static void ModifyValue(this Value value, float mod)
-    {
+public static class ValueExtentions{
+    public static void ModifyValue(this Value value, float mod){
         if (value.log){
             Debug.Log($"Modifing {value.name} value by " + mod);
         }
         value.SetValue(value.GetValue() + mod);
     }
 
-    public static void MultiplyValue(this Value value, float mod)
-    {
+    public static void MultiplyValue(this Value value, float mod){
         if (value.log){
             Debug.Log($"Multipling {value.name} value by " + mod);
         }
         value.SetValue(value.GetValue() * mod);
     }
 
-    public static bool HasValue(this Value value, int requiredValue)
-    {
+    public static bool HasValue(this Value value, int requiredValue){
         return value.GetValue() >= requiredValue;
     }
 }

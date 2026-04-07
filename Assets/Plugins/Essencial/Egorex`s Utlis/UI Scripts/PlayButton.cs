@@ -7,15 +7,13 @@ using UnityEngine.UI;
 using UnityEditor.Events;
 #endif
 
-public class PlayButton : MonoBehaviour, ISceneGetter
-{
+public class PlayButton : MonoBehaviour, ISceneGetter{
     [SerializeField] [SceneObjectsOnly] protected string sceneName;
     [SerializeField] Optional<TextMeshProUGUI> levelName = new(null, false);
     [SerializeField] protected bool async;
 #if UNITY_EDITOR
 
-    protected void Reset()
-    {
+    protected void Reset(){
         levelName = new Optional<TextMeshProUGUI>(GetComponentInChildren<TextMeshProUGUI>());
         levelName.Enabled = levelName.Value != null;
         if (!TryGetComponent<Button>(out var button)){
@@ -28,8 +26,7 @@ public class PlayButton : MonoBehaviour, ISceneGetter
         UnityEventTools.AddPersistentListener(button.onClick, Play);
     }
 #endif
-    protected void OnValidate()
-    {
+    protected void OnValidate(){
         if (!levelName){
             return;
         }
@@ -42,14 +39,12 @@ public class PlayButton : MonoBehaviour, ISceneGetter
         levelName.Value.text = sceneName;
     }
 
-    public void GetScene(string scene)
-    {
+    public void GetScene(string scene){
         sceneName = scene;
         OnValidate();
     }
 
-    public void Play()
-    {
+    public void Play(){
         if (async){
             SceneManager.LoadSceneAsync(sceneName);
         }

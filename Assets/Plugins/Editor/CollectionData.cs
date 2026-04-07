@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitySweeper
-{
+namespace UnitySweeper{
     [Serializable]
-    public class CollectionData
-    {
+    public class CollectionData{
         public string fileGuid;
         public string fileName;
         public List<string> referenceGuids = new();
@@ -14,16 +12,14 @@ namespace UnitySweeper
     }
 
     [Serializable]
-    public class TypeDate
-    {
+    public class TypeDate{
         public string guid;
         public string fileName;
         public DateTime timeStamp;
         public List<string> typeFullName = new();
         public string assembly;
 
-        public void Add(Type addType)
-        {
+        public void Add(Type addType){
             assembly = addType.Assembly.FullName;
             var typeName = addType.FullName;
             if (!typeFullName.Contains(typeName)){
@@ -36,8 +32,7 @@ namespace UnitySweeper
         }
     }
 
-    public interface IReferenceCollection
-    {
+    public interface IReferenceCollection{
         void CollectionFiles();
         void Init(List<CollectionData> refs);
     }

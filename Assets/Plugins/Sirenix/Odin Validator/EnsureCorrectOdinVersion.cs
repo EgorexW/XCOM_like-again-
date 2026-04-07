@@ -16,18 +16,15 @@ using UnityEngine.Rendering;
 
 #if UNITY_EDITOR
 
-namespace Sirenix.OdinValidator.Editor
-{
-    static class EnsureCorrectOdinVersion
-    {
+namespace Sirenix.OdinValidator.Editor{
+    static class EnsureCorrectOdinVersion{
         const string validatorVersion = "3.3.1.14";
 
         static bool IsHeadlessOrBatchMode => SystemInfo.graphicsDeviceType == GraphicsDeviceType.Null ||
                                              InternalEditorUtility.inBatchMode;
 
         [InitializeOnLoadMethod]
-        static void Init()
-        {
+        static void Init(){
 #if SIRENIX_INTERNAL
             #pragma warning disable 0162 // Unreachable code detected
             return;
@@ -88,8 +85,7 @@ namespace Sirenix.OdinValidator.Editor
             }
         }
 
-        static void TryInstall()
-        {
+        static void TryInstall(){
             if (TryGetOdinInstallPath(out var path)){
                 var tmp_extension = "_tmp";
                 var assemblyFiles = new[]{
@@ -127,8 +123,7 @@ namespace Sirenix.OdinValidator.Editor
 #if ODIN_INSPECTOR
                 else if (EditorPrefs.GetBool("ODIN_VALIDATOR_SHOW_GETTING_STARTED", false)){
                     EditorPrefs.SetBool("ODIN_VALIDATOR_SHOW_GETTING_STARTED", false);
-                    EditorApplication.delayCall += () =>
-                    {
+                    EditorApplication.delayCall += () => {
                         var t = TwoWaySerializationBinder.Default.BindToType(
                             "Sirenix.OdinInspector.Editor.GettingStarted.GettingStartedWindow");
                         if (t != null){
@@ -146,8 +141,7 @@ namespace Sirenix.OdinValidator.Editor
             }
         }
 
-        static bool TryGetOdinInstallPath(out string path)
-        {
+        static bool TryGetOdinInstallPath(out string path){
             var t = Type.GetType("Sirenix.Utilities.SirenixAssetPaths, Sirenix.Utilities");
 
             if (t == null){
@@ -165,8 +159,7 @@ namespace Sirenix.OdinValidator.Editor
             return true;
         }
 
-        static bool TryGetOdinInspectorVersion(out string version)
-        {
+        static bool TryGetOdinInspectorVersion(out string version){
             var t = Type.GetType("Sirenix.OdinInspector.Editor.OdinInspectorVersion, Sirenix.OdinInspector.Editor");
 
             if (t == null){

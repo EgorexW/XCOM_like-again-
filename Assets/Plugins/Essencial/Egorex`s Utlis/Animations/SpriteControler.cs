@@ -1,25 +1,21 @@
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class SpriteControler : AnimationController
-{
+public class SpriteControler : AnimationController{
     bool facingRight = true;
 
-    public void Flip()
-    {
+    public void Flip(){
         facingRight = !facingRight;
         spriteRenderer.flipX = !spriteRenderer.flipX;
     }
 
-    public void FaceLeft()
-    {
+    public void FaceLeft(){
         if (facingRight){
             Flip();
         }
     }
 
-    public void FaceRight()
-    {
+    public void FaceRight(){
         if (!facingRight){
             Flip();
         }

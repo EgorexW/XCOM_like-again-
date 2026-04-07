@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class AnimationController : MonoBehaviour
-{
+public class AnimationController : MonoBehaviour{
     [HideIf("@image != null")] [BoxGroup("References")] [Required] [SerializeField]
     protected SpriteRenderer spriteRenderer;
 
@@ -18,8 +17,7 @@ public class AnimationController : MonoBehaviour
 
     [FoldoutGroup("Events")] public UnityEvent onNewFrame;
 
-    public Sprite GetSprite()
-    {
+    public Sprite GetSprite(){
         if (spriteRenderer != null){
             return spriteRenderer.sprite;
         }
@@ -29,8 +27,7 @@ public class AnimationController : MonoBehaviour
         throw new Exception("No SpriteRenderer or Image assigned");
     }
 
-    public void SetSprite(Sprite sprite)
-    {
+    public void SetSprite(Sprite sprite){
         if (spriteRenderer != null){
             spriteRenderer.sprite = sprite;
             return;
@@ -42,15 +39,13 @@ public class AnimationController : MonoBehaviour
         throw new Exception("No SpriteRenderer or Image assigned");
     }
 
-    protected void Awake()
-    {
+    protected void Awake(){
         if (animationOnAwake){
             SetAnimation(animationOnAwake);
         }
     }
 
-    protected void Update()
-    {
+    protected void Update(){
         if (activeAnimation == null){
             return;
         }
@@ -63,19 +58,16 @@ public class AnimationController : MonoBehaviour
         SetSprite(newSprite);
     }
 
-    public void SetAnimation(Animation animation)
-    {
+    public void SetAnimation(Animation animation){
         activeAnimation = animation;
         timePlaying = 0;
     }
 
-    public Animation GetAnimation()
-    {
+    public Animation GetAnimation(){
         return activeAnimation;
     }
 
-    public void StopAnimation()
-    {
+    public void StopAnimation(){
         activeAnimation = null;
     }
 }

@@ -7,17 +7,14 @@ using UnityEngine;
 // AI Generated Code
 // This script creates a Sound asset from selected AudioClip(s) in the Unity Editor.
 
-public class SoundCreator
-{
+public class SoundCreator{
     [MenuItem("Assets/Create/Egorex/Sound from AudioClip", true)]
-    static bool ValidateCreateSound()
-    {
+    static bool ValidateCreateSound(){
         return Selection.objects.All(obj => obj is AudioClip) && Selection.objects.Length > 0;
     }
 
     [MenuItem("Assets/Create/Egorex/Sound from AudioClip")]
-    static void CreateSound()
-    {
+    static void CreateSound(){
         var clips = Selection.objects.OfType<AudioClip>().ToArray();
         if (clips.Length == 0){
             Debug.LogError("Selected object(s) are not AudioClip(s).");

@@ -2,8 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Animation", menuName = "Egorex/Animation")]
-public class Animation : ScriptableObject
-{
+public class Animation : ScriptableObject{
     public AnimationCell[] animationCells;
 #if UNITY_EDITOR
     [OnValueChanged("SetCellsDuration")] [SerializeField] float defaultCellDuration;
@@ -15,15 +14,13 @@ public class Animation : ScriptableObject
     float cycleDuration = -10;
 
 #if UNITY_EDITOR
-    void SetCellsDuration()
-    {
+    void SetCellsDuration(){
         var cellDuration = defaultCellDuration;
         for (var i = 0; i < animationCells.Length; i++) animationCells[i].duration = cellDuration;
     }
 #endif
 
-    public Sprite GetSprite(float timePlaying)
-    {
+    public Sprite GetSprite(float timePlaying){
         if (timePlaying > GetCycleDuration() && !loop){
             return spriteOnEnd;
         }
@@ -36,8 +33,7 @@ public class Animation : ScriptableObject
         return animationCells[index].sprite;
     }
 
-    public float GetCycleDuration()
-    {
+    public float GetCycleDuration(){
         if (cycleDuration > 0){
             return cycleDuration;
         }

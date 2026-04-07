@@ -1,13 +1,11 @@
 using UnityEngine;
 
-public class TutorialScreen : MonoBehaviour
-{
+public class TutorialScreen : MonoBehaviour{
     [SerializeField] string prefabName = "Tutorial";
     [SerializeField] bool autoUpdatePrefabName = true;
     [SerializeField] bool activateOnAwake = true;
 
-    protected void Awake()
-    {
+    protected void Awake(){
         UpdatePrefabName();
         gameObject.SetActive(false);
         if (activateOnAwake){
@@ -15,21 +13,18 @@ public class TutorialScreen : MonoBehaviour
         }
     }
 
-    protected void OnValidate()
-    {
+    protected void OnValidate(){
         UpdatePrefabName();
     }
 
-    public void TryToActivate()
-    {
+    public void TryToActivate(){
         var activate = PlayerPrefs.GetInt(prefabName, 0) == 0;
         if (activate){
             Activate();
         }
     }
 
-    public void Complete()
-    {
+    public void Complete(){
         if (!gameObject.activeSelf){
             return;
         }
@@ -37,18 +32,15 @@ public class TutorialScreen : MonoBehaviour
         Deactivate();
     }
 
-    protected virtual void Activate()
-    {
+    protected virtual void Activate(){
         gameObject.SetActive(true);
     }
 
-    public void Deactivate()
-    {
+    public void Deactivate(){
         gameObject.SetActive(false);
     }
 
-    void UpdatePrefabName()
-    {
+    void UpdatePrefabName(){
         if (autoUpdatePrefabName){
             prefabName = gameObject.name;
         }

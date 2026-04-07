@@ -1,9 +1,7 @@
 using UnityEngine;
 
-public class OnKeyDownQuit : OnKeyDownTrigger
-{
-    protected override void Trigger()
-    {
+public class OnKeyDownQuit : OnKeyDownTrigger{
+    protected override void Trigger(){
 #if !UNITY_WEBGL && !UNITY_EDITOR
         Application.Quit();
 #else

@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class Grid<TGridObject>{
     public event EventHandler<OnGridObjectChangedEventArgs> OnGridObjectChanged;
@@ -75,12 +74,11 @@ public abstract class GridNode{
     public readonly int x;
     public readonly int y;
 
-    protected GridNode(int x, int y)
-    {
+    protected GridNode(int x, int y){
         this.x = x;
         this.y = y;
     }
-    
+
     public Vector2Int GetPos(){
         return new Vector2Int(x, y);
     }

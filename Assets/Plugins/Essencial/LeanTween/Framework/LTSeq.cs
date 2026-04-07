@@ -34,8 +34,7 @@ using UnityEngine;
  *                                                         @class LTSeq
  *                                                         @constructor
  */
-public class LTSeq
-{
+public class LTSeq{
     uint _id;
 
     public uint counter;
@@ -68,15 +67,13 @@ public class LTSeq
         }
     }
 
-    public void reset()
-    {
+    public void reset(){
         previous = null;
         tween = null;
         totalDelay = 0f;
     }
 
-    public void init(uint id, uint global_counter)
-    {
+    public void init(uint id, uint global_counter){
         reset();
         _id = id;
 
@@ -85,8 +82,7 @@ public class LTSeq
         current = this;
     }
 
-    LTSeq addOn()
-    {
+    LTSeq addOn(){
         current.toggle = true;
         var lastCurrent = current;
         current = LeanTween.sequence();
@@ -98,8 +94,7 @@ public class LTSeq
         return current;
     }
 
-    float addPreviousDelays()
-    {
+    float addPreviousDelays(){
 //		Debug.Log("delay:"+delay+" count:"+this.current.count+" this.current.totalDelay:"+this.current.totalDelay);
 
         var prev = current.previous;
@@ -121,8 +116,7 @@ public class LTSeq
      *     <br>
      *         seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a tween<br>
      */
-    public LTSeq append(float delay)
-    {
+    public LTSeq append(float delay){
         current.totalDelay += delay;
 
         return current;
@@ -150,8 +144,7 @@ public class LTSeq
      *                         <br>
      *                             });;<br>
      */
-    public LTSeq append(Action callback)
-    {
+    public LTSeq append(Action callback){
         var newTween = LeanTween.delayedCall(0f, callback);
 //		Debug.Log("newTween:" + newTween);
         return append(newTween);
@@ -180,22 +173,19 @@ public class LTSeq
      *                         &nbsp;Debug.Log("We are done now obj value:"+dict["hi"]);
      *                         &nbsp;}, new Dictionary<string, string>(){ {"hi","sup"} } );
      */
-    public LTSeq append(Action<object> callback, object obj)
-    {
+    public LTSeq append(Action<object> callback, object obj){
         append(LeanTween.delayedCall(0f, callback).setOnCompleteParam(obj));
 
         return addOn();
     }
 
-    public LTSeq append(GameObject gameObject, Action callback)
-    {
+    public LTSeq append(GameObject gameObject, Action callback){
         append(LeanTween.delayedCall(gameObject, 0f, callback));
 
         return addOn();
     }
 
-    public LTSeq append(GameObject gameObject, Action<object> callback, object obj)
-    {
+    public LTSeq append(GameObject gameObject, Action<object> callback, object obj){
         append(LeanTween.delayedCall(gameObject, 0f, callback).setOnCompleteParam(obj));
 
         return addOn();
@@ -213,8 +203,7 @@ public class LTSeq
      *     <br>
      *         seq.append( LeanTween.rotateAround( avatar1, Vector3.forward, 360f, 1f ) ); // then do a rotate tween<br>
      */
-    public LTSeq append(LTDescr tween)
-    {
+    public LTSeq append(LTDescr tween){
         current.tween = tween;
 
 //		Debug.Log("tween:" + tween + " delay:" + this.current.totalDelay);
@@ -226,8 +215,7 @@ public class LTSeq
         return addOn();
     }
 
-    public LTSeq insert(LTDescr tween)
-    {
+    public LTSeq insert(LTDescr tween){
         current.tween = tween;
 
         tween.setDelay(addPreviousDelays());
@@ -236,16 +224,14 @@ public class LTSeq
     }
 
 
-    public LTSeq setScale(float timeScale)
-    {
+    public LTSeq setScale(float timeScale){
 //		Debug.Log("this.current:" + this.current.previous.debugIter+" tween:"+this.current.previous.tween);
         setScaleRecursive(current, timeScale, 500);
 
         return addOn();
     }
 
-    void setScaleRecursive(LTSeq seq, float timeScale, int count)
-    {
+    void setScaleRecursive(LTSeq seq, float timeScale, int count){
         if (count > 0){
             this.timeScale = timeScale;
 
@@ -265,8 +251,7 @@ public class LTSeq
         }
     }
 
-    public LTSeq reverse()
-    {
+    public LTSeq reverse(){
         return addOn();
     }
 }

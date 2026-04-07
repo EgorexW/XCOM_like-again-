@@ -2,8 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CheckPlayerPref : MonoBehaviour
-{
+public class CheckPlayerPref : MonoBehaviour{
     [SerializeField] string prefName;
     [SerializeField] ObjectType prefType;
 
@@ -25,18 +24,15 @@ public class CheckPlayerPref : MonoBehaviour
     bool IsFloat => prefType == ObjectType.Float;
     bool IsString => prefType == ObjectType.String;
 
-    public void Check()
-    {
+    public void Check(){
         GetCheck();
     }
 
-    public void Check(UnityAction<bool> callback)
-    {
+    public void Check(UnityAction<bool> callback){
         GetCheck(callback);
     }
 
-    public bool GetCheck(UnityAction<bool> callback = null)
-    {
+    public bool GetCheck(UnityAction<bool> callback = null){
         var result = false;
         switch (prefType){
             case ObjectType.Int:
@@ -62,8 +58,7 @@ public class CheckPlayerPref : MonoBehaviour
         return result;
     }
 
-    public bool CheckInt()
-    {
+    public bool CheckInt(){
         var value = PlayerPrefs.GetInt(prefName, 0);
         switch (compareType){
             case CompareType.Bigger:
@@ -76,8 +71,7 @@ public class CheckPlayerPref : MonoBehaviour
         return false;
     }
 
-    public bool CheckFloat()
-    {
+    public bool CheckFloat(){
         var value = PlayerPrefs.GetFloat(prefName, 0f);
         switch (compareType){
             case CompareType.Bigger:
@@ -90,8 +84,7 @@ public class CheckPlayerPref : MonoBehaviour
         return false;
     }
 
-    public bool CheckString()
-    {
+    public bool CheckString(){
         var value = PlayerPrefs.GetString(prefName, "");
         return value == text;
     }

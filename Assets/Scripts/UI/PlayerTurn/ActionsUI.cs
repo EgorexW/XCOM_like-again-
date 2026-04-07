@@ -1,29 +1,27 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 class ActionsUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool actionsPool;
 
-    [FoldoutGroup("Events")]
-    public UnityEvent<UnitAction> onActionSelected;
+    [FoldoutGroup("Events")] public UnityEvent<UnitAction> onActionSelected;
 
     CombatUnit unit;
-    
+
     public void Show(CombatUnit newUnit){
         base.Show();
         unit = newUnit;
         var actions = unit.UnitActions;
         actionsPool.SetCount(actions.Count);
-        for (int i = 0; i < actions.Count; i++){
+        for (var i = 0; i < actions.Count; i++){
             var actionUI = actionsPool.GetActiveObject(i).GetComponent<ActionTileUI>();
             actionUI.SetAction(actions[i], OnActionSelected);
         }
     }
 
     void OnActionSelected(UnitAction action){
-        Debug.Log("Selected action: " + action.Name, action);
+        Debug.Log("Selected action: " + action.name, action);
         onActionSelected.Invoke(action);
     }
 

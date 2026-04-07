@@ -2,10 +2,8 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(Optional<>))]
-public class OptionalPropertyDrawer : PropertyDrawer
-{
-    public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-    {
+public class OptionalPropertyDrawer : PropertyDrawer{
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label){
         var valueProperty = property.FindPropertyRelative("value");
         return EditorGUI.GetPropertyHeight(valueProperty);
     }
@@ -14,8 +12,7 @@ public class OptionalPropertyDrawer : PropertyDrawer
         Rect position,
         SerializedProperty property,
         GUIContent label
-    )
-    {
+    ){
         var valueProperty = property.FindPropertyRelative("value");
         var enabledProperty = property.FindPropertyRelative("enabled");
 

@@ -3,8 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public sealed class PlayAudio : MonoBehaviour
-{
+public sealed class PlayAudio : MonoBehaviour{
     [GetComponent] [SerializeField] AudioSource audioSource;
 
     [Required] [SerializeField] [InlineEditor] public Sound sound;
@@ -16,22 +15,19 @@ public sealed class PlayAudio : MonoBehaviour
 
     public bool IsPlaying => audioSource.isPlaying;
 
-    void Reset()
-    {
+    void Reset(){
         audioSource = GetComponent<AudioSource>();
         audioSource.playOnAwake = false;
     }
 
-    void Start()
-    {
+    void Start(){
         if (playOnStart){
             Play();
         }
     }
 
     [Button]
-    public void Play()
-    {
+    public void Play(){
         if (Time.time - lastPlayTime < delayBetweenPlays){
             return;
         }
@@ -47,8 +43,7 @@ public sealed class PlayAudio : MonoBehaviour
         audioSource.Play();
     }
 
-    public void Stop()
-    {
+    public void Stop(){
         audioSource.Stop();
     }
 }

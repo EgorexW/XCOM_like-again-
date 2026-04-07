@@ -3,15 +3,13 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class TurnSystem : MonoBehaviour, ITurnSystem{
-    List<ITurnTaker> turnTakers = new();
+    readonly List<ITurnTaker> turnTakers = new();
 
     int index = -1;
-        
+
     public int TurnTakersCount => turnTakers.Count;
-    public ITurnTaker CurrentTurnTaker
-    {
-        get
-        {
+    public ITurnTaker CurrentTurnTaker{
+        get{
             if (index >= 0 && index < turnTakers.Count){
                 return turnTakers[index];
             }
@@ -46,13 +44,13 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
         }
         CurrentTurnTaker?.StartTurn();
     }
-
 }
 
 public interface ITurnTaker{
-    public int Priority { get; }
-    public UnityAction<ITurnTaker> OnTurnCompleted { get; set; }
+    public int Priority{ get; }
+    public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
     void EndTurn();
+
     void StartTurn();
     // void CompleteTurn();
     public UnityEvent<ITurnTaker> onStartTurn{ get; }

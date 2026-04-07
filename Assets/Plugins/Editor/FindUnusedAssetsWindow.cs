@@ -8,10 +8,8 @@ using UnityEngine;
 using Debug = UnityEngine.Debug;
 using Object = UnityEngine.Object;
 
-namespace UnitySweeper
-{
-    public class FindUnusedAssetsWindow : EditorWindow
-    {
+namespace UnitySweeper{
+    public class FindUnusedAssetsWindow : EditorWindow{
         readonly AssetCollector collection = new();
         readonly List<DeleteAsset> deleteAssets = new();
         Vector2 scroll;
@@ -19,8 +17,7 @@ namespace UnitySweeper
         string searchTerm;
 
         [MenuItem("Window/Delete Unused Assets/Only Resource", false, 50)]
-        static void InitWithoutCode()
-        {
+        static void InitWithoutCode(){
             var window = CreateInstance<FindUnusedAssetsWindow>();
             window.collection.useCodeStrip = false;
             window.collection.Collection(new[]{ "Assets" });
@@ -30,8 +27,7 @@ namespace UnitySweeper
         }
 
         [MenuItem("Window/Delete Unused Assets/Unused by Editor", false, 51)]
-        static void InitWithout()
-        {
+        static void InitWithout(){
             var window = CreateInstance<FindUnusedAssetsWindow>();
             window.collection.Collection(new[]{ "Assets" });
             window.CopyDeleteFileList(window.collection.deleteFileList);
@@ -40,8 +36,7 @@ namespace UnitySweeper
         }
 
         [MenuItem("Window/Delete Unused Assets/Unused by Game", false, 52)]
-        static void Init()
-        {
+        static void Init(){
             var window = CreateInstance<FindUnusedAssetsWindow>();
             window.collection.saveEditorExtensions = false;
             window.collection.Collection(new[]{ "Assets" });
@@ -51,16 +46,14 @@ namespace UnitySweeper
         }
 
         [MenuItem("Window/Delete Unused Assets/Clear cache")]
-        static void ClearCache()
-        {
+        static void ClearCache(){
             File.Delete(AssetCollector.EXPORT_XMP_PATH);
             File.Delete(ClassReferenceCollection.XMP_PATH);
 
             EditorUtility.DisplayDialog("Clear cache", "Clear cache", "OK");
         }
 
-        protected void OnGUI()
-        {
+        protected void OnGUI(){
             using (new EditorGUILayout.HorizontalScope("box")){
                 EditorGUILayout.LabelField("delete unreference assets from buildsettings and resources");
             }
@@ -157,8 +150,7 @@ namespace UnitySweeper
         /// <param name="path"></param>
         /// <param name="keyword"></param>
         /// <returns></returns>
-        bool CheckSearch(string path, string searchTerm)
-        {
+        bool CheckSearch(string path, string searchTerm){
             if (string.IsNullOrEmpty(searchTerm)){
                 return true;
             }
@@ -185,20 +177,17 @@ namespace UnitySweeper
             return true;
         }
 
-        void Exclude()
-        {
+        void Exclude(){
             RemoveFiles();
             Close();
         }
 
-        static void CleanDir()
-        {
+        static void CleanDir(){
             RemoveEmptyDirectory("Assets");
             AssetDatabase.Refresh();
         }
 
-        void CopyDeleteFileList(IEnumerable<string> deleteFileList)
-        {
+        void CopyDeleteFileList(IEnumerable<string> deleteFileList){
             foreach (var asset in deleteFileList){
                 var filePath = AssetDatabase.GUIDToAssetPath(asset);
                 if (!string.IsNullOrEmpty(filePath)){
@@ -207,8 +196,7 @@ namespace UnitySweeper
             }
         }
 
-        void RemoveFiles()
-        {
+        void RemoveFiles(){
             try{
                 var exportDirectory = "BackupUnusedAssets";
                 Directory.CreateDirectory(exportDirectory);
@@ -246,8 +234,7 @@ namespace UnitySweeper
             }
         }
 
-        static void RemoveEmptyDirectory(string path)
-        {
+        static void RemoveEmptyDirectory(string path){
             var dirs = Directory.GetDirectories(path);
             foreach (var dir in dirs) RemoveEmptyDirectory(dir);
 
@@ -261,8 +248,7 @@ namespace UnitySweeper
             }
         }
 
-        class DeleteAsset
-        {
+        class DeleteAsset{
             public bool isDelete = true;
             public string path;
         }

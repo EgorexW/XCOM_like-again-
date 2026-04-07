@@ -6,10 +6,8 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Nrjwolf.Tools.Editor.AttachAttributes
-{
-    public static class AttachAttributesUtils
-    {
+namespace Nrjwolf.Tools.Editor.AttachAttributes{
+    public static class AttachAttributesUtils{
         const string k_ContextMenuItemLabel = "CONTEXT/Component/AttachAttributes";
         const string k_ToolsMenuItemLabel = "Tools/Nrjwolf/AttachAttributes";
 
@@ -30,22 +28,19 @@ namespace Nrjwolf.Tools.Editor.AttachAttributes
 
         [MenuItem(k_ContextMenuItemLabel)]
         [MenuItem(k_ToolsMenuItemLabel)]
-        static void ToggleAction()
-        {
+        static void ToggleAction(){
             IsEnabled = !IsEnabled;
         }
 
         [MenuItem(k_ContextMenuItemLabel, true)]
         [MenuItem(k_ToolsMenuItemLabel, true)]
-        static bool ToggleActionValidate()
-        {
+        static bool ToggleActionValidate(){
             Menu.SetChecked(k_ContextMenuItemLabel, IsEnabled);
             Menu.SetChecked(k_ToolsMenuItemLabel, IsEnabled);
             return true;
         }
 
-        public static string GetPropertyType(this SerializedProperty property)
-        {
+        public static string GetPropertyType(this SerializedProperty property){
             var type = property.type;
             var match = Regex.Match(type, @"PPtr<\$(.*?)>");
             if (match.Success){
@@ -54,21 +49,18 @@ namespace Nrjwolf.Tools.Editor.AttachAttributes
             return type;
         }
 
-        public static Type StringToType(this string aClassName)
-        {
+        public static Type StringToType(this string aClassName){
             return AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
                 .First(x => x.IsSubclassOf(typeof(Component)) && x.Name == aClassName);
         }
     }
 
     /// Base class for Attach Attribute
-    public class AttachAttributePropertyDrawer : PropertyDrawer
-    {
+    public class AttachAttributePropertyDrawer : PropertyDrawer{
         readonly Color m_GUIColorDefault = new(.6f, .6f, .6f, 1);
         readonly Color m_GUIColorNull = new(1f, .5f, .5f, 1);
 
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label){
             // turn off attribute if not active or in Play Mode (imitate as build will works)
             if (!AttachAttributesUtils.IsEnabled || Application.isPlaying){
                 property.serializedObject.Update();
@@ -99,8 +91,7 @@ namespace Nrjwolf.Tools.Editor.AttachAttributes
         }
 
         /// Customize it for each attribute
-        public virtual void UpdateProperty(SerializedProperty property, GameObject go, Type type)
-        {
+        public virtual void UpdateProperty(SerializedProperty property, GameObject go, Type type){
             // Do whatever
             // For example to get component 
             // property.objectReferenceValue = go.GetComponent(type);
@@ -111,20 +102,16 @@ namespace Nrjwolf.Tools.Editor.AttachAttributes
 
     /// GetComponent
     [CustomPropertyDrawer(typeof(GetComponentAttribute))]
-    public class GetComponentAttributeEditor : AttachAttributePropertyDrawer
-    {
-        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type)
-        {
+    public class GetComponentAttributeEditor : AttachAttributePropertyDrawer{
+        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type){
             property.objectReferenceValue = go.GetComponent(type);
         }
     }
 
     /// GetComponentInChildren
     [CustomPropertyDrawer(typeof(GetComponentInChildrenAttribute))]
-    public class GetComponentInChildrenAttributeEditor : AttachAttributePropertyDrawer
-    {
-        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type)
-        {
+    public class GetComponentInChildrenAttributeEditor : AttachAttributePropertyDrawer{
+        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type){
             var labelAttribute = (GetComponentInChildrenAttribute)attribute;
             if (labelAttribute.ChildName == null){
                 property.objectReferenceValue = go.GetComponentInChildren(type, labelAttribute.IncludeInactive);
@@ -140,25 +127,20 @@ namespace Nrjwolf.Tools.Editor.AttachAttributes
 
     /// AddComponent
     [CustomPropertyDrawer(typeof(AddComponentAttribute))]
-    public class AddComponentAttributeEditor : AttachAttributePropertyDrawer
-    {
-        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type)
-        {
+    public class AddComponentAttributeEditor : AttachAttributePropertyDrawer{
+        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type){
             property.objectReferenceValue = go.AddComponent(type);
         }
     }
 
     /// FindObjectOfType
     [CustomPropertyDrawer(typeof(FindObjectOfTypeAttribute))]
-    public class FindObjectOfTypeAttributeEditor : AttachAttributePropertyDrawer
-    {
-        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type)
-        {
+    public class FindObjectOfTypeAttributeEditor : AttachAttributePropertyDrawer{
+        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type){
             property.objectReferenceValue = FindObjectsOfTypeByName(property.GetPropertyType());
         }
 
-        public Object FindObjectsOfTypeByName(string aClassName)
-        {
+        public Object FindObjectsOfTypeByName(string aClassName){
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             for (var i = 0; i < assemblies.Length; i++){
                 var types = assemblies[i].GetTypes();
@@ -173,10 +155,8 @@ namespace Nrjwolf.Tools.Editor.AttachAttributes
 
     /// GetComponentInParent
     [CustomPropertyDrawer(typeof(GetComponentInParent))]
-    public class GetComponentInParentAttributeEditor : AttachAttributePropertyDrawer
-    {
-        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type)
-        {
+    public class GetComponentInParentAttributeEditor : AttachAttributePropertyDrawer{
+        public override void UpdateProperty(SerializedProperty property, GameObject go, Type type){
             if (go.transform.parent != null){
                 property.objectReferenceValue = go.transform.parent.gameObject.GetComponent(type);
             }

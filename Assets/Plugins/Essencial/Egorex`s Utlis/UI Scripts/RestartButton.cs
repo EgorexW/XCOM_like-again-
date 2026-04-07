@@ -5,12 +5,10 @@ using UnityEngine.UI;
 using UnityEditor.Events;
 #endif
 
-public class RestartButton : MonoBehaviour
-{
+public class RestartButton : MonoBehaviour{
     [SerializeField] protected bool async;
 #if UNITY_EDITOR
-    protected void Reset()
-    {
+    protected void Reset(){
         if (!TryGetComponent<Button>(out var button)){
             return;
         }
@@ -21,8 +19,7 @@ public class RestartButton : MonoBehaviour
         UnityEventTools.AddPersistentListener(button.onClick, Restart);
     }
 #endif
-    public void Restart()
-    {
+    public void Restart(){
         var sceneBuildIndex = SceneManager.GetActiveScene().buildIndex;
         if (async){
             SceneManager.LoadSceneAsync(sceneBuildIndex);

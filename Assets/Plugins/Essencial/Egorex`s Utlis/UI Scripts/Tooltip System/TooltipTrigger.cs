@@ -1,73 +1,61 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
-{
+public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
     [SerializeField] Message message;
 
     [SerializeField] float delay = 0.5f;
 
     LTDescr delayCall = new();
 
-    protected void Reset()
-    {
+    protected void Reset(){
         message.header = gameObject.name;
     }
 
-    protected void OnDisable()
-    {
+    protected void OnDisable(){
         Deactivate();
     }
 
-    protected void OnMouseEnter()
-    {
+    protected void OnMouseEnter(){
         Activate();
     }
 
-    protected void OnMouseExit()
-    {
+    protected void OnMouseExit(){
         Deactivate();
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
+    public void OnPointerEnter(PointerEventData eventData){
         Activate();
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
+    public void OnPointerExit(PointerEventData eventData){
         Deactivate();
     }
 
-    void Activate()
-    {
+    void Activate(){
         if (!enabled){
             return;
         }
         delayCall = LeanTween.delayedCall(delay, () => { TooltipSystem.Show(message); });
     }
 
-    void Deactivate()
-    {
+    void Deactivate(){
         LeanTween.cancel(delayCall.uniqueId);
         TooltipSystem.Hide();
     }
 
-    public void SetMessage(Message message, bool enable = true)
-    {
+    public void SetMessage(Message message, bool enable = true){
         this.message = message;
         if (enable){
             Enable();
         }
     }
 
-    public void Disable()
-    {
+    public void Disable(){
         enabled = false;
     }
 
-    public void Enable()
-    {
+    public void Enable(){
         enabled = true;
     }
 }

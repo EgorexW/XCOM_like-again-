@@ -5,10 +5,8 @@ using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using UnityEditor;
 
-namespace UnitySweeper
-{
-    public class AssetCollector
-    {
+namespace UnitySweeper{
+    public class AssetCollector{
         public const string EXPORT_XMP_PATH = "referencemap.xml";
 
         public readonly List<string> deleteFileList = new();
@@ -17,8 +15,7 @@ namespace UnitySweeper
         public bool useCodeStrip = true;
         public bool saveEditorExtensions = true;
 
-        public void Collection(string[] collectionFolders)
-        {
+        public void Collection(string[] collectionFolders){
             try{
                 var serialize = new XmlSerializer(typeof(List<CollectionData>));
                 deleteFileList.Clear();
@@ -79,8 +76,7 @@ namespace UnitySweeper
             }
         }
 
-        List<string> StripTargetPathsAll(bool isUseCodeStrip, string[] paths)
-        {
+        List<string> StripTargetPathsAll(bool isUseCodeStrip, string[] paths){
             var files = paths.SelectMany(c => Directory.GetFiles(c, "*.*", SearchOption.AllDirectories))
                 .Distinct()
                 .Where(item => Path.GetExtension(item) != ".meta")
@@ -98,8 +94,7 @@ namespace UnitySweeper
             return files.ToList();
         }
 
-        void UnregisterReferenceFromIgnoreList()
-        {
+        void UnregisterReferenceFromIgnoreList(){
             var codePaths = deleteFileList.Where(fileName => Path.GetExtension(fileName) == ".cs");
 
             foreach (var path in codePaths){
@@ -110,8 +105,7 @@ namespace UnitySweeper
             }
         }
 
-        void UnregisterReferenceFromExtensionMethod()
-        {
+        void UnregisterReferenceFromExtensionMethod(){
             var resourcesFiles = deleteFileList
                 .Where(item => Path.GetExtension(item) != ".meta")
                 .ToArray();
@@ -119,8 +113,7 @@ namespace UnitySweeper
                 UnregisterFromDeleteList(AssetDatabase.AssetPathToGUID(path));
         }
 
-        void UnregisterReferenceFromResources()
-        {
+        void UnregisterReferenceFromResources(){
             var resourcesFiles = deleteFileList
                 .Where(item => Regex.IsMatch(item, "[\\/\\\\]Resources[\\/\\\\]"))
                 .Where(item => Path.GetExtension(item) != ".meta")
@@ -129,8 +122,7 @@ namespace UnitySweeper
                 UnregisterFromDeleteList(AssetDatabase.AssetPathToGUID(path));
         }
 
-        void UnregisterReferenceFromScenes()
-        {
+        void UnregisterReferenceFromScenes(){
             // Exclude objects that reference from scenes.
             var scenes = EditorBuildSettings.scenes
                 .Where(item => item.enabled)
@@ -140,8 +132,7 @@ namespace UnitySweeper
                 UnregisterFromDeleteList(AssetDatabase.AssetPathToGUID(path));
         }
 
-        void UnregisterEditorCodes()
-        {
+        void UnregisterEditorCodes(){
             // Exclude objects that reference from Editor API
             var editorCodes = Directory.GetFiles("Assets", "*.*", SearchOption.AllDirectories)
                 .Where(fileName => Path.GetExtension(fileName) == ".cs")
@@ -173,8 +164,7 @@ namespace UnitySweeper
             }
         }
 
-        void UnregisterFromDeleteList(string guid)
-        {
+        void UnregisterFromDeleteList(string guid){
             if (!deleteFileList.Contains(guid)){
                 return;
             }

@@ -6,14 +6,12 @@ using UnityEngine.UI;
 using UnityEditor.Events;
 #endif
 
-public class ObjectButton<T> : MonoBehaviour
-{
+public class ObjectButton<T> : MonoBehaviour{
     [FoldoutGroup("Events")] public UnityEvent<T> onClick;
     UnityAction<T> callback;
     T obj;
 #if UNITY_EDITOR
-    protected void Reset()
-    {
+    protected void Reset(){
         if (!TryGetComponent<Button>(out var button)){
             return;
         }
@@ -25,18 +23,15 @@ public class ObjectButton<T> : MonoBehaviour
     }
 #endif
 
-    public virtual void SetObject(T obj)
-    {
+    public virtual void SetObject(T obj){
         this.obj = obj;
     }
 
-    public virtual void SetCallback(UnityAction<T> callback)
-    {
+    public virtual void SetCallback(UnityAction<T> callback){
         this.callback = callback;
     }
 
-    public void OnClick()
-    {
+    public void OnClick(){
         callback?.Invoke(obj);
         onClick.Invoke(obj);
     }

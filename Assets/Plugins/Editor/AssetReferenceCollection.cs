@@ -3,19 +3,15 @@ using System.IO;
 using System.Linq;
 using UnityEditor;
 
-namespace UnitySweeper
-{
-    public class AssetReferenceCollection : IReferenceCollection
-    {
-        public void Init(List<CollectionData> refs)
-        {
+namespace UnitySweeper{
+    public class AssetReferenceCollection : IReferenceCollection{
+        public void Init(List<CollectionData> refs){
             references = refs;
         }
 
         List<CollectionData> references;
 
-        public void CollectionFiles()
-        {
+        public void CollectionFiles(){
             var allFiles = Directory.GetFiles("Assets", "*.*", SearchOption.AllDirectories)
                 .Where(c => Path.GetExtension(c) != ".meta")
                 .Where(c => Path.GetExtension(c) != ".shader")
@@ -26,8 +22,7 @@ namespace UnitySweeper
             foreach (var file in allFiles) CollectionReferenceAssets(file);
         }
 
-        void CollectionReferenceAssets(string path)
-        {
+        void CollectionReferenceAssets(string path){
             var guid = AssetDatabase.AssetPathToGUID(path);
             if (!File.Exists(path)){
                 return;

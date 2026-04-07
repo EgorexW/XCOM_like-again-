@@ -20,6 +20,7 @@ public abstract class TurnTaker : MonoBehaviour, ITurnTaker{
         Debug.Log($"{this} started turn.");
         onStartTurn.Invoke(this);
     }
+
     public void CompleteTurn(){
         OnTurnCompleted?.Invoke(this);
     }

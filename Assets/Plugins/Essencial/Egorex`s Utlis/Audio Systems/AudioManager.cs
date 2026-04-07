@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
-public class AudioManager : MonoBehaviour
-{
+public class AudioManager : MonoBehaviour{
     public static AudioManager i;
 
     public AudioMixerGroup mixerGroup;
@@ -15,8 +14,7 @@ public class AudioManager : MonoBehaviour
 
     readonly List<AudioSource> audioSources = new();
 
-    protected void Awake()
-    {
+    protected void Awake(){
         if (i != null){
             Destroy(gameObject);
         }
@@ -34,8 +32,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void Play(string sound)
-    {
+    public void Play(string sound){
         var nr = Array.FindIndex(sounds, item => item.name == sound);
         if (nr == -1){
             Debug.LogWarning("Sound: " + name + " not found!");
@@ -53,8 +50,7 @@ public class AudioManager : MonoBehaviour
         source.Play();
     }
 
-    public void Stop(string sound)
-    {
+    public void Stop(string sound){
         var nr = Array.FindIndex(sounds, item => item.name == sound);
         if (nr == -1){
             Debug.LogWarning("Sound: " + name + " not found!");

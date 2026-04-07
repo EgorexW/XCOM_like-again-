@@ -3,8 +3,7 @@
 using System;
 using UnityEngine;
 
-public class LTDescrOptional
-{
+public class LTDescrOptional{
     public AnimationCurve animationCurve;
     public Color color;
     public int initFrameCount;
@@ -49,8 +48,7 @@ public class LTDescrOptional
 //	#endif
 
 
-    public void reset()
-    {
+    public void reset(){
         animationCurve = null;
 
         onUpdateFloat = null;
@@ -69,8 +67,7 @@ public class LTDescrOptional
         initFrameCount = 0;
     }
 
-    public void callOnUpdate(float val, float ratioPassed)
-    {
+    public void callOnUpdate(float val, float ratioPassed){
         if (onUpdateFloat != null){
             onUpdateFloat(val);
         }

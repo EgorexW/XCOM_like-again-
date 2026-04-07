@@ -3,8 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ObjectsPool : CountUI
-{
+public class ObjectsPool : CountUI{
     [SerializeField] protected GameObject prefab;
 
     [FoldoutGroup("Events")] public UnityEvent<GameObject> onCreateObject = new();
@@ -12,21 +11,18 @@ public class ObjectsPool : CountUI
     readonly List<GameObject> activeObjs = new();
     readonly Queue<GameObject> inactiveObjs = new();
 
-    protected virtual void Awake()
-    {
+    protected virtual void Awake(){
         SetPrefab();
         if (prefab.transform.parent == transform){
             prefab.SetActive(false);
         }
     }
 
-    protected void OnValidate()
-    {
+    protected void OnValidate(){
         SetPrefab();
     }
 
-    void SetPrefab()
-    {
+    void SetPrefab(){
         if (prefab != null){
             return;
         }
@@ -36,30 +32,26 @@ public class ObjectsPool : CountUI
         prefab = transform.GetChild(0).gameObject;
     }
 
-    public override void SetCount(int count)
-    {
+    public override void SetCount(int count){
         base.SetCount(count);
         while (activeObjs.Count > count) RemoveObject();
         while (activeObjs.Count < count) AddObject();
     }
 
-    public GameObject AddObject()
-    {
+    public GameObject AddObject(){
         if (inactiveObjs.Count < 1){
             CreateObjectUI();
         }
         var obj = inactiveObjs.Dequeue();
         obj.SetActive(true);
         activeObjs.Add(obj);
-        if (obj.TryGetComponent(out IPoolable poolable)) 
-        {
+        if (obj.TryGetComponent(out IPoolable poolable)){
             poolable.OnPoolActivate();
         }
         return obj;
     }
 
-    public void RemoveObject(GameObject obj = null)
-    {
+    public void RemoveObject(GameObject obj = null){
         var iconUI = activeObjs[^1];
         if (obj == null){
             obj = activeObjs[^1];
@@ -67,8 +59,7 @@ public class ObjectsPool : CountUI
         if (obj == null || !activeObjs.Contains(obj)){
             return;
         }
-        if (obj.TryGetComponent(out IPoolable poolable)) 
-        {
+        if (obj.TryGetComponent(out IPoolable poolable)){
             poolable.OnPoolDeactivate();
         }
         obj.SetActive(false);
@@ -76,19 +67,16 @@ public class ObjectsPool : CountUI
         inactiveObjs.Enqueue(obj);
     }
 
-    public override void Hide()
-    {
+    public override void Hide(){
         base.Hide();
         SetCount(0);
     }
 
-    public List<GameObject> GetActiveObjs()
-    {
+    public List<GameObject> GetActiveObjs(){
         return new List<GameObject>(activeObjs);
     }
 
-    public GameObject GetActiveObject(int index)
-    {
+    public GameObject GetActiveObject(int index){
         if (index < 0 || index >= activeObjs.Count){
             Debug.LogWarning("Index out of range: " + index);
             return null;
@@ -96,8 +84,7 @@ public class ObjectsPool : CountUI
         return activeObjs[index];
     }
 
-    protected virtual GameObject CreateObjectUI()
-    {
+    protected virtual GameObject CreateObjectUI(){
         var newObj = Instantiate(prefab, transform);
         inactiveObjs.Enqueue(newObj);
         onCreateObject.Invoke(newObj);

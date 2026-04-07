@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class SendTriggersUpwards : MonoBehaviour
-{
+public class SendTriggersUpwards : MonoBehaviour{
     float timeSendMessage;
 
-    protected void OnTriggerEnter(Collider other)
-    {
+    protected void OnTriggerEnter(Collider other){
         if (Mathf.Approximately(Time.time, timeSendMessage)){
             return;
         }

@@ -1,20 +1,17 @@
 using UnityEngine;
 
-public class LeanAudioStream
-{
+public class LeanAudioStream{
     public float[] audioArr;
 
     public AudioClip audioClip;
 
     public int position;
 
-    public LeanAudioStream(float[] audioArr)
-    {
+    public LeanAudioStream(float[] audioArr){
         this.audioArr = audioArr;
     }
 
-    public void OnAudioRead(float[] data)
-    {
+    public void OnAudioRead(float[] data){
         var count = 0;
         while (count < data.Length){
             data[count] = audioArr[position];
@@ -23,8 +20,7 @@ public class LeanAudioStream
         }
     }
 
-    public void OnAudioSetPosition(int newPosition)
-    {
+    public void OnAudioSetPosition(int newPosition){
         position = newPosition;
     }
 }
@@ -35,8 +31,7 @@ public class LeanAudioStream
 * @class LeanAudio
 * @constructor
 */
-public class LeanAudio : object
-{
+public class LeanAudio : object{
     public static float MIN_FREQEUNCY_PERIOD = 0.000115f;
     public static int PROCESSING_ITERATIONS_MAX = 50000;
     public static float[] generatedWaveDistances;
@@ -44,8 +39,7 @@ public class LeanAudio : object
 
     static float[] longList;
 
-    public static LeanAudioOptions options()
-    {
+    public static LeanAudioOptions options(){
         if (generatedWaveDistances == null){
             generatedWaveDistances = new float[PROCESSING_ITERATIONS_MAX];
             longList = new float[PROCESSING_ITERATIONS_MAX];
@@ -54,8 +48,7 @@ public class LeanAudio : object
     }
 
     public static LeanAudioStream createAudioStream(AnimationCurve volume, AnimationCurve frequency,
-        LeanAudioOptions options = null)
-    {
+        LeanAudioOptions options = null){
         if (options == null){
             options = new LeanAudioOptions();
         }
@@ -88,8 +81,7 @@ public class LeanAudio : object
      *         Vector3[]{ new Vector3(0.32f,0f,0f)} ));<br>
      */
     public static AudioClip createAudio(AnimationCurve volume, AnimationCurve frequency,
-        LeanAudioOptions options = null)
-    {
+        LeanAudioOptions options = null){
         if (options == null){
             options = new LeanAudioOptions();
         }
@@ -99,8 +91,7 @@ public class LeanAudio : object
         return createAudioFromWave(generatedWavePtsLength, options);
     }
 
-    static int createAudioWave(AnimationCurve volume, AnimationCurve frequency, LeanAudioOptions options)
-    {
+    static int createAudioWave(AnimationCurve volume, AnimationCurve frequency, LeanAudioOptions options){
         var time = volume[volume.length - 1].time;
         var listLength = 0;
         // List<float> list = new List<float>();
@@ -162,8 +153,7 @@ public class LeanAudio : object
         return listLength;
     }
 
-    static AudioClip createAudioFromWave(int waveLength, LeanAudioOptions options)
-    {
+    static AudioClip createAudioFromWave(int waveLength, LeanAudioOptions options){
         var time = longList[waveLength - 2];
         var audioArr = new float[(int)(options.frequencyRate * time)];
 
@@ -265,10 +255,9 @@ public class LeanAudio : object
         return audioClip;
     }
 
-    static void OnAudioSetPosition(int newPosition) { }
+    static void OnAudioSetPosition(int newPosition){ }
 
-    public static AudioClip generateAudioFromCurve(AnimationCurve curve, int frequencyRate = 44100)
-    {
+    public static AudioClip generateAudioFromCurve(AnimationCurve curve, int frequencyRate = 44100){
         var curveTime = curve[curve.length - 1].time;
         var time = curveTime;
         var audioArr = new float[(int)(frequencyRate * time)];
@@ -292,25 +281,21 @@ public class LeanAudio : object
         return audioClip;
     }
 
-    public static AudioSource play(AudioClip audio, float volume)
-    {
+    public static AudioSource play(AudioClip audio, float volume){
         var audioSource = playClipAt(audio, Vector3.zero);
         audioSource.volume = volume;
         return audioSource;
     }
 
-    public static AudioSource play(AudioClip audio)
-    {
+    public static AudioSource play(AudioClip audio){
         return playClipAt(audio, Vector3.zero);
     }
 
-    public static AudioSource play(AudioClip audio, Vector3 pos)
-    {
+    public static AudioSource play(AudioClip audio, Vector3 pos){
         return playClipAt(audio, pos);
     }
 
-    public static AudioSource play(AudioClip audio, Vector3 pos, float volume)
-    {
+    public static AudioSource play(AudioClip audio, Vector3 pos, float volume){
         // Debug.Log("audio length:"+audio.length);
         var audioSource = playClipAt(audio, pos);
         audioSource.minDistance = 1f;
@@ -320,8 +305,7 @@ public class LeanAudio : object
         return audioSource;
     }
 
-    public static AudioSource playClipAt(AudioClip clip, Vector3 pos)
-    {
+    public static AudioSource playClipAt(AudioClip clip, Vector3 pos){
         var tempGO = new GameObject(); // create the temp object
         tempGO.transform.position = pos; // set its position
         var aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
@@ -331,8 +315,7 @@ public class LeanAudio : object
         return aSource; // return the AudioSource reference
     }
 
-    public static void printOutAudioClip(AudioClip audioClip, ref AnimationCurve curve, float scaleX = 1f)
-    {
+    public static void printOutAudioClip(AudioClip audioClip, ref AnimationCurve curve, float scaleX = 1f){
         // Debug.Log("Audio channels:"+audioClip.channels+" frequency:"+audioClip.frequency+" length:"+audioClip.length+" samples:"+audioClip.samples);
         var samples = new float[audioClip.samples * audioClip.channels];
         audioClip.GetData(samples, 0);
@@ -354,10 +337,8 @@ public class LeanAudio : object
 * @class LeanAudioOptions
 * @constructor
 */
-public class LeanAudioOptions : object
-{
-    public enum LeanAudioWaveStyle
-    {
+public class LeanAudioOptions : object{
+    public enum LeanAudioWaveStyle{
         Sine,
         Square,
         Sawtooth,
@@ -390,8 +371,7 @@ public class LeanAudioOptions : object
      *         AudioClip audioClip = LeanAudio.createAudio(volumeCurve, frequencyCurve, LeanAudio.options().setVibrato( new
      *         Vector3[]{ new Vector3(0.32f,0f,0f)} ).setFrequency(12100) );<br>
      */
-    public LeanAudioOptions setFrequency(int frequencyRate)
-    {
+    public LeanAudioOptions setFrequency(int frequencyRate){
         this.frequencyRate = frequencyRate;
         return this;
     }
@@ -411,8 +391,7 @@ public class LeanAudioOptions : object
      *         AudioClip audioClip = LeanAudio.createAudio(volumeCurve, frequencyCurve, LeanAudio.options().setVibrato( new
      *         Vector3[]{ new Vector3(0.32f,0.3f,0f)} ).setFrequency(12100) );<br>
      */
-    public LeanAudioOptions setVibrato(Vector3[] vibrato)
-    {
+    public LeanAudioOptions setVibrato(Vector3[] vibrato){
         this.vibrato = vibrato;
         return this;
     }
@@ -423,45 +402,38 @@ public class LeanAudioOptions : object
         return this;
     }*/
 
-    public LeanAudioOptions setWaveSine()
-    {
+    public LeanAudioOptions setWaveSine(){
         waveStyle = LeanAudioWaveStyle.Sine;
         return this;
     }
 
-    public LeanAudioOptions setWaveSquare()
-    {
+    public LeanAudioOptions setWaveSquare(){
         waveStyle = LeanAudioWaveStyle.Square;
         return this;
     }
 
-    public LeanAudioOptions setWaveSawtooth()
-    {
+    public LeanAudioOptions setWaveSawtooth(){
         waveStyle = LeanAudioWaveStyle.Sawtooth;
         return this;
     }
 
-    public LeanAudioOptions setWaveNoise()
-    {
+    public LeanAudioOptions setWaveNoise(){
         waveStyle = LeanAudioWaveStyle.Noise;
         return this;
     }
 
-    public LeanAudioOptions setWaveStyle(LeanAudioWaveStyle style)
-    {
+    public LeanAudioOptions setWaveStyle(LeanAudioWaveStyle style){
         waveStyle = style;
         return this;
     }
 
 
-    public LeanAudioOptions setWaveNoiseScale(float waveScale)
-    {
+    public LeanAudioOptions setWaveNoiseScale(float waveScale){
         waveNoiseScale = waveScale;
         return this;
     }
 
-    public LeanAudioOptions setWaveNoiseInfluence(float influence)
-    {
+    public LeanAudioOptions setWaveNoiseInfluence(float influence){
         waveNoiseInfluence = influence;
         return this;
     }

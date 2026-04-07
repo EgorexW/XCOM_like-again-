@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 [CreateAssetMenu(menuName = "Egorex/Sound")]
-public class Sound : ScriptableObject
-{
+public class Sound : ScriptableObject{
     [SerializeField] public List<AudioClip> clips;
 
     [Range(0f, 1f)] public float volume = .75f;
@@ -20,8 +19,7 @@ public class Sound : ScriptableObject
 
     public AudioMixerGroup mixerGroup;
 
-    public virtual AudioClip GetClip()
-    {
+    public virtual AudioClip GetClip(){
         return clips.Random();
     }
 }

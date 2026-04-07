@@ -3,13 +3,13 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 class CombatObjectUI : UIElement{
-    [BoxGroup("References")][GetComponent][SerializeField] RectTransform rectTransform;
-    
-    [BoxGroup("References")][Required][SerializeField] HealthComponentUI healthComponentUI;
-    [BoxGroup("References")][Required][SerializeField] CombatUnitUI combatUnitUI;
+    [BoxGroup("References")] [GetComponent] [SerializeField] RectTransform rectTransform;
+
+    [BoxGroup("References")] [Required] [SerializeField] HealthComponentUI healthComponentUI;
+    [BoxGroup("References")] [Required] [SerializeField] CombatUnitUI combatUnitUI;
 
     public void SetCombatObject(ICombatObject combatObject){
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(combatObject.WorldPosition);
+        var screenPos = Camera.main.WorldToScreenPoint(combatObject.WorldPosition);
         rectTransform.position = screenPos;
         var healthComponent = combatObject.GetCombatComponent<HealthComponent>();
         if (healthComponent != null){

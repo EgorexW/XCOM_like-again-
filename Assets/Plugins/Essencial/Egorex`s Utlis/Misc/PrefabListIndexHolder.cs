@@ -3,15 +3,13 @@ using UnityEngine;
 #if UNITY_EDITOR
 #endif
 
-public class PrefabListIndexHolder : MonoBehaviour
-{
+public class PrefabListIndexHolder : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] PrefabList prefabList;
 
     public int prefabListIndex;
 
     [Button]
-    void SaveIndex()
-    {
+    void SaveIndex(){
         // AddToPrefabList();
         prefabListIndex = prefabList.GetPrefabIndex(gameObject);
     }

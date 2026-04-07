@@ -5,14 +5,12 @@ class CameraMovement : MonoBehaviour{
 
     Vector2 movement = Vector2.zero;
 
-    protected void Update()
-    {
+    protected void Update(){
         var move = movement * (speed * Time.deltaTime);
         transform.Translate(move);
     }
 
-    public void SetMovementInput(Vector2 inputVector)
-    {
+    public void SetMovementInput(Vector2 inputVector){
         movement = inputVector.normalized;
     }
 }

@@ -1,8 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class SetPlayerPref : MonoBehaviour
-{
+public class SetPlayerPref : MonoBehaviour{
     [SerializeField] string prefName;
     [SerializeField] ObjectType prefType;
 
@@ -16,8 +15,7 @@ public class SetPlayerPref : MonoBehaviour
     bool IsFloat => prefType == ObjectType.Float;
     public bool IsString => prefType == ObjectType.String;
 
-    public void Set()
-    {
+    public void Set(){
         switch (prefType){
             case ObjectType.Int:
                 SetInt();
@@ -31,18 +29,15 @@ public class SetPlayerPref : MonoBehaviour
         }
     }
 
-    void SetInt()
-    {
+    void SetInt(){
         PlayerPrefs.SetInt(prefName, nrInt);
     }
 
-    void SetFloat()
-    {
+    void SetFloat(){
         PlayerPrefs.SetFloat(prefName, nrFloat);
     }
 
-    void SetString()
-    {
+    void SetString(){
         PlayerPrefs.SetFloat(prefName, nrFloat);
     }
 }

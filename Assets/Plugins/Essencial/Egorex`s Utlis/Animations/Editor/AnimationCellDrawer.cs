@@ -2,14 +2,12 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomPropertyDrawer(typeof(AnimationCell))]
-class AnimationCellDrawer : PropertyDrawer
-{
+class AnimationCellDrawer : PropertyDrawer{
     public override void OnGUI(
         Rect position,
         SerializedProperty property,
         GUIContent label
-    )
-    {
+    ){
         var spriteProperty = property.FindPropertyRelative("sprite");
         var durationProperty = property.FindPropertyRelative("duration");
 

@@ -7,8 +7,7 @@ using UnityEngine;
 
 [DefaultExecutionOrder(-100)]
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class TextUI : CountUI
-{
+public class TextUI : CountUI{
     const string STR_TO_SUBSTITUTE = "{nr}";
 
     [InfoBox(STR_TO_SUBSTITUTE + " is substituted with the value")] [SerializeField] [GetComponent]
@@ -20,8 +19,7 @@ public class TextUI : CountUI
 
     string format;
 
-    protected virtual void Awake()
-    {
+    protected virtual void Awake(){
         format = text.text;
         if (!format.Contains(STR_TO_SUBSTITUTE)){
             Debug.LogWarning("TextUI: Text does not contain " + STR_TO_SUBSTITUTE, this);
@@ -32,13 +30,11 @@ public class TextUI : CountUI
         }
     }
 
-    protected void Reset()
-    {
+    protected void Reset(){
         text = GetComponent<TextMeshProUGUI>();
     }
 
-    public virtual void SetCount(float count)
-    {
+    public virtual void SetCount(float count){
         if (format == null){
             Awake();
         }
@@ -49,13 +45,11 @@ public class TextUI : CountUI
         UpdateUI(textToShow);
     }
 
-    public void UpdateUI(string textToShow)
-    {
+    public void UpdateUI(string textToShow){
         text.text = textToShow;
     }
 
-    public override void SetCount(int count)
-    {
-        SetCount((float)count);
+    public override void SetCount(int count){
+        SetCount(count);
     }
 }

@@ -1,18 +1,15 @@
-using System;
 using System.Collections.Generic;
-using NUnit.Framework;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerTurnUI : UIElement{
-    [BoxGroup("External References")][Required][SerializeField] List<PlayerTurnTaker> playerTurnTakers;
-    
-    [BoxGroup("Internal References")][Required][SerializeField] ActionsUI actionsUI;
-    [BoxGroup("Internal References")][Required][SerializeField] ActionTargetingUI  actionTargetingUI;
-    [BoxGroup("Internal References")][Required][SerializeField] Button endTurnButton;
-    
+    [BoxGroup("External References")] [Required] [SerializeField] List<PlayerTurnTaker> playerTurnTakers;
+
+    [BoxGroup("Internal References")] [Required] [SerializeField] ActionsUI actionsUI;
+    [BoxGroup("Internal References")] [Required] [SerializeField] ActionTargetingUI actionTargetingUI;
+    [BoxGroup("Internal References")] [Required] [SerializeField] Button endTurnButton;
+
     [ShowInInspector] CombatUnit selectedUnit;
     [ShowInInspector] PlayerTurnTaker currentTurnTaker;
 
@@ -100,7 +97,7 @@ public class PlayerTurnUI : UIElement{
 
     List<Collider2D> GetCollidersUnderMouse(){
         var point = General.GetMouseWorldPos();
-        List<Collider2D> collider2Ds = new List<Collider2D>();
+        var collider2Ds = new List<Collider2D>();
         Physics2D.OverlapPoint(point, ContactFilter2D.noFilter, collider2Ds);
         // Debug.Log("Colliders under mouse: " + collider2Ds.Count);
         return collider2Ds;

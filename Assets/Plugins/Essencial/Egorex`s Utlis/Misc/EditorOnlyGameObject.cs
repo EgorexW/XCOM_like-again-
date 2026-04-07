@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class EditorOnlyGameObject : MonoBehaviour
-{
+public class EditorOnlyGameObject : MonoBehaviour{
     readonly bool destroy = false;
 
-    protected void Awake()
-    {
+    protected void Awake(){
         if (destroy){
             Destroy(gameObject);
             return;

@@ -1,10 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerPrefsEditor : EditorWindow
-{
-    public enum FieldType
-    {
+public class PlayerPrefsEditor : EditorWindow{
+    public enum FieldType{
         String,
         Integer,
         Float
@@ -16,8 +14,7 @@ public class PlayerPrefsEditor : EditorWindow
     string setKey = "";
     string setVal = "";
 
-    protected void OnGUI()
-    {
+    protected void OnGUI(){
         EditorGUILayout.LabelField("Player Prefs Editor", EditorStyles.boldLabel);
         EditorGUILayout.LabelField("by RomejanicDev");
         EditorGUILayout.Separator();
@@ -81,8 +78,7 @@ public class PlayerPrefsEditor : EditorWindow
     }
 
     [MenuItem("Edit/Player Prefs")]
-    public static void openWindow()
-    {
+    public static void openWindow(){
         var window = (PlayerPrefsEditor)GetWindow(typeof(PlayerPrefsEditor));
         window.titleContent = new GUIContent("Player Prefs");
         window.Show();

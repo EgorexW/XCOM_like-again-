@@ -7,10 +7,8 @@ using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using UnityEditor;
 
-namespace UnitySweeper
-{
-    public class ClassReferenceCollection : IReferenceCollection
-    {
+namespace UnitySweeper{
+    public class ClassReferenceCollection : IReferenceCollection{
         // guid : types
         List<CollectionData> references;
 
@@ -39,8 +37,7 @@ namespace UnitySweeper
             }
         }
 
-        TypeDate GetTypeData(string guid)
-        {
+        TypeDate GetTypeData(string guid){
             if (!fileTypeList.Exists(c => c.guid == guid)){
                 var path = AssetDatabase.GUIDToAssetPath(guid);
 
@@ -56,19 +53,16 @@ namespace UnitySweeper
 
         readonly bool isSaveEditorCode;
 
-        public ClassReferenceCollection(bool saveStiroCode = false)
-        {
+        public ClassReferenceCollection(bool saveStiroCode = false){
             isSaveEditorCode = saveStiroCode;
             fileTypeList = FileTypeXML;
         }
 
-        public void Init(List<CollectionData> refs)
-        {
+        public void Init(List<CollectionData> refs){
             references = refs;
         }
 
-        public void CollectionFiles()
-        {
+        public void CollectionFiles(){
             // connect each classes.
             var firstPassList = new List<string>();
             if (Directory.Exists("Assets/Plugins")){
@@ -127,8 +121,7 @@ namespace UnitySweeper
             }
         }
 
-        List<string> CodeList(string path)
-        {
+        List<string> CodeList(string path){
             var codes = Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories);
 
             var needUpdateFileList = new List<string>();
@@ -153,8 +146,7 @@ namespace UnitySweeper
             return needUpdateFileList;
         }
 
-        void CollectionCodeFileDictionary(List<Type> alltypes, string[] codes)
-        {
+        void CollectionCodeFileDictionary(List<Type> alltypes, string[] codes){
             float count = 1;
             foreach (var codePath in codes){
                 EditorUtility.DisplayProgressBar("checking", "search files", count++ / codes.Length);
@@ -214,8 +206,7 @@ namespace UnitySweeper
             }
         }
 
-        List<Type> CollectionAllClasses()
-        {
+        List<Type> CollectionAllClasses(){
             const string assemblyDll = "Library/ScriptAssemblies/Assembly-CSharp.dll";
             const string assemblyDllEditor = "Library/ScriptAssemblies/Assembly-CSharp-Editor.dll";
             var path2Project = Environment.CurrentDirectory;
@@ -234,8 +225,7 @@ namespace UnitySweeper
             return alltypes.ToList();
         }
 
-        List<Type> collectionAllFastspassClasses()
-        {
+        List<Type> collectionAllFastspassClasses(){
             const string assemblyFirstpassDll = "Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll";
             const string assemblyFirstpassEditorDll = "Library/ScriptAssemblies/Assembly-CSharp-Editor-firstpass.dll";
             var path2Project = Environment.CurrentDirectory;
@@ -252,15 +242,13 @@ namespace UnitySweeper
             return alltypes;
         }
 
-        public static string StripComment(string code)
-        {
+        public static string StripComment(string code){
             code = Regex.Replace(code, "//.*[\\n\\r]", "");
             code = Regex.Replace(code, "/\\*.*[\\n\\r]\\*/", "");
             return code;
         }
 
-        void CollectionReferenceClasses(string guid, List<Type> types)
-        {
+        void CollectionReferenceClasses(string guid, List<Type> types){
             var codePath = AssetDatabase.GUIDToAssetPath(guid);
             if (string.IsNullOrEmpty(codePath) || !File.Exists(codePath)){
                 return;
@@ -332,8 +320,7 @@ namespace UnitySweeper
             }
         }
 
-        void CollectionCustomEditorClasses(IEnumerable<Type> types)
-        {
+        void CollectionCustomEditorClasses(IEnumerable<Type> types){
             foreach (var type in types){
                 if (!code2FileDic.ContainsKey(type)){
                     continue;

@@ -3,23 +3,20 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum CompareType
-{
+public enum CompareType{
     Bigger,
     Smaller,
     Equal
 }
 
-enum ObjectType
-{
+enum ObjectType{
     Int,
     Float,
     String,
     Bool
 }
 
-public class CheckValue : MonoBehaviour
-{
+public class CheckValue : MonoBehaviour{
     [SerializeField] ObjectType objType;
 
     [ShowIf("IsInt")] [SerializeField] int nrInt;
@@ -44,8 +41,7 @@ public class CheckValue : MonoBehaviour
     bool IsString => objType == ObjectType.String;
     bool IsBool => objType == ObjectType.Bool;
 
-    public void GetCheck(object obj)
-    {
+    public void GetCheck(object obj){
         switch (objType){
             case ObjectType.Int:
                 CheckInt((int)obj);
@@ -62,8 +58,7 @@ public class CheckValue : MonoBehaviour
         }
     }
 
-    void ResolveResult(bool result)
-    {
+    void ResolveResult(bool result){
         if (result){
             onTrue.Invoke();
         }
@@ -73,14 +68,12 @@ public class CheckValue : MonoBehaviour
         onCheck.Invoke(result);
     }
 
-    public void CheckBool(bool condition)
-    {
+    public void CheckBool(bool condition){
         var result = condition == desiredCondition;
         ResolveResult(result);
     }
 
-    public void CheckInt(int value)
-    {
+    public void CheckInt(int value){
         bool result;
         switch (compareType){
             case CompareType.Bigger:
@@ -98,8 +91,7 @@ public class CheckValue : MonoBehaviour
         ResolveResult(result);
     }
 
-    public void CheckFloat(float value)
-    {
+    public void CheckFloat(float value){
         bool result;
         switch (compareType){
             case CompareType.Bigger:
@@ -117,8 +109,7 @@ public class CheckValue : MonoBehaviour
         ResolveResult(result);
     }
 
-    public void CheckString(string value)
-    {
+    public void CheckString(string value){
         var result = value == text;
         ResolveResult(result);
     }

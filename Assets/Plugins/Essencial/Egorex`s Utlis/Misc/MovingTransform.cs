@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public sealed class MovingTransform : MonoBehaviour
-{
+public sealed class MovingTransform : MonoBehaviour{
     [SerializeField] GameObject moveGameObject;
 
     [SerializeField] List<ObjectWithValue<Transform>> movementPositions = new();
@@ -12,13 +11,11 @@ public sealed class MovingTransform : MonoBehaviour
 
     int currentIndex;
 
-    void Awake()
-    {
+    void Awake(){
         MoveNext();
     }
 
-    void Reset()
-    {
+    void Reset(){
         var child = transform.GetChild(0);
         if (child == null){
             return;
@@ -26,8 +23,7 @@ public sealed class MovingTransform : MonoBehaviour
         moveGameObject = child.gameObject;
     }
 
-    void MoveNext()
-    {
+    void MoveNext(){
         currentIndex++;
         if (currentIndex >= movementPositions.Count){
             currentIndex = 0;
@@ -39,8 +35,7 @@ public sealed class MovingTransform : MonoBehaviour
     }
 
     [Button]
-    void AddChildrenTransform()
-    {
+    void AddChildrenTransform(){
         foreach (var child in GetComponentsInChildren<Transform>()){
             if (child == transform){
                 continue;

@@ -1,18 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-public class LeanTester : MonoBehaviour
-{
+public class LeanTester : MonoBehaviour{
     public float timeout = 15f;
 
 #if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_0_1 && !UNITY_4_1 && !UNITY_4_2 && !UNITY_4_3 && !UNITY_4_5
-    protected void Start()
-    {
+    protected void Start(){
         StartCoroutine(timeoutCheck());
     }
 
-    IEnumerator timeoutCheck()
-    {
+    IEnumerator timeoutCheck(){
         var pauseEndTime = Time.realtimeSinceStartup + timeout;
         while (Time.realtimeSinceStartup < pauseEndTime) yield return 0;
         if (!LeanTest.testsFinished){
@@ -23,8 +20,7 @@ public class LeanTester : MonoBehaviour
 #endif
 }
 
-public class LeanTest : object
-{
+public class LeanTest : object{
     public static int expected = 0;
     static int tests;
     static int passes;
@@ -33,13 +29,11 @@ public class LeanTest : object
     public static bool timeoutStarted;
     public static bool testsFinished;
 
-    public static void debug(string name, bool didPass, string failExplaination = null)
-    {
+    public static void debug(string name, bool didPass, string failExplaination = null){
         expect(didPass, name, failExplaination);
     }
 
-    public static void expect(bool didPass, string definition, string failExplaination = null)
-    {
+    public static void expect(bool didPass, string definition, string failExplaination = null){
         var len = printOutLength(definition);
         var paddingLen = 40 - (int)(len * 1.05f);
 #if UNITY_FLASH
@@ -78,15 +72,13 @@ public class LeanTest : object
         }
     }
 
-    public static string padRight(int len)
-    {
+    public static string padRight(int len){
         var str = "";
         for (var i = 0; i < len; i++) str += "_";
         return str;
     }
 
-    public static float printOutLength(string str)
-    {
+    public static float printOutLength(string str){
         var len = 0.0f;
         for (var i = 0; i < str.Length; i++)
             if (str[i] == "I"[0]){
@@ -101,13 +93,11 @@ public class LeanTest : object
         return len;
     }
 
-    public static string formatBC(string str, string color)
-    {
+    public static string formatBC(string str, string color){
         return formatC(formatB(str), color);
     }
 
-    public static string formatB(string str)
-    {
+    public static string formatB(string str){
 #if UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2
 		return str;
 #else
@@ -115,8 +105,7 @@ public class LeanTest : object
 #endif
     }
 
-    public static string formatC(string str, string color)
-    {
+    public static string formatC(string str, string color){
 #if UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2
 		return str;
 #else
@@ -124,8 +113,7 @@ public class LeanTest : object
 #endif
     }
 
-    public static void overview()
-    {
+    public static void overview(){
         testsFinished = true;
         var failedCnt = expected - passes;
         var failedStr = failedCnt > 0 ? formatBC("" + failedCnt, "red") : "" + failedCnt;

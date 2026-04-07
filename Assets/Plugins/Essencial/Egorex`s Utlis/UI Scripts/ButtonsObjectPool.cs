@@ -2,24 +2,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ButtonsObjectPool<T> : ObjectsPool
-{
+public class ButtonsObjectPool<T> : ObjectsPool{
     UnityAction<T> callback;
 
-    protected override GameObject CreateObjectUI()
-    {
+    protected override GameObject CreateObjectUI(){
         var newObj = base.CreateObjectUI();
         newObj.GetComponent<ObjectButton<T>>().SetCallback(ButtonClicked);
         return newObj;
     }
 
-    void ButtonClicked(T party)
-    {
+    void ButtonClicked(T party){
         callback.Invoke(party);
     }
 
-    public void ShowButtons(List<T> objects, UnityAction<T> callback)
-    {
+    public void ShowButtons(List<T> objects, UnityAction<T> callback){
         this.callback = callback;
         SetCount(objects.Count);
         var activeObjs = GetActiveObjs();

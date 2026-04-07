@@ -8,69 +8,66 @@ public static class CombatGridExtensions{
         }
         return true;
     }
+
     public static bool LineUnobstructed(this CombatGridNode node1, CombatGridNode node2){
-        foreach (var node in GetNodesInBetween(node1, node2)){
+        foreach (var node in node1.GetNodesInBetween(node2))
             if (node.IsOccupied){
                 return false;
             }
-        }
         return true;
     }
 
-    public static List<CombatGridNode> GetNodesInBetween(this CombatGridNode node1, CombatGridNode node2)
-    {
+    public static List<CombatGridNode> GetNodesInBetween(this CombatGridNode node1, CombatGridNode node2){
         var nodes = new List<CombatGridNode>();
 
-        int x0 = node1.x;
-        int y0 = node1.y;
-        int x1 = node2.x;
-        int y1 = node2.y;
+        var x0 = node1.x;
+        var y0 = node1.y;
+        var x1 = node2.x;
+        var y1 = node2.y;
 
-        int dx = Mathf.Abs(x1 - x0);
-        int dy = Mathf.Abs(y1 - y0);
-    
-        int stepX = x0 < x1 ? 1 : -1;
-        int stepY = y0 < y1 ? 1 : -1;
-    
+        var dx = Mathf.Abs(x1 - x0);
+        var dy = Mathf.Abs(y1 - y0);
+
+        var stepX = x0 < x1 ? 1 : -1;
+        var stepY = y0 < y1 ? 1 : -1;
+
         // We multiply by 2 so we can do perfect integer math without decimals
-        int error = dx - dy;
-        int dx2 = dx * 2;
-        int dy2 = dy * 2;
+        var error = dx - dy;
+        var dx2 = dx * 2;
+        var dy2 = dy * 2;
 
-        int x = x0;
-        int y = y0;
+        var x = x0;
+        var y = y0;
 
-        while (true)
-        {
+        while (true){
             nodes.Add(node1.grid.GetNode(new Vector2Int(x, y)));
 
             // We reached the target!
-            if (x == x1 && y == y1) break;
+            if (x == x1 && y == y1){
+                break;
+            }
 
             // Step Horizontally
-            if (error > 0)
-            {
+            if (error > 0){
                 x += stepX;
                 error -= dy2;
             }
             // Step Vertically
-            else if (error < 0)
-            {
+            else if (error < 0){
                 y += stepY;
                 error += dx2;
             }
             // THE MAGIC BLOCK: error == 0
             // The line passes exactly through a 4-way intersection!
-            else 
-            {
+            else{
                 // 1. Grab the Horizontal Corner
-                int cornerX1 = x + stepX;
-                int cornerY1 = y;
+                var cornerX1 = x + stepX;
+                var cornerY1 = y;
                 nodes.Add(node1.grid.GetNode(new Vector2Int(cornerX1, cornerY1)));
 
                 // 2. Grab the Vertical Corner
-                int cornerX2 = x;
-                int cornerY2 = y + stepY;
+                var cornerX2 = x;
+                var cornerY2 = y + stepY;
                 nodes.Add(node1.grid.GetNode(new Vector2Int(cornerX2, cornerY2)));
 
                 // 3. Finally, move the main tracker diagonally
@@ -80,64 +77,56 @@ public static class CombatGridExtensions{
                 error += dx2;
             }
         }
-    
+
         nodes.Remove(node1);
         nodes.Remove(node2);
 
         return nodes;
     }
-    
-    public static float GetDistance(this CombatGridNode node1, CombatGridNode node2)
-    {
+
+    public static float GetDistance(this CombatGridNode node1, CombatGridNode node2){
         float dx = node1.x - node2.x;
         float dy = node1.y - node2.y;
-        return Mathf.Sqrt((dx * dx) + (dy * dy));
+        return Mathf.Sqrt(dx * dx + dy * dy);
     }
-    public static Direction GetDirection(CombatGridNode attackerNode, CombatGridNode targetNode)
-    {
-        int dx = attackerNode.x - targetNode.x;
-        int dy = attackerNode.y - targetNode.y;
 
-        if (Mathf.Abs(dx) > Mathf.Abs(dy)) 
-        {
+    public static Direction GetDirection(CombatGridNode attackerNode, CombatGridNode targetNode){
+        var dx = attackerNode.x - targetNode.x;
+        var dy = attackerNode.y - targetNode.y;
+
+        if (Mathf.Abs(dx) > Mathf.Abs(dy)){
             return dx > 0 ? Direction.Left : Direction.Right;
         }
-        else{
-            return dy > 0 ? Direction.Up : Direction.Down;
-        }
+        return dy > 0 ? Direction.Up : Direction.Down;
     }
 
     #region Attacks
-    public static bool IsProtectedFrom(this CombatGridNode node, Direction attackDirection)
-    {
+
+    public static bool IsProtectedFrom(this CombatGridNode node, Direction attackDirection){
         foreach (var obj in node.GetCombatObjects()){
             var cover = obj.GetCombatComponent<CoverComponent>();
             if (cover != null){
-                if (cover.Direction == attackDirection)
-                {
-                    return true; 
+                if (cover.Direction == attackDirection){
+                    return true;
                 }
             }
         }
         return false;
     }
-    
-    
-    public static bool CanAttack(this CombatGridNode attackerNode, CombatGridNode targetNode)
-    {
-        if (!attackerNode.LineUnobstructed(targetNode))
-        {
-            return false; 
+
+
+    public static bool CanAttack(this CombatGridNode attackerNode, CombatGridNode targetNode){
+        if (!attackerNode.LineUnobstructed(targetNode)){
+            return false;
         }
         var attackDirection = GetDirection(attackerNode, targetNode);
-        
-        if (targetNode.IsProtectedFrom(attackDirection.Opposite()))
-        {
-            return false; 
+
+        if (targetNode.IsProtectedFrom(attackDirection.Opposite())){
+            return false;
         }
-        
+
         return true;
     }
-    
+
     #endregion
 }

@@ -1,11 +1,8 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class MyExtentions
-{
-    public static void Shuffle<T>(this List<T> list)
-    {
+public static class MyExtentions{
+    public static void Shuffle<T>(this List<T> list){
         var count = list.Count;
         var last = count - 1;
         for (var i = 0; i < last; ++i){
@@ -14,8 +11,7 @@ public static class MyExtentions
         }
     }
 
-    public static T Random<T>(this List<T> list, bool pop = false)
-    {
+    public static T Random<T>(this List<T> list, bool pop = false){
         if (list.Count < 1){
             Debug.LogWarning("Trying to get random element from empty list");
             return default;
@@ -27,60 +23,47 @@ public static class MyExtentions
         }
         return obj;
     }
-    
-    public static T WeightedRandom<T>(this Dictionary<T, float> list)
-    {
-        float totalWeight = 0f;
-        
-        foreach (var kvp in list) 
-        {
-            totalWeight += Mathf.Max(kvp.Value, 0f);
-        }
 
-        float roll = UnityEngine.Random.Range(0f, totalWeight);
+    public static T WeightedRandom<T>(this Dictionary<T, float> list){
+        var totalWeight = 0f;
 
-        foreach (var kvp in list)
-        {
-            float weight = Mathf.Max(kvp.Value, 0f);
-            if (roll <= weight)
-            {
+        foreach (var kvp in list) totalWeight += Mathf.Max(kvp.Value, 0f);
+
+        var roll = UnityEngine.Random.Range(0f, totalWeight);
+
+        foreach (var kvp in list){
+            var weight = Mathf.Max(kvp.Value, 0f);
+            if (roll <= weight){
                 return kvp.Key;
             }
             roll -= weight;
         }
-        
+
         Debug.LogWarning("Invalid Weights");
         return default;
     }
-    
-    public static T WeightedRandom<T>(this Dictionary<T, int> list)
-    {
-        int totalWeight = 0;
-    
-        foreach (var kvp in list) 
-        {
-            totalWeight += Mathf.Max(kvp.Value, 0);
-        }
-        
-        int roll = UnityEngine.Random.Range(0, totalWeight);
 
-        foreach (var kvp in list)
-        {
-            int weight = Mathf.Max(kvp.Value, 0);
+    public static T WeightedRandom<T>(this Dictionary<T, int> list){
+        var totalWeight = 0;
 
-            if (roll < weight)
-            {
+        foreach (var kvp in list) totalWeight += Mathf.Max(kvp.Value, 0);
+
+        var roll = UnityEngine.Random.Range(0, totalWeight);
+
+        foreach (var kvp in list){
+            var weight = Mathf.Max(kvp.Value, 0);
+
+            if (roll < weight){
                 return kvp.Key;
             }
             roll -= weight;
         }
-    
+
         Debug.LogWarning("Invalid Weights");
         return default;
     }
 
-    public static List<T> Copy<T>(this List<T> list)
-    {
+    public static List<T> Copy<T>(this List<T> list){
         return new List<T>(list);
     }
 }

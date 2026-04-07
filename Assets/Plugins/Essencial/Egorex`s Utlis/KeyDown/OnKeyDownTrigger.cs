@@ -2,12 +2,10 @@ using Nrjwolf.Tools.AttachAttributes;
 using UnityEngine;
 
 [RequireComponent(typeof(OnKeyDown))]
-public abstract class OnKeyDownTrigger : MonoBehaviour
-{
+public abstract class OnKeyDownTrigger : MonoBehaviour{
     [GetComponent] [SerializeField] OnKeyDown onKeyDown;
 
-    protected void Awake()
-    {
+    protected void Awake(){
         onKeyDown.onKeyDown.AddListener(Trigger);
     }
 

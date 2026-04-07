@@ -4,10 +4,8 @@ using System.IO;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-public class OnKeyDownOpenDebug : OnKeyDownTrigger
-{
-    protected override void Trigger()
-    {
+public class OnKeyDownOpenDebug : OnKeyDownTrigger{
+    protected override void Trigger(){
         // AI GENERATED
 
         var path = Application.consoleLogPath;

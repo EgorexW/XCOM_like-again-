@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class MusicPlayer : MonoBehaviour
-{
+public class MusicPlayer : MonoBehaviour{
     static MusicPlayer i;
 
-    protected void Awake()
-    {
+    protected void Awake(){
         if (i != null){
             Destroy(gameObject);
         }
@@ -15,8 +13,7 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
-    protected void Update()
-    {
+    protected void Update(){
         AudioManager.i.Play("Music");
     }
 }

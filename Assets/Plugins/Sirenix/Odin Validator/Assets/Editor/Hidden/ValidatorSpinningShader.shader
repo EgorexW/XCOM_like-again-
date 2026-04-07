@@ -112,7 +112,7 @@
                 float2 b = p - q * float2(clamp(p.x / q.x, 0.0, 1.0), 1.0);
                 float s = -sign(q.y);
                 float2 d = min(float2(dot(a, a), s * (p.x * q.y - p.y * q.x)),
-                                 float2(dot(b, b), s * (p.y - q.y)));
+                               float2(dot(b, b), s * (p.y - q.y)));
                 return -sqrt(d.x) * sign(d.y);
             }
 

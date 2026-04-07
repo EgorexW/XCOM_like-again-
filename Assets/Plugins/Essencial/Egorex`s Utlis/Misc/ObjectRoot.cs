@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class ObjectRoot : MonoBehaviour
-{
+public class ObjectRoot : MonoBehaviour{
     readonly Dictionary<Type, object> components = new();
     [ShowInInspector] List<Component> componentsList = new(); // List of Component
 
-    public T GetRootComponent<T>()
-    {
+    public T GetRootComponent<T>(){
         if (components.TryGetValue(typeof(T), out var component)){
             return (T)component;
         }
