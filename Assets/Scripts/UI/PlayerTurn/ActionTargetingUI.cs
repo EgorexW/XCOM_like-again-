@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class ActionTargetingUI : UIElement{
     [BoxGroup("References")][Required][SerializeField] TextMeshProUGUI actionNameText;
+    [BoxGroup("References")][Required][SerializeField] TextMeshProUGUI descriptionText;
     [BoxGroup("References")][Required][SerializeField] Button confirmButton;
     [BoxGroup("References")][Required][SerializeField] Button cancelButton;
     [BoxGroup("References")][Required][SerializeField] GridUI gridUI;
@@ -46,6 +47,7 @@ public class ActionTargetingUI : UIElement{
             confirmButton.interactable = true;
         }
         actionNameText.SetText(action.Name);
+        descriptionText.SetText(action.Description);
     }
 
     public void OnSelect(Vector2 pos){

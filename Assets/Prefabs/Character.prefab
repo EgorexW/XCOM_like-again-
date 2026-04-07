@@ -171,7 +171,7 @@ MonoBehaviour:
   Name: Attack
   cost: 1
   unit: {fileID: 0}
-  range: 10
+  range: 6
   damage: 1
 --- !u!1 &6489246826936598810
 GameObject:
@@ -265,7 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59bacba6bd97456fa111ffae9a769fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  combatObject: {fileID: 0}
   maxHealth: 1
   onHealthChanged:
     m_PersistentCalls:
@@ -318,6 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d459c2d9e379474bba6c3cee8eb7fb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatUnit
+  occupiesTile: 1
   defaultActionPoints: 2
   unitActions:
   - {fileID: 4310955059030211448}

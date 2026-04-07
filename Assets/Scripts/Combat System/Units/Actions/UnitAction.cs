@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class UnitAction : MonoBehaviour{
     [SerializeField] public string Name;
+    [SerializeField] public string Description;
     [SerializeField] float cost = 1;
 
     [HideInEditorMode][ReadOnly] public CombatUnit unit;
