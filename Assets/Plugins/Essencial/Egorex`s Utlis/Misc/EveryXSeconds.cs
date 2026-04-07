@@ -9,12 +9,12 @@ public class EveryXSeconds : MonoBehaviour
 
     [SerializeField] UnityEvent onTrigger;
 
-    void Awake()
+    protected void Awake()
     {
         lastTriggerTime = Time.time;
     }
 
-    void Update()
+    protected void Update()
     {
         while (Time.time - lastTriggerTime >= x){
             lastTriggerTime += x;

@@ -32,7 +32,7 @@ public class TextUI : CountUI
         }
     }
 
-    void Reset()
+    protected void Reset()
     {
         text = GetComponent<TextMeshProUGUI>();
     }

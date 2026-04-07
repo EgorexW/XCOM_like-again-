@@ -8,12 +8,12 @@ public class Timer : MonoBehaviour
     TextMeshProUGUI text;
     float time;
 
-    void Awake()
+    protected void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
     }
 
-    void Update()
+    protected void Update()
     {
         if (!run){
             return;

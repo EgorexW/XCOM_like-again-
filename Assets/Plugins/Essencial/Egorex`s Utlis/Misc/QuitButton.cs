@@ -6,14 +6,14 @@ using UnityEditor.Events;
 
 public class QuitButton : MonoBehaviour
 {
-    void Awake()
+    protected void Awake()
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer || Application.platform == RuntimePlatform.OSXEditor){
             Destroy(gameObject);
         }
     }
 #if UNITY_EDITOR
-    void Reset()
+    protected void Reset()
     {
         if (!TryGetComponent<Button>(out var button)){
             return;

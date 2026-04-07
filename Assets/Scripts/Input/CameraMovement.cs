@@ -5,7 +5,7 @@ class CameraMovement : MonoBehaviour{
 
     Vector2 movement = Vector2.zero;
 
-    void Update()
+    protected void Update()
     {
         var move = movement * (speed * Time.deltaTime);
         transform.Translate(move);

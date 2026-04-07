@@ -16,7 +16,7 @@ public class PlayerPrefsEditor : EditorWindow
     string setKey = "";
     string setVal = "";
 
-    void OnGUI()
+    protected void OnGUI()
     {
         EditorGUILayout.LabelField("Player Prefs Editor", EditorStyles.boldLabel);
         EditorGUILayout.LabelField("by RomejanicDev");

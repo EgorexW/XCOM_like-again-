@@ -20,7 +20,7 @@ public class ActionTargetingUI : UIElement{
     [FoldoutGroup("Events")]
     public UnityEvent onCancel;
 
-    void Awake(){
+    protected void Awake(){
         confirmButton.onClick.AddListener(OnConfirm);
         cancelButton.onClick.AddListener(OnCancel);
     }

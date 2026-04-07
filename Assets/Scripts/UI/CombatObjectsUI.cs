@@ -21,7 +21,7 @@ public class CombatObjectsUI : UIElement
         }
     }
 
-    void Update(){
+    protected void Update(){
         if (IsVisible){
             UpdateUI();
         }

@@ -14,7 +14,7 @@ public class PlayButton : MonoBehaviour, ISceneGetter
     [SerializeField] protected bool async;
 #if UNITY_EDITOR
 
-    void Reset()
+    protected void Reset()
     {
         levelName = new Optional<TextMeshProUGUI>(GetComponentInChildren<TextMeshProUGUI>());
         levelName.Enabled = levelName.Value != null;
@@ -28,7 +28,7 @@ public class PlayButton : MonoBehaviour, ISceneGetter
         UnityEventTools.AddPersistentListener(button.onClick, Play);
     }
 #endif
-    void OnValidate()
+    protected void OnValidate()
     {
         if (!levelName){
             return;

@@ -12,7 +12,7 @@ public class ObjectButton<T> : MonoBehaviour
     UnityAction<T> callback;
     T obj;
 #if UNITY_EDITOR
-    void Reset()
+    protected void Reset()
     {
         if (!TryGetComponent<Button>(out var button)){
             return;

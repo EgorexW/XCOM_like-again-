@@ -9,22 +9,22 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     LTDescr delayCall = new();
 
-    void Reset()
+    protected void Reset()
     {
         message.header = gameObject.name;
     }
 
-    void OnDisable()
+    protected void OnDisable()
     {
         Deactivate();
     }
 
-    void OnMouseEnter()
+    protected void OnMouseEnter()
     {
         Activate();
     }
 
-    void OnMouseExit()
+    protected void OnMouseExit()
     {
         Deactivate();
     }

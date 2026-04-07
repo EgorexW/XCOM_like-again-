@@ -13,12 +13,12 @@ public class Tooltip : MonoBehaviour
     [SerializeField] [Required] TextMeshProUGUI headerText;
     [SerializeField] [Required] TextMeshProUGUI descriptionText;
 
-    void Awake()
+    protected void Awake()
     {
         Hide();
     }
 
-    void Update()
+    protected void Update()
     {
         transform.position = Input.mousePosition;
 

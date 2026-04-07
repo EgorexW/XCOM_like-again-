@@ -15,7 +15,7 @@ public class CombatGrid : MonoBehaviour
 
     [FoldoutGroup("Events")] public UnityEvent<CombatGridNode> onCombatGridNodeChanged = new();
 
-    void Awake()
+    protected void Awake()
     {
         grid = new Grid<CombatGridNode>(width, height, 1f, Vector3.zero, 
             (Grid<CombatGridNode> g, int x, int y) => new CombatGridNode(this, x, y)
@@ -23,8 +23,8 @@ public class CombatGrid : MonoBehaviour
         
         grid.OnGridObjectChanged += Grid_OnGridObjectChanged;
     }
-    
-    private void OnDestroy()
+
+    protected void OnDestroy()
     {
         if (grid != null)
         {

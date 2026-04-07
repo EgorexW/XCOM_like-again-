@@ -6,14 +6,14 @@ public class OnAwake : MonoBehaviour
     public UnityEvent onAwake;
     readonly bool onStart = false;
 
-    void Awake()
+    protected void Awake()
     {
         if (!onStart){
             onAwake.Invoke();
         }
     }
 
-    void Start()
+    protected void Start()
     {
         if (onStart){
             onAwake.Invoke();

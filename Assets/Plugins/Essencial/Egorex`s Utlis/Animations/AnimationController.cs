@@ -42,14 +42,14 @@ public class AnimationController : MonoBehaviour
         throw new Exception("No SpriteRenderer or Image assigned");
     }
 
-    void Awake()
+    protected void Awake()
     {
         if (animationOnAwake){
             SetAnimation(animationOnAwake);
         }
     }
 
-    void Update()
+    protected void Update()
     {
         if (activeAnimation == null){
             return;

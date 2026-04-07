@@ -4,7 +4,7 @@ public class MusicPlayer : MonoBehaviour
 {
     static MusicPlayer i;
 
-    void Awake()
+    protected void Awake()
     {
         if (i != null){
             Destroy(gameObject);
@@ -15,7 +15,7 @@ public class MusicPlayer : MonoBehaviour
         }
     }
 
-    void Update()
+    protected void Update()
     {
         AudioManager.i.Play("Music");
     }

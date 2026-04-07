@@ -11,7 +11,7 @@ public class CombatInit : MonoBehaviour{
     [SerializeField] Transform combatObjectsParent;
     [SerializeField] List<TurnTaker> turnTakers;
 
-    void Start(){
+    protected void Start(){
         var combatObjs = combatObjectsParent.GetComponentsInChildren<ICombatObject>();
         foreach (var combatObj in combatObjs){
             combatSystem.AddCombatObject(combatObj);

@@ -6,7 +6,7 @@ public class TutorialScreen : MonoBehaviour
     [SerializeField] bool autoUpdatePrefabName = true;
     [SerializeField] bool activateOnAwake = true;
 
-    void Awake()
+    protected void Awake()
     {
         UpdatePrefabName();
         gameObject.SetActive(false);
@@ -15,7 +15,7 @@ public class TutorialScreen : MonoBehaviour
         }
     }
 
-    void OnValidate()
+    protected void OnValidate()
     {
         UpdatePrefabName();
     }

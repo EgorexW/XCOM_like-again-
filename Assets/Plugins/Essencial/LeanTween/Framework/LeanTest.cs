@@ -6,7 +6,7 @@ public class LeanTester : MonoBehaviour
     public float timeout = 15f;
 
 #if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_0_1 && !UNITY_4_1 && !UNITY_4_2 && !UNITY_4_3 && !UNITY_4_5
-    public void Start()
+    protected void Start()
     {
         StartCoroutine(timeoutCheck());
     }

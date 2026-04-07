@@ -11,7 +11,7 @@ public class InstantiateRandomGameObject : MonoBehaviour
 
     [FoldoutGroup("Events")] UnityEvent<GameObject> onInstantiate = new();
 
-    void Awake()
+    protected void Awake()
     {
         if (onAwake){
             InstantiateRandom();

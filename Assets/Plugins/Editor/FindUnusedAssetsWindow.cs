@@ -59,7 +59,7 @@ namespace UnitySweeper
             EditorUtility.DisplayDialog("Clear cache", "Clear cache", "OK");
         }
 
-        void OnGUI()
+        protected void OnGUI()
         {
             using (new EditorGUILayout.HorizontalScope("box")){
                 EditorGUILayout.LabelField("delete unreference assets from buildsettings and resources");

@@ -6,12 +6,12 @@ public class SceneSetter : MonoBehaviour
     [SceneObjectsOnly] [SerializeField] string scene;
     [SerializeField] bool updateInEditor = true;
 
-    void Awake()
+    protected void Awake()
     {
         GiveScene();
     }
 
-    void OnValidate()
+    protected void OnValidate()
     {
         if (!updateInEditor){
             return;

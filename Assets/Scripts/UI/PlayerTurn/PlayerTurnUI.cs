@@ -16,7 +16,7 @@ public class PlayerTurnUI : UIElement{
     [ShowInInspector] CombatUnit selectedUnit;
     [ShowInInspector] PlayerTurnTaker currentTurnTaker;
 
-    void Awake(){
+    protected void Awake(){
         Hide();
         foreach (var playerTurnTaker in playerTurnTakers){
             playerTurnTaker.onStartTurn.AddListener(ShowTurnTaker);

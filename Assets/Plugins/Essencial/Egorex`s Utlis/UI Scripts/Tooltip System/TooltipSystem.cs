@@ -7,7 +7,7 @@ public class TooltipSystem : MonoBehaviour
     static TooltipSystem i;
     [SerializeField] [Required] Tooltip tooltip;
 
-    void Awake()
+    protected void Awake()
     {
         i = this;
     }

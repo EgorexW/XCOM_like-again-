@@ -9,7 +9,7 @@ public class CoverComponent : CombatComponent
 
     public Direction Direction => direction;
 
-    private void Start()
+    protected void Start()
     {
         UpdateVisuals();
         combatObject.onInit.AddListener(SpawnAdjacentCover);
@@ -49,7 +49,7 @@ public class CoverComponent : CombatComponent
     }
 
 #if UNITY_EDITOR
-    private void OnValidate()
+    protected void OnValidate()
     {
         if (combatObject != null && combatObject.OccupiesTile)
         {

@@ -12,7 +12,7 @@ class ActionTileUI : UIElement{
     UnitAction action;
     UnityAction<UnitAction> onSelect;
 
-    void Awake(){
+    protected void Awake(){
         selectButton.onClick.AddListener(OnSelect);
     }
 

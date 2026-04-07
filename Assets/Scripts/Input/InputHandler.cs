@@ -13,7 +13,7 @@ public class InputHandler : MonoBehaviour
     [BoxGroup("References")][Required][SerializeField] PlayerTurnUI playerTurnUI;
     [BoxGroup("References")][Required][SerializeField] CameraMovement cameraMovement;
 
-    void Awake()
+    protected void Awake()
     {
         playerInput.onActionTriggered += OnActionTriggered;
     }
@@ -72,7 +72,7 @@ public class InputHandler : MonoBehaviour
         _selectTriggeredThisFrame = true; 
     }
 
-    private void Update() 
+    protected void Update() 
     {
         if (_selectTriggeredThisFrame) 
         {

@@ -20,7 +20,7 @@ public class ObjectsPool : CountUI
         }
     }
 
-    void OnValidate()
+    protected void OnValidate()
     {
         SetPrefab();
     }

@@ -4,7 +4,7 @@ public class EditorOnlyGameObject : MonoBehaviour
 {
     readonly bool destroy = false;
 
-    void Awake()
+    protected void Awake()
     {
         if (destroy){
             Destroy(gameObject);

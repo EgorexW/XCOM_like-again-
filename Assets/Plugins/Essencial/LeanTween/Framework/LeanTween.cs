@@ -426,7 +426,7 @@ public class LeanTween : MonoBehaviour
         Destroy(_tweenEmpty);
     }
 
-    public void Update()
+    protected void Update()
     {
         update();
     }

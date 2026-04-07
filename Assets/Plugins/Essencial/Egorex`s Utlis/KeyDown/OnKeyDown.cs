@@ -9,7 +9,7 @@ public class OnKeyDown : MonoBehaviour
     public UnityEvent onKeyDown = new();
 
 
-    void Update()
+    protected void Update()
     {
         if (Keyboard.current == null){
             return;

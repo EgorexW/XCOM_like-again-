@@ -11,7 +11,7 @@ public class HealthComponent : CombatComponent{
     public float Health => currentHealth;
 
 
-    void Start(){
+    protected void Start(){
         currentHealth = maxHealth;
     }
 

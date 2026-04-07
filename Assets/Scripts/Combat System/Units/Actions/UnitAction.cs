@@ -38,7 +38,7 @@ public abstract class UnitAction : MonoBehaviour{
         Name = gameObject.name;
     }
 
-    void Reset(){
+    protected void Reset(){
         ResetName();
     }
 }

@@ -8,7 +8,7 @@ public class CombatUI : MonoBehaviour
     
     [BoxGroup("References")][Required][SerializeField] GridUI gridUI;
 
-    void Awake(){
+    protected void Awake(){
         combatSystem.onCombatStarted.AddListener(Init);
     }
 

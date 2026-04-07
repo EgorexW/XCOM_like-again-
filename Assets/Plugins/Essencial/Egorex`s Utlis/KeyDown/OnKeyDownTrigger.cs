@@ -6,7 +6,7 @@ public abstract class OnKeyDownTrigger : MonoBehaviour
 {
     [GetComponent] [SerializeField] OnKeyDown onKeyDown;
 
-    void Awake()
+    protected void Awake()
     {
         onKeyDown.onKeyDown.AddListener(Trigger);
     }
