@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,17 +17,17 @@ public class CombatSystem : MonoBehaviour{
 
     public void AddCombatObject(ICombatObject combatObject){
         combatObjects.Add(combatObject);
-        combatObject.MoveTo(combatGrid.GetNode(combatObject.WorldPosition));
-        combatObject.onRemove.AddListener(RemoveCombatObject);
+        combatObject.MoveTo(combatGrid.GetNode(combatObject.WorldPosition()));
+        combatObject.CombatSystem = this;
+        combatObject.Init();
     }
 
-    void RemoveCombatObject(ICombatObject arg0){
+    public void RemoveCombatObject(ICombatObject arg0){
         combatObjects.Remove(arg0);
         combatGrid.RemoveCombatObject(arg0);
     }
 
     public void StartCombat(){
-        foreach (var combatObject in combatObjects) combatObject.onInit.Invoke();
         turnSystem.NextTurn();
         onCombatStarted.Invoke();
     }

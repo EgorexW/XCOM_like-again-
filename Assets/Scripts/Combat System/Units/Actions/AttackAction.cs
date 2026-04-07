@@ -1,8 +1,8 @@
 using UnityEngine;
 
 public class AttackAction : TargetedUnitAction{
-    [SerializeField] int range = 10;
     [SerializeField] float damage = 1;
+    public float Damage => damage;
 
     protected override void OnExecute(){
         var targetObjects = targetNode.GetCombatObjects();
@@ -31,9 +31,6 @@ public class AttackAction : TargetedUnitAction{
             }
         }
         if (!foundTarget){
-            return false;
-        }
-        if (unit.Node.GetDistance(node) > range){
             return false;
         }
         if (!unit.Node.CanAttack(node)){

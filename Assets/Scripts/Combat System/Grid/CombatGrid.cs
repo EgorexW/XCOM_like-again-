@@ -29,17 +29,16 @@ public class CombatGrid : MonoBehaviour{
         onCombatGridNodeChanged.Invoke(node);
     }
 
-    public void PlaceCombatObject(ICombatObject combatObject, Vector2Int pos){
+    public void PlaceCombatObject(ICombatObject combatObject, CombatGridNode newNode){
         if (combatObject.Node != null){
             combatObject.Node.RemoveCombatObject(combatObject);
         }
-        var newNode = Grid.GetGridObject(pos.x, pos.y);
         newNode.AddCombatObject(combatObject);
         combatObject.Node = newNode;
     }
 
     public void TriggerGridObjectChanged(CombatGridNode node){
-        Debug.Log($"A grid object was changed at coordinates X: {node.x}, Y: {node.y}");
+        // Debug.Log($"A grid object was changed at coordinates X: {node.x}, Y: {node.y}");
     }
 
     public CombatGridNode GetNode(Vector2 pos){
@@ -52,4 +51,5 @@ public class CombatGrid : MonoBehaviour{
             arg0.Node = null;
         }
     }
+
 }

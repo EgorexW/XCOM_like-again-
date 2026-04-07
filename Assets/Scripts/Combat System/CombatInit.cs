@@ -11,7 +11,7 @@ public class CombatInit : MonoBehaviour{
     protected void Start(){
         var combatObjs = combatObjectsParent.GetComponentsInChildren<ICombatObject>();
         foreach (var combatObj in combatObjs) combatSystem.AddCombatObject(combatObj);
-        foreach (var turnTaker in turnTakers) combatSystem.turnSystem.AddTurnTaker(turnTaker);
+        foreach (var turnTaker in turnTakers) combatSystem.turnSystem.AddTurnTaker(turnTaker, InsertTurnTakerType.Last);
         combatSystem.StartCombat();
     }
 }

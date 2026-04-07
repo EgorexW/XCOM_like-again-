@@ -18,14 +18,22 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
         }
     }
 
-    public void AddTurnTaker(ITurnTaker turnTaker){
-        var currentTurnTaker = CurrentTurnTaker;
-        turnTakers.Add(turnTaker);
-        turnTaker.OnTurnCompleted = TurnCompleted;
-        turnTakers.Sort((a, b) => a.Priority.CompareTo(b.Priority));
-        if (currentTurnTaker != null){
-            index = turnTakers.IndexOf(currentTurnTaker);
+    public void AddTurnTaker(ITurnTaker turnTaker, InsertTurnTakerType insertTurnTakerType){
+        switch (insertTurnTakerType){
+            case InsertTurnTakerType.Next:
+                var i1 = index + 1;
+                turnTakers.Insert(i1, turnTaker);
+                break;
+            case InsertTurnTakerType.Last:
+                var i2 = index;
+                index += 1;
+                if (i2 < 0){
+                    i2 = 0;
+                }
+                turnTakers.Insert(i2, turnTaker);
+                break;
         }
+        turnTaker.OnTurnCompleted = TurnCompleted;
     }
 
     void TurnCompleted(ITurnTaker turnTaker){
@@ -46,8 +54,12 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
     }
 }
 
+public enum InsertTurnTakerType{
+    Next,
+    Last
+}
+
 public interface ITurnTaker{
-    public int Priority{ get; }
     public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
     void EndTurn();
 

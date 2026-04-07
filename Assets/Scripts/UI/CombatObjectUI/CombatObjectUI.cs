@@ -9,7 +9,7 @@ class CombatObjectUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] CombatUnitUI combatUnitUI;
 
     public void SetCombatObject(ICombatObject combatObject){
-        var screenPos = Camera.main.WorldToScreenPoint(combatObject.WorldPosition);
+        var screenPos = Camera.main.WorldToScreenPoint(combatObject.WorldPosition());
         rectTransform.position = screenPos;
         var healthComponent = combatObject.GetCombatComponent<HealthComponent>();
         if (healthComponent != null){

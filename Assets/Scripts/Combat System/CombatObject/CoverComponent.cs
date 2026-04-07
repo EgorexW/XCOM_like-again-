@@ -11,7 +11,10 @@ public class CoverComponent : CombatComponent{
 
     protected void Start(){
         UpdateVisuals();
-        combatObject.onInit.AddListener(SpawnAdjacentCover);
+    }
+
+    public override void Init(){
+        SpawnAdjacentCover();
     }
 
     void SpawnAdjacentCover(){
@@ -26,7 +29,7 @@ public class CoverComponent : CombatComponent{
             return;
         }
 
-        var spawnedHalf = Instantiate(adjacentCoverPrefab);
+        var spawnedHalf = Instantiate(adjacentCoverPrefab, transform.parent);
 
         var coverComponent = spawnedHalf.GetComponentInChildren<CoverComponent>();
         coverComponent.InitializeAsSpawnedHalf(direction.Opposite(), targetNode);

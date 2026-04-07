@@ -2545,7 +2545,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   actionNameText: {fileID: 1336488734}
-  descriptionText: {fileID: 0}
+  descriptionText: {fileID: 1262446368}
   confirmButton: {fileID: 1032714404}
   cancelButton: {fileID: 442291558}
   gridUI: {fileID: 2104002465}

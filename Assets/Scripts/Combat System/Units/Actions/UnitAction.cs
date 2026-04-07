@@ -1,15 +1,16 @@
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public abstract class UnitAction : MonoBehaviour{
-    [FormerlySerializedAs("Name")] [SerializeField] public string name;
+    [FormerlySerializedAs("Name")] [SerializeField] public new string name;
     [SerializeField] string description;
     [SerializeField] float cost = 1;
 
     [HideInEditorMode] [ReadOnly] public CombatUnit unit;
 
-    protected virtual float GetCost(){
+    public virtual float GetCost(){
         return cost;
     }
 
@@ -43,6 +44,6 @@ public abstract class UnitAction : MonoBehaviour{
     }
 
     public virtual string GetDescription(){
-        return string.Format(description, GetCost());
+        return Descriptions.GetActionDescription(this, description);
     }
 }

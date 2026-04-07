@@ -12,8 +12,7 @@ public class CombatUnit : CombatObject{
     [SerializeField] [HideInEditorMode] List<UnitAction> unitActions;
     [SerializeField] [HideInEditorMode] float actionPoints;
 
-    protected override void Awake(){
-        base.Awake();
+    protected void Awake(){
         unitActions = GetComponentsInChildren<UnitAction>().ToList();
         foreach (var action in unitActions) action.unit = this;
     }

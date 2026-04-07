@@ -21,7 +21,7 @@ class ActionsUI : UIElement{
     }
 
     void OnActionSelected(UnitAction action){
-        Debug.Log("Selected action: " + action.name, action);
+        // Debug.Log("Selected action: " + action.name, action);
         onActionSelected.Invoke(action);
     }
 

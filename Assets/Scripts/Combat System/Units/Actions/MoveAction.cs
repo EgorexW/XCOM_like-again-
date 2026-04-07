@@ -1,7 +1,9 @@
 using UnityEngine;
 
 public class MoveAction : TargetedUnitAction{
-    [SerializeField] int range = 2;
+    [SerializeField] float range = 2;
+
+    public float Range => range;
 
     protected override void OnExecute(){
         unit.MoveTo(targetNode);
@@ -17,12 +19,9 @@ public class MoveAction : TargetedUnitAction{
         if (node == unit.Node){
             return false;
         }
-        if (!unit.Node.InStraightLine(node)){
-            return false;
-        }
-        if (unit.Node.GetDistance(node) > range){
-            return false;
-        }
+        // if (!unit.Node.InStraightLine(node)){
+        //     return false;
+        // }
         if (!unit.Node.LineUnobstructed(node)){
             return false;
         }

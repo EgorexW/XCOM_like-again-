@@ -3,6 +3,10 @@ using UnityEngine;
 
 public abstract class TargetedUnitAction : UnitAction{
     protected CombatGridNode targetNode;
+    
+    [SerializeField] int range = 5;
+    
+    public float Range => range;
 
     protected override bool CanExecute(){
         if (!base.CanExecute()){
@@ -26,6 +30,9 @@ public abstract class TargetedUnitAction : UnitAction{
 
     protected virtual bool IsValidTarget(CombatGridNode node){
         if (node == null){
+            return false;
+        }
+        if (unit.Node.GetDistance(node) > range){
             return false;
         }
         return true;
