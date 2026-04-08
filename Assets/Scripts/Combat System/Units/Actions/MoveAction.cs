@@ -1,10 +1,6 @@
 using UnityEngine;
 
 public class MoveAction : TargetedUnitAction{
-    [SerializeField] float range = 2;
-
-    public float Range => range;
-
     protected override void OnExecute(){
         unit.MoveTo(targetNode);
     }

@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,10 +10,10 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     public CombatSystem CombatSystem{ get; set; }
     public GameObject GameObject => gameObject;
     public bool OccupiesTile => occupiesTile;
-
-    [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
-    [FoldoutGroup("Events")] public UnityEvent onInit{ get; } = new();
+    
     public string Name => name;
+
+    protected virtual void Awake(){}
 
     public T GetCombatComponent<T>() where T : CombatComponent{
         var component = GetComponentInChildren<T>();

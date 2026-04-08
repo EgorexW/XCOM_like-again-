@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class CombatSystem : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] CombatGrid combatGrid;
-    [BoxGroup("References")] [Required] [SerializeField] public TurnSystem turnSystem;
+    [BoxGroup("References")] [Required] [SerializeField] TurnSystem turnSystem;
 
     readonly List<ICombatObject> combatObjects = new();
 
@@ -14,6 +14,7 @@ public class CombatSystem : MonoBehaviour{
 
     public List<ICombatObject> CombatObjects => combatObjects.Copy();
     public CombatGrid CombatGrid => combatGrid;
+    public TurnSystem TurnSystem => turnSystem;
 
     public void AddCombatObject(ICombatObject combatObject){
         combatObjects.Add(combatObject);

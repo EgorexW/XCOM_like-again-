@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class SpawnAction : TargetedUnitAction{
     [SerializeField] GameObject prefabToSpawn;
-    
+    [Header("Spawn Settings")]
+    [SerializeField] InsertTurnTakerType insertTurnTakerType = InsertTurnTakerType.Next;
+
     protected override void OnExecute(){
         var spawnedObj = Instantiate(prefabToSpawn, unit.transform.parent);
         var combatObj = spawnedObj.GetComponent<CombatObject>();
@@ -10,6 +12,10 @@ public class SpawnAction : TargetedUnitAction{
             Debug.LogWarning($"Spawned object {spawnedObj.name} does not have a CombatObject component.", prefabToSpawn);
             return;
         }
-        unit.Grid().PlaceCombatObject(combatObj, targetNode);
+        unit.CombatSystem.AddCombatObject(combatObj);
+        var turnTaker = spawnedObj.GetComponentInChildren<ITurnTaker>();
+        if (turnTaker != null){
+            unit.CombatSystem.TurnSystem.AddTurnTaker(turnTaker, insertTurnTakerType);
+        }
     }
 }

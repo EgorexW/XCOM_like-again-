@@ -12115,6 +12115,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1722028004418123444, guid: 32cc6b6cbd1664423bea0a8081eeaa1a, type: 3}
   m_PrefabInstance: {fileID: 1703271132}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1704775923 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8948908945039809590, guid: b9b146c7e054e4150b3570aa7c815697, type: 3}
+  m_PrefabInstance: {fileID: 1746961862}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1714427596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12231,7 +12236,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 8948908945039809590, guid: b9b146c7e054e4150b3570aa7c815697, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1909229348}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9b146c7e054e4150b3570aa7c815697, type: 3}
 --- !u!4 &1746961863 stripped
@@ -13110,6 +13118,57 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1909229347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1909229348}
+  - component: {fileID: 1909229349}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1909229348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909229347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1704775923}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1909229349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909229347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6a2acbc7f3e45fdb0df34ea9e82e387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnAction
+  name: Spawn
+  description: 
+  cost: 1
+  unit: {fileID: 0}
+  range: 5
+  prefabToSpawn: {fileID: 5456766478168322322, guid: 32cc6b6cbd1664423bea0a8081eeaa1a, type: 3}
+  insertTurnTakerType: 0
 --- !u!1001 &1913676912
 PrefabInstance:
   m_ObjectHideFlags: 0

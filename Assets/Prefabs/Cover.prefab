@@ -153,6 +153,7 @@ MonoBehaviour:
   direction: 2
   coverSprite: {fileID: 1487447143790949270}
   adjacentCoverPrefab: {fileID: 7086092485035440313}
+  spawnedAsAdjacentCover: 0
 --- !u!1 &8720106548867897963
 GameObject:
   m_ObjectHideFlags: 0
