@@ -28,7 +28,8 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
                 var i2 = index;
                 index += 1;
                 if (i2 < 0){
-                    i2 = 0;
+                    index -= 1;
+                    i2 = turnTakers.Count;
                 }
                 turnTakers.Insert(i2, turnTaker);
                 break;
@@ -52,6 +53,21 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
         }
         CurrentTurnTaker?.StartTurn();
     }
+
+    public void RemoveTurnTaker(ITurnTaker turnTaker){
+        int removedIndex = turnTakers.IndexOf(turnTaker);
+        if (removedIndex == -1){
+            Debug.LogWarning($"Attempted to remove turn taker {turnTaker} but it was not found in the list.", this);
+            return;
+        }
+        if (removedIndex < index){
+            index--;
+        }
+        if (removedIndex == index){
+            NextTurn();
+        }
+        turnTakers.RemoveAt(removedIndex);
+    }
 }
 
 public enum InsertTurnTakerType{
@@ -62,9 +78,8 @@ public enum InsertTurnTakerType{
 public interface ITurnTaker{
     public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
     void EndTurn();
-
     void StartTurn();
-    // void CompleteTurn();
+    public TurnSystem TurnSystem { get; set; }
     public UnityEvent<ITurnTaker> onStartTurn{ get; }
     public UnityEvent<ITurnTaker> onEndTurn{ get; }
 }

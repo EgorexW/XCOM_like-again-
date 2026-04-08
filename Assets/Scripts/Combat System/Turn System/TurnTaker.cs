@@ -3,8 +3,6 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class TurnTaker : MonoBehaviour, ITurnTaker{
-    [SerializeField] int priority;
-    public int Priority => priority;
     public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
 
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn{ get; } = new();
@@ -20,6 +18,8 @@ public abstract class TurnTaker : MonoBehaviour, ITurnTaker{
         Debug.Log($"{this} started turn.");
         onStartTurn.Invoke(this);
     }
+
+    public TurnSystem TurnSystem{ get; set; }
 
     public void CompleteTurn(){
         OnTurnCompleted?.Invoke(this);

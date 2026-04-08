@@ -13,6 +13,7 @@ public class SpawnAction : TargetedUnitAction{
             return;
         }
         unit.CombatSystem.AddCombatObject(combatObj);
+        combatObj.MoveTo(targetNode);
         var turnTaker = spawnedObj.GetComponentInChildren<ITurnTaker>();
         if (turnTaker != null){
             unit.CombatSystem.TurnSystem.AddTurnTaker(turnTaker, insertTurnTakerType);

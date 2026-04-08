@@ -26,7 +26,6 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     }
 
     public void Remove(){
-        CombatSystem.RemoveCombatObject(this);
         Destroy(gameObject);
     }
 
@@ -35,6 +34,10 @@ public class CombatObject : MonoBehaviour, ICombatObject{
             combatComponent.combatObject = this;
             combatComponent.Init();
         }
+    }
+
+    protected void OnDestroy(){
+        CombatSystem.RemoveCombatObject(this);
     }
 }
 
