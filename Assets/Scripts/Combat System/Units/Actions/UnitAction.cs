@@ -9,14 +9,10 @@ public abstract class UnitAction : MonoBehaviour{
     [SerializeField] float cost = 1;
 
     [HideInEditorMode] [ReadOnly] public CombatUnit unit;
-
-    public virtual float GetCost(){
-        return cost;
-    }
-
+    
     public void Execute(){
         if (!CanExecute()){
-            Debug.LogWarning($"Cannot execute action {name} for unit {unit.name}");
+            Debug.LogWarning($"Cannot execute action {this.name} for unit {unit.name}");
             return;
         }
         OnExecute();
@@ -24,6 +20,9 @@ public abstract class UnitAction : MonoBehaviour{
     }
 
     protected abstract void OnExecute();
+    public virtual float GetCost(){
+        return cost;
+    }
 
     protected virtual bool CanExecute(){
         if (unit.ActionPoints < cost){
@@ -34,16 +33,15 @@ public abstract class UnitAction : MonoBehaviour{
         return true;
     }
 
+    public virtual string GetDescription(){
+        return Descriptions.GetActionDescription(this, description);
+    }
     [Button]
     void ResetName(){
-        name = gameObject.name;
+        this.name = gameObject.name;
     }
 
     protected void Reset(){
         ResetName();
-    }
-
-    public virtual string GetDescription(){
-        return Descriptions.GetActionDescription(this, description);
     }
 }

@@ -5,10 +5,7 @@ public class MoveAction : TargetedUnitAction{
         unit.MoveTo(targetNode);
     }
 
-    protected override bool IsValidTarget(CombatGridNode node){
-        if (!base.IsValidTarget(node)){
-            return false;
-        }
+    protected override bool CheckActionSpecificRules(CombatGridNode node){
         if (node.IsOccupied){
             return false;
         }

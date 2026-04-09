@@ -99,6 +99,48 @@ public static class CombatGridExtensions{
         }
         return dy > 0 ? Direction.Up : Direction.Down;
     }
+    
+    public static List<CombatGridNode> GetNodesInRadius(this CombatGridNode centerNode, float radius){
+        var nodes = new List<CombatGridNode>();
+        int boundingBox = Mathf.CeilToInt(radius);
+
+        for (int x = centerNode.x - boundingBox; x <= centerNode.x + boundingBox; x++){
+            for (int y = centerNode.y - boundingBox; y <= centerNode.y + boundingBox; y++){
+                var targetNode = centerNode.grid.GetNode(new Vector2Int(x, y));
+                if (targetNode == null){
+                    continue;
+                }
+                if (centerNode.GetDistance(targetNode) <= radius){
+                    nodes.Add(targetNode);
+                }
+            }
+        }
+        return nodes;
+    }
+    
+    public static List<CombatGridNode> GetNeighborNodes(this CombatGridNode node, bool includeDiagonals = false){
+        var neighbors = new List<CombatGridNode>();
+        for (int x = -1; x <= 1; x++){
+            for (int y = -1; y <= 1; y++){
+                if (x == 0 && y == 0) {
+                    continue;
+                }
+                
+                if (!includeDiagonals && Mathf.Abs(x) == Mathf.Abs(y)){
+                    continue;
+                }
+                
+                var targetNode = node.grid.GetNode(new Vector2Int(node.x + x, node.y + y));
+                if (targetNode == null){
+                    continue;
+                }
+
+                neighbors.Add(targetNode);
+            }
+        }
+
+        return neighbors;
+    }
 
     #region Attacks
 

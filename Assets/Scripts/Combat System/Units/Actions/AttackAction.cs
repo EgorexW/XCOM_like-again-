@@ -14,10 +14,7 @@ public class AttackAction : TargetedUnitAction{
         }
     }
 
-    protected override bool IsValidTarget(CombatGridNode node){
-        if (!base.IsValidTarget(node)){
-            return false;
-        }
+    protected override bool CheckActionSpecificRules(CombatGridNode node){
         if (node == unit.Node){
             return false;
         }

@@ -35,6 +35,7 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
                 break;
         }
         turnTaker.OnTurnCompleted = TurnCompleted;
+        turnTaker.TurnSystem = this;
     }
 
     void TurnCompleted(ITurnTaker turnTaker){
@@ -64,9 +65,13 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
             index--;
         }
         if (removedIndex == index){
+            index--;
             NextTurn();
         }
         turnTakers.RemoveAt(removedIndex);
+        if (turnTakers.Count == 0){
+            index = -1;
+        }
     }
 }
 

@@ -7665,7 +7665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cf8f59cd9d4a06b4af4fd0b82c43f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTurnTaker
-  priority: 0
   units:
   - {fileID: 1391571790}
   - {fileID: 352325184}
@@ -9695,7 +9694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cf8f59cd9d4a06b4af4fd0b82c43f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTurnTaker
-  priority: 0
   units:
   - {fileID: 1326826306}
   - {fileID: 1746961864}
@@ -13167,8 +13165,8 @@ MonoBehaviour:
   cost: 1
   unit: {fileID: 0}
   range: 5
-  prefabToSpawn: {fileID: 5456766478168322322, guid: 32cc6b6cbd1664423bea0a8081eeaa1a, type: 3}
-  insertTurnTakerType: 0
+  prefabToSpawn: {fileID: 9098700461190151436, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+  insertTurnTakerType: 1
 --- !u!1001 &1913676912
 PrefabInstance:
   m_ObjectHideFlags: 0

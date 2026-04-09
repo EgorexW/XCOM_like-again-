@@ -19,4 +19,13 @@ public class SpawnAction : TargetedUnitAction{
             unit.CombatSystem.TurnSystem.AddTurnTaker(turnTaker, insertTurnTakerType);
         }
     }
+
+    protected override bool CheckActionSpecificRules(CombatGridNode node){
+        if (node.IsOccupied){
+            if (prefabToSpawn.GetComponent<CombatObject>().OccupiesTile){
+                return false;
+            }
+        }
+        return true;
+    }
 }
