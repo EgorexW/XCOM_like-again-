@@ -7,16 +7,26 @@ public abstract class UnitAction : MonoBehaviour{
     [FormerlySerializedAs("Name")] [SerializeField] public new string name;
     [SerializeField] string description;
     [SerializeField] float cost = 1;
+    [SerializeField] Optional<int> usesLeft;
+    [SerializeField] ActionType actionType;
 
     [HideInEditorMode] [ReadOnly] public CombatUnit unit;
+
+    public int UsesLeft => usesLeft ? usesLeft : 1;
+    public bool LimitedUses => usesLeft;
+    public bool NoUsesLeft => usesLeft && usesLeft <= 0;
+    public ActionType ActionType => actionType;
     
     public void Execute(){
         if (!CanExecute()){
             Debug.LogWarning($"Cannot execute action {this.name} for unit {unit.name}");
             return;
         }
-        OnExecute();
         unit.SpendActionPoints(cost);
+        if (usesLeft){
+            usesLeft -= 1;
+        }
+        OnExecute();
     }
 
     protected abstract void OnExecute();
@@ -25,13 +35,16 @@ public abstract class UnitAction : MonoBehaviour{
     }
 
     protected virtual bool CanExecute(){
-        if (unit.ActionPoints < cost){
-            Debug.Log(
-                $"Cannot execute action {name} for unit {unit.name}, not enough action points. Current AP: {unit.ActionPoints}, required AP: {cost}");
-            return false;
+        if (usesLeft){
+            if (usesLeft <= 0){
+                Debug.Log(
+                    $"Cannot execute action {name} for unit {unit.name}, no uses left. Current uses: {usesLeft}");
+                return false;
+            }
         }
-        return true;
+        return unit.CanExecute(this);
     }
+    
 
     public virtual string GetDescription(){
         return Descriptions.GetActionDescription(this, description);
@@ -44,4 +57,10 @@ public abstract class UnitAction : MonoBehaviour{
     protected void Reset(){
         ResetName();
     }
+}
+
+public enum ActionType{
+    Movement,
+    Shooting,
+    Utility
 }

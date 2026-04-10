@@ -29,7 +29,7 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
                 index += 1;
                 if (i2 < 0){
                     index -= 1;
-                    i2 = turnTakers.Count;
+                    i2 = TurnTakersCount;
                 }
                 turnTakers.Insert(i2, turnTaker);
                 break;
@@ -61,17 +61,18 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
             Debug.LogWarning($"Attempted to remove turn taker {turnTaker} but it was not found in the list.", this);
             return;
         }
+        if (TurnTakersCount < 2){
+            index = -1;
+            turnTakers.Clear();
+            return;
+        }
+        if (removedIndex == index){
+            NextTurn();
+        }
         if (removedIndex < index){
             index--;
         }
-        if (removedIndex == index){
-            index--;
-            NextTurn();
-        }
         turnTakers.RemoveAt(removedIndex);
-        if (turnTakers.Count == 0){
-            index = -1;
-        }
     }
 }
 

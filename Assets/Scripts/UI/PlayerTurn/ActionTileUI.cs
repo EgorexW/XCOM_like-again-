@@ -7,6 +7,7 @@ using UnityEngine.UI;
 class ActionTileUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI actionName;
     [BoxGroup("References")] [Required] [SerializeField] Button selectButton;
+    [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI uses;
 
     UnitAction action;
     UnityAction<UnitAction> onSelect;
@@ -23,5 +24,11 @@ class ActionTileUI : UIElement{
         actionName.SetText(action.name);
         this.action = action;
         this.onSelect = onSelect;
+        if (action.LimitedUses){
+            uses.SetText($"x{action.UsesLeft}");
+        }
+        else{
+            uses.SetText("");
+        }
     }
 }

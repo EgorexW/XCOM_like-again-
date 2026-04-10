@@ -52,7 +52,7 @@ public class PlayerTurnUI : UIElement{
 
     void OnActionTargetConfirmed(UnitAction action){
         action.Execute();
-        actionTargetingUI.Hide();
+        SelectUnit(selectedUnit);
     }
 
     void OnActionSelected(UnitAction action){

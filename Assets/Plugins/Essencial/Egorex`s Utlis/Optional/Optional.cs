@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct Optional<T>{
+public struct Optional<T> : IEquatable<Optional<T>>{
     [SerializeField] bool enabled;
     [SerializeField] T value;
 
@@ -68,5 +69,9 @@ public struct Optional<T>{
 
     public override string ToString(){
         return value.ToString();
+    }
+
+    public bool Equals(Optional<T> other){
+        return this == other;
     }
 }

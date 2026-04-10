@@ -13,6 +13,7 @@ class ActionsUI : UIElement{
         base.Show();
         unit = newUnit;
         var actions = unit.UnitActions;
+        actions.RemoveAll(a => a.NoUsesLeft);
         actionsPool.SetCount(actions.Count);
         for (var i = 0; i < actions.Count; i++){
             var actionUI = actionsPool.GetActiveObject(i).GetComponent<ActionTileUI>();

@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosionEffect : CombatEffect{
     [SerializeField] float range = 1;
     [SerializeField] int damage = 1;
+    [SerializeField] List<UnitStatusEffectCreator> statusEffects;
     
     public override void Execute(){
         if (!HasNode){
@@ -14,8 +16,12 @@ public class ExplosionEffect : CombatEffect{
                 if (health != null){
                     health.TakeDamage(damage);
                 }
+                if (obj is CombatUnit unit){
+                    foreach (var statusEffect in statusEffects){
+                        unit.ApplyStatus(statusEffect.CreateStatus());
+                    }
+                }
             }
-            
         }
     }
 }

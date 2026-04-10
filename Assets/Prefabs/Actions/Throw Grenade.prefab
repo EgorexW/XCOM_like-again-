@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8611426707319941411
+--- !u!1 &7259602901416666776
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3631860729330829194}
-  - component: {fileID: 4011586103964397983}
+  - component: {fileID: 2076564977340960110}
+  - component: {fileID: 6745938322937687844}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: Throw Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3631860729330829194
+--- !u!4 &2076564977340960110
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8611426707319941411}
+  m_GameObject: {fileID: 7259602901416666776}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,25 +32,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4011586103964397983
+--- !u!114 &6745938322937687844
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8611426707319941411}
+  m_GameObject: {fileID: 7259602901416666776}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2aef1d7a12024c5aa73527330702a374, type: 3}
+  m_Script: {fileID: 11500000, guid: f6a2acbc7f3e45fdb0df34ea9e82e387, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AttackAction
-  name: Attack
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnAction
+  name: Throw Grenade
   description: 
   cost: 1
   usesLeft:
-    enabled: 0
-    value: 0
-  actionType: 1
+    enabled: 1
+    value: 1
+  actionType: 2
   unit: {fileID: 0}
-  range: 5
-  damage: 1
+  range: 7
+  prefabToSpawn: {fileID: 9098700461190151436, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+  insertTurnTakerType: 1
