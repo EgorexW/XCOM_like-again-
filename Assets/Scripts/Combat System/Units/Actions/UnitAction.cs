@@ -14,12 +14,11 @@ public abstract class UnitAction : MonoBehaviour{
 
     public int UsesLeft => usesLeft ? usesLeft : 1;
     public bool LimitedUses => usesLeft;
-    public bool NoUsesLeft => usesLeft && usesLeft <= 0;
     public ActionType ActionType => actionType;
     
     public void Execute(){
-        if (!CanExecute()){
-            Debug.LogWarning($"Cannot execute action {this.name} for unit {unit.name}");
+        if (CanExecute() != UnitActionValidation.Success){
+            Debug.LogWarning($"Cannot execute action {this.name} for unit {unit.name}, because {CanExecute().ToString()}");
             return;
         }
         unit.SpendActionPoints(cost);
@@ -34,12 +33,10 @@ public abstract class UnitAction : MonoBehaviour{
         return cost;
     }
 
-    protected virtual bool CanExecute(){
+    public virtual UnitActionValidation CanExecute(){
         if (usesLeft){
             if (usesLeft <= 0){
-                Debug.Log(
-                    $"Cannot execute action {name} for unit {unit.name}, no uses left. Current uses: {usesLeft}");
-                return false;
+                return UnitActionValidation.NoUsesLeft;
             }
         }
         return unit.CanExecute(this);
@@ -57,6 +54,14 @@ public abstract class UnitAction : MonoBehaviour{
     protected void Reset(){
         ResetName();
     }
+}
+
+public enum UnitActionValidation{
+    Success,
+    NotEnoughActionPoints,
+    NoUsesLeft,
+    SupressedByStatus,
+    InvalidTarget
 }
 
 public enum ActionType{

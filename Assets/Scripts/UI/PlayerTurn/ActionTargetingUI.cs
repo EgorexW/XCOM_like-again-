@@ -36,21 +36,19 @@ public class ActionTargetingUI : UIElement{
         base.Show();
         this.action = action;
         if (action is TargetedUnitAction targetedAction){
-            confirmButton.interactable = false;
             gridUI.ShowMarks(action.unit.Grid().Grid, targetedAction.GetValidTargets());
         }
-        else{
-            confirmButton.interactable = true;
-        }
+        confirmButton.interactable = action.CanExecute() == UnitActionValidation.Success;
         actionNameText.SetText(action.name);
         descriptionText.SetText(action.GetDescription());
     }
 
     public void OnSelect(Vector2 pos){
-        if (action is TargetedUnitAction targetedAction){
-            var isValid = targetedAction.SetTarget(pos);
-            confirmButton.interactable = isValid;
+        if (action is not TargetedUnitAction targetedAction){
+            return;
         }
+        targetedAction.SetTarget(pos);
+        confirmButton.interactable = action.CanExecute() == UnitActionValidation.Success;
     }
 
     public override void Hide(){

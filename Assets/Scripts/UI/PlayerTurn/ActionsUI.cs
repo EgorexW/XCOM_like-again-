@@ -13,7 +13,12 @@ class ActionsUI : UIElement{
         base.Show();
         unit = newUnit;
         var actions = unit.UnitActions;
-        actions.RemoveAll(a => a.NoUsesLeft);
+        foreach (var action in actions.Copy()){
+            var validation = action.CanExecute();
+            if (validation == UnitActionValidation.NoUsesLeft){
+                actions.Remove(action);
+            }
+        }
         actionsPool.SetCount(actions.Count);
         for (var i = 0; i < actions.Count; i++){
             var actionUI = actionsPool.GetActiveObject(i).GetComponent<ActionTileUI>();
@@ -22,7 +27,6 @@ class ActionsUI : UIElement{
     }
 
     void OnActionSelected(UnitAction action){
-        // Debug.Log("Selected action: " + action.name, action);
         onActionSelected.Invoke(action);
     }
 

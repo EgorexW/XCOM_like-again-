@@ -56,17 +56,15 @@ public class CombatUnit : CombatObject{
         }
     }
 
-    public bool CanExecute(UnitAction action) {
+    public UnitActionValidation CanExecute(UnitAction action) {
         if (ActionPoints < action.GetCost()){
-            Debug.Log(
-                $"Cannot execute action {action.name} for unit {name}, not enough action points. Current AP: {ActionPoints}, required AP: {action.GetCost()}");
-            return false;
+            return UnitActionValidation.NotEnoughActionPoints;
         }
         foreach (var status in activeStatuses) {
             if (!status.CanExecuteAction(action)){
-                return false;
+                return UnitActionValidation.SupressedByStatus;
             }
         }
-        return true;
+        return UnitActionValidation.Success;
     }
 }

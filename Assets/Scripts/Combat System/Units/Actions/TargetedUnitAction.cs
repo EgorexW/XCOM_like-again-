@@ -8,15 +8,15 @@ public abstract class TargetedUnitAction : UnitAction{
     
     public float Range => range;
 
-    protected override bool CanExecute(){
-        if (!base.CanExecute()){
-            return false;
+    public override UnitActionValidation CanExecute(){
+        var baseValidation = base.CanExecute();
+        if (baseValidation != UnitActionValidation.Success){
+            return baseValidation;
         }
         if (!IsValidTarget(targetNode)){
-            Debug.Log($"Cannot execute action {name} for unit {unit.name}, invalid target.");
-            return false;
+            return UnitActionValidation.InvalidTarget;
         }
-        return true;
+        return UnitActionValidation.Success;
     }
 
     public virtual bool SetTarget(CombatGridNode node){
