@@ -49,10 +49,7 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
     public void NextTurn(){
         CurrentTurnTaker?.EndTurn();
         index++;
-        if (index >= TurnTakersCount){
-            index = 0;
-        }
-        CurrentTurnTaker?.StartTurn();
+        StartTurn();
     }
 
     public void RemoveTurnTaker(ITurnTaker turnTaker){
@@ -66,13 +63,20 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
             turnTakers.Clear();
             return;
         }
+        turnTakers.RemoveAt(removedIndex);
         if (removedIndex == index){
-            NextTurn();
+            StartTurn();
         }
         if (removedIndex < index){
             index--;
         }
-        turnTakers.RemoveAt(removedIndex);
+    }
+
+    void StartTurn(){
+        if (index >= TurnTakersCount){
+            index = 0;
+        }
+        CurrentTurnTaker!.StartTurn();
     }
 }
 

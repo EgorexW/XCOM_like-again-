@@ -20,64 +20,61 @@ public static class CombatGridExtensions{
     public static List<CombatGridNode> GetNodesInBetween(this CombatGridNode node1, CombatGridNode node2){
         var nodes = new List<CombatGridNode>();
 
-        var x0 = node1.x;
-        var y0 = node1.y;
-        var x1 = node2.x;
-        var y1 = node2.y;
+        int x = node1.x;
+        int y = node1.y;
+        int x1 = node2.x;
+        int y1 = node2.y;
 
-        var dx = Mathf.Abs(x1 - x0);
-        var dy = Mathf.Abs(y1 - y0);
+        int dx = Mathf.Abs(x1 - x);
+        int dy = Mathf.Abs(y1 - y);
+    
+        int stepX = x < x1 ? 1 : -1;
+        int stepY = y < y1 ? 1 : -1;
 
-        var stepX = x0 < x1 ? 1 : -1;
-        var stepY = y0 < y1 ? 1 : -1;
-
-        // We multiply by 2 so we can do perfect integer math without decimals
-        var error = dx - dy;
-        var dx2 = dx * 2;
-        var dy2 = dy * 2;
-
-        var x = x0;
-        var y = y0;
+        // Notice we don't multiply err by 2 down in the loop anymore
+        int error = dx - dy;
+        dx *= 2;
+        dy *= 2;
 
         while (true){
-            nodes.Add(node1.grid.GetNode(new Vector2Int(x, y)));
+            var node = node1.grid.GetNode(new Vector2Int(x, y));
+        
+            // Add the node (and make sure we don't add duplicates from the magic block)
+            if (node != null && !nodes.Contains(node)){
+                nodes.Add(node);
+            }
 
-            // We reached the target!
-            if (x == x1 && y == y1){
+            // We reached the target node! Break immediately.
+            if (x == x1 && y == y1) {
                 break;
             }
 
-            // Step Horizontally
-            if (error > 0){
+            // SUPERCOVER LOGIC: We process X and Y steps independently
+            if (error > 0) {
                 x += stepX;
-                error -= dy2;
-            }
-            // Step Vertically
-            else if (error < 0){
+                error -= dy;
+            } 
+            else if (error < 0) {
                 y += stepY;
-                error += dx2;
-            }
-            // THE MAGIC BLOCK: error == 0
-            // The line passes exactly through a 4-way intersection!
-            else{
-                // 1. Grab the Horizontal Corner
-                var cornerX1 = x + stepX;
-                var cornerY1 = y;
-                nodes.Add(node1.grid.GetNode(new Vector2Int(cornerX1, cornerY1)));
+                error += dx;
+            } 
+            else { 
+                // THE MAGIC BLOCK: error == 0 (Perfect Diagonal)
+                // The line crosses the exact corner of 4 tiles. We check them all.
+                var corner1 = node1.grid.GetNode(new Vector2Int(x + stepX, y));
+                var corner2 = node1.grid.GetNode(new Vector2Int(x, y + stepY));
+            
+                if (corner1 != null && corner1 != node2) nodes.Add(corner1);
+                if (corner2 != null && corner2 != node2) nodes.Add(corner2);
 
-                // 2. Grab the Vertical Corner
-                var cornerX2 = x;
-                var cornerY2 = y + stepY;
-                nodes.Add(node1.grid.GetNode(new Vector2Int(cornerX2, cornerY2)));
-
-                // 3. Finally, move the main tracker diagonally
                 x += stepX;
                 y += stepY;
-                error -= dy2;
-                error += dx2;
+                error -= dy;
+                error += dx;
             }
         }
 
+        // Clean up
         nodes.Remove(node1);
         nodes.Remove(node2);
 
@@ -97,7 +94,7 @@ public static class CombatGridExtensions{
         if (Mathf.Abs(dx) > Mathf.Abs(dy)){
             return dx > 0 ? Direction.Left : Direction.Right;
         }
-        return dy > 0 ? Direction.Up : Direction.Down;
+        return dy > 0 ? Direction.Down : Direction.Up;
     }
     
     public static List<CombatGridNode> GetNodesInRadius(this CombatGridNode centerNode, float radius){
@@ -163,6 +160,8 @@ public static class CombatGridExtensions{
         }
         var attackDirection = GetDirection(attackerNode, targetNode);
 
+        Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in direction {attackDirection}");
+        
         if (targetNode.IsProtectedFrom(attackDirection.Opposite())){
             return false;
         }

@@ -6,12 +6,14 @@ using UnityEngine.Events;
 public class CombatObject : MonoBehaviour, ICombatObject{
     [SerializeField] bool occupiesTile = true;
 
-    public CombatGridNode Node{ get; set; }
-    public CombatSystem CombatSystem{ get; set; }
+    [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public CombatGridNode Node{ get; set; }
+    [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public CombatSystem CombatSystem{ get; set; }
     public GameObject GameObject => gameObject;
     public bool OccupiesTile => occupiesTile;
     
     public string Name => name;
+
+    [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
 
     protected virtual void Awake(){}
 
@@ -25,8 +27,10 @@ public class CombatObject : MonoBehaviour, ICombatObject{
         transform.position = new Vector3(targetNode.x, targetNode.y, transform.position.z);
     }
 
-    public void Remove(){
-        Destroy(gameObject);
+    public virtual void Remove(){
+        CombatSystem.RemoveCombatObject(this);
+        onRemove.Invoke(this);
+        gameObject.SetActive(false);
     }
 
     public void Init(){
@@ -36,8 +40,8 @@ public class CombatObject : MonoBehaviour, ICombatObject{
         }
     }
 
-    protected void OnDestroy(){
-        CombatSystem.RemoveCombatObject(this);
+    protected void OnDisable(){
+        Remove();
     }
 }
 
@@ -51,6 +55,7 @@ public interface ICombatObject{
     public void MoveTo(CombatGridNode targetNode);
     public void Remove();
     void Init();
+    UnityEvent<ICombatObject> onRemove{ get; }
 }
 
 public abstract class CombatComponent : MonoBehaviour{

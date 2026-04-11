@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 
+[Serializable]
 public class CombatGridNode : GridNode{
     public readonly CombatGrid grid;
 
-    readonly List<ICombatObject> combatObjects;
+    [FoldoutGroup("Debug")][ShowInInspector][HideInEditorMode] readonly List<ICombatObject> combatObjects;
 
     public bool IsOccupied => combatObjects.Find(co => co.OccupiesTile) != null;
 

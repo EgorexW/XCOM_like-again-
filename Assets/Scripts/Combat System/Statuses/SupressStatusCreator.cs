@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using UnityEngine;
-
 using UnityEngine;
 
 public class SupressStatusCreator : UnitStatusEffectCreator{
@@ -32,10 +29,10 @@ public class SupressStatus : UnitStatusEffect{
     }
 
     void OnEndTurn(CombatUnit arg0){
-            duration -= 1;
-            if (duration <= 0){
-                target.RemoveStatus(this);
-            }
+        duration -= 1;
+        if (duration <= 0){
+            target.RemoveStatus(this);
+        }
     }
 
     public override void OnRemoved(){
