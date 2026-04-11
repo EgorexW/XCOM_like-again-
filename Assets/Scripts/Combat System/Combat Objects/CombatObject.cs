@@ -2,14 +2,15 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class CombatObject : MonoBehaviour, ICombatObject{
-    [SerializeField] bool occupiesTile = true;
+    [SerializeField] GridOccupancyType gridOccupancyType;
 
     [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public CombatGridNode Node{ get; set; }
     [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public CombatSystem CombatSystem{ get; set; }
     public GameObject GameObject => gameObject;
-    public bool OccupiesTile => occupiesTile;
+    public GridOccupancyType OccupancyType => gridOccupancyType;
     
     public string Name => name;
 
@@ -49,7 +50,7 @@ public interface ICombatObject{
     CombatGridNode Node{ get; set; }
     CombatSystem CombatSystem { get; set; }
     GameObject GameObject { get; }
-    bool OccupiesTile{ get; }
+    GridOccupancyType OccupancyType { get; }
     T GetCombatComponent<T>() where T : CombatComponent;
     string Name{ get; }
     public void MoveTo(CombatGridNode targetNode);

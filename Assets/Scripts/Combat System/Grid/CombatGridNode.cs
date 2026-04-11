@@ -8,8 +8,6 @@ public class CombatGridNode : GridNode{
 
     [FoldoutGroup("Debug")][ShowInInspector][HideInEditorMode] readonly List<ICombatObject> combatObjects;
 
-    public bool IsOccupied => combatObjects.Find(co => co.OccupiesTile) != null;
-
     public CombatGridNode(CombatGrid grid, int x, int y) : base(x, y){
         this.grid = grid;
         combatObjects = new List<ICombatObject>();
@@ -28,4 +26,25 @@ public class CombatGridNode : GridNode{
     public List<ICombatObject> GetCombatObjects(){
         return combatObjects.Copy();
     }
+
+    // THE GATEKEEPER METHOD
+    public bool CanAcceptObject(GridOccupancyType newObjectType) {
+        if (combatObjects.Exists(co => co.OccupancyType == GridOccupancyType.Wall)) {
+            return false; 
+        }
+        
+        if (combatObjects.Exists(co => co.OccupancyType == GridOccupancyType.Character)) {
+            if (newObjectType == GridOccupancyType.Character || newObjectType == GridOccupancyType.Wall) {
+                return false;
+            }
+        }
+
+        return true; 
+    }
+}
+
+public enum GridOccupancyType{
+    Wall,
+    Character,
+    Other
 }

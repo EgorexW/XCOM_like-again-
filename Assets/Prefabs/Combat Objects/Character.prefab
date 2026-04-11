@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d459c2d9e379474bba6c3cee8eb7fb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatUnit
-  occupiesTile: 1
+  gridOccupancyType: 1
   defaultActionPoints: 2
   unitActions:
   - {fileID: 4310955059030211448}

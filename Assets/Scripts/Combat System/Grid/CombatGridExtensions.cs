@@ -9,9 +9,9 @@ public static class CombatGridExtensions{
         return true;
     }
 
-    public static bool LineUnobstructed(this CombatGridNode node1, CombatGridNode node2){
+    public static bool LineUnobstructed(this CombatGridNode node1, CombatGridNode node2, GridOccupancyType obstructionType){
         foreach (var node in node1.GetNodesInBetween(node2))
-            if (node.IsOccupied){
+            if (!node.CanAcceptObject(obstructionType)){
                 return false;
             }
         return true;
@@ -87,14 +87,30 @@ public static class CombatGridExtensions{
         return Mathf.Sqrt(dx * dx + dy * dy);
     }
 
-    public static Direction GetDirection(CombatGridNode attackerNode, CombatGridNode targetNode){
+    public static List<Direction> GetDirections(CombatGridNode attackerNode, CombatGridNode targetNode){
+        var directions = new List<Direction>();
+            
         var dx = attackerNode.x - targetNode.x;
         var dy = attackerNode.y - targetNode.y;
-
-        if (Mathf.Abs(dx) > Mathf.Abs(dy)){
-            return dx > 0 ? Direction.Left : Direction.Right;
+        
+        if (Mathf.Abs(dx) >= Mathf.Abs(dy)){
+            if (dx > 0){
+                directions.Add(Direction.Left);
+            }
+            else if (dx < 0){
+                directions.Add(Direction.Right);
+            }
+        } 
+        if (Mathf.Abs(dy) >= Mathf.Abs(dx)){
+            if (dy > 0){
+                directions.Add(Direction.Down);
+            }
+            else if (dy < 0){
+                directions.Add(Direction.Up);
+            }
         }
-        return dy > 0 ? Direction.Down : Direction.Up;
+
+        return directions;
     }
     
     public static List<CombatGridNode> GetNodesInRadius(this CombatGridNode centerNode, float radius){
@@ -155,15 +171,17 @@ public static class CombatGridExtensions{
 
 
     public static bool CanAttack(this CombatGridNode attackerNode, CombatGridNode targetNode){
-        if (!attackerNode.LineUnobstructed(targetNode)){
+        if (!attackerNode.LineUnobstructed(targetNode, GridOccupancyType.Character)){
             return false;
         }
-        var attackDirection = GetDirection(attackerNode, targetNode);
+        var attackDirections = GetDirections(attackerNode, targetNode);
 
-        Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in direction {attackDirection}");
-        
-        if (targetNode.IsProtectedFrom(attackDirection.Opposite())){
-            return false;
+        Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in directions {attackDirections}");
+
+        foreach (var direction in attackDirections){
+            if (targetNode.IsProtectedFrom(direction.Opposite())){
+                return false;
+            }
         }
 
         return true;

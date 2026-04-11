@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579098e593ff43bd84fb065bb2d7d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatObject
-  occupiesTile: 0
+  gridOccupancyType: 2
 --- !u!114 &1265413614643043436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,4 +191,4 @@ MonoBehaviour:
   supressedActionTypes: 01000000
   duration:
     enabled: 1
-    value: 2
+    value: 1

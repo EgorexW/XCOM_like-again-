@@ -60,10 +60,6 @@ public class CoverComponent : CombatComponent{
 
 #if UNITY_EDITOR
     protected void OnValidate(){
-        if (combatObject != null && combatObject.OccupiesTile){
-            Debug.LogWarning($"CombatObject {combatObject.Name} has a CoverComponent but also occupies a tile.");
-        }
-
         EditorApplication.delayCall += EditorDelayVisualUpdate;
     }
 

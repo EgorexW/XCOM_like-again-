@@ -4,9 +4,9 @@ public abstract class UnitStatusEffect {
     public virtual void OnApplied(CombatUnit targetTmp) {
         this.target = targetTmp;
     }
-    
-    public virtual void OnRemoved() {
-        this.target = null;
+
+    public virtual void OnRemoved(){
+        
     }
     
     public virtual bool CanExecuteAction(UnitAction action) {

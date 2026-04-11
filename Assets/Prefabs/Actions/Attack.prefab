@@ -52,5 +52,5 @@ MonoBehaviour:
     value: 0
   actionType: 1
   unit: {fileID: 0}
-  range: 5
+  range: 10
   damage: 1

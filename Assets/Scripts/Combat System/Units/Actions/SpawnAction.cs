@@ -21,10 +21,12 @@ public class SpawnAction : TargetedUnitAction{
     }
 
     protected override bool CheckActionSpecificRules(CombatGridNode node){
-        if (node.IsOccupied){
-            if (prefabToSpawn.GetComponent<CombatObject>().OccupiesTile){
-                return false;
-            }
+        var combatObject = prefabToSpawn.GetComponent<CombatObject>();
+        if (!node.CanAcceptObject(combatObject.OccupancyType)){
+            return false;
+        }
+        if (!unit.Node.LineUnobstructed(node, combatObject.OccupancyType)){
+            return false;
         }
         return true;
     }

@@ -6,16 +6,13 @@ public class MoveAction : TargetedUnitAction{
     }
 
     protected override bool CheckActionSpecificRules(CombatGridNode node){
-        if (node.IsOccupied){
+        if (!node.CanAcceptObject(unit.OccupancyType)){
             return false;
         }
         if (node == unit.Node){
             return false;
         }
-        // if (!unit.Node.InStraightLine(node)){
-        //     return false;
-        // }
-        if (!unit.Node.LineUnobstructed(node)){
+        if (!unit.Node.LineUnobstructed(node, GridOccupancyType.Character)){
             return false;
         }
         return true;

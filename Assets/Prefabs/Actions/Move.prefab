@@ -47,5 +47,9 @@ MonoBehaviour:
   name: Move
   description: 
   cost: 1
+  usesLeft:
+    enabled: 0
+    value: 0
+  actionType: 0
   unit: {fileID: 0}
-  range: 2
+  range: 3
