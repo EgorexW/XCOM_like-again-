@@ -14,7 +14,7 @@ class ActionsUI : UIElement{
         unit = newUnit;
         var actions = unit.UnitActions;
         foreach (var action in actions.Copy()){
-            var validation = action.CanExecute();
+            var validation = action.ValidateAction();
             if (validation.HasFlag(UnitActionValidation.NoUsesLeft)){
                 actions.Remove(action);
             }

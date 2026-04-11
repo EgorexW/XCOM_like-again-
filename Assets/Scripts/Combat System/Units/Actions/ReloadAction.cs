@@ -7,8 +7,8 @@ public class ReloadAction : UnitAction {
         ammoComp.Reload();
     }
     
-    public override UnitActionValidation CanExecute() {
-        var result = base.CanExecute();
+    public override UnitActionValidation ValidateAction() {
+        var result = base.ValidateAction();
         
         var ammoComp = unit.GetCombatComponent<AmmoComponent>();
         if (ammoComp == null) {

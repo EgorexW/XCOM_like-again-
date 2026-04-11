@@ -21,17 +21,17 @@ public class GridUI : UIElement{
         }
     }
 
-    public void ShowMarks<T>(Grid<T> grid, List<T> positions) where T : GridNode{
-        marksPool.SetCount(positions.Count);
+    public void ShowMarks<T>(Grid<T> grid, List<T> positions, Color color) where T : GridNode{
         for (var i = 0; i < positions.Count; i++){
             var pos = positions[i];
-            var cellObj = marksPool.GetActiveObject(i);
+            var cellObj = marksPool.AddObject();
             cellObj.transform.position = grid.GetWorldPosition(pos.x, pos.y);
             cellObj.transform.localScale = Vector3.one * grid.cellSize;
+            cellObj.GetComponent<SpriteRenderer>().color = color;
         }
     }
 
-    public void HideMarks(){
-        marksPool.Hide();
+    public void ClearMarks(){
+        marksPool.Clear();
     }
 }

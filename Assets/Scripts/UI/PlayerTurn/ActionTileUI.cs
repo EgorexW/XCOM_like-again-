@@ -25,7 +25,7 @@ class ActionTileUI : UIElement{
         actionName.SetText(action.name);
         this.action = action;
         this.onSelect = onSelect;
-        var validation = action.CanExecute();
+        var validation = action.ValidateAction();
         supressedIcon.gameObject.SetActive(false);
         selectButton.interactable = true;
         

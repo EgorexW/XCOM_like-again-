@@ -5,16 +5,17 @@ public class MoveAction : TargetedUnitAction{
         unit.MoveTo(targetNode);
     }
 
-    protected override bool CheckActionSpecificTargetRules(CombatGridNode node){
+    protected override TargetValidation CheckActionSpecificTargetRules(CombatGridNode node){
+        var result = base.CheckActionSpecificTargetRules(node);
         if (!node.CanAcceptObject(unit.OccupancyType)){
-            return false;
+            result |= TargetValidation.InvalidTarget;
         }
         if (node == unit.Node){
-            return false;
+            result |= TargetValidation.InvalidTarget;
         }
         if (!unit.Node.LineUnobstructed(node, GridOccupancyType.Character)){
-            return false;
+            result |= TargetValidation.NoPath;
         }
-        return true;
+        return result;
     }
 }

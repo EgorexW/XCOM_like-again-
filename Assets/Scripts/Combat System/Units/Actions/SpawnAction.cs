@@ -20,14 +20,15 @@ public class SpawnAction : TargetedUnitAction{
         }
     }
 
-    protected override bool CheckActionSpecificTargetRules(CombatGridNode node){
+    protected override TargetValidation CheckActionSpecificTargetRules(CombatGridNode node){
+        var result = base.CheckActionSpecificTargetRules(node);
         var combatObject = prefabToSpawn.GetComponent<CombatObject>();
         if (!node.CanAcceptObject(combatObject.OccupancyType)){
-            return false;
+            result = TargetValidation.InvalidTarget;
         }
         if (!unit.Node.LineUnobstructed(node, combatObject.OccupancyType)){
-            return false;
+            result |= TargetValidation.NoPath;
         }
-        return true;
+        return result;
     }
 }

@@ -67,11 +67,6 @@ public class ObjectsPool : CountUI{
         inactiveObjs.Enqueue(obj);
     }
 
-    public override void Hide(){
-        base.Hide();
-        SetCount(0);
-    }
-
     public List<GameObject> GetActiveObjs(){
         return new List<GameObject>(activeObjs);
     }
@@ -90,6 +85,10 @@ public class ObjectsPool : CountUI{
         onCreateObject.Invoke(newObj);
         newObj.SendMessage("OnObjectPoolCreate", SendMessageOptions.DontRequireReceiver);
         return newObj;
+    }
+
+    public void Clear(){
+        SetCount(0);
     }
 }
 

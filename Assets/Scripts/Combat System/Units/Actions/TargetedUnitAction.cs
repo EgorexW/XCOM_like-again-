@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,16 +9,16 @@ public abstract class TargetedUnitAction : UnitAction{
     
     public float Range => range;
 
-    public override UnitActionValidation CanExecute(){
-        var result = base.CanExecute();
-        if (!IsValidTarget(targetNode)){
+    public override UnitActionValidation ValidateAction(){
+        var result = base.ValidateAction();
+        if (ValidateTarget(targetNode) != TargetValidation.Valid){
             result |= UnitActionValidation.InvalidTarget;
         }
         return result;
     }
 
     public virtual bool SetTarget(CombatGridNode node){
-        if (!IsValidTarget(node)){
+        if (ValidateTarget(node) != TargetValidation.Valid){
             Debug.LogWarning($"Invalid target node {node} for action {name} of unit {unit.name}");
             return false;
         }
@@ -25,14 +26,17 @@ public abstract class TargetedUnitAction : UnitAction{
         return true;
     }
 
-    public bool IsValidTarget(CombatGridNode node){
+    public TargetValidation ValidateTarget(CombatGridNode node){
+        var result = TargetValidation.Valid;
         if (node == null){
-            return false;
+            result |= TargetValidation.NotANode;
+            return result; // Can't Validate further
         }
         if (unit.Node.GetDistance(node) > range){
-            return false;
+            result |= TargetValidation.OutOfRange;
         }
-        return CheckActionSpecificTargetRules(node);
+        result |= CheckActionSpecificTargetRules(node);
+        return result;
     }
 
     public bool SetTarget(Vector2 pos){
@@ -42,15 +46,29 @@ public abstract class TargetedUnitAction : UnitAction{
 
     public List<CombatGridNode> GetValidTargets(){
         var list = new List<CombatGridNode>();
-        foreach (var node in unit.Node.GetNodesInRadius(range)){
-            if (CheckActionSpecificTargetRules(node)){
+        foreach (var node in GetAllTargets()){
+            if (CheckActionSpecificTargetRules(node) == TargetValidation.Valid){
                 list.Add(node);
             }
         }
         return list;
     }
 
-    protected virtual bool CheckActionSpecificTargetRules(CombatGridNode node){
-        return true; 
+    protected virtual TargetValidation CheckActionSpecificTargetRules(CombatGridNode node){
+        return TargetValidation.Valid;
     }
+
+    public List<CombatGridNode> GetAllTargets(){
+        return unit.Node.GetNodesInRadius(range);
+    }
+}
+
+[Flags]
+public enum TargetValidation{
+    Valid          = 0,      
+    OutOfRange     = 1 << 0, 
+    InvalidTarget  = 1 << 1, 
+    NoValidTarget  = 1 << 2, 
+    NoPath         = 1 << 3,
+    NotANode       = 1 << 4,
 }

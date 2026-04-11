@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -11,7 +13,10 @@ public class ActionTargetingUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] Button cancelButton;
     [BoxGroup("References")] [Required] [SerializeField] GridUI gridUI;
 
-    UnitAction action;
+    [BoxGroup("Config")] [SerializeField] Color validTargetsColor = Color.white;
+    [BoxGroup("Config")] [SerializeField] Color invalidTargetsColor = Color.gray3;
+    
+            UnitAction action;
 
     [FoldoutGroup("Events")] public UnityEvent<UnitAction> onConfirm;
     [FoldoutGroup("Events")] public UnityEvent onCancel;
@@ -35,13 +40,26 @@ public class ActionTargetingUI : UIElement{
     public void Show(UnitAction action){
         base.Show();
         this.action = action;
+        gridUI.ClearMarks();
         if (action is TargetedUnitAction targetedAction){
-            gridUI.ShowMarks(action.unit.Grid().Grid, targetedAction.GetValidTargets());
+            var allTargets = targetedAction.GetAllTargets();
+            var validTargets = new List<CombatGridNode>();
+            var nonValidTargetsToShow = new List<CombatGridNode>();
+            foreach (var target in allTargets){
+                var validation = targetedAction.ValidateTarget(target);
+                if (validation == TargetValidation.Valid){
+                    validTargets.Add(target);
+                    continue;
+                }
+                if (validation == TargetValidation.NoValidTarget){
+                    nonValidTargetsToShow.Add(target);
+                }
+            }
+            gridUI.ShowMarks(action.unit.Grid().Grid, validTargets, validTargetsColor);
+            gridUI.ShowMarks(action.unit.Grid().Grid, nonValidTargetsToShow, invalidTargetsColor);
         }
-
-        Debug.Log($"Action Validation: {action.CanExecute()}");
         
-        confirmButton.interactable = action.CanExecute() == UnitActionValidation.NoIssues;
+        confirmButton.interactable = action.ValidateAction() == UnitActionValidation.Valid;
         actionNameText.SetText(action.name);
         descriptionText.SetText(action.GetDescription());
     }
@@ -51,11 +69,11 @@ public class ActionTargetingUI : UIElement{
             return;
         }
         targetedAction.SetTarget(pos);
-        confirmButton.interactable = action.CanExecute() == UnitActionValidation.NoIssues;
+        confirmButton.interactable = action.ValidateAction() == UnitActionValidation.Valid;
     }
 
     public override void Hide(){
         base.Hide();
-        gridUI.HideMarks();
+        gridUI.ClearMarks();
     }
 }

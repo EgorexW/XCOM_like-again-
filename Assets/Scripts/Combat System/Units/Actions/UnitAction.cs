@@ -16,8 +16,8 @@ public abstract class UnitAction : MonoBehaviour{
     public ActionType ActionType => actionType;
     
     public void Execute(){
-        if (CanExecute() != UnitActionValidation.NoIssues){
-            Debug.LogWarning($"Cannot execute action {this.name} for unit {unit.name}, because {CanExecute().ToString()}");
+        if (ValidateAction() != UnitActionValidation.Valid){
+            Debug.LogWarning($"Cannot execute action {this.name} for unit {unit.name}, because {ValidateAction().ToString()}");
             return;
         }
         unit.SpendActionPoints(cost);
@@ -32,8 +32,8 @@ public abstract class UnitAction : MonoBehaviour{
         return cost;
     }
 
-    public virtual UnitActionValidation CanExecute(){
-        UnitActionValidation result = UnitActionValidation.NoIssues;
+    public virtual UnitActionValidation ValidateAction(){
+        UnitActionValidation result = UnitActionValidation.Valid;
         if (IsLimitedUse()){
             if (GetUsesLeft() <= 0){
                 result |= UnitActionValidation.NoUsesLeft;
@@ -70,7 +70,7 @@ public abstract class UnitAction : MonoBehaviour{
 
 [Flags]
 public enum UnitActionValidation{
-    NoIssues = 0,                     
+    Valid = 0,                     
     NotEnoughActionPoints = 1 << 0,  
     NoUsesLeft = 1 << 1,             
     SupressedByStatus = 1 << 2,      

@@ -16,7 +16,6 @@ class CollapseablePool : CountUI{
             collapsedUI.SetActive(false);
         }
         else{
-            heartsPool.Hide();
             collapsedUI.SetActive(true);
         }
     }

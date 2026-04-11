@@ -58,7 +58,7 @@ public class CombatUnit : CombatObject{
     }
 
     public UnitActionValidation CanExecute(UnitAction action) {
-        var result = UnitActionValidation.NoIssues;
+        var result = UnitActionValidation.Valid;
         if (ActionPoints < action.GetCost()){
             result |= UnitActionValidation.NotEnoughActionPoints;
         }

@@ -23,9 +23,10 @@ public class AttackAction : TargetedUnitAction{
         }
     }
 
-    protected override bool CheckActionSpecificTargetRules(CombatGridNode node){
+    protected override TargetValidation CheckActionSpecificTargetRules(CombatGridNode node){
+        var result = base.CheckActionSpecificTargetRules(node);
         if (node == unit.Node){
-            return false;
+            result |= TargetValidation.InvalidTarget;
         }
         var targetObjects = node.GetCombatObjects();
         var foundTarget = false;
@@ -37,16 +38,16 @@ public class AttackAction : TargetedUnitAction{
             }
         }
         if (!foundTarget){
-            return false;
+            result |= TargetValidation.NoValidTarget;
         }
         if (!unit.Node.CanAttack(node)){
-            return false;
+            result |= TargetValidation.NoPath;
         }
-        return true;
+        return result;
     }
 
-    public override UnitActionValidation CanExecute(){
-        var result = base.CanExecute();
+    public override UnitActionValidation ValidateAction(){
+        var result = base.ValidateAction();
          if (ammoCost > 0) {
              var ammoComp = unit.GetCombatComponent<AmmoComponent>();
              if (ammoComp == null) {
