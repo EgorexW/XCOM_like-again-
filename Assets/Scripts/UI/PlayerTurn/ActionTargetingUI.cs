@@ -38,7 +38,10 @@ public class ActionTargetingUI : UIElement{
         if (action is TargetedUnitAction targetedAction){
             gridUI.ShowMarks(action.unit.Grid().Grid, targetedAction.GetValidTargets());
         }
-        confirmButton.interactable = action.CanExecute() == UnitActionValidation.Success;
+
+        Debug.Log($"Action Validation: {action.CanExecute()}");
+        
+        confirmButton.interactable = action.CanExecute() == UnitActionValidation.NoIssues;
         actionNameText.SetText(action.name);
         descriptionText.SetText(action.GetDescription());
     }
@@ -48,7 +51,7 @@ public class ActionTargetingUI : UIElement{
             return;
         }
         targetedAction.SetTarget(pos);
-        confirmButton.interactable = action.CanExecute() == UnitActionValidation.Success;
+        confirmButton.interactable = action.CanExecute() == UnitActionValidation.NoIssues;
     }
 
     public override void Hide(){

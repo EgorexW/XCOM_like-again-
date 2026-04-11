@@ -28,17 +28,16 @@ class ActionTileUI : UIElement{
         var validation = action.CanExecute();
         supressedIcon.gameObject.SetActive(false);
         selectButton.interactable = true;
-        switch (validation){
-            case UnitActionValidation.SupressedByStatus:
+        
+            if (validation.HasFlag(UnitActionValidation.SupressedByStatus)){
                 selectButton.interactable = false;
                 supressedIcon.gameObject.SetActive(true);
-                break;
-            case UnitActionValidation.NotEnoughActionPoints:
+            }
+            if (validation.HasFlag(UnitActionValidation.NotEnoughActionPoints)){
                 selectButton.interactable = false;
-                break;
-        }
-        if (action.LimitedUses){
-            uses.SetText($"x{action.UsesLeft}");
+            }
+        if (action.IsLimitedUse()){
+            uses.SetText($"x{action.GetUsesLeft()}");
         }
         else{
             uses.SetText("");

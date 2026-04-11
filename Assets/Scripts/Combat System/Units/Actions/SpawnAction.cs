@@ -20,7 +20,7 @@ public class SpawnAction : TargetedUnitAction{
         }
     }
 
-    protected override bool CheckActionSpecificRules(CombatGridNode node){
+    protected override bool CheckActionSpecificTargetRules(CombatGridNode node){
         var combatObject = prefabToSpawn.GetComponent<CombatObject>();
         if (!node.CanAcceptObject(combatObject.OccupancyType)){
             return false;

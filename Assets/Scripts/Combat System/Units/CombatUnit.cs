@@ -58,14 +58,15 @@ public class CombatUnit : CombatObject{
     }
 
     public UnitActionValidation CanExecute(UnitAction action) {
+        var result = UnitActionValidation.NoIssues;
         if (ActionPoints < action.GetCost()){
-            return UnitActionValidation.NotEnoughActionPoints;
+            result |= UnitActionValidation.NotEnoughActionPoints;
         }
         foreach (var status in activeStatuses) {
             if (!status.CanExecuteAction(action)){
-                return UnitActionValidation.SupressedByStatus;
+                result |= UnitActionValidation.SupressedByStatus;
             }
         }
-        return UnitActionValidation.Success;
+        return result;
     }
 }

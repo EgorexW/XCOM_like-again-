@@ -9,14 +9,11 @@ public abstract class TargetedUnitAction : UnitAction{
     public float Range => range;
 
     public override UnitActionValidation CanExecute(){
-        var baseValidation = base.CanExecute();
-        if (baseValidation != UnitActionValidation.Success){
-            return baseValidation;
-        }
+        var result = base.CanExecute();
         if (!IsValidTarget(targetNode)){
-            return UnitActionValidation.InvalidTarget;
+            result |= UnitActionValidation.InvalidTarget;
         }
-        return UnitActionValidation.Success;
+        return result;
     }
 
     public virtual bool SetTarget(CombatGridNode node){
@@ -35,7 +32,7 @@ public abstract class TargetedUnitAction : UnitAction{
         if (unit.Node.GetDistance(node) > range){
             return false;
         }
-        return CheckActionSpecificRules(node);
+        return CheckActionSpecificTargetRules(node);
     }
 
     public bool SetTarget(Vector2 pos){
@@ -46,14 +43,14 @@ public abstract class TargetedUnitAction : UnitAction{
     public List<CombatGridNode> GetValidTargets(){
         var list = new List<CombatGridNode>();
         foreach (var node in unit.Node.GetNodesInRadius(range)){
-            if (CheckActionSpecificRules(node)){
+            if (CheckActionSpecificTargetRules(node)){
                 list.Add(node);
             }
         }
         return list;
     }
 
-    protected virtual bool CheckActionSpecificRules(CombatGridNode node){
+    protected virtual bool CheckActionSpecificTargetRules(CombatGridNode node){
         return true; 
     }
 }

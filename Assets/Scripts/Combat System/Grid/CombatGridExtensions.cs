@@ -176,7 +176,7 @@ public static class CombatGridExtensions{
         }
         var attackDirections = GetDirections(attackerNode, targetNode);
 
-        Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in directions {attackDirections}");
+        // Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in directions {attackDirections}");
 
         foreach (var direction in attackDirections){
             if (targetNode.IsProtectedFrom(direction.Opposite())){

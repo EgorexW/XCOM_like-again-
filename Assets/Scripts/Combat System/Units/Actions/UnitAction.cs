@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,13 +12,11 @@ public abstract class UnitAction : MonoBehaviour{
     [SerializeField] ActionType actionType;
 
     [HideInEditorMode] [ReadOnly] public CombatUnit unit;
-
-    public int UsesLeft => usesLeft ? usesLeft : 1;
-    public bool LimitedUses => usesLeft;
+    
     public ActionType ActionType => actionType;
     
     public void Execute(){
-        if (CanExecute() != UnitActionValidation.Success){
+        if (CanExecute() != UnitActionValidation.NoIssues){
             Debug.LogWarning($"Cannot execute action {this.name} for unit {unit.name}, because {CanExecute().ToString()}");
             return;
         }
@@ -34,12 +33,14 @@ public abstract class UnitAction : MonoBehaviour{
     }
 
     public virtual UnitActionValidation CanExecute(){
-        if (usesLeft){
-            if (usesLeft <= 0){
-                return UnitActionValidation.NoUsesLeft;
+        UnitActionValidation result = UnitActionValidation.NoIssues;
+        if (IsLimitedUse()){
+            if (GetUsesLeft() <= 0){
+                result |= UnitActionValidation.NoUsesLeft;
             }
         }
-        return unit.CanExecute(this);
+        result |= unit.CanExecute(this);
+        return result;
     }
     
 
@@ -54,14 +55,27 @@ public abstract class UnitAction : MonoBehaviour{
     protected void Reset(){
         ResetName();
     }
+
+    public virtual bool IsLimitedUse(){
+        return GetUsesLeft() > -1;
+    }
+
+    public virtual int GetUsesLeft(){
+        if (!usesLeft){
+            return -1;
+        }
+        return usesLeft;
+    }
 }
 
+[Flags]
 public enum UnitActionValidation{
-    Success,
-    NotEnoughActionPoints,
-    NoUsesLeft,
-    SupressedByStatus,
-    InvalidTarget
+    NoIssues = 0,                     
+    NotEnoughActionPoints = 1 << 0,  
+    NoUsesLeft = 1 << 1,             
+    SupressedByStatus = 1 << 2,      
+    InvalidTarget = 1 << 3,          
+    AmmoIssue = 1 << 4
 }
 
 public enum ActionType{

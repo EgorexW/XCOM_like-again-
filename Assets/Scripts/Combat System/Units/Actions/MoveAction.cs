@@ -5,7 +5,7 @@ public class MoveAction : TargetedUnitAction{
         unit.MoveTo(targetNode);
     }
 
-    protected override bool CheckActionSpecificRules(CombatGridNode node){
+    protected override bool CheckActionSpecificTargetRules(CombatGridNode node){
         if (!node.CanAcceptObject(unit.OccupancyType)){
             return false;
         }
