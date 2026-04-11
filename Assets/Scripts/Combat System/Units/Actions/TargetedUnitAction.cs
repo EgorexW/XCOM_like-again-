@@ -22,6 +22,7 @@ public abstract class TargetedUnitAction : UnitAction{
             Debug.LogWarning($"Invalid target node {node} for action {name} of unit {unit.name}");
             return false;
         }
+        Debug.Log("Setting target node to " + node);
         targetNode = node;
         return true;
     }

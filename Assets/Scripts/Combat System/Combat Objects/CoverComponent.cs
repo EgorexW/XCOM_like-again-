@@ -39,7 +39,7 @@ public class CoverComponent : CombatComponent{
         var coverComponent = spawnedHalf.GetComponentInChildren<CoverComponent>();
         coverComponent.spawnedAsAdjacentCover = true;
         
-        combatObject.CombatSystem.AddCombatObject(combatObj);
+        combatObject.CombatSystem.AddCombatObject(combatObj, targetNode);
         coverComponent.InitializeAsSpawnedHalf(direction.Opposite(), targetNode);
 
     }
@@ -47,8 +47,6 @@ public class CoverComponent : CombatComponent{
     public void InitializeAsSpawnedHalf(Direction oppositeDir, CombatGridNode targetNode){
         direction = oppositeDir;
         UpdateVisuals();
-
-        combatObject.MoveTo(targetNode);
     }
 
     void UpdateVisuals(){

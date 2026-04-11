@@ -39,10 +39,17 @@ public class InputHandler : MonoBehaviour{
             case "Confirm":
                 OnConfirmPerformed();
                 break;
+            case "Cancel":
+                OnCancelPerformed();
+                break;
             default:
                 Debug.LogWarning("Unhandled action: " + obj.action.name);
                 break;
         }
+    }
+
+    void OnCancelPerformed(){
+        playerTurnUI.OnCancel();
     }
 
     void OnActionSlotPerformed(int slot){

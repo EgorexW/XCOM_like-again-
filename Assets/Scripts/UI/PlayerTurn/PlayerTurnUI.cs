@@ -9,6 +9,7 @@ public class PlayerTurnUI : UIElement{
     [BoxGroup("Internal References")] [Required] [SerializeField] ActionsUI actionsUI;
     [BoxGroup("Internal References")] [Required] [SerializeField] ActionTargetingUI actionTargetingUI;
     [BoxGroup("Internal References")] [Required] [SerializeField] Button endTurnButton;
+    [BoxGroup("Internal References")] [Required] [SerializeField] Transform selectedUnitHighlight;
 
     [ShowInInspector] CombatUnit selectedUnit;
     [ShowInInspector] PlayerTurnTaker currentTurnTaker;
@@ -46,6 +47,7 @@ public class PlayerTurnUI : UIElement{
 
     public override void Show(){
         base.Show();
+        selectedUnitHighlight.gameObject.SetActive(false);
         actionsUI.Hide();
         actionTargetingUI.Hide();
     }
@@ -86,11 +88,14 @@ public class PlayerTurnUI : UIElement{
         }
         DeselectUnit();
         selectedUnit = unit;
+        selectedUnitHighlight.position = Camera.main.WorldToScreenPoint(selectedUnit.transform.position);
+        selectedUnitHighlight.gameObject.SetActive(true);
         actionsUI.Show(unit);
     }
 
     public void DeselectUnit(){
         selectedUnit = null;
+        selectedUnitHighlight.gameObject.SetActive(false);
         actionsUI.Hide();
         actionTargetingUI.Hide();
     }
@@ -115,5 +120,17 @@ public class PlayerTurnUI : UIElement{
             return;
         }
         actionsUI.SelectSlot(slot);
+    }
+
+    public void OnCancel(){
+        if (!IsVisible){
+            return;
+        }
+        if (actionTargetingUI.IsVisible){
+            actionTargetingUI.OnCancel();
+        }
+        else{
+            DeselectUnit();
+        }
     }
 }

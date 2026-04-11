@@ -26,7 +26,7 @@ public class ActionTargetingUI : UIElement{
         cancelButton.onClick.AddListener(OnCancel);
     }
 
-    void OnCancel(){
+    public void OnCancel(){
         onCancel.Invoke();
     }
 

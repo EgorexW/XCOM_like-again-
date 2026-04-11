@@ -26,8 +26,7 @@ public class CombatGridNode : GridNode{
     public List<ICombatObject> GetCombatObjects(){
         return combatObjects.Copy();
     }
-
-    // THE GATEKEEPER METHOD
+    
     public bool CanAcceptObject(GridOccupancyType newObjectType) {
         if (combatObjects.Exists(co => co.OccupancyType == GridOccupancyType.Wall)) {
             return false; 
@@ -40,6 +39,10 @@ public class CombatGridNode : GridNode{
         }
 
         return true; 
+    }
+
+    public override string ToString(){
+        return $"Node({x}, {y}) with {combatObjects.Count} objects";
     }
 }
 

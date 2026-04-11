@@ -12,8 +12,8 @@ public class SpawnAction : TargetedUnitAction{
             Debug.LogWarning($"Spawned object {spawnedObj.name} does not have a CombatObject component.", prefabToSpawn);
             return;
         }
-        unit.CombatSystem.AddCombatObject(combatObj);
-        combatObj.MoveTo(targetNode);
+        Debug.Log($"Spawning object {spawnedObj.name} at node {targetNode}", spawnedObj);
+        unit.CombatSystem.AddCombatObject(combatObj, targetNode);
         var turnTaker = spawnedObj.GetComponentInChildren<ITurnTaker>();
         if (turnTaker != null){
             unit.CombatSystem.TurnSystem.AddTurnTaker(turnTaker, insertTurnTakerType);

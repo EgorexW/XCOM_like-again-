@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,6 +9,7 @@ class ActionsUI : UIElement{
     [FoldoutGroup("Events")] public UnityEvent<UnitAction> onActionSelected;
 
     CombatUnit unit;
+    List<ActionTileUI> actionsUI;
 
     public void Show(CombatUnit newUnit){
         base.Show();
@@ -20,8 +22,10 @@ class ActionsUI : UIElement{
             }
         }
         actionsPool.SetCount(actions.Count);
+        actionsUI = new List<ActionTileUI>();
         for (var i = 0; i < actions.Count; i++){
             var actionUI = actionsPool.GetActiveObject(i).GetComponent<ActionTileUI>();
+            actionsUI.Add(actionUI);
             actionUI.SetAction(actions[i], OnActionSelected);
         }
     }
@@ -34,12 +38,11 @@ class ActionsUI : UIElement{
         if (unit == null){
             return;
         }
-        var actions = unit.UnitActions;
-        if (slot < 0 || slot >= actions.Count){
-            Debug.LogWarning($"Invalid action slot {slot}. Unit {unit.name} has {actions.Count} actions.");
+        if (slot < 0 || slot >= actionsUI.Count){
+            Debug.LogWarning($"Invalid action slot {slot}. Unit {unit.name} has {actionsUI.Count} actions.");
             return;
         }
-        var action = actions[slot];
-        OnActionSelected(action);
+        var actionUI = actionsUI[slot];
+        actionUI.OnSelect();
     }
 }

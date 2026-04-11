@@ -31,7 +31,10 @@ public class Grenade : TurnTaker
         onActivate.Invoke();
         TurnSystem.RemoveTurnTaker(this);
         if (destroy){
-            Destroy(gameObject);
+            owner.Remove();
+            if (owner == null){
+                Destroy(this.gameObject);
+            }
         }
     }
 

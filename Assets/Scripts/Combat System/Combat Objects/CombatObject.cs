@@ -40,10 +40,6 @@ public class CombatObject : MonoBehaviour, ICombatObject{
             combatComponent.Init();
         }
     }
-
-    protected void OnDisable(){
-        Remove();
-    }
 }
 
 public interface ICombatObject{

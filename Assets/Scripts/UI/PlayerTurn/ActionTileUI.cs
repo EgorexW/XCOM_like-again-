@@ -17,7 +17,10 @@ class ActionTileUI : UIElement{
         selectButton.onClick.AddListener(OnSelect);
     }
 
-    void OnSelect(){
+    public void OnSelect(){
+        if (!selectButton.interactable){
+            return;
+        }
         onSelect?.Invoke(action);
     }
 
