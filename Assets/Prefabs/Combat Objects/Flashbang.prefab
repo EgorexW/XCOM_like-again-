@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95819fbeb1b4ef9843f76937ecceaec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionEffect
-  range: 1
+  range: 1.5
   damage: 0
   statusEffects:
   - {fileID: -6548559243408836610}

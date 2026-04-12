@@ -42,7 +42,6 @@ public class SupressStatus : UnitStatusEffect{
 
     public override bool CanExecuteAction(UnitAction action){
         if (supressedActionTypes.Contains(action.ActionType)){
-            Debug.Log($"Action {action.name} of type {action.ActionType} is supressed for unit {target.name} due to status {ToString()}");
             return false;
         }
         return true;

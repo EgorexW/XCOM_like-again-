@@ -81,5 +81,6 @@ public enum UnitActionValidation{
 public enum ActionType{
     Movement,
     Shooting,
-    Utility
+    Utility,
+    Other
 }

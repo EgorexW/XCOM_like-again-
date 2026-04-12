@@ -88,7 +88,8 @@ public class PlayerTurnUI : UIElement{
         }
         DeselectUnit();
         selectedUnit = unit;
-        selectedUnitHighlight.position = Camera.main.WorldToScreenPoint(selectedUnit.transform.position);
+        selectedUnitHighlight.position = selectedUnit.transform.position;
+        selectedUnitHighlight.localScale = selectedUnit.transform.lossyScale;
         selectedUnitHighlight.gameObject.SetActive(true);
         actionsUI.Show(unit);
     }

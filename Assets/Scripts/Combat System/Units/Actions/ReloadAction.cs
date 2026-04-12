@@ -14,7 +14,9 @@ public class ReloadAction : UnitAction {
         if (ammoComp == null) {
             Debug.LogWarning($"Can't reload, unit {unit.name} has no AmmoComponent!");
             result |= UnitActionValidation.AmmoIssue;
-        } else if (ammoComp.IsFull) {
+            return result;
+        }
+        if (ammoComp.IsFull) {
             result |= UnitActionValidation.AmmoIssue;
         }
 

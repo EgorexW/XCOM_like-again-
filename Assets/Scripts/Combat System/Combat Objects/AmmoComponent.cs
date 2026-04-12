@@ -7,7 +7,7 @@ public class AmmoComponent : CombatComponent{
     private int currentLoadedAmmo;
 
     public int CurrentLoadedAmmo => currentLoadedAmmo;
-    public bool IsFull => currentLoadedAmmo == magazineSize;
+    public bool IsFull => CurrentLoadedAmmo == magazineSize;
     public int Magazines => magazines;
 
     private void Awake() {

@@ -20,6 +20,9 @@ class ActionsUI : UIElement{
             if (validation.HasFlag(UnitActionValidation.NoUsesLeft)){
                 actions.Remove(action);
             }
+            if (validation.HasFlag(UnitActionValidation.AmmoIssue)){
+                actions.Remove(action);
+            }
         }
         actionsPool.SetCount(actions.Count);
         actionsUI = new List<ActionTileUI>();
