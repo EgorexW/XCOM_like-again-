@@ -25,7 +25,7 @@ class ActionTileUI : UIElement{
     }
 
     public void SetAction(UnitAction action, UnityAction<UnitAction> onSelect){
-        actionName.SetText(action.name);
+        actionName.SetText(action.Name);
         this.action = action;
         this.onSelect = onSelect;
         var validation = action.ValidateAction();

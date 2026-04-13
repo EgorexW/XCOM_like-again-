@@ -5,6 +5,8 @@ public class SpawnAction : TargetedUnitAction{
     [Header("Spawn Settings")]
     [SerializeField] InsertTurnTakerType insertTurnTakerType = InsertTurnTakerType.Next;
 
+    public GameObject PrefabToSpawn => prefabToSpawn;
+
     protected override void OnExecute(){
         var spawnedObj = Instantiate(prefabToSpawn, unit.transform.parent);
         var combatObj = spawnedObj.GetComponent<CombatObject>();

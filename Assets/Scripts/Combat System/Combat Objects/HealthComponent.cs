@@ -7,6 +7,7 @@ public class HealthComponent : CombatComponent{
 
     [FoldoutGroup("Events")] public UnityEvent<HealthComponent> onHealthChanged;
     public float Health{ get; private set; }
+    public float MaxHealth => maxHealth;
 
 
     protected void Start(){

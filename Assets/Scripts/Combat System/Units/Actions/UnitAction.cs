@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public abstract class UnitAction : MonoBehaviour{
-    [FormerlySerializedAs("Name")] [SerializeField] public new string name;
+    [FormerlySerializedAs("Name")] [SerializeField] new string name;
     [SerializeField] string description;
     [SerializeField] float cost = 1;
     [SerializeField] Optional<int> usesLeft;
@@ -14,10 +14,12 @@ public abstract class UnitAction : MonoBehaviour{
     [HideInEditorMode] [ReadOnly] public CombatUnit unit;
     
     public ActionType ActionType => actionType;
-    
+    public string Description => description;
+    public string Name => name;
+
     public void Execute(){
         if (ValidateAction() != UnitActionValidation.Valid){
-            Debug.LogWarning($"Cannot execute action {this.name} for unit {unit.name}, because {ValidateAction().ToString()}");
+            Debug.LogWarning($"Cannot execute action {this.Name} for unit {unit.name}, because {ValidateAction().ToString()}");
             return;
         }
         unit.SpendActionPoints(cost);
@@ -43,10 +45,6 @@ public abstract class UnitAction : MonoBehaviour{
         return result;
     }
     
-
-    public virtual string GetDescription(){
-        return Descriptions.GetActionDescription(this, description);
-    }
     [Button]
     void ResetName(){
         this.name = gameObject.name;
