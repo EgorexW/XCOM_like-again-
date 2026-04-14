@@ -4,16 +4,19 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public class BasicAIBehaviour : AIBehaviour{
-    [BoxGroup("References")] [Required] [SerializeField] AIMovementBehaviour aiMovementBehaviour;
+    [BoxGroup("References")] [Required] [SerializeField] AITargetEvaluator aiMovementBehaviour;
+    [BoxGroup("References")] [Required] [SerializeField] AITargetEvaluator aiAttackBehaviour;
     [Required][BoxGroup("ActionReferences")][SerializeField] TargetedUnitAction movementAction;
     [Required][BoxGroup("ActionReferences")][SerializeField] TargetedUnitAction attackAction;
     [Required][BoxGroup("ActionReferences")][SerializeField] UnitAction reloadAction;
 
     [BoxGroup("Config")][SerializeField] float attackWhenExposedChance = 0.5f;
-    public override AIAction GetAction(){
+    
+    public override AIAction GetAction(AIContext context){
         var enemies = combatUnit.CombatSystem.TeamsSystem.GetEnemies(combatUnit);
         var allies = combatUnit.CombatSystem.TeamsSystem.GetAllies(combatUnit);
-        var movementEvaluation = aiMovementBehaviour.EvaluateMovementOptions(combatUnit, movementAction.GetValidTargets(), enemies, allies);
+        var movementEvaluation = aiMovementBehaviour.EvaluateTargetedAction(context, movementAction);
+        var attackEvaluation = aiAttackBehaviour.EvaluateTargetedAction(context, attackAction);
 
         // Circumstances
         HashSet<Circumstance> circumstances = new ();
@@ -21,9 +24,9 @@ public class BasicAIBehaviour : AIBehaviour{
         if (combatUnit.Node.IsExposed(enemies)){
             circumstances.Add(Circumstance.Exposed);
         }
-
-        if (movementEvaluation.CurrentNodeBest){
-            circumstances.Add(Circumstance.NotWantToMove);
+        
+        if (movementEvaluation.score <= 0){
+            circumstances.Add(Circumstance.NoBetterTile);
             circumstances.Remove(Circumstance.Exposed);
         }
         
@@ -44,11 +47,11 @@ public class BasicAIBehaviour : AIBehaviour{
         if (circumstances.Contains(Circumstance.EnemyExposed)){
             if (circumstances.Contains(Circumstance.Exposed)){
                 if (Random.value < attackWhenExposedChance){
-                    return GetAttackAction(enemiesExposed.Random());
+                    return GetAttackAction(attackEvaluation.bestNode);
                 }
                 return GetMoveAction(movementEvaluation.bestNode);
             }
-            return GetAttackAction(enemiesExposed.Random());
+            return GetAttackAction(attackEvaluation.bestNode);
         }
         if (circumstances.Contains(Circumstance.Exposed)){
             return GetMoveAction(movementEvaluation.bestNode);
@@ -56,10 +59,13 @@ public class BasicAIBehaviour : AIBehaviour{
         if (circumstances.Contains(Circumstance.MustReload)){
             return GetReloadAction();
         }
-        if (circumstances.Contains(Circumstance.NotWantToMove)){
-            return AIAction.Empty; // TODO come up with something then
+        if (movementEvaluation.score / 10 >= Random.value){
+            return GetMoveAction(movementEvaluation.bestNode);
         }
-        return GetMoveAction(movementEvaluation.bestNode);
+        if (attackEvaluation.score > 0){
+            return GetAttackAction(attackEvaluation.bestNode);
+        }
+        return AIAction.Empty;
     }
 
     AIAction GetReloadAction(){
@@ -79,10 +85,10 @@ public class BasicAIBehaviour : AIBehaviour{
         return AIAction.Empty;
     }
 
-    AIAction GetAttackAction(ICombatObject target){
+    AIAction GetAttackAction(CombatGridNode target){
         var action = new AIAction{
             Action = attackAction,
-            TargetNode = target.Node
+            TargetNode = target
         };
         return action;
     }
@@ -91,10 +97,10 @@ public class BasicAIBehaviour : AIBehaviour{
         Exposed,
         EnemyExposed,
         MustReload,
-        NotWantToMove
+        NoBetterTile
     }
     
-    public List<ICombatObject> GetExposedEnemies(List<ICombatObject> enemies){ // TODO invorporate attack range
+    public List<ICombatObject> GetExposedEnemies(List<ICombatObject> enemies){
         var exposedEnemies = new List<ICombatObject>();
         foreach (var enemy in enemies){
             if (attackAction.ValidateTarget(enemy.Node) != TargetValidation.Valid){

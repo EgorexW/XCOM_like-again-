@@ -13,7 +13,12 @@ class AIBrain : MonoBehaviour{
     public IEnumerator ResolveTurn(){
         Debug.Log($"Resolving turn for {combatUnit.Name}...");
         while (true){
-            AIAction action = aiBehaviour.GetAction();
+            AIContext context = new AIContext(
+                combatUnit,
+                combatUnit.CombatSystem.TeamsSystem.GetEnemies(combatUnit),
+                combatUnit.CombatSystem.TeamsSystem.GetAllies(combatUnit)
+            );
+            AIAction action = aiBehaviour.GetAction(context);
 
             if (action.IsEmpty){
                 break;

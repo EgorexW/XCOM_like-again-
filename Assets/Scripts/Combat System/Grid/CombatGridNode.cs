@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 
 [Serializable]
 public class CombatGridNode : GridNode{
     public readonly CombatGrid grid;
 
-    [FoldoutGroup("Debug")][ShowInInspector][HideInEditorMode] readonly List<ICombatObject> combatObjects;
+    [FoldoutGroup("Debug")][ShowInInspector][HideInEditorMode] readonly HashSet<ICombatObject> combatObjects;
 
     public CombatGridNode(CombatGrid grid, int x, int y) : base(x, y){
         this.grid = grid;
-        combatObjects = new List<ICombatObject>();
+        combatObjects = new HashSet<ICombatObject>();
     }
 
     public void AddCombatObject(ICombatObject combatObject){
@@ -23,16 +24,16 @@ public class CombatGridNode : GridNode{
         grid.TriggerGridObjectChanged(this);
     }
 
-    public List<ICombatObject> GetCombatObjects(){
-        return combatObjects.Copy();
+    public HashSet<ICombatObject> GetCombatObjects(){
+        return new HashSet<ICombatObject>(combatObjects);
     }
     
     public bool CanAcceptObject(GridOccupancyType newObjectType) {
-        if (combatObjects.Exists(co => co.OccupancyType == GridOccupancyType.Wall)) {
+        if (combatObjects.Any(co => co.OccupancyType == GridOccupancyType.Wall)) {
             return false; 
         }
         
-        if (combatObjects.Exists(co => co.OccupancyType == GridOccupancyType.Character)) {
+        if (combatObjects.Any(co => co.OccupancyType == GridOccupancyType.Character)) {
             if (newObjectType == GridOccupancyType.Character || newObjectType == GridOccupancyType.Wall) {
                 return false;
             }

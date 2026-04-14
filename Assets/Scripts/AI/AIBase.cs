@@ -5,22 +5,16 @@ using UnityEngine;
 public abstract class AIBehaviour : MonoBehaviour{
     [BoxGroup("References")][Required][SerializeField] protected CombatUnit combatUnit;
     
-    public abstract AIAction GetAction();
+    public abstract AIAction GetAction(AIContext context);
 }
 
-public abstract class AIMovementBehaviour : MonoBehaviour{
-    public abstract MovementEvaluation EvaluateMovementOptions(CombatUnit unit, List<CombatGridNode> reachableNodes, List<ICombatObject> enemies, List<ICombatObject> allies);
+public abstract class AITargetEvaluator : MonoBehaviour{
+    public abstract TargetEvaluation EvaluateTargetedAction(AIContext aiContext, TargetedUnitAction validNodes);
 }
 
-public class MovementEvaluation{
+public class TargetEvaluation{
     public CombatGridNode bestNode;
-    public float nodeScore;
-    
-    public static MovementEvaluation CurrentBest => new MovementEvaluation{
-        bestNode = null,
-        nodeScore = float.MinValue
-    };
-    public bool CurrentNodeBest => bestNode == null;
+    public float score;
 }
 
 public class AIAction{
@@ -43,7 +37,7 @@ static class AIHelper{
         }
         return exposed;
     }
-    public static List<ICombatObject> GetExposedEnemies(this CombatGridNode node, List<ICombatObject> enemies){ // TODO invorporate attack range
+    public static List<ICombatObject> GetExposedEnemies(this CombatGridNode node, List<ICombatObject> enemies){
         var exposedEnemies = new List<ICombatObject>();
         foreach (var enemy in enemies){
             if (node.CanAttack(enemy.Node)){
@@ -51,5 +45,20 @@ static class AIHelper{
             }
         }
         return exposedEnemies;
+    }
+}
+
+public class AIContext{
+    public readonly CombatUnit Unit;
+    public readonly List<ICombatObject> Enemies;
+
+    public readonly List<ICombatObject> Allies;
+    // Możesz tu dorzucić referencję do mapy/gridu, jeśli potrzebna
+    // public readonly CombatGrid Grid;
+
+    public AIContext(CombatUnit unit, List<ICombatObject> enemies, List<ICombatObject> allies){
+        Unit = unit;
+        Enemies = enemies;
+        Allies = allies;
     }
 }

@@ -21,7 +21,9 @@ public class AITurnTaker : UnitsTurnTaker{
     }
 
     IEnumerator ResolveTurn(){
-        foreach (var unit in Units){
+        var combatUnits = Units;
+        combatUnits.Shuffle();
+        foreach (var unit in combatUnits){
             var aiBrain = unit.GetComponentInChildren<AIBrain>();
             if (aiBrain != null){
                 yield return StartCoroutine(aiBrain.ResolveTurn());
