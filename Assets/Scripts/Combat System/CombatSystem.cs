@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Assertions;
-// using UnityEngine.Assertions;
 using UnityEngine.Events;
 
 public class CombatSystem : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] CombatGrid combatGrid;
     [BoxGroup("References")] [Required] [SerializeField] TurnSystem turnSystem;
+    [BoxGroup("References")][Required][SerializeField] TeamsSystem teamsSystem;
 
     readonly List<ICombatObject> combatObjects = new();
 
@@ -17,6 +17,7 @@ public class CombatSystem : MonoBehaviour{
     public List<ICombatObject> CombatObjects => combatObjects.Copy();
     public CombatGrid CombatGrid => combatGrid;
     public TurnSystem TurnSystem => turnSystem;
+    public TeamsSystem TeamsSystem => teamsSystem;
 
     public void AddCombatObject(ICombatObject combatObject, CombatGridNode targetNode){
         Assert.IsNotNull(targetNode, $"Node cannot be null when adding a combat object. {combatObject}");

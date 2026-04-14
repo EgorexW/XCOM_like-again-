@@ -87,13 +87,13 @@ public static class CombatGridExtensions{
         return Mathf.Sqrt(dx * dx + dy * dy);
     }
 
-    public static List<Direction> GetDirections(CombatGridNode attackerNode, CombatGridNode targetNode){
+    public static List<Direction> GetDirections(this CombatGridNode attackerNode, CombatGridNode targetNode, int diagonalThreshold = 0){
         var directions = new List<Direction>();
             
         var dx = attackerNode.x - targetNode.x;
         var dy = attackerNode.y - targetNode.y;
         
-        if (Mathf.Abs(dx) >= Mathf.Abs(dy)){
+        if (Mathf.Abs(dx) + diagonalThreshold >= Mathf.Abs(dy)){
             if (dx > 0){
                 directions.Add(Direction.Left);
             }
@@ -101,7 +101,7 @@ public static class CombatGridExtensions{
                 directions.Add(Direction.Right);
             }
         } 
-        if (Mathf.Abs(dy) >= Mathf.Abs(dx)){
+        if (Mathf.Abs(dy) + diagonalThreshold >= Mathf.Abs(dx)){
             if (dy > 0){
                 directions.Add(Direction.Down);
             }
