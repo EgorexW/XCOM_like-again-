@@ -33,7 +33,9 @@ public class BasicAIAttackEvaluator : BasicAIEvaluator{
         }
         
         text += $"Total Score: {score}\n";
-        General.WorldText(text, node.GetPos(), 0.5f, 1);
+        if (context.debug){
+            General.WorldText(text, node.GetPos(), 0.5f, 1);
+        }
 
         return score;
     }

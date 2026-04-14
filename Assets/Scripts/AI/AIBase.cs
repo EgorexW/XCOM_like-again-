@@ -9,7 +9,7 @@ public abstract class AIBehaviour : MonoBehaviour{
 }
 
 public abstract class AITargetEvaluator : MonoBehaviour{
-    public abstract TargetEvaluation EvaluateTargetedAction(AIContext aiContext, TargetedUnitAction validNodes);
+    public abstract TargetEvaluation EvaluateTargetedAction(AIContext aiContext, TargetedUnitAction targetedAction);
 }
 
 public class TargetEvaluation{
@@ -53,8 +53,8 @@ public class AIContext{
     public readonly List<ICombatObject> Enemies;
 
     public readonly List<ICombatObject> Allies;
-    // Możesz tu dorzucić referencję do mapy/gridu, jeśli potrzebna
-    // public readonly CombatGrid Grid;
+
+    public bool debug;
 
     public AIContext(CombatUnit unit, List<ICombatObject> enemies, List<ICombatObject> allies){
         Unit = unit;

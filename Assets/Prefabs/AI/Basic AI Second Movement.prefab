@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2860775453890108948}
   - component: {fileID: 1524837099596054473}
   m_Layer: 0
-  m_Name: Basic AI Movement
+  m_Name: Basic AI Second Movement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BasicAIMovement
   exposedPenalty: 100
   coverFromEnemy: 50
-  exposedEnemy: 40
+  exposedEnemy: 20
   distanceToEnemyScore: 20
   diagonalThreshold: 2
   distanceFalloff: 1

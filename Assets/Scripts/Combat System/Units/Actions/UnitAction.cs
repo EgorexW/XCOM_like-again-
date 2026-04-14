@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public abstract class UnitAction : MonoBehaviour{
     [FormerlySerializedAs("Name")] [SerializeField] new string name;
     [SerializeField] string description;
-    [SerializeField] float cost = 1;
+    [SerializeField] int cost = 1;
     [SerializeField] Optional<int> usesLeft;
     [SerializeField] ActionType actionType;
 

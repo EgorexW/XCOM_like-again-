@@ -12,8 +12,8 @@ public class BasicAIMoveEvaluator : BasicAIEvaluator {
     [SerializeField] int diagonalThreshold = 2;
     [SerializeField] float distanceFalloff = 1f;
 
-    public override TargetEvaluation EvaluateTargetedAction(AIContext context, TargetedUnitAction action){
-        var validation = base.EvaluateTargetedAction(context, action);
+    public override TargetEvaluation EvaluateTargetedAction(AIContext context, TargetedUnitAction targetedAction){
+        var validation = base.EvaluateTargetedAction(context, targetedAction);
         validation.score -= EvaluateNode(context.Unit.Node, context);
         return validation;
     }
@@ -59,7 +59,9 @@ public class BasicAIMoveEvaluator : BasicAIEvaluator {
         text += $"Distance to Enemies: {totalDistanceScore}\n";
         
         text += $"Total Score: {score}\n";
-        General.WorldText(text, node.GetPos(), 0.5f, 1);
+        if (context.debug){
+            General.WorldText(text, node.GetPos(), 0.5f, 1);
+        }
 
         return score;
     }

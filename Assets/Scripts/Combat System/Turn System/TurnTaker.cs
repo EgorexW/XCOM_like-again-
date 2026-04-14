@@ -10,12 +10,12 @@ public abstract class TurnTaker : MonoBehaviour, ITurnTaker{
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn{ get; } = new();
 
     public virtual void EndTurn(){
-        Debug.Log($"{this} ended their turn.");
+        // Debug.Log($"{this} ended their turn.");
         onEndTurn.Invoke(this);
     }
 
     public virtual void StartTurn(){
-        Debug.Log($"{this} started turn.");
+        // Debug.Log($"{this} started turn.");
         onStartTurn.Invoke(this);
     }
 

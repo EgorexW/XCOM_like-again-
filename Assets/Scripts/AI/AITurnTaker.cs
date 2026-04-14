@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 public class AITurnTaker : UnitsTurnTaker{
-    const float TIME_BETWEEN_UNIT_TURNS = 1f;
+    const float TIME_BETWEEN_UNIT_TURNS = 0.5f;
     
     Coroutine turnResolveCoroutine;
     

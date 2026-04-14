@@ -11,17 +11,16 @@ public class BasicAIBehaviour : AIBehaviour{
     [Required][BoxGroup("ActionReferences")][SerializeField] UnitAction reloadAction;
 
     [BoxGroup("Config")][SerializeField] float attackWhenExposedChance = 0.5f;
+    [BoxGroup("Config")][SerializeField] float moveScoreToMove = 5;
     
     public override AIAction GetAction(AIContext context){
-        var enemies = combatUnit.CombatSystem.TeamsSystem.GetEnemies(combatUnit);
-        var allies = combatUnit.CombatSystem.TeamsSystem.GetAllies(combatUnit);
         var movementEvaluation = aiMovementBehaviour.EvaluateTargetedAction(context, movementAction);
         var attackEvaluation = aiAttackBehaviour.EvaluateTargetedAction(context, attackAction);
 
         // Circumstances
         HashSet<Circumstance> circumstances = new ();
 
-        if (combatUnit.Node.IsExposed(enemies)){
+        if (combatUnit.Node.IsExposed(context.Enemies)){
             circumstances.Add(Circumstance.Exposed);
         }
         
@@ -30,7 +29,7 @@ public class BasicAIBehaviour : AIBehaviour{
             circumstances.Remove(Circumstance.Exposed);
         }
         
-        var enemiesExposed = GetExposedEnemies(enemies);
+        var enemiesExposed = GetExposedEnemies(context.Enemies);
         if (enemiesExposed.Count > 0){
             circumstances.Add(Circumstance.EnemyExposed);
         }
@@ -43,9 +42,16 @@ public class BasicAIBehaviour : AIBehaviour{
             }
         }
 
+        if (context.Unit.ActionPoints < 2){
+            circumstances.Add(Circumstance.LastAction);
+        }
+
         // Resolution
         if (circumstances.Contains(Circumstance.EnemyExposed)){
             if (circumstances.Contains(Circumstance.Exposed)){
+                if (!circumstances.Contains(Circumstance.LastAction)){
+                    return GetAttackAction(attackEvaluation.bestNode);
+                }
                 if (Random.value < attackWhenExposedChance){
                     return GetAttackAction(attackEvaluation.bestNode);
                 }
@@ -59,7 +65,7 @@ public class BasicAIBehaviour : AIBehaviour{
         if (circumstances.Contains(Circumstance.MustReload)){
             return GetReloadAction();
         }
-        if (movementEvaluation.score / 10 >= Random.value){
+        if (movementEvaluation.score / moveScoreToMove >= Random.value){
             return GetMoveAction(movementEvaluation.bestNode);
         }
         if (attackEvaluation.score > 0){
@@ -97,7 +103,8 @@ public class BasicAIBehaviour : AIBehaviour{
         Exposed,
         EnemyExposed,
         MustReload,
-        NoBetterTile
+        NoBetterTile,
+        LastAction
     }
     
     public List<ICombatObject> GetExposedEnemies(List<ICombatObject> enemies){

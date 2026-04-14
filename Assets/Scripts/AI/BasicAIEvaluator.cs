@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BasicAIEvaluator : AITargetEvaluator{
-    public override TargetEvaluation EvaluateTargetedAction(AIContext context, TargetedUnitAction action){
+    public override TargetEvaluation EvaluateTargetedAction(AIContext context, TargetedUnitAction targetedAction){
         CombatGridNode bestNode = null;
         float highestScore = float.MinValue;
-        var validNodes = action.GetValidTargets();
+        var validNodes = targetedAction.GetValidTargets();
         
         foreach (var node in validNodes) {
             float score = EvaluateNode(node, context);

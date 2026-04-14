@@ -6,13 +6,13 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class CombatUnit : CombatObject{
-    [SerializeField] float defaultActionPoints = 2;
+    [SerializeField] int defaultActionPoints = 2;
 
     public List<UnitAction> UnitActions => unitActions.Copy();
-    public float ActionPoints => actionPoints;
+    public int ActionPoints => actionPoints;
 
     [SerializeField] [HideInEditorMode] List<UnitAction> unitActions;
-    [SerializeField] [HideInEditorMode] float actionPoints;
+    [SerializeField] [HideInEditorMode] int actionPoints;
     
     List<UnitStatusEffect> activeStatuses = new();
 
@@ -35,7 +35,7 @@ public class CombatUnit : CombatObject{
         onEndTurn.Invoke(this);
     }
 
-    public void SpendActionPoints(float cost){
+    public void SpendActionPoints(int cost){
         if (cost > actionPoints){
             Debug.LogWarning(
                 $"Unit {name} does not have enough action points to spend {cost}. Current AP: {actionPoints}");

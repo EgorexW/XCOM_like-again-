@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 class AIBrain : MonoBehaviour{
-    const float WAIT_TIME_BETWEEN_ACTIONS = 1f;
+    const float WAIT_TIME_BETWEEN_ACTIONS = 0.5f;
     
     [BoxGroup("References")] [Required] [SerializeField] CombatUnit combatUnit;
     [BoxGroup("References")] [Required] [SerializeField] AIBehaviour aiBehaviour;
