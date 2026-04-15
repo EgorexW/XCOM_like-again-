@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AttackAction : TargetedUnitAction{
+public class ShootAction : TargetedUnitAction{
     [SerializeField] float damage = 1;
     [SerializeField] int ammoCost = 1;
     public float Damage => damage;

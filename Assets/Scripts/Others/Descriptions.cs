@@ -7,7 +7,7 @@ public static class Descriptions{
         if (unitAction is TargetedUnitAction targetedUnitAction){
             description += $" Range: {targetedUnitAction.Range}";
         } 
-        if (unitAction is AttackAction attackAction){
+        if (unitAction is ShootAction attackAction){
             description += $" Damage: {attackAction.Damage}";
         }
         if (unitAction is SpawnAction spawnAction){

@@ -11,7 +11,7 @@ class AIBrain : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] AIBehaviour aiBehaviour;
     
     public IEnumerator ResolveTurn(){
-        Debug.Log($"Resolving turn for {combatUnit.Name}...");
+        // Debug.Log($"Resolving turn for {combatUnit.Name}...");
         while (true){
             AIContext context = new AIContext(
                 combatUnit,

@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 public class AmmoComponent : CombatComponent{
     [SerializeField] int magazineSize = 6;
     [SerializeField] int magazines = 3;
+    [SerializeField] bool startReloaded = true;
 
     public int CurrentLoadedAmmo{ get; private set; }
     public bool IsFull => CurrentLoadedAmmo == magazineSize;
@@ -12,7 +13,9 @@ public class AmmoComponent : CombatComponent{
     public bool IsEmpty => CurrentLoadedAmmo <= 0;
 
     private void Awake() {
-        Reload();
+        if (startReloaded){
+            Reload();
+        }
     }
 
     public void ConsumeAmmo(int cost) {
