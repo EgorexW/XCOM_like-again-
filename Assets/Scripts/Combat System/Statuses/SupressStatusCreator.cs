@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SupressStatusCreator : UnitStatusEffectCreator{
-    [SerializeField] List<ActionType> supressedActionTypes;
+    [SerializeField] List<ActionFlags> supressedActionTypes;
     [SerializeField] Optional<int> duration;
     
     public override UnitStatusEffect CreateStatus(){
@@ -13,10 +13,10 @@ public class SupressStatusCreator : UnitStatusEffectCreator{
 }
 
 public class SupressStatus : UnitStatusEffect{
-    List<ActionType> supressedActionTypes;
+    List<ActionFlags> supressedActionTypes;
     int duration;
 
-    public SupressStatus(List<ActionType> actionTypes, int durationTmp){
+    public SupressStatus(List<ActionFlags> actionTypes, int durationTmp){
         supressedActionTypes = actionTypes;
         duration = durationTmp;
     }
@@ -41,7 +41,7 @@ public class SupressStatus : UnitStatusEffect{
     }
 
     public override bool CanExecuteAction(UnitAction action){
-        if (supressedActionTypes.Contains(action.ActionInfo.ActionType)){
+        if (supressedActionTypes.Contains(action.ActionInfo.ActionFlags)){
             return false;
         }
         return true;

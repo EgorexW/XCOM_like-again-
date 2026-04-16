@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BasicAITargetedMoveEvaluator : BasicAITargetedEvaluator {
+public class AIMoveActionCreator : AITargetedActionCreator{
     [SerializeField] float exposedPenalty = 100f;
     [SerializeField] float coverFromEnemy = 50f;
     [SerializeField] float exposedEnemy = 40f;
@@ -13,9 +13,9 @@ public class BasicAITargetedMoveEvaluator : BasicAITargetedEvaluator {
     [SerializeField] int diagonalThreshold = 2;
     [SerializeField] float distanceFalloff = 1f;
 
-    public override TargetEvaluation EvaluateTargetedAction(AIContext context, TargetedUnitAction targetedAction){
-        var validation = base.EvaluateTargetedAction(context, targetedAction);
-        validation.score -= EvaluateNode(context.Unit.Node, context);
+    protected override AIAction GetAIAction(AIContext context, UnitAction action){
+        var validation = base.GetAIAction(context, action);
+        validation.SetScore(validation.Score - EvaluateNode(context.Unit.Node, context));
         return validation;
     }
 

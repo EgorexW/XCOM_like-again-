@@ -44,15 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aef1d7a12024c5aa73527330702a374, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
+  actionInfo:
+    actionName: Shoot
+    description: 
+    actionFlags: 10
   cost: 1
   usesLeft:
     enabled: 0
     value: 0
-  actionInfo:
-    actionType: 1
-    aggressive: 1
-    actionName: Shoot
-    description: 
   unit: {fileID: 0}
   range: 10
   damage: 1

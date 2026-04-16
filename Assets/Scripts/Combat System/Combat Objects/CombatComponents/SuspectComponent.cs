@@ -14,7 +14,7 @@ public class SuspectComponent : CombatComponent{
     }
 
     void OnActionPerformed(UnitAction action){
-        if (action.ActionInfo.Aggressive){
+        if (action.ActionInfo.ActionFlags.HasFlag(ActionFlags.Aggressive)){
             ChangeState(SuspectState.Hostile);
         }
     }

@@ -22,19 +22,19 @@ class AIBrain : MonoBehaviour{
             );
             AIAction action = aiBehaviour.GetAction(context);
 
-            if (action.IsEmpty){
+            if (!action.Valid){
                 break;
             }
             
-            if (action.Action is TargetedUnitAction targetedAction) {
-                targetedAction.SetTarget(action.TargetNode);
+            if (action.action is TargetedUnitAction targetedAction) {
+                targetedAction.SetTarget(action.targetNode);
             }
-            if (action.Action.ValidateAction() != UnitActionValidation.Valid){
-                Debug.LogWarning($"AI for unit {combatUnit.Name} attempted to execute invalid action {action.Action.ActionInfo.Name}. Ending turn.");
+            if (action.action.ValidateAction() != UnitActionValidation.Valid){
+                Debug.LogWarning($"AI for unit {combatUnit.Name} attempted to execute invalid action {action.action.ActionInfo.Name}. Ending turn.");
                 break;
             }
-            Debug.Log($"AI for unit {combatUnit.Name} executing action {action.Action.ActionInfo.Name}.");
-            action.Action.Execute(); 
+            Debug.Log($"AI for unit {combatUnit.Name} executing action {action.action.ActionInfo.Name}.");
+            action.action.Execute(); 
             yield return new WaitForSeconds(WAIT_TIME_BETWEEN_ACTIONS);
         }
     }

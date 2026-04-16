@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class AIBehaviour : MonoBehaviour{
     [BoxGroup("References")][Required][SerializeField] protected CombatUnit combatUnit;
@@ -8,27 +9,31 @@ public abstract class AIBehaviour : MonoBehaviour{
     public abstract AIAction GetAction(AIContext context);
 }
 
-public abstract class AITargetedActionEvaluator : MonoBehaviour{
-    public abstract TargetEvaluation EvaluateTargetedAction(AIContext aiContext, TargetedUnitAction targetedAction);
-}
-
-public class TargetEvaluation{
-    public CombatGridNode bestNode;
-    public float score;
-    public bool available;
-    
-    public static TargetEvaluation Unavailible => new TargetEvaluation(){
-        available = false,
-    };
+public abstract class AIActionCreator : MonoBehaviour{
+    public abstract AIAction CreateAIAction(AIContext context);
 }
 
 public class AIAction{
-    public UnitAction Action;
-    public CombatGridNode TargetNode;
+    public readonly UnitAction action;
+    public readonly CombatGridNode targetNode;
+    float score;
+    bool valid = true;
     
-    public bool IsEmpty => Action == null;
+    public AIAction(UnitAction action = null, CombatGridNode targetNode = null, float score = 0f){
+        this.action = action;
+        this.targetNode = targetNode;
+        this.score = score;
+    }
     
-    public static AIAction Empty => new AIAction();
+    public void SetScore(float newScore){
+        score = newScore;
+    }
+    bool IsEmpty => action == null;
+    public static AIAction Invalid => new AIAction{
+        valid = false,
+    };
+    public bool Valid => valid && !IsEmpty;
+    public float Score => Valid ? score : float.MinValue;
 }
 
 static class AIHelper{

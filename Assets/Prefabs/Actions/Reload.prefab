@@ -44,13 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cefca91b95e449aa1c2857ea9f08642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReloadAction
+  actionInfo:
+    actionName: Reload
+    description: 
+    actionFlags: 12
   cost: 1
   usesLeft:
     enabled: 0
     value: 0
-  actionInfo:
-    actionType: 3
-    aggressive: 1
-    actionName: Reload
-    description: 
   unit: {fileID: 0}

@@ -4,20 +4,21 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public class BasicAIBehaviour : AIBehaviour{
-    [FormerlySerializedAs("aiMovementBehaviour")] [BoxGroup("References")] [Required] [SerializeField] AITargetedActionEvaluator aiTargetedMovementBehaviour;
-    [FormerlySerializedAs("aiAttackBehaviour")] [BoxGroup("References")] [Required] [SerializeField] AITargetedActionEvaluator aiTargetedAttackBehaviour;
-    [Required][BoxGroup("ActionReferences")][SerializeField] TargetedUnitAction movementAction;
-    [Required][BoxGroup("ActionReferences")][SerializeField] TargetedUnitAction attackAction;
-    [Required][BoxGroup("ActionReferences")][SerializeField] UnitAction reloadAction;
-    [Required][BoxGroup("ActionReferences")][SerializeField] UnitAction surrenderAction;
+    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator moveActionCreator;
+    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator attackActionCreator;
+    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator reloadActionCreator;
+    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator surrenderActionCreator;
 
     [BoxGroup("Config")][SerializeField] float attackWhenExposedChance = 0.5f;
     [BoxGroup("Config")][SerializeField] float moveScoreToMove = 5;
     [BoxGroup("Config")][SerializeField] float surrenderChance = 0.5f;
     
     public override AIAction GetAction(AIContext context){
-        var movementEvaluation = aiTargetedMovementBehaviour.EvaluateTargetedAction(context, movementAction);
-        var attackEvaluation = aiTargetedAttackBehaviour.EvaluateTargetedAction(context, attackAction);
+        // Actions
+        var moveAction = moveActionCreator.CreateAIAction(context);
+        var attackAction = attackActionCreator.CreateAIAction(context);
+        var reloadAction = reloadActionCreator.CreateAIAction(context);
+        var surrenderAction = surrenderActionCreator.CreateAIAction(context);
 
         // Circumstances
         HashSet<Circumstance> circumstances = new ();
@@ -26,15 +27,10 @@ public class BasicAIBehaviour : AIBehaviour{
             circumstances.Add(Circumstance.Exposed);
         }
         
-        if (movementEvaluation.score <= 0){
-            circumstances.Add(Circumstance.NoBetterTile);
-            circumstances.Remove(Circumstance.Exposed);
-        }
-        
-        var enemiesExposed = GetExposedEnemies(context.Enemies);
-        if (enemiesExposed.Count > 0){
-            circumstances.Add(Circumstance.EnemyExposed);
-        }
+        // var enemiesExposed = GetExposedEnemies(context.Enemies);
+        // if (enemiesExposed.Count > 0){
+        //     circumstances.Add(Circumstance.EnemyExposed);
+        // }
         
         var ammoComponent = combatUnit.GetCombatComponent<AmmoComponent>();
         if (ammoComponent != null){
@@ -52,83 +48,39 @@ public class BasicAIBehaviour : AIBehaviour{
         if (circumstances.Contains(Circumstance.EnemyExposed)){
             if (circumstances.Contains(Circumstance.Exposed)){
                 if (!circumstances.Contains(Circumstance.LastAction)){
-                    return GetAttackAction(attackEvaluation.bestNode);
+                    return attackAction;
                 }
                 if (Random.value < attackWhenExposedChance){
-                    return GetAttackAction(attackEvaluation.bestNode);
+                    return attackAction;
                 }
-                return GetMoveAction(movementEvaluation.bestNode);
+                return moveAction;
             }
-            return GetAttackAction(attackEvaluation.bestNode);
+            return attackAction;
         }
         if (circumstances.Contains(Circumstance.Exposed)){
-            if (movementEvaluation.score > 0){
-                return GetMoveAction(movementEvaluation.bestNode);
+            if (moveAction.Score > 0){
+                return moveAction;
             }
             if (Random.value < surrenderChance){
-                return GetSurrenderAction();
+                return surrenderAction;
             }
         }
         if (circumstances.Contains(Circumstance.MustReload)){
-            return GetReloadAction();
+            return reloadAction;
         }
-        if (movementEvaluation.score / moveScoreToMove >= Random.value){
-            return GetMoveAction(movementEvaluation.bestNode);
+        if (moveAction.Score / moveScoreToMove >= Random.value){
+            return moveAction;
         }
-        if (attackEvaluation.score > 0){
-            return GetAttackAction(attackEvaluation.bestNode);
+        if (attackAction.Score > 0){
+            return attackAction;
         }
-        return AIAction.Empty;
-    }
-
-    AIAction GetSurrenderAction(){
-        var action = new AIAction{
-            Action = surrenderAction
-        };
-        return action;
-    }
-
-    AIAction GetReloadAction(){
-            var action = new AIAction{
-                Action = reloadAction
-            };
-            return action;
-    }
-
-    public AIAction GetMoveAction(CombatGridNode targetNode) {
-        if (targetNode != null) {
-            return new AIAction {
-                Action = movementAction,
-                TargetNode = targetNode
-            };
-        }
-        return AIAction.Empty;
-    }
-
-    AIAction GetAttackAction(CombatGridNode target){
-        var action = new AIAction{
-            Action = attackAction,
-            TargetNode = target
-        };
-        return action;
+        return AIAction.Invalid;
     }
 
     enum Circumstance{
         Exposed,
         EnemyExposed,
         MustReload,
-        NoBetterTile,
         LastAction
-    }
-    
-    public List<ICombatObject> GetExposedEnemies(List<ICombatObject> enemies){
-        var exposedEnemies = new List<ICombatObject>();
-        foreach (var enemy in enemies){
-            if (attackAction.ValidateTarget(enemy.Node) != TargetValidation.Valid){
-                continue;
-            }
-            exposedEnemies.Add(enemy);
-        }
-        return exposedEnemies;
     }
 }

@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BasicAITargetedAttackEvaluator : BasicAITargetedEvaluator{
+public class AIAttackActionCreator : AITargetedActionCreator{
     [SerializeField] float baseScore = -5f;
     [SerializeField] float enemyPresent = 50f;
     [SerializeField] float blockPathToEnemy = 20f;

@@ -47,13 +47,58 @@ MonoBehaviour:
   actionInfo:
     actionName: Surrender
     description: 
-    actionType: 3
-    aggressive: 0
+    actionFlags: 3
   cost: 1
   usesLeft:
     enabled: 0
     value: 0
   unit: {fileID: 0}
+--- !u!1 &1205281592849856474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7058503426227982562}
+  - component: {fileID: 3057410326975558901}
+  m_Layer: 0
+  m_Name: AI Surrender
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7058503426227982562
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205281592849856474}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2438600814162373264}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3057410326975558901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205281592849856474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc599a87275e42c1a0461098c9db4171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicAIActionCreator
+  unitActions:
+  - {fileID: 7582279008868887966}
 --- !u!1 &2663123644022523197
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,6 +177,8 @@ Transform:
   m_Children:
   - {fileID: 2558415362182986993}
   - {fileID: 1802950589851056873}
+  - {fileID: 3583971954901575106}
+  - {fileID: 7058503426227982562}
   m_Father: {fileID: 8124356126452425556}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1931045595889409497
@@ -162,15 +209,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicAIBehaviour
   combatUnit: {fileID: 7939027683121073963}
-  aiMovementBehaviour: {fileID: 6356027462811808188}
-  aiAttackBehaviour: {fileID: 4127198261635684400}
-  movementAction: {fileID: 1421047514816524401}
-  attackAction: {fileID: 4907681156018269520}
-  reloadAction: {fileID: 7566062566804207911}
-  surrenderAction: {fileID: 7582279008868887966}
+  moveActionCreator: {fileID: 6356027462811808188}
+  attackActionCreator: {fileID: 4127198261635684400}
+  reloadActionCreator: {fileID: 219024014377268973}
+  surrenderActionCreator: {fileID: 3057410326975558901}
   attackWhenExposedChance: 0.5
   moveScoreToMove: 5
   surrenderChance: 0.5
+--- !u!1 &6199117629105287934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3583971954901575106}
+  - component: {fileID: 219024014377268973}
+  m_Layer: 0
+  m_Name: AI Reload
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3583971954901575106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6199117629105287934}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2438600814162373264}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &219024014377268973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6199117629105287934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc599a87275e42c1a0461098c9db4171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicAIActionCreator
+  unitActions:
+  - {fileID: 7566062566804207911}
 --- !u!1001 &791588589466580847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -219,6 +310,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3727442633141776223, guid: 79054106700214c0791b985c4e091c92, type: 3}
+      propertyPath: unitActions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727442633141776223, guid: 79054106700214c0791b985c4e091c92, type: 3}
+      propertyPath: 'unitActions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4907681156018269520}
     - target: {fileID: 7843015531298092685, guid: 79054106700214c0791b985c4e091c92, type: 3}
       propertyPath: m_Name
       value: Basic AI Attack
@@ -296,6 +395,38 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic AI Move Evaluator
       objectReference: {fileID: 0}
+    - target: {fileID: 5611134837917335711, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+      propertyPath: actionCreators.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611134837917335711, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+      propertyPath: 'actionCreators.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6552485034448646014}
+    - target: {fileID: 5611134837917335711, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+      propertyPath: 'actionCreators.Array.data[1]'
+      value: 
+      objectReference: {fileID: 6552485034448646014}
+    - target: {fileID: 5611134837917335711, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+      propertyPath: 'actionCreators.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5532716079653963500}
+    - target: {fileID: 5693955409081556573, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+      propertyPath: unitActions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5693955409081556573, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+      propertyPath: 'unitActions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1421047514816524401}
+    - target: {fileID: 6423192857006995407, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+      propertyPath: unitActions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6423192857006995407, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+      propertyPath: 'unitActions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1421047514816524401}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -306,6 +437,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 931886856033831882, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
   m_PrefabInstance: {fileID: 1579606966842929443}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5532716079653963500 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6423192857006995407, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+  m_PrefabInstance: {fileID: 1579606966842929443}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7f867073ee64394a4cab674ccf97c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicAIMovement
 --- !u!114 &6356027462811808188 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5611134837917335711, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
@@ -317,6 +459,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e06f1818d24e36bc04d80b41d74ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AITargetEvaluatorSwitch
+--- !u!114 &6552485034448646014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5693955409081556573, guid: 33815f5581f3e471a85ee6ea97ab6f46, type: 3}
+  m_PrefabInstance: {fileID: 1579606966842929443}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7f867073ee64394a4cab674ccf97c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicAIMovement
 --- !u!1001 &2912428072139229961
 PrefabInstance:
   m_ObjectHideFlags: 0

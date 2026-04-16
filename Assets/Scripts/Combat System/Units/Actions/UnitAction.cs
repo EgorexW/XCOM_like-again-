@@ -68,18 +68,17 @@ public enum UnitActionValidation{
 public class ActionInfo{
     [SerializeField] private string actionName;
     [SerializeField] private string description;
-    [SerializeField] private ActionType actionType;
-    [SerializeField] private bool aggressive;
+    [FormerlySerializedAs("actionType")] [SerializeField] private ActionFlags actionFlags;
     
-    public ActionType ActionType => actionType;
-    public bool Aggressive => aggressive;
+    public ActionFlags ActionFlags => actionFlags;
     public string Name => actionName;
     public string Description => description;
 }
 
-public enum ActionType{
-    Movement,
-    Shooting,
-    Utility,
-    Other
+[Flags]
+public enum ActionFlags{
+    Movement = 1 << 0,
+    Shooting  = 1 << 1,
+    Utility  = 1 << 2,
+    Aggressive   = 1 << 3,
 }

@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BasicAITargetedEvaluator : AITargetedActionEvaluator{
-    public override TargetEvaluation EvaluateTargetedAction(AIContext context, TargetedUnitAction targetedAction){
-        var validation = targetedAction.ValidateAction();
+public abstract class AITargetedActionCreator : BasicAIActionCreator{
+    protected override AIAction GetAIAction(AIContext context, UnitAction action){
+        if (action is not TargetedUnitAction targetedAction){
+            return AIAction.Invalid;
+        }
+        
+        var validation = action.ValidateAction();
 
         if (validation != UnitActionValidation.Valid && validation != UnitActionValidation.InvalidTarget){
-            return TargetEvaluation.Unavailible;
+            return AIAction.Invalid;
         }
         
         CombatGridNode bestNode = null;
@@ -24,11 +28,8 @@ public abstract class BasicAITargetedEvaluator : AITargetedActionEvaluator{
             highestScore = score;
             bestNode = node;
         }
-        
-        var evaluation = new TargetEvaluation{
-            bestNode = bestNode,
-            score = highestScore
-        };
+
+        var evaluation = new AIAction(action, bestNode, highestScore);
         return evaluation;
     }
 
