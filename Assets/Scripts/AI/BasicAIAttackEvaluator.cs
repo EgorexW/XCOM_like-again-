@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BasicAIAttackEvaluator : BasicAIEvaluator{
+public class BasicAITargetedAttackEvaluator : BasicAITargetedEvaluator{
     [SerializeField] float baseScore = -5f;
     [SerializeField] float enemyPresent = 50f;
     [SerializeField] float blockPathToEnemy = 20f;
@@ -33,7 +33,7 @@ public class BasicAIAttackEvaluator : BasicAIEvaluator{
         }
         
         text += $"Total Score: {score}\n";
-        if (context.debug){
+        if (context.Debug){
             General.WorldText(text, node.GetPos(), 0.5f, 1);
         }
 

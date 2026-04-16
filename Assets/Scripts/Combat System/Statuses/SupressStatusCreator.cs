@@ -41,7 +41,7 @@ public class SupressStatus : UnitStatusEffect{
     }
 
     public override bool CanExecuteAction(UnitAction action){
-        if (supressedActionTypes.Contains(action.ActionType)){
+        if (supressedActionTypes.Contains(action.ActionInfo.ActionType)){
             return false;
         }
         return true;

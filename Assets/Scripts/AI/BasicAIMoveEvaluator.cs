@@ -4,11 +4,12 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class BasicAIMoveEvaluator : BasicAIEvaluator {
-    [SerializeField] float exposedPenalty = 1000f;
+public class BasicAITargetedMoveEvaluator : BasicAITargetedEvaluator {
+    [SerializeField] float exposedPenalty = 100f;
     [SerializeField] float coverFromEnemy = 50f;
     [SerializeField] float exposedEnemy = 40f;
-    [SerializeField] float distanceToEnemyScore = 20f;
+    [FormerlySerializedAs("distanceToEnemyScore")] [SerializeField] float distanceScore = 20f;
+    [SerializeField] float idealDistance = 4f;
     [SerializeField] int diagonalThreshold = 2;
     [SerializeField] float distanceFalloff = 1f;
 
@@ -23,31 +24,31 @@ public class BasicAIMoveEvaluator : BasicAIEvaluator {
         var text = "";
 
         float totalCoverFromEnemyScore = 0;
-        float closestExposeDistance = float.MaxValue;
+        float totalExposedPenalty = 0;
         float totalExposedEnemiesScore = 0;
         float totalDistanceScore = 0;
         
         foreach (var enemy in context.Enemies){
             float distance = node.GetDistance(enemy.Node);
-            totalDistanceScore += distanceToEnemyScore / (distance * distanceFalloff);
+            float inverseDistance = distance * distanceFalloff;
+            float diffFromIdealDistance = Mathf.Abs(idealDistance - distance);
+            totalDistanceScore += distanceScore / (diffFromIdealDistance * distanceFalloff + 1);
             var enemyDirection = node.GetDirections(enemy.Node, diagonalThreshold);
             foreach (var direction in enemyDirection){
                 if (node.IsProtectedFrom(direction)){
-                    totalCoverFromEnemyScore += coverFromEnemy / (distance * distanceFalloff * enemyDirection.Count);
+                    totalCoverFromEnemyScore += coverFromEnemy / (inverseDistance * enemyDirection.Count);
                 }
             }
             if (enemy.Node.CanAttack(node)){
-                if (distance < closestExposeDistance){
-                    closestExposeDistance = distance;
-                }
+                totalExposedPenalty += exposedPenalty / inverseDistance;
             }
             if (node.CanAttack(enemy.Node)){
-                totalExposedEnemiesScore += exposedEnemy / (distance * distanceFalloff);
+                totalExposedEnemiesScore += exposedEnemy / inverseDistance;
             }
         }
 
-        score -= exposedPenalty / (closestExposeDistance * distanceFalloff);
-        text += $"Exposed: {-exposedPenalty / (closestExposeDistance * distanceFalloff)}\n";
+        score -= totalExposedPenalty;
+        text += $"Exposed: {-totalExposedPenalty}\n";
         
         score += totalCoverFromEnemyScore;
         text += $"Cover from Enemies: {totalCoverFromEnemyScore}\n";
@@ -59,7 +60,7 @@ public class BasicAIMoveEvaluator : BasicAIEvaluator {
         text += $"Distance to Enemies: {totalDistanceScore}\n";
         
         text += $"Total Score: {score}\n";
-        if (context.debug){
+        if (context.Debug){
             General.WorldText(text, node.GetPos(), 0.5f, 1);
         }
 

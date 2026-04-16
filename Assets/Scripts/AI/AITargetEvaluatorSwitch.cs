@@ -2,11 +2,12 @@
     using System.Collections.Generic;
     using Sirenix.OdinInspector;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
-    public class AITargetEvaluatorSwitch : AITargetEvaluator{
-        [BoxGroup("References")][Required][SerializeField] AITargetEvaluator defaultTargetEvaluator;
+    public class AITargetedActionEvaluatorSwitch : AITargetedActionEvaluator{
+        [FormerlySerializedAs("defaultActionEvaluator")] [FormerlySerializedAs("defaultTargetEvaluator")] [BoxGroup("References")][Required][SerializeField] AITargetedActionEvaluator defaultTargetedActionEvaluator;
         
-        [SerializeField] Optional<List<AITargetEvaluator>> evaluatorBasedOnActionPoints;
+        [SerializeField] Optional<List<AITargetedActionEvaluator>> evaluatorBasedOnActionPoints;
         
         public override TargetEvaluation EvaluateTargetedAction(AIContext aiContext, TargetedUnitAction targetedAction){
             if (evaluatorBasedOnActionPoints.Enabled){
@@ -15,6 +16,6 @@
                 evaluatorIndex = Mathf.Clamp(evaluatorIndex, 0, evaluatorBasedOnActionPoints.Value.Count - 1);
                 return evaluatorBasedOnActionPoints.Value[evaluatorIndex].EvaluateTargetedAction(aiContext, targetedAction);
             }
-            return defaultTargetEvaluator.EvaluateTargetedAction(aiContext, targetedAction);
+            return defaultTargetedActionEvaluator.EvaluateTargetedAction(aiContext, targetedAction);
         }
     }

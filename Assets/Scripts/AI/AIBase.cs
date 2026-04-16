@@ -8,13 +8,18 @@ public abstract class AIBehaviour : MonoBehaviour{
     public abstract AIAction GetAction(AIContext context);
 }
 
-public abstract class AITargetEvaluator : MonoBehaviour{
+public abstract class AITargetedActionEvaluator : MonoBehaviour{
     public abstract TargetEvaluation EvaluateTargetedAction(AIContext aiContext, TargetedUnitAction targetedAction);
 }
 
 public class TargetEvaluation{
     public CombatGridNode bestNode;
     public float score;
+    public bool available;
+    
+    public static TargetEvaluation Unavailible => new TargetEvaluation(){
+        available = false,
+    };
 }
 
 public class AIAction{
@@ -54,11 +59,12 @@ public class AIContext{
 
     public readonly List<ICombatObject> Allies;
 
-    public bool debug;
+    public readonly bool Debug;
 
-    public AIContext(CombatUnit unit, List<ICombatObject> enemies, List<ICombatObject> allies){
+    public AIContext(CombatUnit unit, List<ICombatObject> enemies, List<ICombatObject> allies, bool debug){
         Unit = unit;
         Enemies = enemies;
         Allies = allies;
+        Debug = debug;
     }
 }

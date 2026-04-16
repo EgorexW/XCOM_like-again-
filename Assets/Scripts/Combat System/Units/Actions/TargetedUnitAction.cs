@@ -19,10 +19,9 @@ public abstract class TargetedUnitAction : UnitAction{
 
     public virtual bool SetTarget(CombatGridNode node){
         if (ValidateTarget(node) != TargetValidation.Valid){
-            Debug.LogWarning($"Invalid target node {node} for action {Name} of unit {unit.name}");
+            Debug.LogWarning($"Invalid target node {node} for action {ActionInfo.Name} of unit {unit.name}");
             return false;
         }
-        Debug.Log("Setting target node to " + node);
         targetNode = node;
         return true;
     }

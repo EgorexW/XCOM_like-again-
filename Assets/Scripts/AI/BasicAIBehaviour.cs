@@ -4,18 +4,20 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public class BasicAIBehaviour : AIBehaviour{
-    [BoxGroup("References")] [Required] [SerializeField] AITargetEvaluator aiMovementBehaviour;
-    [BoxGroup("References")] [Required] [SerializeField] AITargetEvaluator aiAttackBehaviour;
+    [FormerlySerializedAs("aiMovementBehaviour")] [BoxGroup("References")] [Required] [SerializeField] AITargetedActionEvaluator aiTargetedMovementBehaviour;
+    [FormerlySerializedAs("aiAttackBehaviour")] [BoxGroup("References")] [Required] [SerializeField] AITargetedActionEvaluator aiTargetedAttackBehaviour;
     [Required][BoxGroup("ActionReferences")][SerializeField] TargetedUnitAction movementAction;
     [Required][BoxGroup("ActionReferences")][SerializeField] TargetedUnitAction attackAction;
     [Required][BoxGroup("ActionReferences")][SerializeField] UnitAction reloadAction;
+    [Required][BoxGroup("ActionReferences")][SerializeField] UnitAction surrenderAction;
 
     [BoxGroup("Config")][SerializeField] float attackWhenExposedChance = 0.5f;
     [BoxGroup("Config")][SerializeField] float moveScoreToMove = 5;
+    [BoxGroup("Config")][SerializeField] float surrenderChance = 0.5f;
     
     public override AIAction GetAction(AIContext context){
-        var movementEvaluation = aiMovementBehaviour.EvaluateTargetedAction(context, movementAction);
-        var attackEvaluation = aiAttackBehaviour.EvaluateTargetedAction(context, attackAction);
+        var movementEvaluation = aiTargetedMovementBehaviour.EvaluateTargetedAction(context, movementAction);
+        var attackEvaluation = aiTargetedAttackBehaviour.EvaluateTargetedAction(context, attackAction);
 
         // Circumstances
         HashSet<Circumstance> circumstances = new ();
@@ -60,7 +62,12 @@ public class BasicAIBehaviour : AIBehaviour{
             return GetAttackAction(attackEvaluation.bestNode);
         }
         if (circumstances.Contains(Circumstance.Exposed)){
-            return GetMoveAction(movementEvaluation.bestNode);
+            if (movementEvaluation.score > 0){
+                return GetMoveAction(movementEvaluation.bestNode);
+            }
+            if (Random.value < surrenderChance){
+                return GetSurrenderAction();
+            }
         }
         if (circumstances.Contains(Circumstance.MustReload)){
             return GetReloadAction();
@@ -72,6 +79,13 @@ public class BasicAIBehaviour : AIBehaviour{
             return GetAttackAction(attackEvaluation.bestNode);
         }
         return AIAction.Empty;
+    }
+
+    AIAction GetSurrenderAction(){
+        var action = new AIAction{
+            Action = surrenderAction
+        };
+        return action;
     }
 
     AIAction GetReloadAction(){

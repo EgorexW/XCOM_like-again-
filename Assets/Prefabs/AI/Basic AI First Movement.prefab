@@ -49,4 +49,4 @@ MonoBehaviour:
   exposedEnemy: 100
   distanceToEnemyScore: 100
   diagonalThreshold: 2
-  distanceFalloff: 0.5
+  distanceFalloff: 1

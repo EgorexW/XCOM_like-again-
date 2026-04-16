@@ -44,13 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a2acbc7f3e45fdb0df34ea9e82e387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnAction
-  name: Throw Flashbang
-  description: 
   cost: 1
   usesLeft:
     enabled: 1
     value: 1
-  actionType: 2
+  actionInfo:
+    actionType: 2
+    aggressive: 1
+    actionName: Throw Flashbang
+    description: 
   unit: {fileID: 0}
   range: 7
   prefabToSpawn: {fileID: 9098700461190151436, guid: 56529cb7b94754746bcb3dff6683185d, type: 3}

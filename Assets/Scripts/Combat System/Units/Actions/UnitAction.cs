@@ -5,21 +5,17 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public abstract class UnitAction : MonoBehaviour{
-    [FormerlySerializedAs("Name")] [SerializeField] new string name;
-    [SerializeField] string description;
+    [SerializeField] ActionInfo actionInfo;
     [SerializeField] int cost = 1;
     [SerializeField] Optional<int> usesLeft;
-    [SerializeField] ActionType actionType;
 
     [HideInEditorMode] [ReadOnly] public CombatUnit unit;
     
-    public ActionType ActionType => actionType;
-    public string Description => description;
-    public string Name => name;
+    public ActionInfo ActionInfo => actionInfo;
 
     public void Execute(){
         if (ValidateAction() != UnitActionValidation.Valid){
-            Debug.LogWarning($"Cannot execute action {this.Name} for unit {unit.name}, because {ValidateAction().ToString()}");
+            Debug.LogWarning($"Cannot execute action {this.ActionInfo.Name} for unit {unit.name}, because {ValidateAction().ToString()}");
             return;
         }
         unit.SpendActionPoints(cost);
@@ -27,6 +23,7 @@ public abstract class UnitAction : MonoBehaviour{
             usesLeft -= 1;
         }
         OnExecute();
+        unit.onActionPerformed.Invoke(this);
     }
 
     protected abstract void OnExecute();
@@ -45,15 +42,6 @@ public abstract class UnitAction : MonoBehaviour{
         return result;
     }
     
-    [Button]
-    void ResetName(){
-        this.name = gameObject.name;
-    }
-
-    protected void Reset(){
-        ResetName();
-    }
-
     public virtual bool IsLimitedUse(){
         return GetUsesLeft() > -1;
     }
@@ -74,6 +62,19 @@ public enum UnitActionValidation{
     SupressedByStatus = 1 << 2,      
     InvalidTarget = 1 << 3,          
     AmmoIssue = 1 << 4
+}
+
+[Serializable][HideLabel]
+public class ActionInfo{
+    [SerializeField] private string actionName;
+    [SerializeField] private string description;
+    [SerializeField] private ActionType actionType;
+    [SerializeField] private bool aggressive;
+    
+    public ActionType ActionType => actionType;
+    public bool Aggressive => aggressive;
+    public string Name => actionName;
+    public string Description => description;
 }
 
 public enum ActionType{

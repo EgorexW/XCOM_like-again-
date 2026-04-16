@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicAIMovement
   exposedPenalty: 100
-  coverFromEnemy: 50
+  coverFromEnemy: 30
   exposedEnemy: 20
-  distanceToEnemyScore: 20
+  distanceScore: 10
+  idealDistance: 4
   diagonalThreshold: 2
-  distanceFalloff: 1
+  distanceFalloff: 0.5

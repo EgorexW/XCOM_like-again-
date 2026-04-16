@@ -1,8 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BasicAIEvaluator : AITargetEvaluator{
+public abstract class BasicAITargetedEvaluator : AITargetedActionEvaluator{
     public override TargetEvaluation EvaluateTargetedAction(AIContext context, TargetedUnitAction targetedAction){
+        var validation = targetedAction.ValidateAction();
+
+        if (validation != UnitActionValidation.Valid && validation != UnitActionValidation.InvalidTarget){
+            return TargetEvaluation.Unavailible;
+        }
+        
         CombatGridNode bestNode = null;
         float highestScore = float.MinValue;
         var validNodes = targetedAction.GetValidTargets();

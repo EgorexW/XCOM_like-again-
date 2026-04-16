@@ -18,6 +18,7 @@ public class CombatUnit : CombatObject{
 
     [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onStartTurn;
     [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onEndTurn;
+    [FoldoutGroup("Events")] public UnityEvent<UnitAction> onActionPerformed;
 
     protected override void Awake(){
         base.Awake();

@@ -44,12 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ccf754617e4740a722652f569c2226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveAction
-  name: Move
-  description: 
   cost: 1
   usesLeft:
     enabled: 0
     value: 0
-  actionType: 0
+  actionInfo:
+    actionType: 0
+    aggressive: 0
+    actionName: Move
+    description: 
   unit: {fileID: 0}
   range: 3

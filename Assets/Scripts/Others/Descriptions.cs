@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class Descriptions{
     public static string GetDescription(this UnitAction unitAction){
-        string description = unitAction.Description;
+        string description = unitAction.ActionInfo.Description;
         description += $"Cost: {unitAction.GetCost()}";
         if (unitAction is TargetedUnitAction targetedUnitAction){
             description += $" Range: {targetedUnitAction.Range}";

@@ -60,7 +60,7 @@ public class ActionTargetingUI : UIElement{
         }
         
         confirmButton.interactable = action.ValidateAction() == UnitActionValidation.Valid;
-        actionNameText.SetText(action.Name);
+        actionNameText.SetText(action.ActionInfo.Name);
         descriptionText.SetText(action.GetDescription());
     }
 
