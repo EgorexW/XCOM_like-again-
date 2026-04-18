@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -26,8 +27,8 @@ public class CoverComponent : CombatComponent{
             return;
         }
 
-        var targetPos = combatObject.GetCenterNode().GetPos() + direction.Vector();
-        var targetNode = combatObject.Grid().GetNode(targetPos);
+        var targetPos = CombatObject.GetCenterNode().GetPos() + direction.Vector();
+        var targetNode = CombatObject.Grid().GetNode(targetPos);
 
         if (targetNode == null){
             return;
@@ -39,7 +40,7 @@ public class CoverComponent : CombatComponent{
         var coverComponent = spawnedHalf.GetComponentInChildren<CoverComponent>();
         coverComponent.spawnedAsAdjacentCover = true;
         
-        combatObject.CombatSystem.AddCombatObject(combatObj, targetNode);
+        CombatObject.CombatSystem.AddCombatObject(combatObj, new List<CombatGridNode>{ targetNode });
         coverComponent.InitializeAsSpawnedHalf(direction.Opposite(), targetNode);
 
     }

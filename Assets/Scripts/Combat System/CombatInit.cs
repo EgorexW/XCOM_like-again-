@@ -9,8 +9,8 @@ public class CombatInit : MonoBehaviour{
     [SerializeField] List<UnitsTurnTaker> turnTakers;
 
     protected void Start(){
-        var combatObjs = combatObjectsParent.GetComponentsInChildren<ICombatObject>();
-        foreach (var combatObj in combatObjs) combatSystem.AddCombatObject(combatObj, combatSystem.CombatGrid.GetNode(combatObj.WorldPosition()));
+        var combatObjs = combatObjectsParent.GetComponentsInChildren<CombatObject>();
+        foreach (var combatObj in combatObjs) combatSystem.AddCombatObject(combatObj, new List<CombatGridNode>{ combatSystem.CombatGrid.GetNode(combatObj.transform.position) });
         foreach (var turnTaker in turnTakers){
             combatSystem.TurnSystem.AddTurnTaker(turnTaker, InsertTurnTakerType.Last);
             Team team = new Team(turnTaker.Units.ConvertAll(unit => (ICombatObject) unit));

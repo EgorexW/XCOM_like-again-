@@ -11,7 +11,7 @@ class CombatObjectUI : UIElement{
     [BoxGroup("References")][Required][SerializeField] SuspectComponentUI suspectComponentUI;
 
     public void SetCombatObject(ICombatObject combatObject){
-        var screenPos = Camera.main.WorldToScreenPoint(combatObject.WorldPosition());
+        var screenPos = Camera.main.WorldToScreenPoint(combatObject.GetCenter());
         rectTransform.position = screenPos;
         var healthComponent = combatObject.GetCombatComponent<HealthComponent>();
         if (healthComponent != null){

@@ -114,16 +114,33 @@ public static class CombatGridExtensions{
     }
     
     public static List<CombatGridNode> GetNodesInRadius(this CombatGridNode centerNode, float radius){
+        return GetNodesInRadius(centerNode.grid, centerNode.GetPos(), radius);
+    }
+    
+    public static List<CombatGridNode> GetNodesInRadius(this CombatGrid grid, Vector2 point, float radius){
         var nodes = new List<CombatGridNode>();
-        int boundingBox = Mathf.CeilToInt(radius);
 
-        for (int x = centerNode.x - boundingBox; x <= centerNode.x + boundingBox; x++){
-            for (int y = centerNode.y - boundingBox; y <= centerNode.y + boundingBox; y++){
-                var targetNode = centerNode.grid.GetNode(new Vector2Int(x, y));
+        // Strictly respect the float point for the bounding box
+        int minX = Mathf.FloorToInt(point.x - radius);
+        int maxX = Mathf.CeilToInt(point.x + radius);
+        int minY = Mathf.FloorToInt(point.y - radius);
+        int maxY = Mathf.CeilToInt(point.y + radius);
+
+        // Square the radius once to avoid running Mathf.Sqrt inside the loop
+        float radiusSqr = radius * radius;
+
+        for (int x = minX; x <= maxX; x++){
+            for (int y = minY; y <= maxY; y++){
+                var targetNode = grid.GetNode(new Vector2Int(x, y));
                 if (targetNode == null){
                     continue;
                 }
-                if (centerNode.GetDistance(targetNode) <= radius){
+                
+                // Float distance check against the exact Vector2 point
+                float dx = point.x - targetNode.x;
+                float dy = point.y - targetNode.y;
+                
+                if ((dx * dx + dy * dy) <= radiusSqr){
                     nodes.Add(targetNode);
                 }
             }

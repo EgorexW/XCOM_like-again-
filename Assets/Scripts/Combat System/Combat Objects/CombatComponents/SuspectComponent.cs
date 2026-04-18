@@ -8,7 +8,7 @@ public class SuspectComponent : CombatComponent{
 
     public override void Init(){
         base.Init();
-        if (combatObject is CombatUnit combatUnit){
+        if (CombatObject is CombatUnit combatUnit){
             combatUnit.onActionPerformed.AddListener(OnActionPerformed);
         }
     }
@@ -27,7 +27,7 @@ public class SuspectComponent : CombatComponent{
     }
     
     void OnDestroy() {
-        if (combatObject is CombatUnit combatUnit){
+        if (CombatObject is CombatUnit combatUnit){
             combatUnit.onActionPerformed.RemoveListener(OnActionPerformed);
         }
     }

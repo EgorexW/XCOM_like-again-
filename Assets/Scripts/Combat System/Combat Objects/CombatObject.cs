@@ -17,6 +17,8 @@ public class CombatObject : MonoBehaviour, ICombatObject{
 
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
 
+    [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onInit{ get; } = new();
+
     protected virtual void Awake(){}
 
     public T GetCombatComponent<T>() where T : CombatComponent{
@@ -37,48 +39,15 @@ public class CombatObject : MonoBehaviour, ICombatObject{
 
     public void Init(){
         foreach (var combatComponent in GetComponentsInChildren<CombatComponent>()){
-            combatComponent.combatObject = this;
+            combatComponent.CombatObject = this;
             combatComponent.Init();
         }
+        onInit.Invoke(this);
     }
-}
-
-public interface ICombatObject{
-    List<CombatGridNode> Nodes{ get; set; }
-    CombatSystem CombatSystem { get; set; }
-    GameObject GameObject { get; }
-    GridOccupancyType OccupancyType { get; }
-    T GetCombatComponent<T>() where T : CombatComponent;
-    string Name{ get; }
-    void MoveTo(List<CombatGridNode> targetNodes);
-    public void Remove();
-    void Init();
-    UnityEvent<ICombatObject> onRemove{ get; }
 }
 
 public abstract class CombatComponent : MonoBehaviour{
-    public ICombatObject combatObject;
+    public ICombatObject CombatObject { get; set; }
 
     public virtual void Init(){ }
-}
-
-public static class CombatObjectExtensions{
-    public static CombatGrid Grid(this ICombatObject combatObject){
-        var nodes = combatObject.Nodes;
-        return nodes.PrimaryGrid();
-    }
-
-    public static Vector3 WorldPosition(this ICombatObject combatObject){
-        return combatObject.GameObject.transform.position;
-    }
-    public static void MoveTo(this ICombatObject combatObject, CombatGridNode targetNode){
-        combatObject.MoveTo(new List<CombatGridNode>{targetNode});
-    }
-
-    public static Vector2 GetCenter(this ICombatObject combatObject){
-        return combatObject.Nodes.GetCenter();
-    }
-    public static CombatGridNode GetCenterNode(this ICombatObject combatObject){
-        return combatObject.Nodes.GetCenterNode();
-    }
 }

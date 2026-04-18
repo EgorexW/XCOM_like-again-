@@ -6,6 +6,8 @@ public class ExplosionEffect : CombatEffect{
     [SerializeField] int damage = 1;
     [SerializeField] List<UnitStatusEffectCreator> statusEffects;
     
+    public float Range => range;
+
     public override void Execute(){
         if (!HasNode){
             return;
