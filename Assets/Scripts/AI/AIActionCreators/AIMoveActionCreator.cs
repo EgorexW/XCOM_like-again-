@@ -15,12 +15,13 @@ public class AIMoveActionCreator : AITargetedActionCreator{
 
     protected override AIAction GetAIAction(AIContext context, UnitAction action){
         var validation = base.GetAIAction(context, action);
-        validation.SetScore(validation.Score - EvaluateNode(context.Unit.Node, context));
+        validation.SetScore(validation.Score - EvaluateNode(context.Unit.Node, context, out var flags));
         return validation;
     }
 
-    protected override float EvaluateNode(CombatGridNode node, AIContext context) {
+    protected override float EvaluateNode(CombatGridNode node, AIContext context, out AIActionFlags flags) {
         float score = 0;
+        flags = AIActionFlags.None;
         var text = "";
 
         float totalCoverFromEnemyScore = 0;
@@ -41,9 +42,11 @@ public class AIMoveActionCreator : AITargetedActionCreator{
             }
             if (enemy.Node.CanAttack(node)){
                 totalExposedPenalty += exposedPenalty / inverseDistance;
+                flags |= AIActionFlags.SelfExposed;
             }
             if (node.CanAttack(enemy.Node)){
                 totalExposedEnemiesScore += exposedEnemy / inverseDistance;
+                flags |= AIActionFlags.EnemyExposed;
             }
         }
 

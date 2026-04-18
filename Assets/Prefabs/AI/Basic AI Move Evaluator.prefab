@@ -46,13 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e06f1818d24e36bc04d80b41d74ade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AITargetEvaluatorSwitch
-  defaultTargetEvaluator: {fileID: 6423192857006995407}
-  evaluatorBasedOnActionPoints:
-    enabled: 1
-    value:
-    - {fileID: 5693955409081556573}
-    - {fileID: 5693955409081556573}
-    - {fileID: 6423192857006995407}
+  actionCreators:
+  - {fileID: 5693955409081556573}
+  - {fileID: 5693955409081556573}
+  - {fileID: 6423192857006995407}
 --- !u!1001 &5479346500045113350
 PrefabInstance:
   m_ObjectHideFlags: 0

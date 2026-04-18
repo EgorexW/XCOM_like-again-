@@ -5244,6 +5244,7 @@ MonoBehaviour:
   combatGrid: {fileID: 1325963468}
   turnSystem: {fileID: 655440598}
   teamsSystem: {fileID: 1865073917}
+  hazardsSystem: {fileID: 0}
   onCombatStarted:
     m_PersistentCalls:
       m_Calls: []

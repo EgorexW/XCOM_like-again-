@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -18,11 +19,13 @@ public class AIAction{
     public readonly CombatGridNode targetNode;
     float score;
     bool valid = true;
+    AIActionFlags actionFlags;
     
-    public AIAction(UnitAction action = null, CombatGridNode targetNode = null, float score = 0f){
+    public AIAction(UnitAction action = null, CombatGridNode targetNode = null, float score = 0f, AIActionFlags actionFlags = AIActionFlags.None){
         this.action = action;
         this.targetNode = targetNode;
         this.score = score;
+        this.actionFlags = actionFlags;
     }
     
     public void SetScore(float newScore){
@@ -34,6 +37,19 @@ public class AIAction{
     };
     public bool Valid => valid && !IsEmpty;
     public float Score => Valid ? score : float.MinValue;
+    public AIActionFlags ActionFlags => actionFlags;
+
+    public void AddFlag(AIActionFlags aiActionFlags){
+        actionFlags |= aiActionFlags;
+    }
+}
+
+[Flags]
+public enum AIActionFlags{
+    None = 0,
+    SelfExposed = 1 << 1,
+    EnemyExposed  = 1 << 2,
+    MagazineEmpty  = 1 << 3,
 }
 
 static class AIHelper{

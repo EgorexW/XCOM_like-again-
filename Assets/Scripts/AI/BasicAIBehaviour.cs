@@ -11,7 +11,7 @@ public class BasicAIBehaviour : AIBehaviour{
 
     [BoxGroup("Config")][SerializeField] float attackWhenExposedChance = 0.5f;
     [BoxGroup("Config")][SerializeField] float moveScoreToMove = 5;
-    [BoxGroup("Config")][SerializeField] float surrenderChance = 0.5f;
+    // [BoxGroup("Config")][SerializeField] float surrenderChance = 0.5f;
     
     public override AIAction GetAction(AIContext context){
         // Actions
@@ -20,53 +20,23 @@ public class BasicAIBehaviour : AIBehaviour{
         var reloadAction = reloadActionCreator.CreateAIAction(context);
         var surrenderAction = surrenderActionCreator.CreateAIAction(context);
 
-        // Circumstances
-        HashSet<Circumstance> circumstances = new ();
-
-        if (combatUnit.Node.IsExposed(context.Enemies)){
-            circumstances.Add(Circumstance.Exposed);
-        }
-        
-        // var enemiesExposed = GetExposedEnemies(context.Enemies);
-        // if (enemiesExposed.Count > 0){
-        //     circumstances.Add(Circumstance.EnemyExposed);
-        // }
-        
-        var ammoComponent = combatUnit.GetCombatComponent<AmmoComponent>();
-        if (ammoComponent != null){
-            if (ammoComponent.IsEmpty){
-                circumstances.Add(Circumstance.MustReload);
-                circumstances.Remove(Circumstance.EnemyExposed);
-            }
-        }
-
-        if (context.Unit.ActionPoints < 2){
-            circumstances.Add(Circumstance.LastAction);
-        }
-
         // Resolution
-        if (circumstances.Contains(Circumstance.EnemyExposed)){
-            if (circumstances.Contains(Circumstance.Exposed)){
-                if (!circumstances.Contains(Circumstance.LastAction)){
-                    return attackAction;
-                }
+        var exposed = combatUnit.Node.IsExposed(context.Enemies);
+        var enemyExposed = attackAction.ActionFlags.HasFlag(AIActionFlags.EnemyExposed);
+
+        if (exposed){
+            if (enemyExposed){
                 if (Random.value < attackWhenExposedChance){
                     return attackAction;
                 }
-                return moveAction;
             }
-            return attackAction;
+            return moveAction.Score > 0 ? moveAction : surrenderAction;
         }
-        if (circumstances.Contains(Circumstance.Exposed)){
-            if (moveAction.Score > 0){
-                return moveAction;
-            }
-            if (Random.value < surrenderChance){
-                return surrenderAction;
-            }
-        }
-        if (circumstances.Contains(Circumstance.MustReload)){
+        if (reloadAction.ActionFlags.HasFlag(AIActionFlags.MagazineEmpty)){
             return reloadAction;
+        }
+        if (enemyExposed){
+            return attackAction;
         }
         if (moveAction.Score / moveScoreToMove >= Random.value){
             return moveAction;
@@ -75,12 +45,5 @@ public class BasicAIBehaviour : AIBehaviour{
             return attackAction;
         }
         return AIAction.Invalid;
-    }
-
-    enum Circumstance{
-        Exposed,
-        EnemyExposed,
-        MustReload,
-        LastAction
     }
 }

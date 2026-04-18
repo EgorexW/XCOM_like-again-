@@ -1,23 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SupressStatusCreator : UnitStatusEffectCreator{
-    [SerializeField] List<ActionFlags> supressedActionTypes;
+    [SerializeField] ActionFlags supressedFlags;
     [SerializeField] Optional<int> duration;
     
     public override UnitStatusEffect CreateStatus(){
         int durationValue = duration ? duration.Value : -1;
-        var status = new SupressStatus(supressedActionTypes, durationValue);
+        var status = new SupressStatus(supressedFlags, durationValue);
         return status;
     }
 }
 
 public class SupressStatus : UnitStatusEffect{
-    List<ActionFlags> supressedActionTypes;
+    ActionFlags supressedFlags;
     int duration;
 
-    public SupressStatus(List<ActionFlags> actionTypes, int durationTmp){
-        supressedActionTypes = actionTypes;
+    public SupressStatus(ActionFlags flags, int durationTmp){
+        supressedFlags = flags;
         duration = durationTmp;
     }
 
@@ -41,7 +42,7 @@ public class SupressStatus : UnitStatusEffect{
     }
 
     public override bool CanExecuteAction(UnitAction action){
-        if (supressedActionTypes.Contains(action.ActionInfo.ActionFlags)){
+        if ((supressedFlags & action.ActionInfo.ActionFlags) != 0){
             return false;
         }
         return true;

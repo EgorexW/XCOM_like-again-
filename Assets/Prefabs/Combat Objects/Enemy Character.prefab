@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 1931045595889409497}
   - component: {fileID: 1760186521328549159}
   m_Layer: 0
-  m_Name: AI
+  m_Name: Basic AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -211,7 +211,7 @@ MonoBehaviour:
   combatUnit: {fileID: 7939027683121073963}
   moveActionCreator: {fileID: 6356027462811808188}
   attackActionCreator: {fileID: 4127198261635684400}
-  reloadActionCreator: {fileID: 219024014377268973}
+  reloadActionCreator: {fileID: 4676458533113706944}
   surrenderActionCreator: {fileID: 3057410326975558901}
   attackWhenExposedChance: 0.5
   moveScoreToMove: 5
@@ -225,7 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3583971954901575106}
-  - component: {fileID: 219024014377268973}
+  - component: {fileID: 4676458533113706944}
   m_Layer: 0
   m_Name: AI Reload
   m_TagString: Untagged
@@ -248,7 +248,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2438600814162373264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &219024014377268973
+--- !u!114 &4676458533113706944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,9 +257,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6199117629105287934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc599a87275e42c1a0461098c9db4171, type: 3}
+  m_Script: {fileID: 11500000, guid: a4cb7776fe2240d4b49c7c662e155548, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BasicAIActionCreator
+  m_EditorClassIdentifier: Assembly-CSharp::AIReloadActionCreator
   unitActions:
   - {fileID: 7566062566804207911}
 --- !u!1001 &791588589466580847
