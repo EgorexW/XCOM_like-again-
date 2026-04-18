@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,7 +8,7 @@ using UnityEngine.Serialization;
 public class CombatObject : MonoBehaviour, ICombatObject{
     [SerializeField] GridOccupancyType gridOccupancyType;
 
-    [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public CombatGridNode Node{ get; set; }
+    [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public List<CombatGridNode> Nodes{ get; set; } = new List<CombatGridNode>();
     [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public CombatSystem CombatSystem{ get; set; }
     public GameObject GameObject => gameObject;
     public GridOccupancyType OccupancyType => gridOccupancyType;
@@ -23,9 +24,9 @@ public class CombatObject : MonoBehaviour, ICombatObject{
         return component;
     }
 
-    public void MoveTo(CombatGridNode targetNode){
-        targetNode.grid.PlaceCombatObject(this, targetNode);
-        transform.position = new Vector3(targetNode.x, targetNode.y, transform.position.z);
+    public void MoveTo(List<CombatGridNode> targetNodes){
+        targetNodes.PrimaryGrid().PlaceCombatObject(this, targetNodes);
+        transform.position = targetNodes.GetCenter();
     }
 
     public virtual void Remove(){
@@ -43,13 +44,13 @@ public class CombatObject : MonoBehaviour, ICombatObject{
 }
 
 public interface ICombatObject{
-    CombatGridNode Node{ get; set; }
+    List<CombatGridNode> Nodes{ get; set; }
     CombatSystem CombatSystem { get; set; }
     GameObject GameObject { get; }
     GridOccupancyType OccupancyType { get; }
     T GetCombatComponent<T>() where T : CombatComponent;
     string Name{ get; }
-    public void MoveTo(CombatGridNode targetNode);
+    void MoveTo(List<CombatGridNode> targetNodes);
     public void Remove();
     void Init();
     UnityEvent<ICombatObject> onRemove{ get; }
@@ -63,9 +64,21 @@ public abstract class CombatComponent : MonoBehaviour{
 
 public static class CombatObjectExtensions{
     public static CombatGrid Grid(this ICombatObject combatObject){
-        return combatObject.Node.grid;
+        var nodes = combatObject.Nodes;
+        return nodes.PrimaryGrid();
     }
+
     public static Vector3 WorldPosition(this ICombatObject combatObject){
         return combatObject.GameObject.transform.position;
+    }
+    public static void MoveTo(this ICombatObject combatObject, CombatGridNode targetNode){
+        combatObject.MoveTo(new List<CombatGridNode>{targetNode});
+    }
+
+    public static Vector2 GetCenter(this ICombatObject combatObject){
+        return combatObject.Nodes.GetCenter();
+    }
+    public static CombatGridNode GetCenterNode(this ICombatObject combatObject){
+        return combatObject.Nodes.GetCenterNode();
     }
 }

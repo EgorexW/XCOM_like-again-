@@ -28,7 +28,7 @@ public class SpawnAction : TargetedUnitAction{
         if (!node.CanAcceptObject(combatObject.OccupancyType)){
             result = TargetValidation.InvalidTarget;
         }
-        if (!unit.Node.LineUnobstructed(node, combatObject.OccupancyType)){
+        if (!unit.GetCenterNode().LineUnobstructed(node, combatObject.OccupancyType)){
             result |= TargetValidation.NoPath;
         }
         return result;

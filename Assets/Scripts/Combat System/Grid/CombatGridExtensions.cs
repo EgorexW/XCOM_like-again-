@@ -155,6 +155,76 @@ public static class CombatGridExtensions{
         return neighbors;
     }
 
+    public static Vector2 GetCenter(this List<CombatGridNode> nodes){
+        if (nodes == null || nodes.Count == 0){
+            Debug.LogError("No grid nodes found");
+            return Vector2.zero; 
+        }
+
+        float sumX = 0;
+        float sumY = 0;
+
+        foreach (var node in nodes){
+            sumX += node.x;
+            sumY += node.y;
+        }
+
+        return new Vector2(sumX / nodes.Count, sumY / nodes.Count);
+    }
+
+    public static CombatGridNode GetCenterNode(this List<CombatGridNode> nodes){
+        if (nodes == null || nodes.Count == 0){
+            Debug.LogError("No grid nodes found");
+            return null; // FIXED: You were missing this return!
+        }
+        
+        Vector2 exactCenter = nodes.GetCenter();
+
+        CombatGridNode closestNode = null;
+        float closestDistanceSqr = float.MaxValue;
+        
+        // Track how many nodes share the exact same distance to the center
+        int tieCount = 1; 
+
+        foreach (var node in nodes) {
+            float dx = node.x - exactCenter.x;
+            float dy = node.y - exactCenter.y;
+            float distSqr = dx * dx + dy * dy; // Sqr magnitude
+            
+            if (Mathf.Approximately(distSqr, closestDistanceSqr)) {
+                tieCount++;
+            }
+            else if (distSqr < closestDistanceSqr) {
+                closestDistanceSqr = distSqr;
+                closestNode = node;
+                tieCount = 1; // We found a new true closest, reset the tie breaker
+            }
+        }
+
+        // THE WARNING:
+        if (tieCount > 1) {
+            Debug.LogWarning($"[Grid Paranoia] GetCenterNode was called on a shape with no objective center! Tie between {tieCount} nodes. Defaulting to node {closestNode.x},{closestNode.y}.");
+        }
+
+        return closestNode;
+    }
+    
+    public static CombatGrid PrimaryGrid(this List<CombatGridNode> nodes){
+        if (nodes == null || nodes.Count == 0) return null;
+        // The "Center of Mass" dictates which grid this object officially belongs to
+        CombatGrid primaryGrid = nodes.GetCenterNode().grid;
+
+        // PARANOIA CHECK: Are we straddling two different dimensions?
+        foreach (var node in nodes) {
+            if (node.grid != primaryGrid) {
+                Debug.LogWarning($"{nodes} are occupying nodes across multiple different grids! Proceed with caution.");
+                break;
+            }
+        }
+
+        return primaryGrid;
+    }
+
     #region Attacks
 
     public static bool IsProtectedFrom(this CombatGridNode node, Direction attackDirection){

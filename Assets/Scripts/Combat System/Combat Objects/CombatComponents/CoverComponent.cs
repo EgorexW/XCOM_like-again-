@@ -26,7 +26,7 @@ public class CoverComponent : CombatComponent{
             return;
         }
 
-        var targetPos = combatObject.Node.GetPos() + direction.Vector();
+        var targetPos = combatObject.GetCenterNode().GetPos() + direction.Vector();
         var targetNode = combatObject.Grid().GetNode(targetPos);
 
         if (targetNode == null){

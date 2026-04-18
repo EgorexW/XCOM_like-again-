@@ -15,15 +15,15 @@ public class AIAttackActionCreator : AITargetedActionCreator{
         flags = AIActionFlags.None;
         var text = "";
 
-        float distance = node.GetDistance(context.Unit.Node);
+        float distance = node.GetDistance(context.Unit.GetCenterNode());
         
         foreach (var enemy in context.Enemies){
-            float distanceToEnemy = node.GetDistance(enemy.Node);
+            float distanceToEnemy = node.GetDistance(enemy.GetCenterNode());
             if (node.GetCombatObjects().Contains(enemy)){
                 score += enemyPresent / (distance * distanceFalloff);
                 flags |= AIActionFlags.EnemyExposed;
             }
-            if (context.Unit.Node.GetNodesInBetween(enemy.Node).Contains(node)){
+            if (context.Unit.GetCenterNode().GetNodesInBetween(enemy.GetCenterNode()).Contains(node)){
                 score += blockPathToEnemy / (distance * distanceFalloff * distanceToEnemy);
             }
         }

@@ -10,10 +10,10 @@ public class MoveAction : TargetedUnitAction{
         if (!node.CanAcceptObject(unit.OccupancyType)){
             result |= TargetValidation.InvalidTarget;
         }
-        if (node == unit.Node){
+        if (node.Contains(unit)){
             result |= TargetValidation.InvalidTarget;
         }
-        if (!unit.Node.LineUnobstructed(node, GridOccupancyType.Character)){
+        if (!unit.GetCenterNode().LineUnobstructed(node, GridOccupancyType.Character)){
             result |= TargetValidation.NoPath;
         }
         return result;

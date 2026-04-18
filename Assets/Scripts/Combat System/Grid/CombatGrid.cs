@@ -30,12 +30,16 @@ public class CombatGrid : MonoBehaviour{
         onCombatGridNodeChanged.Invoke(node);
     }
 
-    public void PlaceCombatObject(ICombatObject combatObject, CombatGridNode newNode){
-        if (combatObject.Node != null){
-            combatObject.Node.RemoveCombatObject(combatObject);
-        }
-        newNode.AddCombatObject(combatObject);
-        combatObject.Node = newNode;
+    public void PlaceCombatObject(ICombatObject combatObject, List<CombatGridNode> newNodes){
+            foreach (var node in combatObject.Nodes) {
+                node.RemoveCombatObject(combatObject);
+            }
+        
+            foreach (var node in newNodes) {
+                node.AddCombatObject(combatObject);
+            }
+        
+            combatObject.Nodes = newNodes;
     }
 
     public void TriggerGridObjectChanged(CombatGridNode node){
@@ -46,11 +50,11 @@ public class CombatGrid : MonoBehaviour{
         return Grid.GetGridObject(pos);
     }
 
-    public void RemoveCombatObject(ICombatObject arg0){
-        if (arg0.Node != null){
-            arg0.Node.RemoveCombatObject(arg0);
-            arg0.Node = null;
+    public void RemoveCombatObject(ICombatObject combatObject){
+        foreach (var node in combatObject.Nodes) {
+            node.RemoveCombatObject(combatObject);
         }
+        combatObject.Nodes.Clear(); 
     }
 
     public List<CombatGridNode> GetAllNodes(){

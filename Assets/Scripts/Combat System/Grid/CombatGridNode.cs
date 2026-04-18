@@ -45,6 +45,10 @@ public class CombatGridNode : GridNode{
     public override string ToString(){
         return $"Node({x}, {y}) with {combatObjects.Count} objects";
     }
+
+    public bool Contains(CombatUnit unit){
+        return combatObjects.Contains(unit);
+    }
 }
 
 public enum GridOccupancyType{

@@ -21,7 +21,7 @@ public class BasicAIBehaviour : AIBehaviour{
         var surrenderAction = surrenderActionCreator.CreateAIAction(context);
 
         // Resolution
-        var exposed = combatUnit.Node.IsExposed(context.Enemies);
+        var exposed = combatUnit.GetCenterNode().IsExposed(context.Enemies);
         var enemyExposed = attackAction.ActionFlags.HasFlag(AIActionFlags.EnemyExposed);
 
         if (exposed){

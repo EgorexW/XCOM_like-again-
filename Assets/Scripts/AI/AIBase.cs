@@ -56,7 +56,7 @@ static class AIHelper{
     public static bool IsExposed(this CombatGridNode node, List<ICombatObject> enemies){
         bool exposed = false;
         foreach (var enemy in enemies){
-            if (enemy.Node.CanAttack(node)){
+            if (enemy.GetCenterNode().CanAttack(node)){
                 exposed = true;
                 break;
             }
@@ -66,7 +66,7 @@ static class AIHelper{
     public static List<ICombatObject> GetExposedEnemies(this CombatGridNode node, List<ICombatObject> enemies){
         var exposedEnemies = new List<ICombatObject>();
         foreach (var enemy in enemies){
-            if (node.CanAttack(enemy.Node)){
+            if (node.CanAttack(enemy.GetCenterNode())){
                 exposedEnemies.Add(enemy);
             }
         }

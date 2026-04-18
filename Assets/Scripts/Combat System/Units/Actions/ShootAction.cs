@@ -25,7 +25,7 @@ public class ShootAction : TargetedUnitAction{
 
     protected override TargetValidation CheckActionSpecificTargetRules(CombatGridNode node){
         var result = base.CheckActionSpecificTargetRules(node);
-        if (node == unit.Node){
+        if (node.Contains(unit)){
             result |= TargetValidation.InvalidTarget;
         }
         var targetObjects = node.GetCombatObjects();
@@ -40,7 +40,7 @@ public class ShootAction : TargetedUnitAction{
         if (!foundTarget){
             result |= TargetValidation.NoValidTarget;
         }
-        if (!unit.Node.CanAttack(node)){
+        if (!unit.GetCenterNode().CanAttack(node)){
             result |= TargetValidation.NoPath;
         }
         return result;

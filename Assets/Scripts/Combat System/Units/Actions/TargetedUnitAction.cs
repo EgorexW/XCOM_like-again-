@@ -32,7 +32,7 @@ public abstract class TargetedUnitAction : UnitAction{
             result |= TargetValidation.NotANode;
             return result; // Can't Validate further
         }
-        if (unit.Node.GetDistance(node) > range){
+        if (unit.GetCenterNode().GetDistance(node) > range){
             result |= TargetValidation.OutOfRange;
         }
         result |= CheckActionSpecificTargetRules(node);
@@ -59,7 +59,7 @@ public abstract class TargetedUnitAction : UnitAction{
     }
 
     public List<CombatGridNode> GetAllTargets(){
-        return unit.Node.GetNodesInRadius(range);
+        return unit.GetCenterNode().GetNodesInRadius(range);
     }
 }
 

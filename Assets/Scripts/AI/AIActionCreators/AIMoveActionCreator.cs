@@ -15,7 +15,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
 
     protected override AIAction GetAIAction(AIContext context, UnitAction action){
         var validation = base.GetAIAction(context, action);
-        validation.SetScore(validation.Score - EvaluateNode(context.Unit.Node, context, out var flags));
+        validation.SetScore(validation.Score - EvaluateNode(context.Unit.GetCenterNode(), context, out var flags));
         return validation;
     }
 
@@ -30,21 +30,21 @@ public class AIMoveActionCreator : AITargetedActionCreator{
         float totalDistanceScore = 0;
         
         foreach (var enemy in context.Enemies){
-            float distance = node.GetDistance(enemy.Node);
+            float distance = node.GetDistance(enemy.GetCenterNode());
             float inverseDistance = distance * distanceFalloff;
             float diffFromIdealDistance = Mathf.Abs(idealDistance - distance);
             totalDistanceScore += distanceScore / (diffFromIdealDistance * distanceFalloff + 1);
-            var enemyDirection = node.GetDirections(enemy.Node, diagonalThreshold);
+            var enemyDirection = node.GetDirections(enemy.GetCenterNode(), diagonalThreshold);
             foreach (var direction in enemyDirection){
                 if (node.IsProtectedFrom(direction)){
                     totalCoverFromEnemyScore += coverFromEnemy / (inverseDistance * enemyDirection.Count);
                 }
             }
-            if (enemy.Node.CanAttack(node)){
+            if (enemy.GetCenterNode().CanAttack(node)){
                 totalExposedPenalty += exposedPenalty / inverseDistance;
                 flags |= AIActionFlags.SelfExposed;
             }
-            if (node.CanAttack(enemy.Node)){
+            if (node.CanAttack(enemy.GetCenterNode())){
                 totalExposedEnemiesScore += exposedEnemy / inverseDistance;
                 flags |= AIActionFlags.EnemyExposed;
             }

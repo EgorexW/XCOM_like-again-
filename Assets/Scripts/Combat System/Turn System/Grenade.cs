@@ -25,7 +25,7 @@ public class Grenade : TurnTaker
 
     void Activate(){
         foreach (CombatEffect effect in effects){
-            effect.targetNode = owner != null ? owner.Node : null;
+            effect.targetNode = owner != null ? owner.GetCenterNode() : null;
             effect.Execute();
         }
         onActivate.Invoke();
