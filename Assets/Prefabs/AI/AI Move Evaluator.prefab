@@ -1,0 +1,198 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3269533962580991075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 931886856033831882}
+  - component: {fileID: 5611134837917335711}
+  m_Layer: 0
+  m_Name: AI Move Evaluator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &931886856033831882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3269533962580991075}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 7762244787981178386}
+  - {fileID: 9051730694626934656}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5611134837917335711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3269533962580991075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e06f1818d24e36bc04d80b41d74ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AITargetEvaluatorSwitch
+  actionCreators:
+  - {fileID: 5693955409081556573}
+  - {fileID: 5693955409081556573}
+  - {fileID: 6423192857006995407}
+--- !u!1001 &5479346500045113350
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 931886856033831882}
+    m_Modifications:
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068788409960751879, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+      propertyPath: m_Name
+      value: Basic AI First Movement
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+--- !u!114 &6423192857006995407 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1524837099596054473, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+  m_PrefabInstance: {fileID: 5479346500045113350}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7f867073ee64394a4cab674ccf97c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicAIMovement
+--- !u!4 &7762244787981178386 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2860775453890108948, guid: c037932beee064d3c8ebc7f1ea627716, type: 3}
+  m_PrefabInstance: {fileID: 5479346500045113350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6498044474696540564
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 931886856033831882}
+    m_Modifications:
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068788409960751879, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+      propertyPath: m_Name
+      value: Basic AI Second Movement
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+--- !u!114 &5693955409081556573 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1524837099596054473, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+  m_PrefabInstance: {fileID: 6498044474696540564}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7f867073ee64394a4cab674ccf97c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BasicAIMovement
+--- !u!4 &9051730694626934656 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2860775453890108948, guid: 0b3aa6f88fcb24c2893bce3ccb7f6b4b, type: 3}
+  m_PrefabInstance: {fileID: 6498044474696540564}
+  m_PrefabAsset: {fileID: 0}
