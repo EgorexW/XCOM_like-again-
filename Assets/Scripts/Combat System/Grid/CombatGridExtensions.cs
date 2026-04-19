@@ -9,9 +9,11 @@ public static class CombatGridExtensions{
         return true;
     }
 
-    public static bool LineUnobstructed(this CombatGridNode node1, CombatGridNode node2, GridOccupancyType obstructionType){
+    public static bool LineUnobstructed(this CombatGridNode node1, CombatGridNode node2,
+        GridOccupancyType obstructionType, List<ICombatObject> objectsToIgnore = null){
+        objectsToIgnore ??= new List<ICombatObject>();
         foreach (var node in node1.GetNodesInBetween(node2))
-            if (!node.CanAcceptObject(obstructionType)){
+            if (!node.CanAcceptObject(obstructionType, objectsToIgnore)){
                 return false;
             }
         return true;
@@ -272,8 +274,9 @@ public static class CombatGridExtensions{
     }
 
 
-    public static bool CanAttack(this CombatGridNode attackerNode, CombatGridNode targetNode){
-        if (!attackerNode.LineUnobstructed(targetNode, GridOccupancyType.Character)){
+    public static bool CanAttack(this CombatGridNode attackerNode, CombatGridNode targetNode, List<ICombatObject> objectsToIgnore = null){
+        objectsToIgnore ??= new List<ICombatObject>();
+        if (!attackerNode.LineUnobstructed(targetNode, GridOccupancyType.Character, objectsToIgnore)){
             return false;
         }
         var attackDirections = GetDirections(attackerNode, targetNode);

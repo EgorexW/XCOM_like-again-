@@ -48,14 +48,17 @@ public class CombatUnit : CombatObject{
     
     public void ApplyStatus(UnitStatusEffect status) {
         activeStatuses.Add(status);
-        status.OnApplied(this); 
+        status.OnApplied(this);
+        Debug.Log($"Applied status {status.name} to unit {name}");
     }
 
-    public void RemoveStatus(UnitStatusEffect status) {
-        if (activeStatuses.Contains(status)) {
-            status.OnRemoved(); // Clean up listeners!
-            activeStatuses.Remove(status);
+    public void RemoveStatus(UnitStatusEffect status){
+        if (!activeStatuses.Contains(status)){
+            return;
         }
+        status.OnRemoved();
+        activeStatuses.Remove(status);
+        Debug.Log($"Removed status {status.name} from unit {name}");
     }
 
     public UnitActionValidation CanExecute(UnitAction action) {

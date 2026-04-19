@@ -15,14 +15,14 @@ public class AIAttackActionCreator : AITargetedActionCreator{
         flags = AIActionFlags.None;
         var text = "";
 
-        float distance = node.GetDistance(context.Unit.GetCenterNode());
+        float distance = node.GetDistance(context.unit.GetCenterNode());
         
-        foreach (var enemy in context.Enemies){
+        foreach (var enemy in context.enemies){
             if (node.GetCombatObjects().Contains(enemy)){
                 score += enemyPresent;
                 flags |= AIActionFlags.EnemyExposed;
             }
-            if (context.Unit.GetCenterNode().GetNodesInBetween(enemy.GetCenterNode()).Contains(node)){
+            if (context.unit.GetCenterNode().GetNodesInBetween(enemy.GetCenterNode()).Contains(node)){
                 float distanceToEnemy = node.GetDistance(enemy.GetCenterNode());
                 var diffBetweenDistanceToSelfAndEnemy = distance - distanceToEnemy;
                 var totalDistance = distance + distanceToEnemy;
@@ -31,7 +31,7 @@ public class AIAttackActionCreator : AITargetedActionCreator{
             }
         }
 
-        foreach (var allie in context.Allies){
+        foreach (var allie in context.allies){
             if (node.GetCombatObjects().Contains(allie)){
                 score -= allyPresentPenalty;
             }
@@ -43,7 +43,7 @@ public class AIAttackActionCreator : AITargetedActionCreator{
         score += baseScore;
         
         text += $"Attack Score: {score}\n";
-        if (context.Debug){
+        if (context.debug){
             General.WorldText(text, node.GetPos(), 0.5f, 1);
         }
 

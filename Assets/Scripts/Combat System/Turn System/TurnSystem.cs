@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,14 +9,15 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
     int index = -1;
 
     public int TurnTakersCount => turnTakers.Count;
-    public ITurnTaker CurrentTurnTaker{
-        get{
-            if (index >= 0 && index < turnTakers.Count){
-                return turnTakers[index];
-            }
-            // Debug.LogWarning($"TurnManager: Index {index} is out of bounds for TurnTakers (Count: {turnTakers.Count})");
-            return null;
+
+    [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn;
+    [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn;
+
+    public ITurnTaker GetCurrentTurnTaker(){
+        if (index >= 0 && index < turnTakers.Count){
+            return turnTakers[index];
         }
+        return null;
     }
 
     public void AddTurnTaker(ITurnTaker turnTaker, InsertTurnTakerType insertTurnTakerType){
@@ -39,17 +41,22 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
     }
 
     void TurnCompleted(ITurnTaker turnTaker){
-        if (CurrentTurnTaker != turnTaker){
-            Debug.LogWarning("Turn completed by " + turnTaker + " but current turn taker is " + CurrentTurnTaker, this);
+        if (GetCurrentTurnTaker() != turnTaker){
+            Debug.LogWarning("Turn completed by " + turnTaker + " but current turn taker is " + GetCurrentTurnTaker(), this);
             return;
         }
         NextTurn();
     }
 
     public void NextTurn(){
-        CurrentTurnTaker?.EndTurn();
+        EndTurn();
         index++;
         StartTurn();
+    }
+
+    void EndTurn(){
+        GetCurrentTurnTaker()?.EndTurn();
+        onEndTurn.Invoke(GetCurrentTurnTaker());
     }
 
     public void RemoveTurnTaker(ITurnTaker turnTaker){
@@ -76,7 +83,8 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
         if (index >= TurnTakersCount){
             index = 0;
         }
-        CurrentTurnTaker!.StartTurn();
+        GetCurrentTurnTaker()!.StartTurn();
+        onStartTurn.Invoke(GetCurrentTurnTaker());
     }
 }
 

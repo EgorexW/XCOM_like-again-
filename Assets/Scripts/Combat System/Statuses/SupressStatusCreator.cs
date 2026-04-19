@@ -8,7 +8,7 @@ public class SupressStatusCreator : UnitStatusEffectCreator{
     
     public override UnitStatusEffect CreateStatus(){
         int durationValue = duration ? duration.Value : -1;
-        var status = new SupressStatus(supressedFlags, durationValue);
+        var status = new SupressStatus(statusName, supressedFlags, durationValue);
         return status;
     }
 }
@@ -17,7 +17,7 @@ public class SupressStatus : UnitStatusEffect{
     ActionFlags supressedFlags;
     int duration;
 
-    public SupressStatus(ActionFlags flags, int durationTmp){
+    public SupressStatus(string name, ActionFlags flags, int durationTmp) : base(name){
         supressedFlags = flags;
         duration = durationTmp;
     }

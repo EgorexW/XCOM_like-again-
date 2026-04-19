@@ -16,7 +16,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
 
     protected override AIAction GetAIAction(AIContext context, UnitAction action){
         var validation = base.GetAIAction(context, action);
-        validation.SetScore(validation.Score - EvaluateNode(context.Unit.GetCenterNode(), context, out var flags));
+        validation.SetScore(validation.Score - EvaluateNode(context.unit.GetCenterNode(), context, out var flags));
         return validation;
     }
 
@@ -31,7 +31,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
         float totalDistanceScore = 0;
         float totalHazardPenalty = 0;
         
-        foreach (var enemy in context.Enemies){
+        foreach (var enemy in context.enemies){
             float distance = node.GetDistance(enemy.GetCenterNode());
             float inverseDistance = distance * distanceFalloff + 1f;
             float diffFromIdealDistance = Mathf.Abs(idealDistanceToEnemy - distance);
@@ -42,7 +42,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
                     totalCoverFromEnemyScore += coverFromEnemy / (inverseDistance * enemyDirection.Count);
                 }
             }
-            if (enemy.GetCenterNode().CanAttack(node)){
+            if (enemy.GetCenterNode().CanAttack(node, context.allies)){
                 totalExposedPenalty += exposedPenalty / inverseDistance;
                 flags |= AIActionFlags.SelfExposed;
             }
@@ -73,7 +73,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
         text += $"Hazards: {-totalHazardPenalty}\n";
         
         text += $"Move Score: {score}\n";
-        if (context.Debug){
+        if (context.debug){
             General.WorldText(text, node.GetPos(), 0.5f, 1);
         }
 

@@ -93,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6416dcb63d240b5b897ecdb9d309fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SupressStatusCreator
+  statusName: Flashed
   supressedFlags: 2
   duration:
     enabled: 1

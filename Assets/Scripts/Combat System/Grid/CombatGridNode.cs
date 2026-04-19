@@ -28,12 +28,15 @@ public class CombatGridNode : GridNode{
         return new HashSet<ICombatObject>(combatObjects);
     }
     
-    public bool CanAcceptObject(GridOccupancyType newObjectType) {
-        if (combatObjects.Any(co => co.OccupancyType == GridOccupancyType.Wall)) {
+    public bool CanAcceptObject(GridOccupancyType newObjectType, List<ICombatObject> objectsToIgnore = null) {
+        objectsToIgnore ??= new List<ICombatObject>();
+        var localObjects = GetCombatObjects();
+        localObjects.RemoveWhere(o => objectsToIgnore.Contains(o));
+        if (localObjects.Any(co => co.OccupancyType == GridOccupancyType.Wall)) {
             return false; 
         }
         
-        if (combatObjects.Any(co => co.OccupancyType == GridOccupancyType.Character)) {
+        if (localObjects.Any(co => co.OccupancyType == GridOccupancyType.Character)) {
             if (newObjectType == GridOccupancyType.Character || newObjectType == GridOccupancyType.Wall) {
                 return false;
             }

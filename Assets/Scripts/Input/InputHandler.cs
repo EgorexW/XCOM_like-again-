@@ -3,12 +3,13 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(PlayerInput))]
 public class InputHandler : MonoBehaviour{
     [GetComponent] [SerializeField] PlayerInput playerInput;
 
-    [BoxGroup("References")] [Required] [SerializeField] PlayerTurnUI playerTurnUI;
+    [FormerlySerializedAs("playerTurnUI")] [BoxGroup("References")] [Required] [SerializeField] TurnUI turnUI;
     [BoxGroup("References")] [Required] [SerializeField] CameraMovement cameraMovement;
 
     protected void Awake(){
@@ -49,16 +50,16 @@ public class InputHandler : MonoBehaviour{
     }
 
     void OnCancelPerformed(){
-        playerTurnUI.OnCancel();
+        turnUI.OnCancel();
     }
 
     void OnActionSlotPerformed(int slot){
         slot -= 1; // Convert to 0-based index
-        playerTurnUI.OnSlotSelected(slot);
+        turnUI.OnSlotSelected(slot);
     }
 
     void OnConfirmPerformed(){
-        playerTurnUI.OnConfirm();
+        turnUI.OnConfirm();
     }
 
     void OnMovePerformed(InputAction.CallbackContext callbackContext){
@@ -78,7 +79,7 @@ public class InputHandler : MonoBehaviour{
             if (EventSystem.current.IsPointerOverGameObject()){
                 return;
             }
-            playerTurnUI.OnSelect();
+            turnUI.OnSelect();
         }
     }
 }

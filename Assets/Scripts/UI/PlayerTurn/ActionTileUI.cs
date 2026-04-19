@@ -39,7 +39,7 @@ class ActionTileUI : UIElement{
             if (validation.HasFlag(UnitActionValidation.NotEnoughActionPoints)){
                 selectButton.interactable = false;
             }
-        if (action.IsLimitedUse()){
+        if (action.GetUsesLeft().HasValue){
             uses.SetText($"x{action.GetUsesLeft()}");
         }
         else{

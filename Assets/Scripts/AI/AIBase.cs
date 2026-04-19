@@ -75,17 +75,17 @@ static class AIHelper{
 }
 
 public class AIContext{
-    public readonly CombatUnit Unit;
-    public readonly List<ICombatObject> Enemies;
+    public readonly CombatUnit unit;
+    public readonly List<ICombatObject> enemies;
 
-    public readonly List<ICombatObject> Allies;
+    public readonly List<ICombatObject> allies;
 
-    public readonly bool Debug;
+    public readonly bool debug;
 
     public AIContext(CombatUnit unit, List<ICombatObject> enemies, List<ICombatObject> allies, bool debug){
-        Unit = unit;
-        Enemies = enemies;
-        Allies = allies;
-        Debug = debug;
+        this.unit = unit;
+        this.enemies = enemies;
+        this.allies = allies;
+        this.debug = debug;
     }
 }

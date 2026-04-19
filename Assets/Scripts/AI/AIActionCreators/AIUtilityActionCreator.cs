@@ -14,13 +14,13 @@ public class AIUtilityActionCreator : AITargetedActionCreator{
         flags = AIActionFlags.None;
         var text = "";
 
-        float distance = node.GetDistance(context.Unit.GetCenterNode());
+        float distance = node.GetDistance(context.unit.GetCenterNode());
         
-        foreach (var enemy in context.Enemies){
+        foreach (var enemy in context.enemies){
             Score(enemy, enemyPresent);
         }
 
-        foreach (var allie in context.Allies){
+        foreach (var allie in context.allies){
             Score(allie, -allyPresentPenalty);
         }
 
@@ -35,7 +35,7 @@ public class AIUtilityActionCreator : AITargetedActionCreator{
         score += baseScore;
         
         text += $"Utility Score: {score}\n";
-        if (context.Debug){
+        if (context.debug){
             General.WorldText(text, node.GetPos(), 0.5f, 1);
         }
 

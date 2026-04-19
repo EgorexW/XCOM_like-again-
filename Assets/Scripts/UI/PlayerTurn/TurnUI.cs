@@ -3,9 +3,9 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerTurnUI : UIElement{
-    [BoxGroup("External References")] [Required] [SerializeField] List<PlayerTurnTaker> playerTurnTakers;
-
+public class TurnUI : UIElement{
+    [BoxGroup("References")][Required][SerializeField] TurnSystem turnSystem;
+    
     [BoxGroup("Internal References")] [Required] [SerializeField] ActionsUI actionsUI;
     [BoxGroup("Internal References")] [Required] [SerializeField] ActionTargetingUI actionTargetingUI;
     [BoxGroup("Internal References")] [Required] [SerializeField] Button endTurnButton;
@@ -16,10 +16,8 @@ public class PlayerTurnUI : UIElement{
 
     protected void Awake(){
         Hide();
-        foreach (var playerTurnTaker in playerTurnTakers){
-            playerTurnTaker.onStartTurn.AddListener(ShowTurnTaker);
-            playerTurnTaker.onEndTurn.AddListener(Hide);
-        }
+        turnSystem.onStartTurn.AddListener(ShowTurnTaker);
+        turnSystem.onEndTurn.AddListener(Hide);
         endTurnButton.onClick.AddListener(CompleteTurn);
         actionsUI.onActionSelected.AddListener(OnActionSelected);
         actionTargetingUI.onConfirm.AddListener(OnActionTargetConfirmed);
@@ -31,8 +29,13 @@ public class PlayerTurnUI : UIElement{
     }
 
     void ShowTurnTaker(ITurnTaker arg0){
-        currentTurnTaker = arg0 as PlayerTurnTaker;
-        Show();
+        if (arg0 is PlayerTurnTaker playerTurnTaker){
+            currentTurnTaker = playerTurnTaker;
+            Show();
+        }
+        else{
+            Hide();
+        }
     }
 
     void CompleteTurn(){

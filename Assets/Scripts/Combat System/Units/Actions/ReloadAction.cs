@@ -23,16 +23,16 @@ public class ReloadAction : UnitAction {
         return result;
     }
     
-    public override int GetUsesLeft(){
+    public override int? GetUsesLeft(){
         var baseUsesLeft = base.GetUsesLeft();
         var ammoComp = unit.GetCombatComponent<AmmoComponent>();
         if (ammoComp == null){
             Debug.LogWarning($"Can't reload, unit {unit.name} has no AmmoComponent!");
-            return 0;
+            return baseUsesLeft;
         }
         var ammoUsesLeft = ammoComp.Magazines;
-        if (baseUsesLeft > -1){
-            return Mathf.Min(baseUsesLeft, ammoUsesLeft);
+        if (baseUsesLeft.HasValue){
+            return Mathf.Min(baseUsesLeft.Value, ammoUsesLeft);
         }
         return ammoUsesLeft;
     }

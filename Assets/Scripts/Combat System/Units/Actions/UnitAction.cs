@@ -33,7 +33,7 @@ public abstract class UnitAction : MonoBehaviour{
 
     public virtual UnitActionValidation ValidateAction(){
         UnitActionValidation result = UnitActionValidation.Valid;
-        if (IsLimitedUse()){
+        if (GetUsesLeft().HasValue){
             if (GetUsesLeft() <= 0){
                 result |= UnitActionValidation.NoUsesLeft;
             }
@@ -41,14 +41,10 @@ public abstract class UnitAction : MonoBehaviour{
         result |= unit.CanExecute(this);
         return result;
     }
-    
-    public virtual bool IsLimitedUse(){
-        return GetUsesLeft() > -1;
-    }
 
-    public virtual int GetUsesLeft(){
+    public virtual int? GetUsesLeft(){
         if (!usesLeft){
-            return -1;
+            return null;
         }
         return usesLeft;
     }

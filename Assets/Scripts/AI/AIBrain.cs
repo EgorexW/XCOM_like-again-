@@ -33,7 +33,7 @@ class AIBrain : MonoBehaviour{
                 Debug.LogWarning($"AI for unit {combatUnit.Name} attempted to execute invalid action {action.action.ActionInfo.Name}. Ending turn.");
                 break;
             }
-            if (context.Debug){
+            if (context.debug){
                 
                 Debug.Log($"AI for unit {combatUnit.Name} executing action {action.action.ActionInfo.Name}.");
             }
