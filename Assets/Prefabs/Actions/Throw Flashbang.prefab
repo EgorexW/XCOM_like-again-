@@ -54,5 +54,5 @@ MonoBehaviour:
     value: 1
   unit: {fileID: 0}
   range: 7
-  prefabToSpawn: {fileID: 7259602901416666776}
+  prefabToSpawn: {fileID: 5712773426039571822, guid: 6a013f3c024ec4e6d8a6d991de425680, type: 3}
   insertTurnTakerType: 0

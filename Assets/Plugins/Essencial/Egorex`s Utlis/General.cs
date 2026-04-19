@@ -115,7 +115,7 @@ public class General : MonoBehaviour{
             transform ={
                 position = pos
             },
-            hideFlags = HideFlags.HideInHierarchy
+            // hideFlags = HideFlags.HideInHierarchy
         };
         var textMeshPro = gameObject.AddComponent<TextMeshPro>();
         textMeshPro.color = color;

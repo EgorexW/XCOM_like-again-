@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AITargetedActionCreator : BasicAIActionCreator{
+    [SerializeField] float randomBoostRange = 10f;
+    
     protected override AIAction GetAIAction(AIContext context, UnitAction action){
         if (action is not TargetedUnitAction targetedAction){
             Debug.LogWarning("Action is not TargetedAction", this);
@@ -22,7 +24,7 @@ public abstract class AITargetedActionCreator : BasicAIActionCreator{
         foreach (var node in validNodes) {
             float score = EvaluateNode(node, context, out var flagsTmp);
             
-            score += Random.Range(0f, 1f);
+            score += Random.Range(0f, randomBoostRange);
 
             if (score <= highestScore){
                 continue;

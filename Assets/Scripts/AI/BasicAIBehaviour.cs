@@ -8,10 +8,11 @@ public class BasicAIBehaviour : AIBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] AIActionCreator attackActionCreator;
     [BoxGroup("References")] [Required] [SerializeField] AIActionCreator reloadActionCreator;
     [BoxGroup("References")] [Required] [SerializeField] AIActionCreator surrenderActionCreator;
+    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator utilityActionCreator;
 
     [BoxGroup("Config")][SerializeField] float attackWhenExposedChance = 0.5f;
-    [BoxGroup("Config")][SerializeField] float moveScoreToMove = 5;
-    // [BoxGroup("Config")][SerializeField] float surrenderChance = 0.5f;
+    [BoxGroup("Config")][SerializeField] float moveScoreToMove = 10;
+    [BoxGroup("Config")][SerializeField] float utilityChance = 0.25f;
     
     public override AIAction GetAction(AIContext context){
         // Actions
@@ -19,6 +20,7 @@ public class BasicAIBehaviour : AIBehaviour{
         var attackAction = attackActionCreator.CreateAIAction(context);
         var reloadAction = reloadActionCreator.CreateAIAction(context);
         var surrenderAction = surrenderActionCreator.CreateAIAction(context);
+        var utilityAction = utilityActionCreator.CreateAIAction(context);
 
         // Resolution
         var exposed = combatUnit.GetCenterNode().IsExposed(context.Enemies);
@@ -37,6 +39,11 @@ public class BasicAIBehaviour : AIBehaviour{
         }
         if (enemyExposed){
             return attackAction;
+        }
+        if (Random.value < utilityChance){
+            if (utilityAction.Score > 0){
+                return utilityAction;
+            }
         }
         if (moveAction.Score / moveScoreToMove >= Random.value){
             return moveAction;

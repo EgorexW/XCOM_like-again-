@@ -33,7 +33,10 @@ class AIBrain : MonoBehaviour{
                 Debug.LogWarning($"AI for unit {combatUnit.Name} attempted to execute invalid action {action.action.ActionInfo.Name}. Ending turn.");
                 break;
             }
-            Debug.Log($"AI for unit {combatUnit.Name} executing action {action.action.ActionInfo.Name}.");
+            if (context.Debug){
+                
+                Debug.Log($"AI for unit {combatUnit.Name} executing action {action.action.ActionInfo.Name}.");
+            }
             action.action.Execute(); 
             yield return new WaitForSeconds(WAIT_TIME_BETWEEN_ACTIONS);
         }

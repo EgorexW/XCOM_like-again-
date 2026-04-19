@@ -20,8 +20,8 @@ public class CombatUnit : CombatObject{
     [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onEndTurn;
     [FoldoutGroup("Events")] public UnityEvent<UnitAction> onActionPerformed;
 
-    protected override void Awake(){
-        base.Awake();
+    public override void Init(){
+        base.Init();
         unitActions = GetComponentsInChildren<UnitAction>().ToList();
         foreach (var action in unitActions) action.unit = this;
     }

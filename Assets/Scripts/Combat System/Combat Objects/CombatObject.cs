@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class CombatObject : MonoBehaviour, ICombatObject{
-    [SerializeField] GridOccupancyType gridOccupancyType;
+    [SerializeField] GridOccupancyType gridOccupancyType = GridOccupancyType.Other;
 
     [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public List<CombatGridNode> Nodes{ get; set; } = new List<CombatGridNode>();
     [ShowInInspector][HideInEditorMode][FoldoutGroup("Debug")] public CombatSystem CombatSystem{ get; set; }
@@ -18,8 +18,6 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
 
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onInit{ get; } = new();
-
-    protected virtual void Awake(){}
 
     public T GetCombatComponent<T>() where T : CombatComponent{
         var component = GetComponentInChildren<T>();
@@ -37,7 +35,7 @@ public class CombatObject : MonoBehaviour, ICombatObject{
         gameObject.SetActive(false);
     }
 
-    public void Init(){
+    public virtual void Init(){
         foreach (var combatComponent in GetComponentsInChildren<CombatComponent>()){
             combatComponent.CombatObject = this;
             combatComponent.Init();

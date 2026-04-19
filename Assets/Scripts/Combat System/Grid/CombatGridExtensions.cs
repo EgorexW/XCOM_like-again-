@@ -242,6 +242,21 @@ public static class CombatGridExtensions{
         return primaryGrid;
     }
 
+    #region Components
+
+    public static List<HazardComponent> GetHazards(this CombatGridNode node){
+        var hazards = new List<HazardComponent>();
+        foreach (var combatObject in node.GetCombatObjects()){
+            var hazard = combatObject.GetCombatComponent<HazardComponent>();
+            if (hazard != null){
+                hazards.Add(hazard);
+            }
+        }
+        return hazards;
+    }
+
+    #endregion
+
     #region Attacks
 
     public static bool IsProtectedFrom(this CombatGridNode node, Direction attackDirection){

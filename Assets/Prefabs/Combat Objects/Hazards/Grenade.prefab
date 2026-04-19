@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 650386395851376932}
   - component: {fileID: 1265413614643043436}
   - component: {fileID: 4861380369685027142}
-  - component: {fileID: -7600585537276013213}
+  - component: {fileID: 5318544543648846847}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
@@ -175,7 +175,7 @@ MonoBehaviour:
   range: 1.5
   damage: 4
   statusEffects: []
---- !u!114 &-7600585537276013213
+--- !u!114 &5318544543648846847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,6 +184,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9098700461190151436}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30e9b2a245d23450b8a6f812b2db75d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 45cc0d19a3e24bf596606397f33b4290, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: '::'
+  m_EditorClassIdentifier: Assembly-CSharp::CreateHazardZone
+  explosionEffect: {fileID: 4861380369685027142}
+  hazardSettings:
+    hazardFlags: 1
+    intensity: 1
