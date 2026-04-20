@@ -24,25 +24,8 @@ public class CombatGridNode : GridNode{
         grid.TriggerGridObjectChanged(this);
     }
 
-    public HashSet<ICombatObject> GetCombatObjects(){
-        return new HashSet<ICombatObject>(combatObjects);
-    }
-    
-    public bool CanAcceptObject(GridOccupancyType newObjectType, List<ICombatObject> objectsToIgnore = null) {
-        objectsToIgnore ??= new List<ICombatObject>();
-        var localObjects = GetCombatObjects();
-        localObjects.RemoveWhere(o => objectsToIgnore.Contains(o));
-        if (localObjects.Any(co => co.OccupancyType == GridOccupancyType.Wall)) {
-            return false; 
-        }
-        
-        if (localObjects.Any(co => co.OccupancyType == GridOccupancyType.Character)) {
-            if (newObjectType == GridOccupancyType.Character || newObjectType == GridOccupancyType.Wall) {
-                return false;
-            }
-        }
-
-        return true; 
+    public IReadOnlyCollection<ICombatObject> GetCombatObjects(){
+        return combatObjects;
     }
 
     public override string ToString(){
@@ -52,10 +35,4 @@ public class CombatGridNode : GridNode{
     public bool Contains(CombatUnit unit){
         return combatObjects.Contains(unit);
     }
-}
-
-public enum GridOccupancyType{
-    Wall,
-    Character,
-    Other
 }

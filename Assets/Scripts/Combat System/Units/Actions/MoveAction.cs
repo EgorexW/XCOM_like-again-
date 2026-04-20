@@ -7,13 +7,13 @@ public class MoveAction : TargetedUnitAction{
 
     protected override TargetValidation CheckActionSpecificTargetRules(CombatGridNode node){
         var result = base.CheckActionSpecificTargetRules(node);
-        if (!node.CanAcceptObject(unit.OccupancyType)){
+        if (!node.CanAcceptObject(unit)){
             result |= TargetValidation.InvalidTarget;
         }
         if (node.Contains(unit)){
             result |= TargetValidation.InvalidTarget;
         }
-        if (!unit.GetCenterNode().LineUnobstructed(node, GridOccupancyType.Character)){
+        if (!unit.GetCenterNode().LineUnobstructed(node, unit.GetBlockingFlags())){
             result |= TargetValidation.NoPath;
         }
         return result;

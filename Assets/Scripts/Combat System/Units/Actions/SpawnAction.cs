@@ -26,10 +26,10 @@ public class SpawnAction : TargetedUnitAction{
     protected override TargetValidation CheckActionSpecificTargetRules(CombatGridNode node){
         var result = base.CheckActionSpecificTargetRules(node);
         var combatObject = prefabToSpawn.GetComponent<CombatObject>();
-        if (!node.CanAcceptObject(combatObject.OccupancyType)){
+        if (!node.CanAcceptObject(combatObject)){
             result = TargetValidation.InvalidTarget;
         }
-        if (!unit.GetCenterNode().LineUnobstructed(node, combatObject.OccupancyType)){
+        if (!unit.GetCenterNode().LineUnobstructed(node, combatObject.GetBlockingFlags())){
             result |= TargetValidation.NoPath;
         }
         return result;

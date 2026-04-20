@@ -42,7 +42,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
                     totalCoverFromEnemyScore += coverFromEnemy / (inverseDistance * enemyDirection.Count);
                 }
             }
-            if (enemy.GetCenterNode().CanAttack(node, context.allies)){
+            if (enemy.GetCenterNode().CanAttack(node, objectsToIgnore: context.allies)){
                 totalExposedPenalty += exposedPenalty / inverseDistance;
                 flags |= AIActionFlags.SelfExposed;
             }

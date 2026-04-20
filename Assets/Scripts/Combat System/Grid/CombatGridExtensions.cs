@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class CombatGridExtensions{
@@ -10,13 +11,24 @@ public static class CombatGridExtensions{
     }
 
     public static bool LineUnobstructed(this CombatGridNode node1, CombatGridNode node2,
-        GridOccupancyType obstructionType, List<ICombatObject> objectsToIgnore = null){
-        objectsToIgnore ??= new List<ICombatObject>();
+        CombatObjectFlags blockingFlags, List<ICombatObject> objectsToIgnore = null){
         foreach (var node in node1.GetNodesInBetween(node2))
-            if (!node.CanAcceptObject(obstructionType, objectsToIgnore)){
+            if (!node.HasFlag(blockingFlags, objectsToIgnore)){
                 return false;
             }
         return true;
+    }
+    
+    public static bool HasFlag(this CombatGridNode node, CombatObjectFlags flags, List<ICombatObject> objectsToIgnore = null) {
+        foreach (var obj in node.GetCombatObjects()) {
+            if (objectsToIgnore != null && objectsToIgnore.Contains(obj)) {
+                continue;
+            }
+            if ((obj.Flags & flags) != 0) {
+                return false; 
+            }
+        }
+        return true; 
     }
 
     public static List<CombatGridNode> GetNodesInBetween(this CombatGridNode node1, CombatGridNode node2){
@@ -274,9 +286,8 @@ public static class CombatGridExtensions{
     }
 
 
-    public static bool CanAttack(this CombatGridNode attackerNode, CombatGridNode targetNode, List<ICombatObject> objectsToIgnore = null){
-        objectsToIgnore ??= new List<ICombatObject>();
-        if (!attackerNode.LineUnobstructed(targetNode, GridOccupancyType.Character, objectsToIgnore)){
+    public static bool CanAttack(this CombatGridNode attackerNode, CombatGridNode targetNode, CombatObjectFlags blockingFlags = GridBlockingFlags.AttackBlocker, List<ICombatObject> objectsToIgnore = null){
+        if (!attackerNode.LineUnobstructed(targetNode, blockingFlags, objectsToIgnore)){
             return false;
         }
         var attackDirections = GetDirections(attackerNode, targetNode);
@@ -293,4 +304,8 @@ public static class CombatGridExtensions{
     }
 
     #endregion
+
+    public static bool CanAcceptObject(this CombatGridNode node, CombatObject combatObject){
+        return node.HasFlag(combatObject.GetBlockingFlags(), new List<ICombatObject>{ combatObject });
+    }
 }

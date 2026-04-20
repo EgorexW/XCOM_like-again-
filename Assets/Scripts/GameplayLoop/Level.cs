@@ -6,6 +6,5 @@ public abstract class Level : MonoBehaviour{
         return new List<CombatObject>(GetComponentsInChildren<CombatObject>());
     }
 
-    public abstract List<ITurnTaker> GetTurnTakers();
-    public abstract List<Team> GetTeams();
+    public abstract List<Vector2> GetSpawnPoints(int team);
 }

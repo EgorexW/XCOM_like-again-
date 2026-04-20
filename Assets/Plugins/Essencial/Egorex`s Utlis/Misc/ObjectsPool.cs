@@ -52,7 +52,6 @@ public class ObjectsPool : CountUI{
     }
 
     public void RemoveObject(GameObject obj = null){
-        var iconUI = activeObjs[^1];
         if (obj == null){
             obj = activeObjs[^1];
         }

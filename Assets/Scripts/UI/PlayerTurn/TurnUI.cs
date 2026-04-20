@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TurnUI : UIElement{
     [BoxGroup("References")][Required][SerializeField] TurnSystem turnSystem;
     
-    [BoxGroup("Internal References")] [Required] [SerializeField] ActionsUI actionsUI;
+    [FormerlySerializedAs("actionsUI")] [BoxGroup("Internal References")] [Required] [SerializeField] UnitActionsSelectionUI unitActionsSelectionUI;
     [BoxGroup("Internal References")] [Required] [SerializeField] ActionTargetingUI actionTargetingUI;
     [BoxGroup("Internal References")] [Required] [SerializeField] Button endTurnButton;
     [BoxGroup("Internal References")] [Required] [SerializeField] Transform selectedUnitHighlight;
@@ -19,7 +20,7 @@ public class TurnUI : UIElement{
         turnSystem.onStartTurn.AddListener(ShowTurnTaker);
         turnSystem.onEndTurn.AddListener(Hide);
         endTurnButton.onClick.AddListener(CompleteTurn);
-        actionsUI.onActionSelected.AddListener(OnActionSelected);
+        unitActionsSelectionUI.onActionSelected.AddListener(OnActionSelected);
         actionTargetingUI.onConfirm.AddListener(OnActionTargetConfirmed);
         actionTargetingUI.onCancel.AddListener(OnActionCanceled);
     }
@@ -51,7 +52,7 @@ public class TurnUI : UIElement{
     public override void Show(){
         base.Show();
         selectedUnitHighlight.gameObject.SetActive(false);
-        actionsUI.Hide();
+        unitActionsSelectionUI.Hide();
         actionTargetingUI.Hide();
     }
 
@@ -94,13 +95,13 @@ public class TurnUI : UIElement{
         selectedUnitHighlight.position = selectedUnit.transform.position;
         selectedUnitHighlight.localScale = selectedUnit.transform.lossyScale;
         selectedUnitHighlight.gameObject.SetActive(true);
-        actionsUI.Show(unit);
+        unitActionsSelectionUI.Show(unit);
     }
 
     public void DeselectUnit(){
         selectedUnit = null;
         selectedUnitHighlight.gameObject.SetActive(false);
-        actionsUI.Hide();
+        unitActionsSelectionUI.Hide();
         actionTargetingUI.Hide();
     }
 
@@ -123,7 +124,7 @@ public class TurnUI : UIElement{
         if (!IsVisible){
             return;
         }
-        actionsUI.SelectSlot(slot);
+        unitActionsSelectionUI.SelectSlot(slot);
     }
 
     public void OnCancel(){

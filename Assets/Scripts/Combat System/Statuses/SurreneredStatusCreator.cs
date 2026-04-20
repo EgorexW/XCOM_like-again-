@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SurrenderedStatusCreator : UnitStatusEffectCreator{
     public override UnitStatusEffect CreateStatus(){
-        return new SurrenderedStatus(name);
+        return new SurrenderedStatus(statusName);
     }
 }
 

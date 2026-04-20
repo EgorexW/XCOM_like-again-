@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicAIAttackEvaluator
   unitActions: []
+  randomBoostRange: 10
   baseScore: -15
-  enemyPresent: 50
+  enemyPresent: 500
   blockPathToEnemy: 20
   allyPresentPenalty: 1000
-  distanceFalloff: 0.5
+  distanceFalloff: 0.2

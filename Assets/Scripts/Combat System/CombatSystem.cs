@@ -14,6 +14,8 @@ public class CombatSystem : MonoBehaviour{
     readonly List<ICombatObject> combatObjects = new();
 
     [FoldoutGroup("Events")] public UnityEvent onCombatStarted;
+    [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onCombatObjectAdded;
+    [FoldoutGroup("Events")] public UnityEvent <ICombatObject> onCombatObjectRemoved;
 
     public List<ICombatObject> CombatObjects => combatObjects.Copy();
     public CombatGrid CombatGrid => combatGrid;
@@ -28,11 +30,13 @@ public class CombatSystem : MonoBehaviour{
         combatObject.MoveTo(targetNode);
         combatObject.CombatSystem = this;
         combatObject.Init();
+        onCombatObjectAdded.Invoke(combatObject);
     }
 
     public void RemoveCombatObject(ICombatObject arg0){
         combatObjects.Remove(arg0);
         combatGrid.RemoveCombatObject(arg0);
+        onCombatObjectRemoved.Invoke(arg0);
     }
 
     public void StartCombat(){

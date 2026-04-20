@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-class ActionsUI : UIElement{
+class UnitActionsSelectionUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool actionsPool;
 
     [FoldoutGroup("Events")] public UnityEvent<UnitAction> onActionSelected;
