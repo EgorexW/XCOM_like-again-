@@ -618,7 +618,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8220964291091274135}
-  - component: {fileID: 5850691988435311356}
+  - component: {fileID: 7552876058669035780}
   m_Layer: 0
   m_Name: Level Template
   m_TagString: Untagged
@@ -645,7 +645,7 @@ Transform:
   - {fileID: 3695407396890814137}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5850691988435311356
+--- !u!114 &7552876058669035780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -654,12 +654,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7866517998092090712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cd215e4a65a4ed787524e4da0866b5b, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e9f96333a7c4ce0b5fd2c0d898cd47b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BasicLevel
-  spawnPoints:
-  - {fileID: 2921007462545337097}
-  - {fileID: 4334987206677790436}
+  m_EditorClassIdentifier: Assembly-CSharp::Level
+  spawnPointsParent: {fileID: 3730960044057334139}
 --- !u!1 &8235420528171263374
 GameObject:
   m_ObjectHideFlags: 0

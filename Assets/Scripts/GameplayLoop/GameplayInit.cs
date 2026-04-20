@@ -5,18 +5,11 @@ using UnityEngine.Serialization;
 public class GameplayInit : MonoBehaviour{
     [BoxGroup("References")][Required][SerializeField] CombatInit combatInit;
     [BoxGroup("References")][Required][SerializeField] LevelInit levelInit;
-    [BoxGroup("References")] [Required] [SerializeField] GameObject levelPrefab;
-
-    [SerializeField] Vector2 levelSpawnPos = new Vector2(50, 50);
+    [BoxGroup("References")][Required][SerializeField] CombatContentInit contentInit;
 
     void Start(){
-        var spawnedLevel = Instantiate(levelPrefab, levelSpawnPos, Quaternion.identity);
-        var currentLevel = spawnedLevel.GetComponent<Level>();
-        if (currentLevel == null){
-            Debug.LogError("GameplayInit: No Level found in the prefab. Please ensure a Level component is present.");
-            return;
-        }
-        CombatContent content = levelInit.InitLevel(currentLevel);
+        var content = contentInit.Init();
+        levelInit.InitLevel(content);
         combatInit.InitCombatSystem(content);
     }
 }

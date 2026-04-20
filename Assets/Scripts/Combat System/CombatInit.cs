@@ -8,7 +8,7 @@ public class CombatInit : MonoBehaviour{
     public void InitCombatSystem(CombatContent content){
         var combatObjs = content.combatObjects;
         foreach (var combatObj in combatObjs){
-            combatSystem.AddCombatObject(combatObj, new List<CombatGridNode>{ combatSystem.CombatGrid.GetNode(combatObj.transform.position) });
+            combatSystem.AddCombatObject(combatObj.combatObject, new List<CombatGridNode>{ combatSystem.CombatGrid.GetNode(combatObj.position) });
         }
         foreach (var turnTaker in content.turnTakers){
             combatSystem.TurnSystem.AddTurnTaker(turnTaker, InsertTurnTakerType.Last);
@@ -21,7 +21,13 @@ public class CombatInit : MonoBehaviour{
 }
 
 public class CombatContent{
-    public List<CombatObject> combatObjects;
-    public List<ITurnTaker> turnTakers;
-    public List<Team> teams;
+    public List<CombatObjectSpawn> combatObjects  = new List<CombatObjectSpawn>();
+    public List<ITurnTaker> turnTakers   = new List<ITurnTaker>();
+    public List<Team> teams = new List<Team>();
+    public GameObject levelPrefab;
+}
+
+public class CombatObjectSpawn{
+    public ICombatObject combatObject;
+    public Vector2Int position;
 }

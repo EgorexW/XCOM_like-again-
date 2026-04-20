@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitsTurnTaker : TurnTaker{
-    [SerializeField] List<CombatUnit> units;
+    List<CombatUnit> units  = new List<CombatUnit>();
 
-    public List<CombatUnit> Units => units.Copy();
-
-    void Awake(){
-        foreach (var unit in units){
-            unit.onRemove.AddListener(RemoveUnit);
-        }
-    }
-
+    public IReadOnlyList<CombatUnit> Units => units.ReadOnly();
+    
     void RemoveUnit(ICombatObject arg0){
         if (arg0 is CombatUnit unit){
             units.Remove(unit);
@@ -31,5 +25,14 @@ public class UnitsTurnTaker : TurnTaker{
             return;
         }
         foreach (var unit in units) unit.OnStartTurn();
+    }
+
+    public void AddUnit(CombatUnit combatUnit){
+        if (units.Contains(combatUnit)){
+            Debug.LogWarning($"Unit {combatUnit.name} is already in the turn taker. Skipping addition.");
+            return;
+        }
+        units.Add(combatUnit);
+        combatUnit.onRemove.AddListener(RemoveUnit);
     }
 }

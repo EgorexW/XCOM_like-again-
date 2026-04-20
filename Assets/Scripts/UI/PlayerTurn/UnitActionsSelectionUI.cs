@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,14 +15,16 @@ class UnitActionsSelectionUI : UIElement{
     public void Show(CombatUnit newUnit){
         base.Show();
         unit = newUnit;
-        var actions = unit.UnitActions;
+        var actions = unit.UnitActions.ToList();
         foreach (var action in actions.Copy()){
             var validation = action.ValidateAction();
             if (validation.HasFlag(UnitActionValidation.NoUsesLeft)){
                 actions.Remove(action);
+                continue;
             }
             if (validation.HasFlag(UnitActionValidation.AmmoIssue)){
                 actions.Remove(action);
+                continue;
             }
         }
         actionsPool.SetCount(actions.Count);

@@ -17,7 +17,7 @@ public class CombatSystem : MonoBehaviour{
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onCombatObjectAdded;
     [FoldoutGroup("Events")] public UnityEvent <ICombatObject> onCombatObjectRemoved;
 
-    public List<ICombatObject> CombatObjects => combatObjects.Copy();
+    public IReadOnlyList<ICombatObject> CombatObjects => combatObjects.ReadOnly();
     public CombatGrid CombatGrid => combatGrid;
     public TurnSystem TurnSystem => turnSystem;
     public TeamsSystem TeamsSystem => teamsSystem;

@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class CombatUnit : CombatObject{
     [SerializeField] int defaultActionPoints = 2;
 
-    public List<UnitAction> UnitActions => unitActions.Copy();
+    public IReadOnlyList<UnitAction> UnitActions => unitActions.ReadOnly();
     public int ActionPoints => actionPoints;
 
     [SerializeField] [HideInEditorMode] List<UnitAction> unitActions;

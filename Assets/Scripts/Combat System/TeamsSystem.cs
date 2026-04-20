@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TeamsSystem : MonoBehaviour{
@@ -32,7 +33,7 @@ public class TeamsSystem : MonoBehaviour{
     
     public List<ICombatObject> GetAllies(ICombatObject combatObject){
         var team = GetTeam(combatObject);
-        return team.CombatObjects;
+        return team.CombatObjects.ToList();
     }
     
      public List<ICombatObject> GetEnemies(ICombatObject combatObject){
@@ -50,7 +51,7 @@ public class Team{
         this.combatObjects = combatObjects;
     }
 
-    public List<ICombatObject> CombatObjects => combatObjects.Copy();
+    public IReadOnlyList<ICombatObject> CombatObjects => combatObjects.ReadOnly();
 
     public void RemoveCombatObject(ICombatObject arg0){
         combatObjects.Remove(arg0);

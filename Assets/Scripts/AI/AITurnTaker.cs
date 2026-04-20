@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class AITurnTaker : UnitsTurnTaker{
@@ -21,7 +22,7 @@ public class AITurnTaker : UnitsTurnTaker{
     }
 
     IEnumerator ResolveTurn(){
-        var combatUnits = Units;
+        var combatUnits = Units.ToList();
         combatUnits.Shuffle();
         foreach (var unit in combatUnits){
             var aiBrain = unit.GetComponentInChildren<AIBrain>();

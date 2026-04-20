@@ -63,6 +63,10 @@ public static class MyExtentions{
         return default;
     }
 
+    public static IReadOnlyList<T> ReadOnly<T>(this List<T> list){
+        return new List<T>(list);
+    }
+    
     public static List<T> Copy<T>(this List<T> list){
         return new List<T>(list);
     }

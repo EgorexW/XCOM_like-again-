@@ -17,7 +17,7 @@ public class ShootAction : TargetedUnitAction{
         }
         
         var targetObjects = targetNode.GetCombatObjects();
-        foreach (var targetObj in targetObjects.Copy()){
+        foreach (var targetObj in targetObjects.ReadOnly()){
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();
             if (healthComp != null){
                 healthComp.TakeDamage(damage);

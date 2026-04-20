@@ -1,29 +1,34 @@
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEngine;
 
 class LevelInit : MonoBehaviour{
-    [SerializeField] List<UnitsTurnTaker> turnTakers;
+    [SerializeField] Vector2 levelSpawnPos = new Vector2(50, 50);
     
-    public CombatContent InitLevel(Level currentLevel){
-        var combatObjects = currentLevel.GetCombatObjects();
-        var teams = new List<Team>();
-        for (int i = 0; i < turnTakers.Count; i++){
-            var turnTaker = turnTakers[i];
-            List<ICombatObject> units =  new List<ICombatObject>();
-            var poses = currentLevel.GetSpawnPoints(i);
-            for (int j = 0; j < turnTaker.Units.Count; j++){
-                var unit = turnTaker.Units[j];
-                unit.transform.position = poses[j];
-                units.Add(unit);
-                combatObjects.Add(unit);
-            }
-            Team team = new Team(units); 
-            teams.Add(team);
+    public void InitLevel(CombatContent content){
+        var spawnedLevel = Instantiate(content.levelPrefab, levelSpawnPos, Quaternion.identity);
+        var currentLevel = spawnedLevel.GetComponent<Level>();
+        if (currentLevel == null){
+            throw new MissingComponentException("Level component is missing from the prefab.");
         }
-        return new CombatContent{
-            combatObjects = combatObjects,
-            turnTakers = new List<ITurnTaker>(turnTakers),
-            teams = teams
-        };
+        var combatObjects = currentLevel.GetCombatObjectSpawns();
+        for (int i = 0; i < content.teams.Count; i++){
+            var team = content.teams[i];
+            var poses = currentLevel.GetSpawnPoints(i);
+            for (int j = 0; j < team.CombatObjects.Count; j++){
+                if (j >= poses.Count){
+                    Debug.LogError($"Team {i} does not have enough spawn points for all combat objects. Skipping remaining objects.");
+                    break;
+                }
+                var unit = team.CombatObjects[j];
+                combatObjects.Add(new CombatObjectSpawn{
+                    combatObject = unit,
+                    position = Vector2Int.RoundToInt(poses[j % poses.Count])
+                });
+            }
+        }
+        content.combatObjects.AddRange(combatObjects);
     }
 }
+
