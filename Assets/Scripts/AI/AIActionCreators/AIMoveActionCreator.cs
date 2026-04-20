@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,6 +9,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
     [FormerlySerializedAs("exposedDistance")] [SerializeField] float exposedRange = 10f;
     [FormerlySerializedAs("distanceToEnemyScore")] [SerializeField] float distanceScore = 20f;
     [SerializeField] float hazardPenalty = 100f;
+    [FormerlySerializedAs("hazardScoring")] [SerializeField] AIHazardScoring aiHazardScoring;
     [FormerlySerializedAs("idealDistance")] [SerializeField] float idealDistanceToEnemy = 4f;
     [SerializeField] int diagonalThreshold = 2;
     [SerializeField] float distanceFalloff = 1f;
@@ -58,7 +57,11 @@ public class AIMoveActionCreator : AITargetedActionCreator{
         }
         var hazards = node.GetHazards();
         foreach (var hazard in hazards){
-            totalHazardPenalty += hazardPenalty * hazard.Intensity;
+            var hazardMult = 1f;
+            if (aiHazardScoring != null){
+                hazardMult = aiHazardScoring.GetHazardScore(hazard, context);
+            }
+            totalHazardPenalty += hazardPenalty * hazardMult;
         }
 
         score -= totalExposedPenalty;

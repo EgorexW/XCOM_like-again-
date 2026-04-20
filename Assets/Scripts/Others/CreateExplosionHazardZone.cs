@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CreateHazardZone : MonoBehaviour{
-    [SerializeField] ExplosionEffect explosionEffect;
+public class CreateExplosionHazardZone : MonoBehaviour{
+    [BoxGroup("References")][Required][SerializeField] ExplosionEffect explosionEffect;
     [SerializeField] HazardSettings hazardSettings;
     
     CombatObject hazardCombatObject;

@@ -30,7 +30,7 @@ public class HealthComponent : CombatComponent{
     }
 
     void Die(){
-        Debug.Log($"{CombatObject.Name} died.", CombatObject as Object);
+        Debug.Log($"{CombatObject.Name} died.", this);
         foreach (CombatEffect effect in onDeathEffects){
             effect.targetNode = CombatObject.GetCenterNode();
             effect.Execute();

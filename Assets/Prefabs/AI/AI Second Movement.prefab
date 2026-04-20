@@ -49,8 +49,10 @@ MonoBehaviour:
   exposedPenalty: 100
   coverFromEnemy: 30
   exposedEnemy: 20
+  exposedRange: 10
   distanceScore: 10
   hazardPenalty: 100
-  idealDistance: 6
+  aiHazardScoring: {fileID: 11400000, guid: 592e82b40245946bdb36284b48799f4d, type: 2}
+  idealDistanceToEnemy: 8
   diagonalThreshold: 2
   distanceFalloff: 0.5

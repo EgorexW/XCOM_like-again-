@@ -776,10 +776,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exploding Barrel
       objectReference: {fileID: 0}
-    - target: {fileID: 7931171033296651014, guid: 34a763b0daff445a6a603a08b4500cc4, type: 3}
-      propertyPath: damage
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

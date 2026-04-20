@@ -14,8 +14,7 @@ public class HazardComponent : CombatComponent{
     public float Intensity => settings.intensity;
 }
 
-
-
+[Flags]
 public enum HazardFlags{
     None = 0,
     Soon  = 1 << 0,

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,23 +12,15 @@ using Random = UnityEngine.Random;
 public class General : MonoBehaviour{
     public const int Iterationlimit = 10;
 
-    static General instance;
-
-    static General GetInstance(){
-        if (instance == null){
-            instance = new GameObject("General").AddComponent<General>();
-            DontDestroyOnLoad(instance);
-        }
-        return instance;
-    }
-
-    public static void StartAfterSeconds(MonoBehaviour monoBehaviour, IEnumerator coroutine, float seconds){
-        GetInstance().StartCoroutine(StartAfterSecondsCoroutine(monoBehaviour, coroutine, seconds));
-    }
-
-    public static void CallAfterSeconds(UnityAction action, float seconds = 0){
-        GetInstance().StartCoroutine(CallAfterSecondsCoroutine(action, seconds));
-    }
+    // static General instance;
+    //
+    // static General GetInstance(){
+    //     if (instance == null){
+    //         instance = new GameObject("General").AddComponent<General>();
+    //         DontDestroyOnLoad(instance);
+    //     }
+    //     return instance;
+    // }
 
     public static readonly Vector2[] MainDirections2D = { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
 
@@ -237,8 +231,33 @@ public class General : MonoBehaviour{
         }
         return components;
     }
-}
 
-public interface INamed{
-    public string GetName();
+    public static string EnumDescription<T>() where T : Enum {
+        StringBuilder sb = new StringBuilder();
+
+        // Detect if this Enum is using the [Flags] attribute
+        bool isFlag = typeof(T).IsDefined(typeof(FlagsAttribute), false);
+
+        // Using basic Rich Text to bold the header
+        sb.AppendLine(isFlag ? "<b>List Index ➔ Name</b>" : "<b>Index ➔ Name</b>");
+
+        foreach (T value in Enum.GetValues(typeof(T))) {
+            int rawValue = Convert.ToInt32(value);
+
+            if (isFlag) {
+                if (rawValue == 0) {
+                    sb.AppendLine($"[--] {value}");
+                } 
+                else if ((rawValue & (rawValue - 1)) == 0) {
+                    int listIndex = (int)Math.Log(rawValue, 2);
+                    sb.AppendLine($"[{listIndex}] {value}");
+                }
+            } else {
+                // Standard Enum behavior
+                sb.AppendLine($"[{rawValue}] {value}"); 
+            }
+        }
+
+        return sb.ToString().TrimEnd();
+    }
 }

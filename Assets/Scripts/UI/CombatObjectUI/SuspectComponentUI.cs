@@ -9,16 +9,8 @@ public class SuspectComponentUI : UIElement{
 
     [InfoBox("$SuspectStateInfo")]
     [SerializeField] List<Color> colorPerSuspectState;
-    
-    private string SuspectStateInfo {
-        get {
-            string info = "List Index / States:\n";
-            foreach (SuspectState state in Enum.GetValues(typeof(SuspectState))) {
-                info += $"{(int)state}: {state}\n"; 
-            }
-            return info.TrimEnd();
-        }
-    }
+
+    public string SuspectStateInfo => General.EnumDescription<SuspectState>();
     
     public void Show(SuspectComponent suspectComponent){
         base.Show();
