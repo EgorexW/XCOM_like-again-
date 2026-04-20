@@ -1,18 +1,17 @@
-using System;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
 class UnitActionWorldUI : UIElement{
-    [BoxGroup("References")][Required][SerializeField] TextMeshPro actionNameText;
-    
+    [BoxGroup("References")] [Required] [SerializeField] TextMeshPro actionNameText;
+
     [SerializeField] Vector2 offset = Vector2.up * 0.5f;
     [SerializeField] Vector2 move = Vector2.up * 0.5f;
     [SerializeField] Vector2 pushMove = Vector2.up;
     [SerializeField] float duration = 3f;
     [SerializeField] float fadeDelay = 2.5f;
     [SerializeField] float overlapRadius = 0.5f;
-    
+
     Color startColor;
     float startTime;
 
@@ -35,7 +34,7 @@ class UnitActionWorldUI : UIElement{
         transform.position += (Vector3)move * Time.deltaTime;
         var time = Time.time - startTime;
         if (time > fadeDelay){
-            float t = (time - fadeDelay) / (duration - fadeDelay);
+            var t = (time - fadeDelay) / (duration - fadeDelay);
             actionNameText.color = Color.Lerp(startColor, Color.clear, t);
         }
         if (time > duration){

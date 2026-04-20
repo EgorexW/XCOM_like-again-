@@ -5,7 +5,7 @@ public class ExplosionEffect : CombatEffect{
     [SerializeField] float range = 1;
     [SerializeField] int damage = 1;
     [SerializeField] List<UnitStatusEffectCreator> statusEffects;
-    
+
     public float Range => range;
 
     public override void Execute(){
@@ -13,17 +13,14 @@ public class ExplosionEffect : CombatEffect{
             Debug.LogWarning("ExplosionEffect executed without a target node.");
             return;
         }
-        foreach (var node in targetNode.GetNodesInRadius(range)){
-            foreach (var obj in node.GetCombatObjects()){
-                var health = obj.GetCombatComponent<HealthComponent>();
-                if (health != null){
-                    health.TakeDamage(damage);
-                }
-                if (obj is CombatUnit unit){
-                    foreach (var statusEffect in statusEffects){
-                        unit.ApplyStatus(statusEffect.CreateStatus());
-                    }
-                }
+        foreach (var node in targetNode.GetNodesInRadius(range))
+        foreach (var obj in node.GetCombatObjects()){
+            var health = obj.GetCombatComponent<HealthComponent>();
+            if (health != null){
+                health.TakeDamage(damage);
+            }
+            if (obj is CombatUnit unit){
+                foreach (var statusEffect in statusEffects) unit.ApplyStatus(statusEffect.CreateStatus());
             }
         }
     }

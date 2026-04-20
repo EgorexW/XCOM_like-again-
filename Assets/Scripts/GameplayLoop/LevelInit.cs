@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using UnityEngine;
 
 class LevelInit : MonoBehaviour{
-    [SerializeField] Vector2 levelSpawnPos = new Vector2(50, 50);
-    
+    [SerializeField] Vector2 levelSpawnPos = new(50, 50);
+
     public void InitLevel(CombatContent content){
         var spawnedLevel = Instantiate(content.levelPrefab, levelSpawnPos, Quaternion.identity);
         var currentLevel = spawnedLevel.GetComponent<Level>();
@@ -13,12 +10,13 @@ class LevelInit : MonoBehaviour{
             throw new MissingComponentException("Level component is missing from the prefab.");
         }
         var combatObjects = currentLevel.GetCombatObjectSpawns();
-        for (int i = 0; i < content.teams.Count; i++){
+        for (var i = 0; i < content.teams.Count; i++){
             var team = content.teams[i];
             var poses = currentLevel.GetSpawnPoints(i);
-            for (int j = 0; j < team.CombatObjects.Count; j++){
+            for (var j = 0; j < team.CombatObjects.Count; j++){
                 if (j >= poses.Count){
-                    Debug.LogError($"Team {i} does not have enough spawn points for all combat objects. Skipping remaining objects.");
+                    Debug.LogError(
+                        $"Team {i} does not have enough spawn points for all combat objects. Skipping remaining objects.");
                     break;
                 }
                 var unit = team.CombatObjects[j];
@@ -31,4 +29,3 @@ class LevelInit : MonoBehaviour{
         content.combatObjects.AddRange(combatObjects);
     }
 }
-

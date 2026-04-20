@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class AITurnTaker : UnitsTurnTaker{
     const float TIME_BETWEEN_UNIT_TURNS = 0.5f;
-    
+
     Coroutine turnResolveCoroutine;
-    
+
     public override void EndTurn(){
         base.EndTurn();
         if (turnResolveCoroutine == null){
@@ -30,11 +30,11 @@ public class AITurnTaker : UnitsTurnTaker{
                 yield return StartCoroutine(aiBrain.ResolveTurn());
             }
             else{
-                Debug.LogWarning($"Unit {unit.Name} does not have an AIBrain component. Skipping turn resolution for this unit.");
+                Debug.LogWarning(
+                    $"Unit {unit.Name} does not have an AIBrain component. Skipping turn resolution for this unit.");
             }
             yield return new WaitForSeconds(TIME_BETWEEN_UNIT_TURNS);
         }
         CompleteTurn();
     }
-
 }

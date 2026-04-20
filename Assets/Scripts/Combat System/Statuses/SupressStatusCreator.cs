@@ -1,20 +1,18 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SupressStatusCreator : UnitStatusEffectCreator{
     [SerializeField] ActionFlags supressedFlags;
     [SerializeField] Optional<int> duration;
-    
+
     public override UnitStatusEffect CreateStatus(){
-        int durationValue = duration ? duration.Value : -1;
+        var durationValue = duration ? duration.Value : -1;
         var status = new SupressStatus(statusName, supressedFlags, durationValue);
         return status;
     }
 }
 
 public class SupressStatus : UnitStatusEffect{
-    ActionFlags supressedFlags;
+    readonly ActionFlags supressedFlags;
     int duration;
 
     public SupressStatus(string name, ActionFlags flags, int durationTmp) : base(name){

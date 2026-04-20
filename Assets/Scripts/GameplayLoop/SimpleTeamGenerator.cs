@@ -3,19 +3,20 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class SimpleTeamGenerator : TeamGenerator{
-    [BoxGroup("References")][Required][SerializeField] List<GameObject> teamPrefabs;
-    
+    [BoxGroup("References")] [Required] [SerializeField] List<GameObject> teamPrefabs;
+
     [SerializeField] UnitsTurnTaker turnTaker;
-    
+
     [SerializeField] int teamCount = 3;
-    
+
     public override Team GenerateTeam(){
-        List<ICombatObject> combatObjects = new List<ICombatObject>();
-        for (int i = 0; i < teamCount; i++){
+        var combatObjects = new List<ICombatObject>();
+        for (var i = 0; i < teamCount; i++){
             var gameObj = Instantiate(teamPrefabs.Random(), transform);
             var combatObject = gameObj.GetComponent<ICombatObject>();
             if (combatObject == null){
-                Debug.LogError($"The prefab {gameObj.name} does not have a component that implements ICombatObject. Skipping this prefab.");
+                Debug.LogError(
+                    $"The prefab {gameObj.name} does not have a component that implements ICombatObject. Skipping this prefab.");
                 Destroy(gameObj);
                 continue;
             }

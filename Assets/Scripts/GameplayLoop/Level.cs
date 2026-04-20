@@ -7,12 +7,11 @@ public class Level : MonoBehaviour{
     public List<CombatObjectSpawn> GetCombatObjectSpawns(){
         var combatObjects = GetComponentsInChildren<CombatObject>();
         var combatObjectSpawns = new List<CombatObjectSpawn>();
-        foreach (var combatObject in combatObjects){
+        foreach (var combatObject in combatObjects)
             combatObjectSpawns.Add(new CombatObjectSpawn{
                 combatObject = combatObject,
                 position = Vector2Int.RoundToInt(combatObject.transform.position)
             });
-        }
         return combatObjectSpawns;
     }
 
@@ -23,9 +22,7 @@ public class Level : MonoBehaviour{
         }
         var spawnPoints = spawnPointsParent.GetChild(team);
         var poses = new List<Vector2>();
-        for (int i = 0; i < spawnPoints.childCount; i++){
-            poses.Add(spawnPoints.GetChild(i).position);
-        }
+        for (var i = 0; i < spawnPoints.childCount; i++) poses.Add(spawnPoints.GetChild(i).position);
         poses.Shuffle();
         return poses;
     }

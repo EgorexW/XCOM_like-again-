@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class SpawnAction : TargetedUnitAction{
     [SerializeField] GameObject prefabToSpawn;
-    [Header("Spawn Settings")]
-    [SerializeField] InsertTurnTakerType insertTurnTakerType = InsertTurnTakerType.Next;
+    [Header("Spawn Settings")] [SerializeField] InsertTurnTakerType insertTurnTakerType = InsertTurnTakerType.Next;
 
     public GameObject PrefabToSpawn => prefabToSpawn;
 
@@ -12,7 +11,8 @@ public class SpawnAction : TargetedUnitAction{
         var spawnedObj = Instantiate(prefabToSpawn, unit.transform.parent);
         var combatObj = spawnedObj.GetComponent<CombatObject>();
         if (combatObj == null){
-            Debug.LogWarning($"Spawned object {spawnedObj.name} does not have a CombatObject component.", prefabToSpawn);
+            Debug.LogWarning($"Spawned object {spawnedObj.name} does not have a CombatObject component.",
+                prefabToSpawn);
             return;
         }
         // Debug.Log($"Spawning object {spawnedObj.name} at node {targetNode}", spawnedObj);

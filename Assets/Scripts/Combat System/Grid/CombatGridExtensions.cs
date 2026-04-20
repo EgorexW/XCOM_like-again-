@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public static class CombatGridExtensions{
@@ -18,68 +17,73 @@ public static class CombatGridExtensions{
             }
         return true;
     }
-    
-    public static bool HasFlag(this CombatGridNode node, CombatObjectFlags flags, List<ICombatObject> objectsToIgnore = null) {
-        foreach (var obj in node.GetCombatObjects()) {
-            if (objectsToIgnore != null && objectsToIgnore.Contains(obj)) {
+
+    public static bool HasFlag(this CombatGridNode node, CombatObjectFlags flags,
+        List<ICombatObject> objectsToIgnore = null){
+        foreach (var obj in node.GetCombatObjects()){
+            if (objectsToIgnore != null && objectsToIgnore.Contains(obj)){
                 continue;
             }
-            if ((obj.Flags & flags) != 0) {
-                return true; 
+            if ((obj.Flags & flags) != 0){
+                return true;
             }
         }
-        return false; 
+        return false;
     }
 
     public static List<CombatGridNode> GetNodesInBetween(this CombatGridNode node1, CombatGridNode node2){
         var nodes = new List<CombatGridNode>();
 
-        int x = node1.x;
-        int y = node1.y;
-        int x1 = node2.x;
-        int y1 = node2.y;
+        var x = node1.x;
+        var y = node1.y;
+        var x1 = node2.x;
+        var y1 = node2.y;
 
-        int dx = Mathf.Abs(x1 - x);
-        int dy = Mathf.Abs(y1 - y);
-    
-        int stepX = x < x1 ? 1 : -1;
-        int stepY = y < y1 ? 1 : -1;
+        var dx = Mathf.Abs(x1 - x);
+        var dy = Mathf.Abs(y1 - y);
+
+        var stepX = x < x1 ? 1 : -1;
+        var stepY = y < y1 ? 1 : -1;
 
         // Notice we don't multiply err by 2 down in the loop anymore
-        int error = dx - dy;
+        var error = dx - dy;
         dx *= 2;
         dy *= 2;
 
         while (true){
             var node = node1.grid.GetNode(new Vector2Int(x, y));
-        
+
             // Add the node (and make sure we don't add duplicates from the magic block)
             if (node != null && !nodes.Contains(node)){
                 nodes.Add(node);
             }
 
             // We reached the target node! Break immediately.
-            if (x == x1 && y == y1) {
+            if (x == x1 && y == y1){
                 break;
             }
 
             // SUPERCOVER LOGIC: We process X and Y steps independently
-            if (error > 0) {
+            if (error > 0){
                 x += stepX;
                 error -= dy;
-            } 
-            else if (error < 0) {
+            }
+            else if (error < 0){
                 y += stepY;
                 error += dx;
-            } 
-            else { 
+            }
+            else{
                 // THE MAGIC BLOCK: error == 0 (Perfect Diagonal)
                 // The line crosses the exact corner of 4 tiles. We check them all.
                 var corner1 = node1.grid.GetNode(new Vector2Int(x + stepX, y));
                 var corner2 = node1.grid.GetNode(new Vector2Int(x, y + stepY));
-            
-                if (corner1 != null && corner1 != node2) nodes.Add(corner1);
-                if (corner2 != null && corner2 != node2) nodes.Add(corner2);
+
+                if (corner1 != null && corner1 != node2){
+                    nodes.Add(corner1);
+                }
+                if (corner2 != null && corner2 != node2){
+                    nodes.Add(corner2);
+                }
 
                 x += stepX;
                 y += stepY;
@@ -101,12 +105,13 @@ public static class CombatGridExtensions{
         return Mathf.Sqrt(dx * dx + dy * dy);
     }
 
-    public static List<Direction> GetDirections(this CombatGridNode attackerNode, CombatGridNode targetNode, int diagonalThreshold = 0){
+    public static List<Direction> GetDirections(this CombatGridNode attackerNode, CombatGridNode targetNode,
+        int diagonalThreshold = 0){
         var directions = new List<Direction>();
-            
+
         var dx = attackerNode.x - targetNode.x;
         var dy = attackerNode.y - targetNode.y;
-        
+
         if (Mathf.Abs(dx) + diagonalThreshold >= Mathf.Abs(dy)){
             if (dx > 0){
                 directions.Add(Direction.Left);
@@ -114,7 +119,7 @@ public static class CombatGridExtensions{
             else if (dx < 0){
                 directions.Add(Direction.Right);
             }
-        } 
+        }
         if (Mathf.Abs(dy) + diagonalThreshold >= Mathf.Abs(dx)){
             if (dy > 0){
                 directions.Add(Direction.Down);
@@ -126,61 +131,59 @@ public static class CombatGridExtensions{
 
         return directions;
     }
-    
+
     public static List<CombatGridNode> GetNodesInRadius(this CombatGridNode centerNode, float radius){
-        return GetNodesInRadius(centerNode.grid, centerNode.GetPos(), radius);
+        return centerNode.grid.GetNodesInRadius(centerNode.GetPos(), radius);
     }
-    
+
     public static List<CombatGridNode> GetNodesInRadius(this CombatGrid grid, Vector2 point, float radius){
         var nodes = new List<CombatGridNode>();
 
         // Strictly respect the float point for the bounding box
-        int minX = Mathf.FloorToInt(point.x - radius);
-        int maxX = Mathf.CeilToInt(point.x + radius);
-        int minY = Mathf.FloorToInt(point.y - radius);
-        int maxY = Mathf.CeilToInt(point.y + radius);
+        var minX = Mathf.FloorToInt(point.x - radius);
+        var maxX = Mathf.CeilToInt(point.x + radius);
+        var minY = Mathf.FloorToInt(point.y - radius);
+        var maxY = Mathf.CeilToInt(point.y + radius);
 
         // Square the radius once to avoid running Mathf.Sqrt inside the loop
-        float radiusSqr = radius * radius;
+        var radiusSqr = radius * radius;
 
-        for (int x = minX; x <= maxX; x++){
-            for (int y = minY; y <= maxY; y++){
-                var targetNode = grid.GetNode(new Vector2Int(x, y));
-                if (targetNode == null){
-                    continue;
-                }
-                
-                // Float distance check against the exact Vector2 point
-                float dx = point.x - targetNode.x;
-                float dy = point.y - targetNode.y;
-                
-                if ((dx * dx + dy * dy) <= radiusSqr){
-                    nodes.Add(targetNode);
-                }
+        for (var x = minX; x <= maxX; x++)
+        for (var y = minY; y <= maxY; y++){
+            var targetNode = grid.GetNode(new Vector2Int(x, y));
+            if (targetNode == null){
+                continue;
+            }
+
+            // Float distance check against the exact Vector2 point
+            var dx = point.x - targetNode.x;
+            var dy = point.y - targetNode.y;
+
+            if (dx * dx + dy * dy <= radiusSqr){
+                nodes.Add(targetNode);
             }
         }
         return nodes;
     }
-    
+
     public static List<CombatGridNode> GetNeighborNodes(this CombatGridNode node, bool includeDiagonals = false){
         var neighbors = new List<CombatGridNode>();
-        for (int x = -1; x <= 1; x++){
-            for (int y = -1; y <= 1; y++){
-                if (x == 0 && y == 0) {
-                    continue;
-                }
-                
-                if (!includeDiagonals && Mathf.Abs(x) == Mathf.Abs(y)){
-                    continue;
-                }
-                
-                var targetNode = node.grid.GetNode(new Vector2Int(node.x + x, node.y + y));
-                if (targetNode == null){
-                    continue;
-                }
-
-                neighbors.Add(targetNode);
+        for (var x = -1; x <= 1; x++)
+        for (var y = -1; y <= 1; y++){
+            if (x == 0 && y == 0){
+                continue;
             }
+
+            if (!includeDiagonals && Mathf.Abs(x) == Mathf.Abs(y)){
+                continue;
+            }
+
+            var targetNode = node.grid.GetNode(new Vector2Int(node.x + x, node.y + y));
+            if (targetNode == null){
+                continue;
+            }
+
+            neighbors.Add(targetNode);
         }
 
         return neighbors;
@@ -189,7 +192,7 @@ public static class CombatGridExtensions{
     public static Vector2 GetCenter(this List<CombatGridNode> nodes){
         if (nodes == null || nodes.Count == 0){
             Debug.LogError("No grid nodes found");
-            return Vector2.zero; 
+            return Vector2.zero;
         }
 
         float sumX = 0;
@@ -208,24 +211,24 @@ public static class CombatGridExtensions{
             Debug.LogError("No grid nodes found");
             return null; // FIXED: You were missing this return!
         }
-        
-        Vector2 exactCenter = nodes.GetCenter();
+
+        var exactCenter = nodes.GetCenter();
 
         CombatGridNode closestNode = null;
-        float closestDistanceSqr = float.MaxValue;
-        
-        // Track how many nodes share the exact same distance to the center
-        int tieCount = 1; 
+        var closestDistanceSqr = float.MaxValue;
 
-        foreach (var node in nodes) {
-            float dx = node.x - exactCenter.x;
-            float dy = node.y - exactCenter.y;
-            float distSqr = dx * dx + dy * dy; // Sqr magnitude
-            
-            if (Mathf.Approximately(distSqr, closestDistanceSqr)) {
+        // Track how many nodes share the exact same distance to the center
+        var tieCount = 1;
+
+        foreach (var node in nodes){
+            var dx = node.x - exactCenter.x;
+            var dy = node.y - exactCenter.y;
+            var distSqr = dx * dx + dy * dy; // Sqr magnitude
+
+            if (Mathf.Approximately(distSqr, closestDistanceSqr)){
                 tieCount++;
             }
-            else if (distSqr < closestDistanceSqr) {
+            else if (distSqr < closestDistanceSqr){
                 closestDistanceSqr = distSqr;
                 closestNode = node;
                 tieCount = 1; // We found a new true closest, reset the tie breaker
@@ -233,25 +236,27 @@ public static class CombatGridExtensions{
         }
 
         // THE WARNING:
-        if (tieCount > 1) {
-            Debug.LogWarning($"[Grid Paranoia] GetCenterNode was called on a shape with no objective center! Tie between {tieCount} nodes. Defaulting to node {closestNode.x},{closestNode.y}.");
+        if (tieCount > 1){
+            Debug.LogWarning(
+                $"[Grid Paranoia] GetCenterNode was called on a shape with no objective center! Tie between {tieCount} nodes. Defaulting to node {closestNode.x},{closestNode.y}.");
         }
 
         return closestNode;
     }
-    
+
     public static CombatGrid PrimaryGrid(this List<CombatGridNode> nodes){
-        if (nodes == null || nodes.Count == 0) return null;
+        if (nodes == null || nodes.Count == 0){
+            return null;
+        }
         // The "Center of Mass" dictates which grid this object officially belongs to
-        CombatGrid primaryGrid = nodes.GetCenterNode().grid;
+        var primaryGrid = nodes.GetCenterNode().grid;
 
         // PARANOIA CHECK: Are we straddling two different dimensions?
-        foreach (var node in nodes) {
-            if (node.grid != primaryGrid) {
+        foreach (var node in nodes)
+            if (node.grid != primaryGrid){
                 Debug.LogWarning($"{nodes} are occupying nodes across multiple different grids! Proceed with caution.");
                 break;
             }
-        }
 
         return primaryGrid;
     }
@@ -286,23 +291,24 @@ public static class CombatGridExtensions{
     }
 
 
-    public static bool CanShoot(this CombatGridNode attackerNode, CombatGridNode targetNode, float range = Mathf.Infinity, CombatObjectFlags blockingFlags = GridBlockingFlags.ShootingBlocker, List<ICombatObject> objectsToIgnore = null){
+    public static bool CanShoot(this CombatGridNode attackerNode, CombatGridNode targetNode,
+        float range = Mathf.Infinity, CombatObjectFlags blockingFlags = GridBlockingFlags.ShootingBlocker,
+        List<ICombatObject> objectsToIgnore = null){
         if (attackerNode.GetDistance(targetNode) > range){
             return false;
         }
-        
+
         if (!attackerNode.LineUnobstructed(targetNode, blockingFlags, objectsToIgnore)){
             return false;
         }
-        var attackDirections = GetDirections(attackerNode, targetNode);
+        var attackDirections = attackerNode.GetDirections(targetNode);
 
         // Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in directions {attackDirections}");
 
-        foreach (var direction in attackDirections){
+        foreach (var direction in attackDirections)
             if (targetNode.IsProtectedFrom(direction.Opposite())){
                 return false;
             }
-        }
 
         return true;
     }

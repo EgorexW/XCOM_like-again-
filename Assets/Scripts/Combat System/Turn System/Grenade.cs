@@ -1,18 +1,15 @@
-using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Grenade : TurnTaker
-{
+public class Grenade : TurnTaker{
     [SerializeField] int turnsToActivate = 1;
     [SerializeField] bool destroy = true;
     [SerializeField] CombatObject owner;
     [SerializeField] List<CombatEffect> effects;
 
-    [FoldoutGroup("Events")]
-    public UnityEvent onActivate = new();
+    [FoldoutGroup("Events")] public UnityEvent onActivate = new();
 
 
     public override void StartTurn(){
@@ -24,7 +21,7 @@ public class Grenade : TurnTaker
     }
 
     void Activate(){
-        foreach (CombatEffect effect in effects){
+        foreach (var effect in effects){
             effect.targetNode = owner != null ? owner.GetCenterNode() : null;
             effect.Execute();
         }
@@ -33,7 +30,7 @@ public class Grenade : TurnTaker
         if (destroy){
             owner.Remove();
             if (owner == null){
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
     }

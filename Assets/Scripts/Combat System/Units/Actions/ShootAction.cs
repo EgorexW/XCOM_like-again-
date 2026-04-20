@@ -8,14 +8,13 @@ public class ShootAction : TargetedUnitAction{
     public float Damage => damage;
 
     protected override void OnExecute(){
-        
-        if (ammoCost > 0) {
+        if (ammoCost > 0){
             var ammoComp = unit.GetCombatComponent<AmmoComponent>();
-            if (ammoComp != null) {
+            if (ammoComp != null){
                 ammoComp.ConsumeAmmo(ammoCost);
             }
         }
-        
+
         var targetObjects = targetNode.GetCombatObjects();
         foreach (var targetObj in targetObjects.ReadOnly()){
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();
@@ -23,9 +22,7 @@ public class ShootAction : TargetedUnitAction{
                 healthComp.TakeDamage(damage);
             }
             if (targetObj is CombatUnit unit){
-                foreach (var statusEffect in appliedStatusEffects){
-                    unit.ApplyStatus(statusEffect.CreateStatus());
-                }
+                foreach (var statusEffect in appliedStatusEffects) unit.ApplyStatus(statusEffect.CreateStatus());
             }
         }
     }
@@ -55,16 +52,17 @@ public class ShootAction : TargetedUnitAction{
 
     public override UnitActionValidation ValidateAction(){
         var result = base.ValidateAction();
-         if (ammoCost > 0) {
-             var ammoComp = unit.GetCombatComponent<AmmoComponent>();
-             if (ammoComp == null) {
-                 Debug.LogWarning($"Action requires ammo but unit {unit.name} has no AmmoComponent!");
-                 result |= UnitActionValidation.AmmoIssue;
-             } else if (ammoComp.CurrentLoadedAmmo < ammoCost) {
-                 result |= UnitActionValidation.AmmoIssue;
-             }
-         }
-         return result;
+        if (ammoCost > 0){
+            var ammoComp = unit.GetCombatComponent<AmmoComponent>();
+            if (ammoComp == null){
+                Debug.LogWarning($"Action requires ammo but unit {unit.name} has no AmmoComponent!");
+                result |= UnitActionValidation.AmmoIssue;
+            }
+            else if (ammoComp.CurrentLoadedAmmo < ammoCost){
+                result |= UnitActionValidation.AmmoIssue;
+            }
+        }
+        return result;
     }
 
     public override int? GetUsesLeft(){
@@ -81,8 +79,6 @@ public class ShootAction : TargetedUnitAction{
         if (baseUsesLeft.HasValue){
             return Mathf.Min(baseUsesLeft.Value, ammoUsesLeft);
         }
-        else{
-            return ammoUsesLeft;
-        }
+        return ammoUsesLeft;
     }
 }

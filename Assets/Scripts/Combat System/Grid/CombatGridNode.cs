@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
 
 [Serializable]
 public class CombatGridNode : GridNode{
     public readonly CombatGrid grid;
 
-    [FoldoutGroup("Debug")][ShowInInspector][HideInEditorMode] readonly HashSet<ICombatObject> combatObjects;
+    [FoldoutGroup("Debug")] [ShowInInspector] [HideInEditorMode] readonly HashSet<ICombatObject> combatObjects;
 
     public CombatGridNode(CombatGrid grid, int x, int y) : base(x, y){
         this.grid = grid;

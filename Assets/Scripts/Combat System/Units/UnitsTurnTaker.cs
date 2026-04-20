@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitsTurnTaker : TurnTaker{
-    List<CombatUnit> units  = new List<CombatUnit>();
+    readonly List<CombatUnit> units = new();
 
     public IReadOnlyList<CombatUnit> Units => units.ReadOnly();
-    
+
     void RemoveUnit(ICombatObject arg0){
         if (arg0 is CombatUnit unit){
             units.Remove(unit);

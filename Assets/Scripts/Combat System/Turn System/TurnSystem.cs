@@ -42,7 +42,8 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
 
     void TurnCompleted(ITurnTaker turnTaker){
         if (GetCurrentTurnTaker() != turnTaker){
-            Debug.LogWarning("Turn completed by " + turnTaker + " but current turn taker is " + GetCurrentTurnTaker(), this);
+            Debug.LogWarning("Turn completed by " + turnTaker + " but current turn taker is " + GetCurrentTurnTaker(),
+                this);
             return;
         }
         NextTurn();
@@ -60,7 +61,7 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
     }
 
     public void RemoveTurnTaker(ITurnTaker turnTaker){
-        int removedIndex = turnTakers.IndexOf(turnTaker);
+        var removedIndex = turnTakers.IndexOf(turnTaker);
         if (removedIndex == -1){
             Debug.LogWarning($"Attempted to remove turn taker {turnTaker} but it was not found in the list.", this);
             return;
@@ -97,7 +98,7 @@ public interface ITurnTaker{
     public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
     void EndTurn();
     void StartTurn();
-    public TurnSystem TurnSystem { get; set; }
+    public TurnSystem TurnSystem{ get; set; }
     public UnityEvent<ITurnTaker> onStartTurn{ get; }
     public UnityEvent<ITurnTaker> onEndTurn{ get; }
 }

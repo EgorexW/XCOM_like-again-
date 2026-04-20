@@ -108,7 +108,7 @@ public class General : MonoBehaviour{
         var gameObject = new GameObject("WorldText"){
             transform ={
                 position = pos
-            },
+            }
             // hideFlags = HideFlags.HideInHierarchy
         };
         var textMeshPro = gameObject.AddComponent<TextMeshPro>();
@@ -232,29 +232,30 @@ public class General : MonoBehaviour{
         return components;
     }
 
-    public static string EnumDescription<T>() where T : Enum {
-        StringBuilder sb = new StringBuilder();
+    public static string EnumDescription<T>() where T : Enum{
+        var sb = new StringBuilder();
 
         // Detect if this Enum is using the [Flags] attribute
-        bool isFlag = typeof(T).IsDefined(typeof(FlagsAttribute), false);
+        var isFlag = typeof(T).IsDefined(typeof(FlagsAttribute), false);
 
         // Using basic Rich Text to bold the header
         sb.AppendLine(isFlag ? "<b>List Index ➔ Name</b>" : "<b>Index ➔ Name</b>");
 
-        foreach (T value in Enum.GetValues(typeof(T))) {
-            int rawValue = Convert.ToInt32(value);
+        foreach (T value in Enum.GetValues(typeof(T))){
+            var rawValue = Convert.ToInt32(value);
 
-            if (isFlag) {
-                if (rawValue == 0) {
+            if (isFlag){
+                if (rawValue == 0){
                     sb.AppendLine($"[--] {value}");
-                } 
-                else if ((rawValue & (rawValue - 1)) == 0) {
-                    int listIndex = (int)Math.Log(rawValue, 2);
+                }
+                else if ((rawValue & (rawValue - 1)) == 0){
+                    var listIndex = (int)Math.Log(rawValue, 2);
                     sb.AppendLine($"[{listIndex}] {value}");
                 }
-            } else {
+            }
+            else{
                 // Standard Enum behavior
-                sb.AppendLine($"[{rawValue}] {value}"); 
+                sb.AppendLine($"[{rawValue}] {value}");
             }
         }
 

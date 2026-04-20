@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class MoveAction : TargetedUnitAction{
     protected override void OnExecute(){
         unit.MoveTo(targetNode);

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -15,8 +14,8 @@ public class ActionTargetingUI : UIElement{
 
     [BoxGroup("Config")] [SerializeField] Color validTargetsColor = Color.white;
     [BoxGroup("Config")] [SerializeField] Color invalidTargetsColor = Color.gray3;
-    
-            UnitAction action;
+
+    UnitAction action;
 
     [FoldoutGroup("Events")] public UnityEvent<UnitAction> onConfirm;
     [FoldoutGroup("Events")] public UnityEvent onCancel;
@@ -58,7 +57,7 @@ public class ActionTargetingUI : UIElement{
             gridUI.ShowMarks(action.unit.Grid().Grid, validTargets, validTargetsColor);
             gridUI.ShowMarks(action.unit.Grid().Grid, nonValidTargetsToShow, invalidTargetsColor);
         }
-        
+
         confirmButton.interactable = action.ValidateAction() == UnitActionValidation.Valid;
         actionNameText.SetText(action.ActionInfo.Name);
         descriptionText.SetText(action.GetDescription());

@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SuspectComponent : CombatComponent{
     [SerializeField] SuspectState suspectState = SuspectState.Docile;
-    
+
     public SuspectState SuspectState => suspectState;
 
     public override void Init(){
@@ -25,16 +24,16 @@ public class SuspectComponent : CombatComponent{
         }
         suspectState = newState;
     }
-    
-    void OnDestroy() {
+
+    void OnDestroy(){
         if (CombatObject is CombatUnit combatUnit){
             combatUnit.onActionPerformed.RemoveListener(OnActionPerformed);
         }
     }
 }
 
-public enum SuspectState {
-    Docile,      // Hands in pockets, walking around, running away. (Shooting = Penalty)
-    Hostile,     // Weapon drawn or actively attacking. (Shooting = Legal)
-    Surrendered  // Hands up, dropped weapon. (Shooting = Massive Penalty)
+public enum SuspectState{
+    Docile, // Hands in pockets, walking around, running away. (Shooting = Penalty)
+    Hostile, // Weapon drawn or actively attacking. (Shooting = Legal)
+    Surrendered // Hands up, dropped weapon. (Shooting = Massive Penalty)
 }

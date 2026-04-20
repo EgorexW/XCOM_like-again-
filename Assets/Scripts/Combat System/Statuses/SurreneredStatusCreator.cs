@@ -8,7 +8,7 @@ public class SurrenderedStatusCreator : UnitStatusEffectCreator{
 }
 
 class SurrenderedStatus : UnitStatusEffect{
-    List<UnitAction> allowedActions;
+    readonly List<UnitAction> allowedActions;
 
     public SurrenderedStatus(string name, List<UnitAction> allowedActions = null) : base(name){
         allowedActions ??= new List<UnitAction>();

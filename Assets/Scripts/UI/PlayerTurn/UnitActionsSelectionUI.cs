@@ -24,7 +24,6 @@ class UnitActionsSelectionUI : UIElement{
             }
             if (validation.HasFlag(UnitActionValidation.AmmoIssue)){
                 actions.Remove(action);
-                continue;
             }
         }
         actionsPool.SetCount(actions.Count);

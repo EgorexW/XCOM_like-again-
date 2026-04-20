@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class TargetedUnitAction : UnitAction{
     protected CombatGridNode targetNode;
-    
+
     [SerializeField] int range = 5;
-    
+
     public float Range => range;
 
     public override UnitActionValidation ValidateAction(){
@@ -46,11 +46,10 @@ public abstract class TargetedUnitAction : UnitAction{
 
     public List<CombatGridNode> GetValidTargets(){
         var list = new List<CombatGridNode>();
-        foreach (var node in GetAllTargets()){
+        foreach (var node in GetAllTargets())
             if (CheckActionSpecificTargetRules(node) == TargetValidation.Valid){
                 list.Add(node);
             }
-        }
         return list;
     }
 
@@ -65,10 +64,10 @@ public abstract class TargetedUnitAction : UnitAction{
 
 [Flags]
 public enum TargetValidation{
-    Valid          = 0,      
-    OutOfRange     = 1 << 0, 
-    InvalidTarget  = 1 << 1, 
-    NoValidTarget  = 1 << 2, 
-    NoPath         = 1 << 3,
-    NotANode       = 1 << 4,
+    Valid = 0,
+    OutOfRange = 1 << 0,
+    InvalidTarget = 1 << 1,
+    NoValidTarget = 1 << 2,
+    NoPath = 1 << 3,
+    NotANode = 1 << 4
 }

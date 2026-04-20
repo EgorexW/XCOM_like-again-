@@ -6,9 +6,11 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TurnUI : UIElement{
-    [BoxGroup("References")][Required][SerializeField] TurnSystem turnSystem;
-    
-    [FormerlySerializedAs("actionsUI")] [BoxGroup("Internal References")] [Required] [SerializeField] UnitActionsSelectionUI unitActionsSelectionUI;
+    [BoxGroup("References")] [Required] [SerializeField] TurnSystem turnSystem;
+
+    [FormerlySerializedAs("actionsUI")] [BoxGroup("Internal References")] [Required] [SerializeField]
+    UnitActionsSelectionUI unitActionsSelectionUI;
+
     [BoxGroup("Internal References")] [Required] [SerializeField] ActionTargetingUI actionTargetingUI;
     [BoxGroup("Internal References")] [Required] [SerializeField] Button endTurnButton;
     [BoxGroup("Internal References")] [Required] [SerializeField] Transform selectedUnitHighlight;

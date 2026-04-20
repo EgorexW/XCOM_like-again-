@@ -8,7 +8,7 @@ class ActionTileUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI actionName;
     [BoxGroup("References")] [Required] [SerializeField] Button selectButton;
     [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI uses;
-    [BoxGroup("References")][Required][SerializeField] Image supressedIcon;
+    [BoxGroup("References")] [Required] [SerializeField] Image supressedIcon;
 
     UnitAction action;
     UnityAction<UnitAction> onSelect;
@@ -31,14 +31,14 @@ class ActionTileUI : UIElement{
         var validation = action.ValidateAction();
         supressedIcon.gameObject.SetActive(false);
         selectButton.interactable = true;
-        
-            if (validation.HasFlag(UnitActionValidation.SupressedByStatus)){
-                selectButton.interactable = false;
-                supressedIcon.gameObject.SetActive(true);
-            }
-            if (validation.HasFlag(UnitActionValidation.NotEnoughActionPoints)){
-                selectButton.interactable = false;
-            }
+
+        if (validation.HasFlag(UnitActionValidation.SupressedByStatus)){
+            selectButton.interactable = false;
+            supressedIcon.gameObject.SetActive(true);
+        }
+        if (validation.HasFlag(UnitActionValidation.NotEnoughActionPoints)){
+            selectButton.interactable = false;
+        }
         if (action.GetUsesLeft().HasValue){
             uses.SetText($"x{action.GetUsesLeft()}");
         }

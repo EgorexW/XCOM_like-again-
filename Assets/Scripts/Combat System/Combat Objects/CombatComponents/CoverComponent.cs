@@ -10,7 +10,7 @@ public class CoverComponent : CombatComponent{
 
     public Direction Direction => direction;
 
-    public bool spawnedAsAdjacentCover = false;
+    public bool spawnedAsAdjacentCover;
 
 
     protected void Start(){
@@ -35,14 +35,13 @@ public class CoverComponent : CombatComponent{
         }
 
         var spawnedHalf = Instantiate(adjacentCoverPrefab, transform.parent);
-        
+
         var combatObj = spawnedHalf.GetComponent<CombatObject>();
         var coverComponent = spawnedHalf.GetComponentInChildren<CoverComponent>();
         coverComponent.spawnedAsAdjacentCover = true;
-        
+
         CombatObject.CombatSystem.AddCombatObject(combatObj, new List<CombatGridNode>{ targetNode });
         coverComponent.InitializeAsSpawnedHalf(direction.Opposite(), targetNode);
-
     }
 
     public void InitializeAsSpawnedHalf(Direction oppositeDir, CombatGridNode targetNode){

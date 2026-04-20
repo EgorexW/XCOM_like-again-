@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class BasicAIBehaviour : AIBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] AIActionCreator moveActionCreator;
@@ -10,11 +8,11 @@ public class BasicAIBehaviour : AIBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] AIActionCreator surrenderActionCreator;
     [BoxGroup("References")] [Required] [SerializeField] AIActionCreator utilityActionCreator;
 
-    [BoxGroup("Config")][SerializeField] float minDisToEnemyToAgress = 13f;
-    [BoxGroup("Config")][SerializeField] float attackWhenExposedChance = 0.5f;
-    [BoxGroup("Config")][SerializeField] float moveScoreToMove = 10;
-    [BoxGroup("Config")][SerializeField] float utilityChance = 0.25f;
-    
+    [BoxGroup("Config")] [SerializeField] float minDisToEnemyToAgress = 13f;
+    [BoxGroup("Config")] [SerializeField] float attackWhenExposedChance = 0.5f;
+    [BoxGroup("Config")] [SerializeField] float moveScoreToMove = 10;
+    [BoxGroup("Config")] [SerializeField] float utilityChance = 0.25f;
+
     public override AIAction GetAction(AIContext context){
         var closestEnemy = context.GetClosestEnemy();
         if (closestEnemy != null){
@@ -23,7 +21,7 @@ public class BasicAIBehaviour : AIBehaviour{
                 return AIAction.Invalid;
             }
         }
-        
+
         // Actions
         var moveAction = moveActionCreator.CreateAIAction(context);
         var attackAction = attackActionCreator.CreateAIAction(context);

@@ -9,31 +9,25 @@ public class AIUtilityActionCreator : AITargetedActionCreator{
     [SerializeField] float range = 1.5f;
     [SerializeField] float distanceFalloff = 0.1f;
 
-    protected override float EvaluateNode(CombatGridNode node, AIContext context, out AIActionFlags flags) {
+    protected override float EvaluateNode(CombatGridNode node, AIContext context, out AIActionFlags flags){
         float score = 0;
         flags = AIActionFlags.None;
         var text = "";
 
-        float distance = node.GetDistance(context.unit.GetCenterNode());
-        
-        foreach (var enemy in context.enemies){
-            Score(enemy, enemyPresent);
-        }
+        var distance = node.GetDistance(context.unit.GetCenterNode());
 
-        foreach (var allie in context.allies){
-            Score(allie, -allyPresentPenalty);
-        }
+        foreach (var enemy in context.enemies) Score(enemy, enemyPresent);
+
+        foreach (var allie in context.allies) Score(allie, -allyPresentPenalty);
 
         var hazards = node.GetHazards();
-        foreach (var hazard in hazards){
-            score -= hazardAlreadyPresentPenalty * hazard.Intensity;
-        }
-        
-        var invertedDistance = (1f + distance * distanceFalloff);
+        foreach (var hazard in hazards) score -= hazardAlreadyPresentPenalty * hazard.Intensity;
+
+        var invertedDistance = 1f + distance * distanceFalloff;
         score /= invertedDistance;
-        
+
         score += baseScore;
-        
+
         text += $"Utility Score: {score}\n";
         if (context.debug){
             General.WorldText(text, node.GetPos(), 0.5f, 1);
@@ -42,11 +36,11 @@ public class AIUtilityActionCreator : AITargetedActionCreator{
         return score;
 
         void Score(ICombatObject enemy, float presentScore){
-            float distanceToEnemy = node.GetDistance(enemy.GetCenterNode());
+            var distanceToEnemy = node.GetDistance(enemy.GetCenterNode());
             if (distanceToEnemy > range){
                 return;
             }
-            float mult = (spotOnMultiplier - 1) * (1 - (distanceToEnemy / range));
+            var mult = (spotOnMultiplier - 1) * (1 - distanceToEnemy / range);
             mult += 1;
             score += presentScore * mult;
         }

@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class CreateExplosionHazardZone : MonoBehaviour{
-    [BoxGroup("References")][Required][SerializeField] ExplosionEffect explosionEffect;
+    [BoxGroup("References")] [Required] [SerializeField] ExplosionEffect explosionEffect;
     [SerializeField] HazardSettings hazardSettings;
-    
+
     CombatObject hazardCombatObject;
 
     void Awake(){
@@ -29,7 +26,7 @@ public class CreateExplosionHazardZone : MonoBehaviour{
         var gameObj = new GameObject("Hazard Zone");
         gameObj.transform.SetParent(transform);
         hazardCombatObject = gameObj.AddComponent<CombatObject>();
-        HazardComponent hazardComponent = gameObj.AddComponent<HazardComponent>();
+        var hazardComponent = gameObj.AddComponent<HazardComponent>();
         hazardComponent.settings = hazardSettings;
         combatObject.CombatSystem.AddCombatObject(hazardCombatObject, nodes);
     }

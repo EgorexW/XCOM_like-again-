@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,8 +12,8 @@ public class CombatUnit : CombatObject{
 
     [SerializeField] [HideInEditorMode] List<UnitAction> unitActions;
     [SerializeField] [HideInEditorMode] int actionPoints;
-    
-    List<UnitStatusEffect> activeStatuses = new();
+
+    readonly List<UnitStatusEffect> activeStatuses = new();
 
     [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onStartTurn;
     [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onEndTurn;
@@ -45,8 +44,8 @@ public class CombatUnit : CombatObject{
         }
         actionPoints -= cost;
     }
-    
-    public void ApplyStatus(UnitStatusEffect status) {
+
+    public void ApplyStatus(UnitStatusEffect status){
         activeStatuses.Add(status);
         status.OnApplied(this);
         Debug.Log($"Applied status {status.name} to unit {name}");
@@ -61,16 +60,15 @@ public class CombatUnit : CombatObject{
         Debug.Log($"Removed status {status.name} from unit {name}");
     }
 
-    public UnitActionValidation CanExecute(UnitAction action) {
+    public UnitActionValidation CanExecute(UnitAction action){
         var result = UnitActionValidation.Valid;
         if (ActionPoints < action.GetCost()){
             result |= UnitActionValidation.NotEnoughActionPoints;
         }
-        foreach (var status in activeStatuses) {
+        foreach (var status in activeStatuses)
             if (!status.CanExecuteAction(action)){
                 result |= UnitActionValidation.SupressedByStatus;
             }
-        }
         return result;
     }
 }

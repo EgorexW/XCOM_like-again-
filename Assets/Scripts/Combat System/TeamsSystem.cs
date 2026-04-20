@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class TeamsSystem : MonoBehaviour{
-    List<Team> teams  = new List<Team>();
-    
-    Dictionary<ICombatObject, Team> combatObjectToTeam = new();
+    readonly List<Team> teams = new();
+
+    readonly Dictionary<ICombatObject, Team> combatObjectToTeam = new();
 
     public void AddTeam(Team team){
         teams.Add(team);
@@ -30,22 +29,22 @@ public class TeamsSystem : MonoBehaviour{
         enemyTeams.Remove(GetTeam(combatObject));
         return enemyTeams;
     }
-    
+
     public List<ICombatObject> GetAllies(ICombatObject combatObject){
         var team = GetTeam(combatObject);
         return team.CombatObjects.ToList();
     }
-    
-     public List<ICombatObject> GetEnemies(ICombatObject combatObject){
-         var enemyTeams = GetEnemyTeams(combatObject);
-         var enemies = new List<ICombatObject>();
-         foreach (var team in enemyTeams) enemies.AddRange(team.CombatObjects);
-         return enemies;
-     }
+
+    public List<ICombatObject> GetEnemies(ICombatObject combatObject){
+        var enemyTeams = GetEnemyTeams(combatObject);
+        var enemies = new List<ICombatObject>();
+        foreach (var team in enemyTeams) enemies.AddRange(team.CombatObjects);
+        return enemies;
+    }
 }
 
 public class Team{
-    List<ICombatObject> combatObjects;
+    readonly List<ICombatObject> combatObjects;
 
     public Team(List<ICombatObject> combatObjects){
         this.combatObjects = combatObjects;

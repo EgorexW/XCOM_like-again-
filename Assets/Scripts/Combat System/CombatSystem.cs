@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,14 +7,14 @@ using UnityEngine.Events;
 public class CombatSystem : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] CombatGrid combatGrid;
     [BoxGroup("References")] [Required] [SerializeField] TurnSystem turnSystem;
-    [BoxGroup("References")][Required][SerializeField] TeamsSystem teamsSystem;
+    [BoxGroup("References")] [Required] [SerializeField] TeamsSystem teamsSystem;
     // [BoxGroup("References")][Required][SerializeField] HazardsSystem hazardsSystem;
 
     readonly List<ICombatObject> combatObjects = new();
 
     [FoldoutGroup("Events")] public UnityEvent onCombatStarted;
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onCombatObjectAdded;
-    [FoldoutGroup("Events")] public UnityEvent <ICombatObject> onCombatObjectRemoved;
+    [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onCombatObjectRemoved;
 
     public IReadOnlyList<ICombatObject> CombatObjects => combatObjects.ReadOnly();
     public CombatGrid CombatGrid => combatGrid;

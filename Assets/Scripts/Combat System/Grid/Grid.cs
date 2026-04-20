@@ -69,14 +69,12 @@ public class Grid<TGridObject>{
         // Debug.Log($"Calculated grid coordinates: X: {x}, Y: {y}");
         return GetGridObject(x, y);
     }
-    
-    public List<TGridObject> GetAllNodes() {
-        List<TGridObject> allNodes = new List<TGridObject>(width * height);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                allNodes.Add(gridArray[x, y]);
-            }
-        }
+
+    public List<TGridObject> GetAllNodes(){
+        var allNodes = new List<TGridObject>(width * height);
+        for (var x = 0; x < width; x++)
+        for (var y = 0; y < height; y++)
+            allNodes.Add(gridArray[x, y]);
         return allNodes;
     }
 }

@@ -5,9 +5,9 @@ public class BasicAIActionCreator : AIActionCreator{
     [SerializeField] List<UnitAction> unitActions;
 
     public override AIAction CreateAIAction(AIContext context){
-        AIAction highestAction = AIAction.Invalid;
+        var highestAction = AIAction.Invalid;
         foreach (var action in unitActions){
-            AIAction newAction = GetAIAction(context, action);
+            var newAction = GetAIAction(context, action);
             if (newAction.Score > highestAction.Score){
                 highestAction = newAction;
             }
