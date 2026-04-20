@@ -40,6 +40,11 @@ public class CombatObject : MonoBehaviour, ICombatObject{
             combatComponent.CombatObject = this;
             combatComponent.Init();
         }
+        this.Validate();
         onInit.Invoke(this);
+    }
+
+    void OnValidate(){
+        this.Validate();
     }
 }

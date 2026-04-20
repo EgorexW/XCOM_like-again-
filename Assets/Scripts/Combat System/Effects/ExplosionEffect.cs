@@ -10,6 +10,7 @@ public class ExplosionEffect : CombatEffect{
 
     public override void Execute(){
         if (!HasNode){
+            Debug.LogWarning("ExplosionEffect executed without a target node.");
             return;
         }
         foreach (var node in targetNode.GetNodesInRadius(range)){

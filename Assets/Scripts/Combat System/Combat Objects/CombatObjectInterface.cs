@@ -19,8 +19,15 @@ public interface ICombatObject{
 [Flags]
 public enum CombatObjectFlags{
     None = 0,
-    Unit = 1 << 0,
-    Wall = 1 << 1
+    Object = 1 << 0,
+    Wall = 1 << 1,
+    [InspectorName("LoS Blocker")] LoSBlocker = 1 << 2,
+    MovementBlocker = 1 << 3,
+    
+    [InspectorName("Presets/Standard Wall")]
+    StandardWall = Object | Wall | LoSBlocker | MovementBlocker,
+    [InspectorName("Presets/Standard Object")]
+    StandardObject = Object | LoSBlocker | MovementBlocker,
 }
 
 

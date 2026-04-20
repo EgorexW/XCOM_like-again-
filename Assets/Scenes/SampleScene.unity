@@ -3572,7 +3572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameplayInit
   combatInit: {fileID: 1575406001}
   levelInit: {fileID: 1575406003}
-  levelPrefab: {fileID: 3888477427664790082, guid: 6e55d8e0c96c1483886b0b12a533af93, type: 3}
+  levelPrefab: {fileID: 3888477427664790082, guid: 200bd255747014945a65ee7a7b7185ec, type: 3}
   levelSpawnPos: {x: 50, y: 50}
 --- !u!114 &1575406003
 MonoBehaviour:

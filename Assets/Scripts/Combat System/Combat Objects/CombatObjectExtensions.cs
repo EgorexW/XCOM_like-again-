@@ -17,6 +17,8 @@ public static class CombatObjectExtensions{
         return combatObject.Nodes.GetCenterNode();
     }
     
+
+    #region Flags
         public static CombatObjectFlags GetBlockingFlags(this CombatObject combatObject){
             var flags = combatObject.Flags;
             CombatObjectFlags blockedBy = CombatObjectFlags.Wall;
@@ -25,17 +27,40 @@ public static class CombatObjectExtensions{
                 return (CombatObjectFlags)(~0); 
             }
             
-            if (flags.HasFlag(CombatObjectFlags.Unit)){
-                blockedBy |= CombatObjectFlags.Unit;
+            if (flags.HasFlag(CombatObjectFlags.Object)){
+                blockedBy |= CombatObjectFlags.Object;
             }
 
             return blockedBy;
     }
+    #endregion
+
+    #region Validation
+    public static void Validate(this ICombatObject combatObject){
+        combatObject.ValidateFlags();
+    }
+    public static void ValidateFlags(this ICombatObject combatObject){
+        var flags = combatObject.Flags;
+        AssertPairFlag(CombatObjectFlags.Wall, CombatObjectFlags.Object);
+        AssertPairFlag(CombatObjectFlags.Wall, CombatObjectFlags.LoSBlocker);
+        AssertPairFlag(CombatObjectFlags.Wall, CombatObjectFlags.MovementBlocker);
+
+        void AssertPairFlag(CombatObjectFlags flag1 ,CombatObjectFlags flag2){
+            if (!flags.HasFlag(flag1)){
+                return;
+            }
+            if (flags.HasFlag(flag2)){
+                return;
+            }
+            Debug.LogWarning($"CombatObject {combatObject.Name} has {flag1} flag but not {flag2} flag.");
+        }
+    }
+    #endregion
 }
 
 
 public static class GridBlockingFlags{
-    public const CombatObjectFlags MovementBlocker = CombatObjectFlags.Wall | CombatObjectFlags.Unit;
-    public const CombatObjectFlags ShootingBlocker = CombatObjectFlags.Wall | CombatObjectFlags.Unit;
+    public const CombatObjectFlags MovementBlocker = CombatObjectFlags.MovementBlocker;
+    public const CombatObjectFlags ShootingBlocker = CombatObjectFlags.LoSBlocker;
     public const CombatObjectFlags ThrowBlocker = CombatObjectFlags.Wall;
 }

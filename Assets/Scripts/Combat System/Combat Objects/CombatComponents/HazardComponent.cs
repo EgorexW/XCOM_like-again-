@@ -18,5 +18,6 @@ public class HazardComponent : CombatComponent{
 
 public enum HazardFlags{
     None = 0,
-    DamageSoon  = 1 << 0,
+    Soon  = 1 << 0,
+    AtRisk = 1 << 1,
 }
