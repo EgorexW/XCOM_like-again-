@@ -47,4 +47,7 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     void OnValidate(){
         this.Validate();
     }
+    public void RemoveFlag(CombatObjectFlags flagsToRemove){
+        flags &= ~flagsToRemove;
+    }
 }

@@ -21,6 +21,7 @@ class SurrenderedStatus : UnitStatusEffect{
 
     public override void OnApplied(CombatUnit targetTmp){
         base.OnApplied(targetTmp);
+        targetTmp.RemoveFlag(CombatObjectFlags.MovementBlocker | CombatObjectFlags.LoSBlocker);
         var suspectComponent = targetTmp.GetCombatComponent<SuspectComponent>();
         if (suspectComponent != null){
             suspectComponent.ChangeState(SuspectState.Surrendered);
