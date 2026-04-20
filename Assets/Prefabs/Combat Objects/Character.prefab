@@ -173,6 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AmmoComponent
   magazineSize: 3
   magazines: 4
+  startReloaded: 1
 --- !u!1 &8964908403254398336
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d459c2d9e379474bba6c3cee8eb7fb8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatUnit
-  gridOccupancyType: 1
+  flags: 1
   defaultActionPoints: 2
   unitActions:
   - {fileID: 4310955059030211448}
@@ -279,6 +280,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onEndTurn:
+    m_PersistentCalls:
+      m_Calls: []
+  onActionPerformed:
     m_PersistentCalls:
       m_Calls: []
 --- !u!58 &3405024798106044534

@@ -14,6 +14,7 @@ public class BasicLevel : Level{
         for (int i = 0; i < teamSpawn.childCount; i++){
             poses.Add(teamSpawn.GetChild(i).position);
         }
+        poses.Shuffle();
         return poses;
     }
 }

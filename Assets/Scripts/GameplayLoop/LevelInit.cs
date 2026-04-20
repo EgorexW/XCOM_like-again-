@@ -15,6 +15,7 @@ class LevelInit : MonoBehaviour{
                 var unit = turnTaker.Units[j];
                 unit.transform.position = poses[j];
                 units.Add(unit);
+                combatObjects.Add(unit);
             }
             Team team = new Team(units); 
             teams.Add(team);

@@ -23,7 +23,7 @@ public class BasicAIBehaviour : AIBehaviour{
         var utilityAction = utilityActionCreator.CreateAIAction(context);
 
         // Resolution
-        var exposed = combatUnit.GetCenterNode().IsExposed(context.enemies);
+        var exposed = moveAction.ActionFlags.HasFlag(AIActionFlags.SelfExposed);
         var enemyExposed = attackAction.ActionFlags.HasFlag(AIActionFlags.EnemyExposed);
 
         if (exposed){

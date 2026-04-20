@@ -136,3 +136,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579098e593ff43bd84fb065bb2d7d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatObject
+  flags: 2

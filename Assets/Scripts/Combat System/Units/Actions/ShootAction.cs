@@ -17,7 +17,7 @@ public class ShootAction : TargetedUnitAction{
         }
         
         var targetObjects = targetNode.GetCombatObjects();
-        foreach (var targetObj in targetObjects){
+        foreach (var targetObj in targetObjects.Copy()){
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();
             if (healthComp != null){
                 healthComp.TakeDamage(damage);
@@ -47,7 +47,7 @@ public class ShootAction : TargetedUnitAction{
         if (!foundTarget){
             result |= TargetValidation.NoValidTarget;
         }
-        if (!unit.GetCenterNode().CanAttack(node)){
+        if (!unit.GetCenterNode().CanShoot(node)){
             result |= TargetValidation.NoPath;
         }
         return result;

@@ -13,7 +13,7 @@ public static class CombatGridExtensions{
     public static bool LineUnobstructed(this CombatGridNode node1, CombatGridNode node2,
         CombatObjectFlags blockingFlags, List<ICombatObject> objectsToIgnore = null){
         foreach (var node in node1.GetNodesInBetween(node2))
-            if (!node.HasFlag(blockingFlags, objectsToIgnore)){
+            if (node.HasFlag(blockingFlags, objectsToIgnore)){
                 return false;
             }
         return true;
@@ -25,10 +25,10 @@ public static class CombatGridExtensions{
                 continue;
             }
             if ((obj.Flags & flags) != 0) {
-                return false; 
+                return true; 
             }
         }
-        return true; 
+        return false; 
     }
 
     public static List<CombatGridNode> GetNodesInBetween(this CombatGridNode node1, CombatGridNode node2){
@@ -286,7 +286,11 @@ public static class CombatGridExtensions{
     }
 
 
-    public static bool CanAttack(this CombatGridNode attackerNode, CombatGridNode targetNode, CombatObjectFlags blockingFlags = GridBlockingFlags.AttackBlocker, List<ICombatObject> objectsToIgnore = null){
+    public static bool CanShoot(this CombatGridNode attackerNode, CombatGridNode targetNode, float range = Mathf.Infinity, CombatObjectFlags blockingFlags = GridBlockingFlags.ShootingBlocker, List<ICombatObject> objectsToIgnore = null){
+        if (attackerNode.GetDistance(targetNode) > range){
+            return false;
+        }
+        
         if (!attackerNode.LineUnobstructed(targetNode, blockingFlags, objectsToIgnore)){
             return false;
         }
@@ -306,6 +310,6 @@ public static class CombatGridExtensions{
     #endregion
 
     public static bool CanAcceptObject(this CombatGridNode node, CombatObject combatObject){
-        return node.HasFlag(combatObject.GetBlockingFlags(), new List<ICombatObject>{ combatObject });
+        return !node.HasFlag(combatObject.GetBlockingFlags(), new List<ICombatObject>{ combatObject });
     }
 }

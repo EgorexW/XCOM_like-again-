@@ -36,6 +36,6 @@ public static class CombatObjectExtensions{
 
 public static class GridBlockingFlags{
     public const CombatObjectFlags MovementBlocker = CombatObjectFlags.Wall | CombatObjectFlags.Unit;
-    public const CombatObjectFlags AttackBlocker = CombatObjectFlags.Wall | CombatObjectFlags.Unit;
+    public const CombatObjectFlags ShootingBlocker = CombatObjectFlags.Wall | CombatObjectFlags.Unit;
     public const CombatObjectFlags ThrowBlocker = CombatObjectFlags.Wall;
 }

@@ -39,39 +39,22 @@ public class AIAction{
     public float Score => Valid ? score : float.MinValue;
     public AIActionFlags ActionFlags => actionFlags;
 
-    public void AddFlag(AIActionFlags aiActionFlags){
-        actionFlags |= aiActionFlags;
+    public void AddFlag(AIActionFlags flags){
+        actionFlags |= flags;
     }
+    //
+    // public void RemoveFlag(AIActionFlags flags){
+    //     actionFlags &= ~flags;
+    // }
 }
 
 [Flags]
 public enum AIActionFlags{
     None = 0,
-    SelfExposed = 1 << 1,
+    TileExposed = 1 << 1,
     EnemyExposed  = 1 << 2,
     MagazineEmpty  = 1 << 3,
-}
-
-static class AIHelper{
-    public static bool IsExposed(this CombatGridNode node, List<ICombatObject> enemies){
-        bool exposed = false;
-        foreach (var enemy in enemies){
-            if (enemy.GetCenterNode().CanAttack(node)){
-                exposed = true;
-                break;
-            }
-        }
-        return exposed;
-    }
-    public static List<ICombatObject> GetExposedEnemies(this CombatGridNode node, List<ICombatObject> enemies){
-        var exposedEnemies = new List<ICombatObject>();
-        foreach (var enemy in enemies){
-            if (node.CanAttack(enemy.GetCenterNode())){
-                exposedEnemies.Add(enemy);
-            }
-        }
-        return exposedEnemies;
-    }
+    SelfExposed  = 1 << 4,
 }
 
 public class AIContext{

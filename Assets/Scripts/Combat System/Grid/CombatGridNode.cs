@@ -24,8 +24,8 @@ public class CombatGridNode : GridNode{
         grid.TriggerGridObjectChanged(this);
     }
 
-    public IReadOnlyCollection<ICombatObject> GetCombatObjects(){
-        return combatObjects;
+    public List<ICombatObject> GetCombatObjects(){
+        return new List<ICombatObject>(combatObjects);
     }
 
     public override string ToString(){

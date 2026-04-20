@@ -8,6 +8,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
     [SerializeField] float exposedPenalty = 100f;
     [SerializeField] float coverFromEnemy = 50f;
     [SerializeField] float exposedEnemy = 40f;
+    [FormerlySerializedAs("exposedDistance")] [SerializeField] float exposedRange = 10f;
     [FormerlySerializedAs("distanceToEnemyScore")] [SerializeField] float distanceScore = 20f;
     [SerializeField] float hazardPenalty = 100f;
     [FormerlySerializedAs("idealDistance")] [SerializeField] float idealDistanceToEnemy = 4f;
@@ -17,6 +18,9 @@ public class AIMoveActionCreator : AITargetedActionCreator{
     protected override AIAction GetAIAction(AIContext context, UnitAction action){
         var validation = base.GetAIAction(context, action);
         validation.SetScore(validation.Score - EvaluateNode(context.unit.GetCenterNode(), context, out var flags));
+        if (flags.HasFlag(AIActionFlags.TileExposed)){
+            validation.AddFlag(AIActionFlags.SelfExposed);
+        }
         return validation;
     }
 
@@ -42,11 +46,11 @@ public class AIMoveActionCreator : AITargetedActionCreator{
                     totalCoverFromEnemyScore += coverFromEnemy / (inverseDistance * enemyDirection.Count);
                 }
             }
-            if (enemy.GetCenterNode().CanAttack(node, objectsToIgnore: context.allies)){
+            if (enemy.GetCenterNode().CanShoot(node, exposedRange, objectsToIgnore: context.allies)){
                 totalExposedPenalty += exposedPenalty / inverseDistance;
-                flags |= AIActionFlags.SelfExposed;
+                flags |= AIActionFlags.TileExposed;
             }
-            if (node.CanAttack(enemy.GetCenterNode())){
+            if (node.CanShoot(enemy.GetCenterNode(), exposedRange)){
                 totalExposedEnemiesScore += exposedEnemy / inverseDistance;
                 flags |= AIActionFlags.EnemyExposed;
             }
