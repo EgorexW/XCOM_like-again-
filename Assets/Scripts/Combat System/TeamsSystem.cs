@@ -6,6 +6,7 @@ public class TeamsSystem : MonoBehaviour{
     readonly List<Team> teams = new();
 
     readonly Dictionary<ICombatObject, Team> combatObjectToTeam = new();
+    public IReadOnlyList<Team> Teams  => teams.AsReadOnly();
 
     public void AddTeam(Team team){
         teams.Add(team);
@@ -25,9 +26,8 @@ public class TeamsSystem : MonoBehaviour{
     }
 
     public List<Team> GetEnemyTeams(ICombatObject combatObject){
-        var enemyTeams = teams.Copy();
-        enemyTeams.Remove(GetTeam(combatObject));
-        return enemyTeams;
+        var team = GetTeam(combatObject);
+        return GetEnemyTeams(team);
     }
 
     public List<ICombatObject> GetAllies(ICombatObject combatObject){
@@ -36,10 +36,21 @@ public class TeamsSystem : MonoBehaviour{
     }
 
     public List<ICombatObject> GetEnemies(ICombatObject combatObject){
-        var enemyTeams = GetEnemyTeams(combatObject);
+        var team = GetTeam(combatObject);
+        return GetEnemies(team);
+    }
+    
+    public List<ICombatObject> GetEnemies(Team team){
+        var enemyTeams = GetEnemyTeams(team);
         var enemies = new List<ICombatObject>();
-        foreach (var team in enemyTeams) enemies.AddRange(team.CombatObjects);
+        foreach (var enemyTeam in enemyTeams) enemies.AddRange(enemyTeam.CombatObjects);
         return enemies;
+    }
+
+    public List<Team> GetEnemyTeams(Team team){
+        var enemyTeams = teams.Copy();
+        enemyTeams.Remove(team);
+        return enemyTeams;
     }
 }
 
@@ -50,7 +61,8 @@ public class Team{
         this.combatObjects = combatObjects;
     }
 
-    public IReadOnlyList<ICombatObject> CombatObjects => combatObjects.ReadOnly();
+    public IReadOnlyList<ICombatObject> CombatObjects => combatObjects.AsReadOnly();
+    public bool Empty  => combatObjects.Count == 0;
 
     public void RemoveCombatObject(ICombatObject arg0){
         combatObjects.Remove(arg0);

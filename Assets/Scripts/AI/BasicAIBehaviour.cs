@@ -15,11 +15,12 @@ public class BasicAIBehaviour : AIBehaviour{
 
     public override AIAction GetAction(AIContext context){
         var closestEnemy = context.GetClosestEnemy();
-        if (closestEnemy != null){
-            var distance = context.unit.GetDistance(closestEnemy);
-            if (distance > minDisToEnemyToAgress){
-                return AIAction.Invalid;
-            }
+        if (closestEnemy == null){
+            return AIAction.Invalid;
+        }
+        var closestDis = context.unit.GetDistance(closestEnemy);
+        if (closestDis > minDisToEnemyToAgress){
+            return AIAction.Invalid;
         }
 
         // Actions

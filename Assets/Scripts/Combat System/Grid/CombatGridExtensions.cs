@@ -166,29 +166,6 @@ public static class CombatGridExtensions{
         return nodes;
     }
 
-    public static List<CombatGridNode> GetNeighborNodes(this CombatGridNode node, bool includeDiagonals = false){
-        var neighbors = new List<CombatGridNode>();
-        for (var x = -1; x <= 1; x++)
-        for (var y = -1; y <= 1; y++){
-            if (x == 0 && y == 0){
-                continue;
-            }
-
-            if (!includeDiagonals && Mathf.Abs(x) == Mathf.Abs(y)){
-                continue;
-            }
-
-            var targetNode = node.grid.GetNode(new Vector2Int(node.x + x, node.y + y));
-            if (targetNode == null){
-                continue;
-            }
-
-            neighbors.Add(targetNode);
-        }
-
-        return neighbors;
-    }
-
     public static Vector2 GetCenter(this List<CombatGridNode> nodes){
         if (nodes == null || nodes.Count == 0){
             Debug.LogError("No grid nodes found");
@@ -298,17 +275,22 @@ public static class CombatGridExtensions{
             return false;
         }
 
-        if (!attackerNode.LineUnobstructed(targetNode, blockingFlags, objectsToIgnore)){
-            return false;
-        }
         var attackDirections = attackerNode.GetDirections(targetNode);
 
         // Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in directions {attackDirections}");
-
-        foreach (var direction in attackDirections)
+        
+        foreach (var direction in attackDirections){
             if (targetNode.IsProtectedFrom(direction.Opposite())){
                 return false;
             }
+        }
+
+        var nodesInBetween = targetNode.GetNodesInBetween(attackerNode);
+        foreach (var node in nodesInBetween){
+            if (node.HasFlag(blockingFlags, objectsToIgnore)){
+                return false;
+            }
+        }
 
         return true;
     }

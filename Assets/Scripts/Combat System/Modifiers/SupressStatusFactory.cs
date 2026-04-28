@@ -1,17 +1,18 @@
 using UnityEngine;
 
-public class SupressStatusCreator : UnitStatusEffectCreator{
+[CreateAssetMenu(menuName = StringKeys.AssetMenuModifierBasePath + "Supress Status")]
+public class SupressStatusFactory : UnitModifierFactory{
     [SerializeField] ActionFlags supressedFlags;
     [SerializeField] Optional<int> duration;
 
-    public override UnitStatusEffect CreateStatus(){
+    public override UnitModifier CreateStatus(){
         var durationValue = duration ? duration.Value : -1;
         var status = new SupressStatus(statusName, supressedFlags, durationValue);
         return status;
     }
 }
 
-public class SupressStatus : UnitStatusEffect{
+public class SupressStatus : UnitModifier{
     readonly ActionFlags supressedFlags;
     int duration;
 

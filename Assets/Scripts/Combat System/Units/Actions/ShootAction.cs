@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ShootAction : TargetedUnitAction{
     [SerializeField] float damage = 1;
-    [SerializeField] List<UnitStatusEffectCreator> appliedStatusEffects;
+    [SerializeField] List<UnitModifierFactory> appliedStatusEffects;
     [SerializeField] int ammoCost = 1;
     public float Damage => damage;
 
@@ -16,7 +16,7 @@ public class ShootAction : TargetedUnitAction{
         }
 
         var targetObjects = targetNode.GetCombatObjects();
-        foreach (var targetObj in targetObjects.ReadOnly()){
+        foreach (var targetObj in (IReadOnlyList<ICombatObject>)targetObjects.AsReadOnly()){
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();
             if (healthComp != null){
                 healthComp.TakeDamage(damage);

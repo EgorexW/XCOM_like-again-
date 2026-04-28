@@ -8,7 +8,7 @@ public interface ICombatObject{
     CombatSystem CombatSystem{ get; set; }
     CombatObjectFlags Flags{ get; }
     T GetCombatComponent<T>() where T : CombatComponent;
-    string Name{ get; }
+    string Name{ get; set; }
     void MoveTo(List<CombatGridNode> targetNodes);
     public void Remove();
     void Init();

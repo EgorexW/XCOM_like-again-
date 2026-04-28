@@ -1,9 +1,9 @@
-public abstract class UnitStatusEffect{
+public abstract class UnitModifier{
     protected CombatUnit target;
 
     public readonly string name;
 
-    protected UnitStatusEffect(string name){
+    protected UnitModifier(string name){
         this.name = name;
     }
 
@@ -16,4 +16,9 @@ public abstract class UnitStatusEffect{
     public virtual bool CanExecuteAction(UnitAction action){
         return true;
     }
+}
+
+public static class StringKeys
+{
+    public const string AssetMenuModifierBasePath = "Modifier/";
 }

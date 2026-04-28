@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SurrenderedStatusCreator : UnitStatusEffectCreator{
-    public override UnitStatusEffect CreateStatus(){
+[CreateAssetMenu(menuName = StringKeys.AssetMenuModifierBasePath + "Surrendered Status")]
+public class SurrenderedStatusFactory : UnitModifierFactory{
+    public override UnitModifier CreateStatus(){
         return new SurrenderedStatus(statusName);
     }
 }
 
-class SurrenderedStatus : UnitStatusEffect{
+class SurrenderedStatus : UnitModifier{
     readonly List<UnitAction> allowedActions;
 
     public SurrenderedStatus(string name, List<UnitAction> allowedActions = null) : base(name){

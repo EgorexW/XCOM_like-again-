@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9045938696728522908}
   - component: {fileID: 2060253630820235853}
-  - component: {fileID: -1440721492448073104}
   m_Layer: 0
   m_Name: Surrender
   m_TagString: Untagged
@@ -55,17 +54,4 @@ MonoBehaviour:
     value: 0
   unit: {fileID: 0}
   statusEffectCreators:
-  - {fileID: -1440721492448073104}
---- !u!114 &-1440721492448073104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8153234647068183499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4234eb1117d144cbb6e081f2690e3817, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SurrenderedStatusCreator
-  statusName: Surrenderer
+  - {fileID: 11400000, guid: e2fbb325f036c411981a98d9c6261ef0, type: 2}

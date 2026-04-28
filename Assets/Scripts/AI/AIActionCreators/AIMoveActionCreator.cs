@@ -1,17 +1,18 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class AIMoveActionCreator : AITargetedActionCreator{
-    [SerializeField] float exposedPenalty = 100f;
-    [SerializeField] float coverFromEnemy = 50f;
-    [SerializeField] float exposedEnemy = 40f;
-    [FormerlySerializedAs("exposedDistance")] [SerializeField] float exposedRange = 10f;
-    [FormerlySerializedAs("distanceToEnemyScore")] [SerializeField] float distanceScore = 20f;
-    [SerializeField] float hazardPenalty = 100f;
-    [FormerlySerializedAs("hazardScoring")] [SerializeField] AIHazardScoring aiHazardScoring;
-    [FormerlySerializedAs("idealDistance")] [SerializeField] float idealDistanceToEnemy = 4f;
-    [SerializeField] int diagonalThreshold = 2;
-    [SerializeField] float distanceFalloff = 1f;
+    [BoxGroup("Score")][SerializeField] float exposedPenalty = 100f;
+    [BoxGroup("Score")][SerializeField] float coverFromEnemy = 50f;
+    [BoxGroup("Score")][SerializeField] float exposedEnemy = 40f;
+    [BoxGroup("Score")][FormerlySerializedAs("distanceToEnemyScore")] [SerializeField] float distanceScore = 20f;
+    [BoxGroup("Score")][SerializeField] float hazardPenalty = 100f;
+    [BoxGroup("Config")] [FormerlySerializedAs("hazardScoring")] [SerializeField] AIHazardScoring aiHazardScoring;
+    [BoxGroup("Config")][FormerlySerializedAs("idealDistance")] [SerializeField] float idealDistanceToEnemy = 4f;
+    [BoxGroup("Config")][FormerlySerializedAs("exposedDistance")] [SerializeField] float exposedRange = 10f;
+    [BoxGroup("Config")][SerializeField] int diagonalThreshold = 2;
+    [BoxGroup("Config")][SerializeField] float distanceFalloff = 1f;
 
     protected override AIAction GetAIAction(AIContext context, UnitAction action){
         var validation = base.GetAIAction(context, action);

@@ -7,13 +7,13 @@ using UnityEngine.Events;
 public class CombatUnit : CombatObject{
     [SerializeField] int defaultActionPoints = 2;
 
-    public IReadOnlyList<UnitAction> UnitActions => unitActions.ReadOnly();
+    public IReadOnlyList<UnitAction> UnitActions => unitActions.AsReadOnly();
     public int ActionPoints => actionPoints;
 
     [SerializeField] [HideInEditorMode] List<UnitAction> unitActions;
     [SerializeField] [HideInEditorMode] int actionPoints;
 
-    readonly List<UnitStatusEffect> activeStatuses = new();
+    readonly List<UnitModifier> activeStatuses = new();
 
     [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onStartTurn;
     [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onEndTurn;
@@ -21,8 +21,9 @@ public class CombatUnit : CombatObject{
 
     public override void Init(){
         base.Init();
-        unitActions = GetComponentsInChildren<UnitAction>().ToList();
-        foreach (var action in unitActions) action.unit = this;
+        var actionsTmp = GetComponentsInChildren<UnitAction>().ToList();
+        foreach (var action in actionsTmp) AddAction(action);
+        onActionPerformed.AddListener(_ => CombatSystem.StateChanged());
     }
 
     public void OnStartTurn(){
@@ -35,7 +36,8 @@ public class CombatUnit : CombatObject{
         onEndTurn.Invoke(this);
     }
 
-    public void SpendActionPoints(int cost){
+    public void ActionExecuted(UnitAction action){
+        var cost = action.GetCost();
         if (cost > actionPoints){
             Debug.LogWarning(
                 $"Unit {name} does not have enough action points to spend {cost}. Current AP: {actionPoints}");
@@ -43,21 +45,22 @@ public class CombatUnit : CombatObject{
             return;
         }
         actionPoints -= cost;
+        onActionPerformed.Invoke(action);
     }
 
-    public void ApplyStatus(UnitStatusEffect status){
+    public void ApplyStatus(UnitModifier status){
         activeStatuses.Add(status);
         status.OnApplied(this);
-        Debug.Log($"Applied status {status.name} to unit {name}");
+        // Debug.Log($"Applied status {status.name} to unit {name}");
     }
 
-    public void RemoveStatus(UnitStatusEffect status){
+    public void RemoveStatus(UnitModifier status){
         if (!activeStatuses.Contains(status)){
             return;
         }
         status.OnRemoved();
         activeStatuses.Remove(status);
-        Debug.Log($"Removed status {status.name} from unit {name}");
+        // Debug.Log($"Removed status {status.name} from unit {name}");
     }
 
     public UnitActionValidation CanExecute(UnitAction action){
@@ -70,5 +73,31 @@ public class CombatUnit : CombatObject{
                 result |= UnitActionValidation.SupressedByStatus;
             }
         return result;
+    }
+
+    public UnitAction InstantiateAction(GameObject action){
+        var actionInstance = Instantiate(action, transform);
+        var unitAction = actionInstance.GetComponent<UnitAction>();
+        if (unitAction == null){
+            Debug.LogError($"The provided action prefab {action.name} does not have a UnitAction component.");
+            Destroy(actionInstance);
+            return null;
+        }
+        AddAction(unitAction);
+        return unitAction;
+    }
+
+    void AddAction(UnitAction unitAction){
+        unitAction.unit = this;
+        unitActions.Add(unitAction);
+    }
+
+    public void RemoveAction(UnitAction action){
+        if (!unitActions.Contains(action)){
+            Debug.LogWarning($"Unit {name} does not have action {action.ActionInfo.Name} to remove.");
+            return;
+        }
+        unitActions.Remove(action);
+        Destroy(action.gameObject);
     }
 }

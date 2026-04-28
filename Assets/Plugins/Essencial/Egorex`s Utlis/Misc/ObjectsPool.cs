@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -66,8 +67,8 @@ public class ObjectsPool : CountUI{
         inactiveObjs.Enqueue(obj);
     }
 
-    public List<GameObject> GetActiveObjs(){
-        return new List<GameObject>(activeObjs);
+    public IReadOnlyList<GameObject> GetActiveObjs(){
+        return activeObjs.AsReadOnly();
     }
 
     public GameObject GetActiveObject(int index){

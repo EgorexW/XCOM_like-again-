@@ -12,21 +12,25 @@ public class SimpleTeamGenerator : TeamGenerator{
     public override Team GenerateTeam(){
         var combatObjects = new List<ICombatObject>();
         for (var i = 0; i < teamCount; i++){
-            var gameObj = Instantiate(teamPrefabs.Random(), transform);
-            var combatObject = gameObj.GetComponent<ICombatObject>();
-            if (combatObject == null){
-                Debug.LogError(
-                    $"The prefab {gameObj.name} does not have a component that implements ICombatObject. Skipping this prefab.");
-                Destroy(gameObj);
-                continue;
-            }
-            combatObjects.Add(combatObject);
-            if (turnTaker != null){
-                if (combatObject is CombatUnit combatUnit){
-                    turnTaker.AddUnit(combatUnit);
-                }
-            }
+            combatObjects.Add(AddTeamMember(teamPrefabs.Random()));
         }
         return new Team(combatObjects);
+    }
+
+    ICombatObject AddTeamMember(GameObject teamPrefab){
+        var gameObj = Instantiate(teamPrefab, transform);
+        var combatObject = gameObj.GetComponent<ICombatObject>();
+        if (combatObject == null){
+            Debug.LogError(
+                $"The prefab {gameObj.name} does not have a component that implements ICombatObject. Skipping this prefab.");
+            Destroy(gameObj);
+            return null;
+        }
+        if (turnTaker != null){
+            if (combatObject is CombatUnit combatUnit){
+                turnTaker.AddUnit(combatUnit);
+            }
+        }
+        return combatObject;
     }
 }

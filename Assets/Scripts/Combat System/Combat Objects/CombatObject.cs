@@ -11,7 +11,7 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     public GameObject GameObject => gameObject;
     public CombatObjectFlags Flags => flags;
 
-    public string Name => name;
+    public string Name { get; set; }
 
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
 

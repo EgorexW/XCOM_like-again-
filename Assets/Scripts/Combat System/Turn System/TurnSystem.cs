@@ -56,23 +56,30 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
     }
 
     void EndTurn(){
-        GetCurrentTurnTaker()?.EndTurn();
+        Debug.Log("Ending turn for " + GetCurrentTurnTaker(), this);
         onEndTurn.Invoke(GetCurrentTurnTaker());
+        GetCurrentTurnTaker()?.EndTurn();
     }
 
     public void RemoveTurnTaker(ITurnTaker turnTaker){
         var removedIndex = turnTakers.IndexOf(turnTaker);
+        Debug.Log("Removing " + turnTaker, this);
         if (removedIndex == -1){
             Debug.LogWarning($"Attempted to remove turn taker {turnTaker} but it was not found in the list.", this);
             return;
         }
         if (TurnTakersCount < 2){
-            index = -1;
+            Stop();
             turnTakers.Clear();
             return;
         }
+        bool startNewTurn = false;
+        if (turnTaker == GetCurrentTurnTaker()){
+            EndTurn();
+            startNewTurn = true;
+        }
         turnTakers.RemoveAt(removedIndex);
-        if (removedIndex == index){
+        if (startNewTurn){
             StartTurn();
         }
         if (removedIndex < index){
@@ -84,8 +91,14 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
         if (index >= TurnTakersCount){
             index = 0;
         }
-        GetCurrentTurnTaker()!.StartTurn();
+        Debug.Log("Starting turn for " + GetCurrentTurnTaker(), this);
         onStartTurn.Invoke(GetCurrentTurnTaker());
+        GetCurrentTurnTaker()!.StartTurn();
+    }
+
+    public void Stop(){
+        EndTurn();
+        index = -1;
     }
 }
 

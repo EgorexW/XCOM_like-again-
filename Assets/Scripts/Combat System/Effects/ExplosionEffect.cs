@@ -4,7 +4,7 @@ using UnityEngine;
 public class ExplosionEffect : CombatEffect{
     [SerializeField] float range = 1;
     [SerializeField] int damage = 1;
-    [SerializeField] List<UnitStatusEffectCreator> statusEffects;
+    [SerializeField] List<UnitModifierFactory> statusEffects;
 
     public float Range => range;
 

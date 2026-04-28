@@ -18,17 +18,16 @@ public abstract class UnitAction : MonoBehaviour{
                 $"Cannot execute action {ActionInfo.Name} for unit {unit.name}, because {ValidateAction().ToString()}");
             return;
         }
-        unit.SpendActionPoints(cost);
+        OnExecute();
         if (usesLeft){
             usesLeft -= 1;
         }
-        OnExecute();
-        unit.onActionPerformed.Invoke(this);
+        unit.ActionExecuted(this);
     }
 
     protected abstract void OnExecute();
 
-    public virtual float GetCost(){
+    public virtual int GetCost(){
         return cost;
     }
 

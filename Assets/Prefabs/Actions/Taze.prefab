@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3631860729330829194}
   - component: {fileID: 4011586103964397983}
-  - component: {fileID: 5066092281649402187}
   m_Layer: 0
   m_Name: Taze
   m_TagString: Untagged
@@ -57,18 +56,5 @@ MonoBehaviour:
   range: 2
   damage: 0
   appliedStatusEffects:
-  - {fileID: 5066092281649402187}
+  - {fileID: 11400000, guid: f8680295d384d457ea19e48c28a5a30f, type: 2}
   ammoCost: 0
---- !u!114 &5066092281649402187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8611426707319941411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4234eb1117d144cbb6e081f2690e3817, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SurrenderedStatusCreator
-  statusName: Tazed

@@ -4,7 +4,7 @@ using UnityEngine;
 public class UnitsTurnTaker : TurnTaker{
     readonly List<CombatUnit> units = new();
 
-    public IReadOnlyList<CombatUnit> Units => units.ReadOnly();
+    public IReadOnlyList<CombatUnit> Units => units.AsReadOnly();
 
     void RemoveUnit(ICombatObject arg0){
         if (arg0 is CombatUnit unit){
