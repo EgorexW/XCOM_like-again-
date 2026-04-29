@@ -4,132 +4,152 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TurnSystem : MonoBehaviour, ITurnSystem{
-    readonly List<ITurnTaker> turnTakers = new();
-
-    int index = -1;
+public class TurnSystem : MonoBehaviour {
+    
+    private readonly List<ITurnTaker> turnTakers = new();
+    
+    private int currentIndex = 0;
+    private bool isRunning = false;   
+    private bool isTurnActive = false; 
 
     public int TurnTakersCount => turnTakers.Count;
 
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn;
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn;
-    
-    bool turnActive = false;
 
-    void Update(){
-        if (!turnActive && index >= 0){
+    private void Update() {
+        if (isRunning && !isTurnActive && TurnTakersCount > 0) {
             NextTurn();
         }
     }
 
-    public ITurnTaker GetCurrentTurnTaker(){
-        if (index >= 0 && index < turnTakers.Count){
-            return turnTakers[index];
+    public void Start() {
+        if (TurnTakersCount == 0) {
+            Debug.LogWarning("Tried to start battle with 0 turn takers.", this);
+            return;
         }
+        isRunning = true;
+        StartTurn();
+    }
+
+    public void Stop() {
+        if (isTurnActive) {
+            EndTurn();
+        }
+        
+        isRunning = false;
+    }
+
+    public ITurnTaker GetCurrentTurnTaker() {
+        if (isRunning && currentIndex >= 0 && currentIndex < turnTakers.Count) {
+            return turnTakers[currentIndex];
+        }
+        Debug.LogWarning("GetCurrentTurnTaker called but turn system is not running or index is out of range.", this);
         return null;
     }
 
-    public void AddTurnTaker(ITurnTaker turnTaker, InsertTurnTakerType insertTurnTakerType){
-        switch (insertTurnTakerType){
-            case InsertTurnTakerType.Next:
-                var i1 = index + 1;
-                turnTakers.Insert(i1, turnTaker);
-                break;
-            case InsertTurnTakerType.Last:
-                var i2 = index;
-                index += 1;
-                if (i2 < 0){
-                    index -= 1;
-                    i2 = TurnTakersCount;
-                }
-                turnTakers.Insert(i2, turnTaker);
-                break;
+    public void AddTurnTaker(ITurnTaker turnTaker, InsertTurnTakerType insertType) {
+        if (!isRunning) {
+            if (insertType == InsertTurnTakerType.Next){
+                turnTakers.Insert(0, turnTaker);
+            }
+            else if (insertType == InsertTurnTakerType.Last){
+                turnTakers.Add(turnTaker);
+            }
+        } else {
+            if (insertType == InsertTurnTakerType.Next) {
+                turnTakers.Insert(currentIndex + 1, turnTaker);
+            } else if (insertType == InsertTurnTakerType.Last) {
+                turnTakers.Insert(currentIndex, turnTaker);
+                currentIndex++; 
+            }
         }
+
         turnTaker.OnTurnCompleted = TurnCompleted;
         turnTaker.TurnSystem = this;
     }
 
-    void TurnCompleted(ITurnTaker turnTaker){
-        if (GetCurrentTurnTaker() != turnTaker){
-            Debug.LogWarning("Turn completed by " + turnTaker + " but current turn taker is " + GetCurrentTurnTaker(),
-                this);
+    public void RemoveTurnTaker(ITurnTaker turnTaker) {
+        int removedIndex = turnTakers.IndexOf(turnTaker);
+        
+        if (removedIndex == -1) {
+            Debug.LogWarning($"Attempted to remove turn taker {turnTaker} but it was not found.", this);
             return;
         }
-        EndTurn();
-    }
 
-    public void NextTurn(){
-        if (turnActive){
-            Debug.LogWarning("NextTurn called while turn is still active. Ending current turn for " + GetCurrentTurnTaker(), this);
-            EndTurn();
-        }
-        index++;
-        StartTurn();
-    }
+        Debug.Log($"Removing {turnTaker}", this);
 
-    void EndTurn(){
-        turnActive = false;
-        GetCurrentTurnTaker()?.EndTurn();
-        Debug.Log("Ending turn for " + GetCurrentTurnTaker(), this);
-        onEndTurn.Invoke(GetCurrentTurnTaker());
-    }
-
-    public void RemoveTurnTaker(ITurnTaker turnTaker){
-        var removedIndex = turnTakers.IndexOf(turnTaker);
-        Debug.Log("Removing " + turnTaker, this);
-        if (removedIndex == -1){
-            Debug.LogWarning($"Attempted to remove turn taker {turnTaker} but it was not found in the list.", this);
-            return;
-        }
-        if (TurnTakersCount < 2){
+        if (TurnTakersCount < 2) {
             Stop();
             turnTakers.Clear();
             return;
         }
-        bool startNewTurn = false;
-        if (turnTaker == GetCurrentTurnTaker()){
+
+        if (removedIndex == currentIndex) {
             EndTurn();
-            startNewTurn = true;
         }
+
         turnTakers.RemoveAt(removedIndex);
-        if (startNewTurn){
-            StartTurn();
-        }
-        if (removedIndex < index){
-            index--;
+
+        if (removedIndex < currentIndex) {
+            currentIndex--;
         }
     }
 
-    void StartTurn(){
-        if (index >= TurnTakersCount){
-            index = 0;
+    private void TurnCompleted(ITurnTaker turnTaker) {
+        if (GetCurrentTurnTaker() != turnTaker) {
+            Debug.LogWarning($"Turn completed by {turnTaker} but current is {GetCurrentTurnTaker()}", this);
+            return;
         }
-        turnActive = true;
-        GetCurrentTurnTaker()!.StartTurn();
-        Debug.Log("Starting turn for " + GetCurrentTurnTaker(), this);
-        onStartTurn.Invoke(GetCurrentTurnTaker());
-    }
-
-    public void Stop(){
         EndTurn();
-        index = -1;
+    }
+
+    void NextTurn() {
+        if (isTurnActive) {
+            Debug.LogWarning($"NextTurn called early! Ending current turn for {GetCurrentTurnTaker()}", this);
+            EndTurn();
+        }
+        
+        currentIndex++;
+        StartTurn();
+    }
+
+    private void StartTurn() {
+        if (currentIndex >= TurnTakersCount) {
+            currentIndex = 0;
+        }
+
+        var current = GetCurrentTurnTaker();
+        if (current == null){
+            return;
+        }
+        isTurnActive = true;
+        
+        Debug.Log($"Starting turn for {current}", this);
+        current.StartTurn();
+        onStartTurn.Invoke(current);
+    }
+
+    private void EndTurn() {
+        isTurnActive = false;
+        var current = GetCurrentTurnTaker();
+        
+        Debug.Log($"Ending turn for {current}", this);
+        current?.EndTurn();
+        onEndTurn.Invoke(current);
     }
 }
 
-public enum InsertTurnTakerType{
+public enum InsertTurnTakerType {
     Next,
     Last
 }
 
-public interface ITurnTaker{
-    public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
+public interface ITurnTaker {
+    public UnityAction<ITurnTaker> OnTurnCompleted { get; set; }
     void EndTurn();
     void StartTurn();
-    public TurnSystem TurnSystem{ get; set; }
-    public UnityEvent<ITurnTaker> onStartTurn{ get; }
-    public UnityEvent<ITurnTaker> onEndTurn{ get; }
-}
-
-public interface ITurnSystem{
-    void NextTurn();
+    public TurnSystem TurnSystem { get; set; }
+    public UnityEvent<ITurnTaker> onStartTurn { get; }
+    public UnityEvent<ITurnTaker> onEndTurn { get; }
 }

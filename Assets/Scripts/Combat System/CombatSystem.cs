@@ -52,7 +52,7 @@ public class CombatSystem : MonoBehaviour{
 
     public void StartCombat(){
         active = true;
-        turnSystem.NextTurn();
+        turnSystem.Start();
         onCombatStarted.Invoke();
     }
 
