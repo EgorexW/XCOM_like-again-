@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 3
+  startingHealth: {x: 3, y: 3}
   onDeathEffects:
   - {fileID: 7931171033296651014}
   onHealthChanged:
@@ -173,6 +174,8 @@ MonoBehaviour:
   range: 1.5
   damage: 4
   statusEffects: []
+  prefabToSpawn: {fileID: 0}
+  insertTurnTakerType: 0
 --- !u!114 &245124333257379108
 MonoBehaviour:
   m_ObjectHideFlags: 0

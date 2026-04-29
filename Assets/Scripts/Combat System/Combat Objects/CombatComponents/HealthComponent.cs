@@ -4,20 +4,21 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class HealthComponent : CombatComponent{
-    [SerializeField] float maxHealth = 1;
+    [SerializeField] int maxHealth = 1;
+    [SerializeField] Vector2Int startingHealth = Vector2Int.one;
     [SerializeField] List<CombatEffect> onDeathEffects;
 
     [FoldoutGroup("Events")] public UnityEvent<HealthComponent> onHealthChanged;
-    public float Health{ get; private set; }
-    public float MaxHealth => maxHealth;
+    public int Health{ get; private set; }
+    public int MaxHealth => maxHealth;
     public bool IsDead => Health <= 0;
 
 
     protected void Start(){
-        Health = maxHealth;
+        Health = Random.Range(startingHealth.x, startingHealth.y + 1);
     }
 
-    public void TakeDamage(float damage){
+    public void TakeDamage(int damage){
         if (IsDead){
             Debug.LogWarning($"{CombatObject.Name} is already dead and cannot take more damage.", this);
             return;

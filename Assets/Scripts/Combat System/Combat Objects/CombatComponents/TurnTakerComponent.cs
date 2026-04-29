@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TurnTaker : MonoBehaviour, ITurnTaker{
+public class TurnTakerComponent : CombatComponent, ITurnTaker{
     public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
     protected bool turnActive;
 

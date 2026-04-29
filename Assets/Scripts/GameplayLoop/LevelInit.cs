@@ -27,5 +27,7 @@ class LevelInit : MonoBehaviour{
             }
         }
         content.combatObjects.AddRange(combatObjects);
+        var turnTakers = currentLevel.GetTurnTakers();
+        content.turnTakers.AddRange(turnTakers);
     }
 }

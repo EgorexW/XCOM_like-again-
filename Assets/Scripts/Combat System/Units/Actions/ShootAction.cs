@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShootAction : TargetedUnitAction{
-    [SerializeField] float damage = 1;
+    [SerializeField] int damage = 1;
     [SerializeField] List<UnitModifierFactory> appliedStatusEffects;
     [SerializeField] int ammoCost = 1;
     public float Damage => damage;

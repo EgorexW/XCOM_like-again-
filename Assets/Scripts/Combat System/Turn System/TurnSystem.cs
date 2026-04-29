@@ -91,14 +91,14 @@ public class TurnSystem : MonoBehaviour {
 
         turnTakers.RemoveAt(removedIndex);
 
-        if (removedIndex < currentIndex) {
+        if (removedIndex <= currentIndex) {
             currentIndex--;
         }
     }
 
     private void TurnCompleted(ITurnTaker turnTaker) {
-        if (GetCurrentTurnTaker() != turnTaker) {
-            Debug.LogWarning($"Turn completed by {turnTaker} but current is {GetCurrentTurnTaker()}", this);
+        if (GetCurrentTurnTaker() != turnTaker || !isTurnActive) {
+            Debug.LogWarning($"TurnCompleted called by {turnTaker} but it's not their turn or turn is not active.", this);
             return;
         }
         EndTurn();

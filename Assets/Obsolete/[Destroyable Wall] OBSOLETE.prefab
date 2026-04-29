@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 5
+  startingHealth: {x: 5, y: 5}
+  onDeathEffects: []
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []

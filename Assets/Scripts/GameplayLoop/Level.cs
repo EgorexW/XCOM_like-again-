@@ -26,4 +26,8 @@ public class Level : MonoBehaviour{
         poses.Shuffle();
         return poses;
     }
+
+    public List<ITurnTaker> GetTurnTakers(){
+        return new List<ITurnTaker>(GetComponentsInChildren<ITurnTaker>());
+    }
 }
