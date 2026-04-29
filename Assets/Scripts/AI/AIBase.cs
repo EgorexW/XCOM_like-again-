@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class AIBehaviour : MonoBehaviour{
-    [BoxGroup("References")] [Required] [SerializeField] protected CombatUnit combatUnit;
+    [FormerlySerializedAs("combatUnit")] [BoxGroup("References")] [Required] [SerializeField] protected Unit unit;
 
     public abstract AIAction GetAction(AIContext context);
 }
@@ -58,14 +59,14 @@ public enum AIActionFlags{
 }
 
 public class AIContext{
-    public readonly CombatUnit unit;
+    public readonly Unit unit;
     public readonly List<ICombatObject> enemies;
 
     public readonly List<ICombatObject> allies;
 
     public readonly bool debug;
 
-    public AIContext(CombatUnit unit, List<ICombatObject> enemies, List<ICombatObject> allies, bool debug){
+    public AIContext(Unit unit, List<ICombatObject> enemies, List<ICombatObject> allies, bool debug){
         this.unit = unit;
         this.enemies = enemies;
         this.allies = allies;

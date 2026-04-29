@@ -4,25 +4,28 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CombatUnit : CombatObject{
+public class Unit : CombatObject{
     [SerializeField] int defaultActionPoints = 2;
 
     public IReadOnlyList<UnitAction> UnitActions => unitActions.AsReadOnly();
     public int ActionPoints => actionPoints;
 
-    [SerializeField] [HideInEditorMode] List<UnitAction> unitActions;
+    [ShowInInspector][HideInEditorMode] List<UnitAction> unitActions = new();
     [SerializeField] [HideInEditorMode] int actionPoints;
 
     readonly List<UnitModifier> activeStatuses = new();
 
-    [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onStartTurn;
-    [FoldoutGroup("Events")] public UnityEvent<CombatUnit> onEndTurn;
+    [FoldoutGroup("Events")] public UnityEvent<Unit> onStartTurn;
+    [FoldoutGroup("Events")] public UnityEvent<Unit> onEndTurn;
     [FoldoutGroup("Events")] public UnityEvent<UnitAction> onActionPerformed;
 
     public override void Init(){
         base.Init();
+        unitActions.Clear();
         var actionsTmp = GetComponentsInChildren<UnitAction>().ToList();
-        foreach (var action in actionsTmp) AddAction(action);
+        foreach (var action in actionsTmp){
+            AddAction(action);
+        }
         onActionPerformed.AddListener(_ => CombatSystem.StateChanged());
     }
 
@@ -48,7 +51,7 @@ public class CombatUnit : CombatObject{
         onActionPerformed.Invoke(action);
     }
 
-    public void ApplyStatus(UnitModifier status){
+    public void ApplyModifier(UnitModifier status){
         activeStatuses.Add(status);
         status.OnApplied(this);
         // Debug.Log($"Applied status {status.name} to unit {name}");
@@ -88,6 +91,11 @@ public class CombatUnit : CombatObject{
     }
 
     void AddAction(UnitAction unitAction){
+        // Debug.Log($"Adding action {unitAction.ActionInfo.Name} to unit {name}");
+        if (unitActions.Contains(unitAction)){
+            Debug.LogWarning($"Unit {name} already has action {unitAction.ActionInfo.Name}.");
+            return;
+        }
         unitAction.unit = this;
         unitActions.Add(unitAction);
     }

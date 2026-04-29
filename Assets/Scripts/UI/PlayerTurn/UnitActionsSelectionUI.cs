@@ -9,10 +9,10 @@ class UnitActionsSelectionUI : UIElement{
 
     [FoldoutGroup("Events")] public UnityEvent<UnitAction> onActionSelected;
 
-    CombatUnit unit;
+    Unit unit;
     List<ActionTileUI> actionsUI;
 
-    public void Show(CombatUnit newUnit){
+    public void Show(Unit newUnit){
         base.Show();
         unit = newUnit;
         var actions = unit.UnitActions.ToList();

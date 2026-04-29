@@ -21,8 +21,8 @@ public class ShootAction : TargetedUnitAction{
             if (healthComp != null){
                 healthComp.TakeDamage(damage);
             }
-            if (targetObj is CombatUnit unit){
-                foreach (var statusEffect in appliedStatusEffects) unit.ApplyStatus(statusEffect.CreateStatus());
+            if (targetObj is Unit unit){
+                foreach (var statusEffect in appliedStatusEffects) unit.ApplyModifier(statusEffect.Create());
             }
         }
     }

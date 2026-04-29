@@ -33,7 +33,7 @@ public class SquadTeamGenerator : TeamGenerator{
         }
         squadMemberComponent.SetMember(member);
         if (turnTaker != null){
-            if (combatObject is CombatUnit combatUnit){
+            if (combatObject is Unit combatUnit){
                 turnTaker.AddUnit(combatUnit);
             }
         }

@@ -31,7 +31,7 @@ public class CombatGridNode : GridNode{
         return $"Node({x}, {y}) with {combatObjects.Count} objects";
     }
 
-    public bool Contains(CombatUnit unit){
+    public bool Contains(Unit unit){
         return combatObjects.Contains(unit);
     }
 }

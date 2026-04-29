@@ -15,7 +15,7 @@ public class TurnUI : UIElement{
     [BoxGroup("Internal References")] [Required] [SerializeField] Button endTurnButton;
     [BoxGroup("Internal References")] [Required] [SerializeField] Transform selectedUnitHighlight;
 
-    [ShowInInspector] CombatUnit selectedUnit;
+    [ShowInInspector] Unit selectedUnit;
     [ShowInInspector] PlayerTurnTaker currentTurnTaker;
 
     protected void Awake(){
@@ -78,7 +78,7 @@ public class TurnUI : UIElement{
         else{
             foreach (var collider in GetCollidersUnderMouse()){
                 // Debug.Log("Collider under mouse: " + collider.name, collider);
-                var unit = General.GetComponentFromCollider<CombatUnit>(collider);
+                var unit = General.GetComponentFromCollider<Unit>(collider);
                 if (unit == null){
                     continue;
                 }
@@ -88,7 +88,7 @@ public class TurnUI : UIElement{
         }
     }
 
-    void SelectUnit(CombatUnit unit){
+    void SelectUnit(Unit unit){
         if (!currentTurnTaker.Units.Contains(unit)){
             Debug.LogWarning($"Cannot select unit {unit.name}, it is not controlled by the player.");
             return;

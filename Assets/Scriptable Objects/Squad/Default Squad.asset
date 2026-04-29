@@ -13,9 +13,19 @@ MonoBehaviour:
   m_Name: Default Squad
   m_EditorClassIdentifier: Assembly-CSharp::RuntimeSquadData
   squadMembers:
-  - prefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
+  - combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
     name: William
-  - prefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
+    modifiers:
+    - {fileID: 11400000, guid: a17264a518d734a97bc43743e2a383de, type: 2}
+    alive: 1
+  - combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
     name: Karen
-  - prefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
+    modifiers:
+    - {fileID: 11400000, guid: d7a79a4307c214500ac292b6ea5d5317, type: 2}
+    - {fileID: 11400000, guid: a17264a518d734a97bc43743e2a383de, type: 2}
+    alive: 1
+  - combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
     name: Wilson
+    modifiers:
+    - {fileID: 11400000, guid: a17264a518d734a97bc43743e2a383de, type: 2}
+    alive: 1

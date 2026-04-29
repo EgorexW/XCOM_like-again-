@@ -8,7 +8,7 @@ public abstract class UnitAction : MonoBehaviour{
     [SerializeField] int cost = 1;
     [SerializeField] Optional<int> usesLeft;
 
-    [HideInEditorMode] [ReadOnly] public CombatUnit unit;
+    [HideInEditorMode] [ReadOnly] public Unit unit;
 
     public ActionInfo ActionInfo => actionInfo;
 

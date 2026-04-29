@@ -1,24 +1,28 @@
+using Sirenix.OdinInspector;
+using UnityEngine.Events;
+
 public abstract class UnitModifier{
-    protected CombatUnit target;
+    protected Unit target;
 
     public readonly string name;
+    public readonly UnitModifierFactory sourceDefinition; 
 
-    protected UnitModifier(string name){
+    public UnityEvent<UnitModifier> onRemoved = new UnityEvent<UnitModifier>();
+
+    protected UnitModifier(string name, UnitModifierFactory sourceDefinition){
         this.name = name;
+        this.sourceDefinition = sourceDefinition;
     }
 
-    public virtual void OnApplied(CombatUnit targetTmp){
+    public virtual void OnApplied(Unit targetTmp){
         target = targetTmp;
     }
 
-    public virtual void OnRemoved(){ }
+    public virtual void OnRemoved(){
+        onRemoved.Invoke(this);
+    }
 
     public virtual bool CanExecuteAction(UnitAction action){
         return true;
     }
-}
-
-public static class StringKeys
-{
-    public const string AssetMenuModifierBasePath = "Modifier/";
 }

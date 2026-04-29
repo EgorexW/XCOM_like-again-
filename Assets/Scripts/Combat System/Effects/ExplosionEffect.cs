@@ -19,8 +19,8 @@ public class ExplosionEffect : CombatEffect{
             if (health != null){
                 health.TakeDamage(damage);
             }
-            if (obj is CombatUnit unit){
-                foreach (var statusEffect in statusEffects) unit.ApplyStatus(statusEffect.CreateStatus());
+            if (obj is Unit unit){
+                foreach (var statusEffect in statusEffects) unit.ApplyModifier(statusEffect.Create());
             }
         }
     }

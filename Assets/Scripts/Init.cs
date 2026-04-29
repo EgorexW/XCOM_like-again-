@@ -10,7 +10,7 @@ public class Init : MonoBehaviour
     [SerializeField] [SceneObjectsOnly] protected string sceneName; 
 
     void Awake(){
-        squadData.Copy(initSquadData);
+        squadData.DeepCopy(initSquadData);
         SceneManager.LoadScene(sceneName);
     }
 }

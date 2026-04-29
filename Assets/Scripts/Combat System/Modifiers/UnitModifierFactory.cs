@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class UnitModifierFactory : ScriptableObject{
     [SerializeField] protected string statusName;
 
-    public abstract UnitModifier CreateStatus();
+    public abstract UnitModifier Create();
 
     void OnValidate(){
         if (string.IsNullOrEmpty(statusName)){

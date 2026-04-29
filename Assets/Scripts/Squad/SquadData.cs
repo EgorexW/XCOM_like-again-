@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,10 +18,10 @@ public class SquadData : ScriptableObject {
         squadMembers.Add(member);
     }
 
-    public void Copy(SquadData initSquadData){
+    public void DeepCopy(SquadData initSquadData){
         Clear();
         foreach (var member in initSquadData.SquadMembers){
-            AddMember(member);
+            AddMember(member.Copy());
         }
     }
 
@@ -33,5 +34,18 @@ public class SquadData : ScriptableObject {
 public class SquadMember{
     [FormerlySerializedAs("prefab")] public GameObject combatPrefab;
     public string name;
-    public bool alive = true;
+    public List<UnitModifierFactory> modifiers;
+    
+    [HideInEditorMode] public bool alive = true;
+}
+
+public static class SquadExtensions{
+    public static SquadMember Copy(this SquadMember member){
+        return new SquadMember{
+            combatPrefab = member.combatPrefab,
+            name = member.name,
+            modifiers = new List<UnitModifierFactory>(member.modifiers),
+            alive = member.alive
+        };
+    }
 }

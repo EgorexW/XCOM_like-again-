@@ -12,7 +12,7 @@ public class UnitActionsWorldUI : UIElement{
     }
 
     void OnCombatObjectRemoved(ICombatObject arg0){
-        if (arg0 is CombatUnit combatUnit){
+        if (arg0 is Unit combatUnit){
             combatUnit.onActionPerformed.RemoveListener(OnActionPerformed);
         }
     }
@@ -23,7 +23,7 @@ public class UnitActionsWorldUI : UIElement{
     }
 
     void OnCombatObjectAdded(ICombatObject arg0){
-        if (arg0 is CombatUnit combatUnit){
+        if (arg0 is Unit combatUnit){
             combatUnit.onActionPerformed.AddListener(OnActionPerformed);
         }
     }

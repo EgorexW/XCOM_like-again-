@@ -5,8 +5,8 @@ public class AddActionUnitModifierFactory : UnitModifierFactory {
     [SerializeField] GameObject relatedAction; 
     [SerializeField] bool consumable = true;
 
-    public override UnitModifier CreateStatus() {
-        return new AddActionUnitModifier(statusName, relatedAction, consumable);
+    public override UnitModifier Create() {
+        return new AddActionUnitModifier(statusName, this, relatedAction, consumable);
     }
 }
 
@@ -16,12 +16,12 @@ class AddActionUnitModifier : UnitModifier {
     
     UnitAction instantiatedAction; 
 
-    public AddActionUnitModifier(string name, GameObject actionPrefab, bool consumable) : base(name) {
+    public AddActionUnitModifier(string name, UnitModifierFactory sourceDefinition, GameObject actionPrefab, bool consumable) : base(name, sourceDefinition) {
         this.actionPrefab = actionPrefab;
         this.consumable = consumable;
     }
 
-    public override void OnApplied(CombatUnit targetTmp) {
+    public override void OnApplied(Unit targetTmp) {
         base.OnApplied(targetTmp);
         instantiatedAction = target.InstantiateAction(actionPrefab);
         target.onActionPerformed.AddListener(OnActionPerformed);

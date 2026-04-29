@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc750ea7ca14df3b805777f58ad5621, type: 3}
   m_Name: Player Squad Data
   m_EditorClassIdentifier: Assembly-CSharp::RuntimeSquadData
-  unitPrefabs: []
+  squadMembers: []

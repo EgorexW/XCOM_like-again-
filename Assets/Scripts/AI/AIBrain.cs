@@ -1,21 +1,22 @@
 using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 class AIBrain : MonoBehaviour{
     const float WAIT_TIME_BETWEEN_ACTIONS = 1f;
     [SerializeField] bool debug;
 
-    [BoxGroup("References")] [Required] [SerializeField] CombatUnit combatUnit;
+    [FormerlySerializedAs("combatUnit")] [BoxGroup("References")] [Required] [SerializeField] Unit unit;
     [BoxGroup("References")] [Required] [SerializeField] AIBehaviour aiBehaviour;
 
     public IEnumerator ResolveTurn(){
         // Debug.Log($"Resolving turn for {combatUnit.Name}...");
         while (true){
             var context = new AIContext(
-                combatUnit,
-                combatUnit.CombatSystem.TeamsSystem.GetEnemies(combatUnit),
-                combatUnit.CombatSystem.TeamsSystem.GetAllies(combatUnit),
+                unit,
+                unit.CombatSystem.TeamsSystem.GetEnemies(unit),
+                unit.CombatSystem.TeamsSystem.GetAllies(unit),
                 debug
             );
             var action = aiBehaviour.GetAction(context);
@@ -29,11 +30,11 @@ class AIBrain : MonoBehaviour{
             }
             if (action.action.ValidateAction() != UnitActionValidation.Valid){
                 Debug.LogWarning(
-                    $"AI for unit {combatUnit.Name} attempted to execute invalid action {action.action.ActionInfo.Name}. Ending turn.");
+                    $"AI for unit {unit.Name} attempted to execute invalid action {action.action.ActionInfo.Name}. Ending turn.");
                 break;
             }
             if (context.debug){
-                Debug.Log($"AI for unit {combatUnit.Name} executing action {action.action.ActionInfo.Name}.");
+                Debug.Log($"AI for unit {unit.Name} executing action {action.action.ActionInfo.Name}.");
             }
             action.action.Execute();
             yield return new WaitForSeconds(WAIT_TIME_BETWEEN_ACTIONS);

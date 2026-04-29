@@ -3,15 +3,15 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuModifierBasePath + "Surrendered Status")]
 public class SurrenderedStatusFactory : UnitModifierFactory{
-    public override UnitModifier CreateStatus(){
-        return new SurrenderedStatus(statusName);
+    public override UnitModifier Create(){
+        return new SurrenderedStatus(statusName, this);
     }
 }
 
 class SurrenderedStatus : UnitModifier{
     readonly List<UnitAction> allowedActions;
 
-    public SurrenderedStatus(string name, List<UnitAction> allowedActions = null) : base(name){
+    public SurrenderedStatus(string name, UnitModifierFactory sourceDefinition, List<UnitAction> allowedActions = null) : base(name, sourceDefinition){
         allowedActions ??= new List<UnitAction>();
         this.allowedActions = allowedActions;
     }
@@ -20,7 +20,7 @@ class SurrenderedStatus : UnitModifier{
         return allowedActions.Contains(action);
     }
 
-    public override void OnApplied(CombatUnit targetTmp){
+    public override void OnApplied(Unit targetTmp){
         base.OnApplied(targetTmp);
         targetTmp.RemoveFlag(CombatObjectFlags.MovementBlocker | CombatObjectFlags.LoSBlocker);
         var suspectComponent = targetTmp.GetCombatComponent<SuspectComponent>();

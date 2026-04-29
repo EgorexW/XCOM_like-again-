@@ -19,7 +19,7 @@ class CombatObjectUI : UIElement{
         else{
             healthComponentUI.Hide();
         }
-        if (combatObject is CombatUnit unit){
+        if (combatObject is Unit unit){
             combatUnitUI.Show(unit);
         }
         else{

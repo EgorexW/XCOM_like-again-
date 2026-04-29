@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitsTurnTaker : TurnTaker{
-    readonly List<CombatUnit> units = new();
+    readonly List<Unit> units = new();
 
-    public IReadOnlyList<CombatUnit> Units => units.AsReadOnly();
+    public IReadOnlyList<Unit> Units => units.AsReadOnly();
 
     void RemoveUnit(ICombatObject arg0){
-        if (arg0 is CombatUnit unit){
+        if (arg0 is Unit unit){
             units.Remove(unit);
         }
     }
@@ -26,12 +26,12 @@ public class UnitsTurnTaker : TurnTaker{
         foreach (var unit in units) unit.OnStartTurn();
     }
 
-    public void AddUnit(CombatUnit combatUnit){
-        if (units.Contains(combatUnit)){
-            Debug.LogWarning($"Unit {combatUnit.name} is already in the turn taker. Skipping addition.");
+    public void AddUnit(Unit unit){
+        if (units.Contains(unit)){
+            Debug.LogWarning($"Unit {unit.name} is already in the turn taker. Skipping addition.");
             return;
         }
-        units.Add(combatUnit);
-        combatUnit.onRemove.AddListener(RemoveUnit);
+        units.Add(unit);
+        unit.onRemove.AddListener(RemoveUnit);
     }
 }
