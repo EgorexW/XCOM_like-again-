@@ -31,6 +31,7 @@ public class CombatSystem : MonoBehaviour{
         onCombatObjectAdded.AddListener(_ => StateChanged());
         onCombatObjectRemoved.AddListener(_ => StateChanged());
         turnSystem.onEndTurn.AddListener(_ => StateChanged());
+        combatGrid.combatSystem = this;
     }
 
     public void AddCombatObject(ICombatObject combatObject, List<CombatGridNode> targetNode){

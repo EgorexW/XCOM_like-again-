@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,6 +13,14 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
 
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn;
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn;
+    
+    bool turnActive = false;
+
+    void Update(){
+        if (!turnActive && index >= 0){
+            NextTurn();
+        }
+    }
 
     public ITurnTaker GetCurrentTurnTaker(){
         if (index >= 0 && index < turnTakers.Count){
@@ -46,19 +55,23 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
                 this);
             return;
         }
-        NextTurn();
+        EndTurn();
     }
 
     public void NextTurn(){
-        EndTurn();
+        if (turnActive){
+            Debug.LogWarning("NextTurn called while turn is still active. Ending current turn for " + GetCurrentTurnTaker(), this);
+            EndTurn();
+        }
         index++;
         StartTurn();
     }
 
     void EndTurn(){
+        turnActive = false;
+        GetCurrentTurnTaker()?.EndTurn();
         Debug.Log("Ending turn for " + GetCurrentTurnTaker(), this);
         onEndTurn.Invoke(GetCurrentTurnTaker());
-        GetCurrentTurnTaker()?.EndTurn();
     }
 
     public void RemoveTurnTaker(ITurnTaker turnTaker){
@@ -91,9 +104,10 @@ public class TurnSystem : MonoBehaviour, ITurnSystem{
         if (index >= TurnTakersCount){
             index = 0;
         }
+        turnActive = true;
+        GetCurrentTurnTaker()!.StartTurn();
         Debug.Log("Starting turn for " + GetCurrentTurnTaker(), this);
         onStartTurn.Invoke(GetCurrentTurnTaker());
-        GetCurrentTurnTaker()!.StartTurn();
     }
 
     public void Stop(){

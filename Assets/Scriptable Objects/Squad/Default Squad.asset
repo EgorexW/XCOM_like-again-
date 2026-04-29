@@ -23,6 +23,7 @@ MonoBehaviour:
     modifiers:
     - {fileID: 11400000, guid: d7a79a4307c214500ac292b6ea5d5317, type: 2}
     - {fileID: 11400000, guid: a17264a518d734a97bc43743e2a383de, type: 2}
+    - {fileID: 11400000, guid: 2fbf6e643a8104431955f3db84b5d148, type: 2}
     alive: 1
   - combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
     name: Wilson

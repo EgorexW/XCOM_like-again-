@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class CombatGrid : MonoBehaviour{
     [SerializeField] int width = 100;
     [SerializeField] int height = 100;
 
     public Grid<CombatGridNode> Grid{ get; private set; }
+    public CombatSystem combatSystem;
 
     [FoldoutGroup("Events")] public UnityEvent<CombatGridNode> onCombatGridNodeChanged = new();
 

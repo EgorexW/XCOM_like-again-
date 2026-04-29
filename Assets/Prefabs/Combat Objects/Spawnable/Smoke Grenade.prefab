@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1550957437627324297
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1050595686570496982, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bfc8380b8be5a423ea12188a79959410, type: 3}
+    - target: {fileID: 1265413614643043436, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: 'effects.Array.data[0]'
+      value: 
+      objectReference: {fileID: 6264801901089705679}
+    - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: range
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: damage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: prefabToSpawn
+      value: 
+      objectReference: {fileID: 5456766478168322322, guid: e7f5e2efb46184261a04b4b304a0be92, type: 3}
+    - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: insertTurnTakerType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400889664588949597, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9098700461190151436, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: m_Name
+      value: Smoke Grenade
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5318544543648846847, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+--- !u!114 &6264801901089705679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+  m_PrefabInstance: {fileID: 1550957437627324297}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95819fbeb1b4ef9843f76937ecceaec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ExplosionEffect

@@ -237,6 +237,10 @@ public static class CombatGridExtensions{
 
         return primaryGrid;
     }
+    
+    public static CombatSystem CombatSystem(this CombatGridNode node){
+        return node.grid.combatSystem;
+    }
 
     #region Components
 
@@ -299,5 +303,28 @@ public static class CombatGridExtensions{
 
     public static bool CanAcceptObject(this CombatGridNode node, CombatObject combatObject){
         return !node.HasFlag(combatObject.GetBlockingFlags(), new List<ICombatObject>{ combatObject });
+    }
+
+    static Transform spawnParent;
+
+    public static ICombatObject Spawn(this CombatGridNode node, GameObject prefabToSpawn,
+        InsertTurnTakerType insertTurnTakerType){
+        if (spawnParent == null){
+            spawnParent = new GameObject("Spawn Parent").transform;
+        }
+        var spawnedObj = Object.Instantiate(prefabToSpawn, spawnParent);
+        var combatObj = spawnedObj.GetComponent<ICombatObject>();
+        if (combatObj == null){
+            Object.Destroy(spawnedObj);
+            Debug.LogWarning($"Spawned object {spawnedObj.name} does not have a CombatObject component.",
+                prefabToSpawn);
+            return null;
+        }
+        node.CombatSystem().AddCombatObject(combatObj, new List<CombatGridNode>(){ node });
+        var turnTaker = spawnedObj.GetComponentInChildren<ITurnTaker>();
+        if (turnTaker != null){
+            node.CombatSystem().TurnSystem.AddTurnTaker(turnTaker, insertTurnTakerType);
+        }
+        return combatObj;
     }
 }

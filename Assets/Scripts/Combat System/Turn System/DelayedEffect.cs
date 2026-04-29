@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Grenade : TurnTaker{
+public class DelayedEffect : TurnTaker{
     [SerializeField] int turnsToActivate = 1;
     [SerializeField] bool destroy = true;
     [SerializeField] CombatObject owner;
@@ -18,6 +18,9 @@ public class Grenade : TurnTaker{
         if (turnsToActivate <= 0){
             Activate();
         }
+        else{
+            CompleteTurn();
+        }
     }
 
     void Activate(){
@@ -28,7 +31,7 @@ public class Grenade : TurnTaker{
         onActivate.Invoke();
         TurnSystem.RemoveTurnTaker(this);
         if (destroy){
-            owner.Remove();
+            owner?.Remove();
             if (owner == null){
                 Destroy(gameObject);
             }
