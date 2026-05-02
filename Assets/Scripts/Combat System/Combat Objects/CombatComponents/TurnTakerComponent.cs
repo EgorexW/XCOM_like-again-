@@ -3,12 +3,18 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class TurnTakerComponent : CombatComponent, ITurnTaker{
+    [SerializeField] InsertTurnTakerType insertType = InsertTurnTakerType.Last;
     public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
     protected bool turnActive;
 
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn{ get; } = new();
 
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn{ get; } = new();
+
+    public override void Init(){
+        base.Init();
+        CombatObject.CombatSystem.TurnSystem.AddTurnTaker(this, insertType);
+    }
 
     public virtual void EndTurn(){
         // Debug.Log($"{this} ended their turn.");

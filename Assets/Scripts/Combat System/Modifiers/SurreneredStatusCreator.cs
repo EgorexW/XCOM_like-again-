@@ -23,6 +23,7 @@ class SurrenderedStatus : UnitModifier{
     public override void OnApplied(Unit targetTmp){
         base.OnApplied(targetTmp);
         targetTmp.RemoveFlag(CombatObjectFlags.MovementBlocker | CombatObjectFlags.LoSBlocker);
+        targetTmp.AddFlag(CombatObjectFlags.Pacified);
         var suspectComponent = targetTmp.GetCombatComponent<SuspectComponent>();
         if (suspectComponent != null){
             suspectComponent.ChangeState(SuspectState.Surrendered);

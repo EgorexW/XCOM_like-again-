@@ -49,4 +49,8 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     public void RemoveFlag(CombatObjectFlags flagsToRemove){
         flags &= ~flagsToRemove;
     }
+    
+     public void AddFlag(CombatObjectFlags flagsToAdd){
+         flags |= flagsToAdd;
+     }
 }

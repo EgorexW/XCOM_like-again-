@@ -66,4 +66,12 @@ public static class MyExtentions{
     public static List<T> Copy<T>(this List<T> list){
         return new List<T>(list);
     }
+    
+    public static float Random(this Vector2 vector){
+        return UnityEngine.Random.Range(vector.x, vector.y);
+    }
+
+    public static int Random(this Vector2Int vector){
+        return UnityEngine.Random.Range(vector.x, vector.y + 1);
+    }
 }

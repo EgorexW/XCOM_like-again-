@@ -150,9 +150,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d804eea415b14f89b83a3a44d1ee875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grenade
-  turnsToActivate: 2
+  insertType: 1
+  startDurationLeft: {x: 2, y: 3}
   destroy: 1
-  owner: {fileID: 3575634181915816088}
   effects: []
   onActivate:
     m_PersistentCalls:

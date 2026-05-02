@@ -8,11 +8,13 @@
                 if (team.Empty){
                     continue;
                 }
-                if (teamsSystem.GetEnemies(team).Count <= 0){
-                    continue;
+                foreach (var enemy in teamsSystem.GetEnemies(team)){
+                    if (!enemy.Flags.HasFlag(CombatObjectFlags.Pacified)){
+                        continue;
+                    }
+                    IsCompleted = false;
+                    return;
                 }
-                IsCompleted = false;
-                return;
             }
         }
     }

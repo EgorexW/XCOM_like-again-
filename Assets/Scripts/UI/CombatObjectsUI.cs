@@ -14,7 +14,7 @@ public class CombatObjectsUI : UIElement{
         var combatObjects = combatSystem.CombatObjects;
         objectsPool.SetCount(combatObjects.Count);
         for (var i = 0; i < combatObjects.Count; i++){
-            var combatObjectUI = objectsPool.GetActiveObject(i).GetComponent<CombatObjectUI>();
+            var combatObjectUI = objectsPool.GetActiveObject(i).GetComponent<MainCombatObjectUI>();
             combatObjectUI.SetCombatObject(combatObjects[i]);
         }
     }

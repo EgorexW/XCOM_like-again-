@@ -13,6 +13,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: bfc8380b8be5a423ea12188a79959410, type: 3}
     - target: {fileID: 1265413614643043436, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: insertType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1265413614643043436, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
       propertyPath: 'effects.Array.data[0]'
       value: 
       objectReference: {fileID: 6264801901089705679}

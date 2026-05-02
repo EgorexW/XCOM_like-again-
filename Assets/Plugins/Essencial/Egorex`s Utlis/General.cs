@@ -7,20 +7,10 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using Random = UnityEngine.Random;
+using Object = UnityEngine.Object;
 
-public class General : MonoBehaviour{
+public static class General{
     public const int Iterationlimit = 10;
-
-    // static General instance;
-    //
-    // static General GetInstance(){
-    //     if (instance == null){
-    //         instance = new GameObject("General").AddComponent<General>();
-    //         DontDestroyOnLoad(instance);
-    //     }
-    //     return instance;
-    // }
 
     public static readonly Vector2[] MainDirections2D = { Vector2.right, Vector2.left, Vector2.up, Vector2.down };
 
@@ -50,7 +40,7 @@ public class General : MonoBehaviour{
     }
 
     public static Vector2 RandomPointOnCircle(){
-        var angle = Random.value * 2 * Mathf.PI;
+        var angle = UnityEngine.Random.value * 2 * Mathf.PI;
         return new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
     }
 
@@ -116,7 +106,7 @@ public class General : MonoBehaviour{
         textMeshPro.text = text;
         textMeshPro.fontSize = size;
         textMeshPro.alignment = TextAlignmentOptions.Center;
-        Destroy(gameObject, time);
+        Object.Destroy(gameObject, time);
     }
 
     public static TComponent GetRootComponent<TComponent>(GameObject gameObject, bool mustBeFound = true){
@@ -165,14 +155,6 @@ public class General : MonoBehaviour{
         return EventSystem.current.IsPointerOverGameObject();
     }
 
-    public static float RandomRange(Vector2 vector){
-        return Random.Range(vector.x, vector.y);
-    }
-
-    public static int RandomRange(Vector2Int vector){
-        return Random.Range(vector.x, vector.y);
-    }
-
     public static HashSet<T> GetUniqueRootComponents<T>(Collider[] colliders){
         var components = new HashSet<T>();
         foreach (var obj in colliders){
@@ -209,8 +191,8 @@ public class General : MonoBehaviour{
         Vector2 pos = collider2D.bounds.center;
         for (var i = 0; i < Iterationlimit; i++){
             var posTmp = new Vector2(
-                Random.Range(collider2D.bounds.min.x, collider2D.bounds.max.x),
-                Random.Range(collider2D.bounds.min.y, collider2D.bounds.max.y)
+                UnityEngine.Random.Range(collider2D.bounds.min.x, collider2D.bounds.max.x),
+                UnityEngine.Random.Range(collider2D.bounds.min.y, collider2D.bounds.max.y)
             );
             if (!collider2D.OverlapPoint(posTmp)){
                 continue;

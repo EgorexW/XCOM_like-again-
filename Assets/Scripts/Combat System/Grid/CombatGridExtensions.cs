@@ -301,30 +301,30 @@ public static class CombatGridExtensions{
 
     #endregion
 
-    public static bool CanAcceptObject(this CombatGridNode node, CombatObject combatObject){
+    public static bool CanAcceptObject(this CombatGridNode node, ICombatObject combatObject){
         return !node.HasFlag(combatObject.GetBlockingFlags(), new List<ICombatObject>{ combatObject });
     }
 
     static Transform spawnParent;
 
-    public static ICombatObject Spawn(this CombatGridNode node, GameObject prefabToSpawn,
-        InsertTurnTakerType insertTurnTakerType){
+    public static ICombatObject Spawn(this CombatGridNode node, GameObject prefabToSpawn){
         if (spawnParent == null){
             spawnParent = new GameObject("Spawn Parent").transform;
         }
-        var spawnedObj = Object.Instantiate(prefabToSpawn, spawnParent);
-        var combatObj = spawnedObj.GetComponent<ICombatObject>();
-        if (combatObj == null){
-            Object.Destroy(spawnedObj);
-            Debug.LogWarning($"Spawned object {spawnedObj.name} does not have a CombatObject component.",
+        var prefabCombatObject = prefabToSpawn.GetComponent<ICombatObject>();
+        if (!node.CanAcceptObject(prefabCombatObject)){
+            Debug.LogWarning($"Cannot spawn {prefabCombatObject.Name} at node {node.x},{node.y} because it cannot accept the object.",
                 prefabToSpawn);
             return null;
         }
-        node.CombatSystem().AddCombatObject(combatObj, new List<CombatGridNode>(){ node });
-        var turnTaker = spawnedObj.GetComponentInChildren<ITurnTaker>();
-        if (turnTaker != null){
-            node.CombatSystem().TurnSystem.AddTurnTaker(turnTaker, insertTurnTakerType);
+        if (prefabCombatObject == null){
+            Debug.LogWarning($"Spawned object {prefabToSpawn.name} does not have a CombatObject component.",
+                prefabToSpawn);
+            return null;
         }
-        return combatObj;
+        var spawnedObj = Object.Instantiate(prefabToSpawn, spawnParent);
+        var combatObject = spawnedObj.GetComponent<ICombatObject>();
+        node.CombatSystem().AddCombatObject(combatObject, new List<CombatGridNode>(){ node });
+        return combatObject;
     }
 }

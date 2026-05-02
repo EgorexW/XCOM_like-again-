@@ -6,12 +6,11 @@ public class CombatInit : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] CombatSystem combatSystem;
 
     public void InitCombatSystem(CombatContent content){
-        var combatObjs = content.combatObjects;
-        foreach (var combatObj in combatObjs)
-            combatSystem.AddCombatObject(combatObj.combatObject,
-                new List<CombatGridNode>{ combatSystem.CombatGrid.GetNode(combatObj.position) });
         foreach (var turnTaker in content.turnTakers)
             combatSystem.TurnSystem.AddTurnTaker(turnTaker, InsertTurnTakerType.Last);
+        foreach (var combatObj in content.combatObjects)
+            combatSystem.AddCombatObject(combatObj.combatObject,
+                new List<CombatGridNode>{ combatSystem.CombatGrid.GetNode(combatObj.position) });
         foreach (var team in content.teams) combatSystem.TeamsSystem.AddTeam(team);
         combatSystem.StartCombat();
     }

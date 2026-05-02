@@ -3,10 +3,9 @@ using UnityEngine;
 
 public class SpawnAction : TargetedUnitAction{
     [SerializeField] GameObject prefabToSpawn;
-    [Header("Spawn Settings")] [SerializeField] InsertTurnTakerType insertTurnTakerType = InsertTurnTakerType.Next;
 
     protected override void OnExecute(){
-        targetNode.Spawn(prefabToSpawn, insertTurnTakerType);
+        targetNode.Spawn(prefabToSpawn);
     }
 
     protected override TargetValidation CheckActionSpecificTargetRules(CombatGridNode node){

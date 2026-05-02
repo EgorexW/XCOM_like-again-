@@ -23,7 +23,7 @@ public class TurnSystem : MonoBehaviour {
         }
     }
 
-    public void Start() {
+    public void StartSystem() {
         if (TurnTakersCount == 0) {
             Debug.LogWarning("Tried to start battle with 0 turn takers.", this);
             return;
@@ -48,7 +48,9 @@ public class TurnSystem : MonoBehaviour {
         return null;
     }
 
-    public void AddTurnTaker(ITurnTaker turnTaker, InsertTurnTakerType insertType) {
+    public void AddTurnTaker(ITurnTaker turnTaker, InsertTurnTakerType insertType){
+        Debug.Log($"Adding {turnTaker} to turn system with insert type {insertType}", this);
+        
         if (!isRunning) {
             if (insertType == InsertTurnTakerType.Next){
                 turnTakers.Insert(0, turnTaker);

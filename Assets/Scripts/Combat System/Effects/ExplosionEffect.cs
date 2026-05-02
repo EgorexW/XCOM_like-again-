@@ -7,9 +7,6 @@ public class ExplosionEffect : CombatEffect{
     [SerializeField] int damage = 1;
     [SerializeField] List<UnitModifierFactory> statusEffects;
     [SerializeField][BoxGroup("Spawn Settings")] GameObject prefabToSpawn;
-    [SerializeField][BoxGroup("Spawn Settings")][ShowIf("HasPrefab")] InsertTurnTakerType insertTurnTakerType;
-
-    bool HasPrefab => prefabToSpawn != null;
 
     public float Range => range;
 
@@ -19,6 +16,9 @@ public class ExplosionEffect : CombatEffect{
             return;
         }
         foreach (var node in targetNode.GetNodesInRadius(range)){
+            if (!node.LineUnobstructed(targetNode, GridBlockingFlags.ExplosionBlocker)){
+                continue;
+            }
             foreach (var obj in node.GetCombatObjects()){
                 var health = obj.GetCombatComponent<HealthComponent>();
                 if (health != null){
@@ -29,7 +29,7 @@ public class ExplosionEffect : CombatEffect{
                 }
             }
             if (prefabToSpawn != null){
-                node.Spawn(prefabToSpawn, insertTurnTakerType);
+                node.Spawn(prefabToSpawn);
             }
         }
     }

@@ -28,7 +28,7 @@ public static class CombatObjectExtensions{
 
     #region Flags
 
-    public static CombatObjectFlags GetBlockingFlags(this CombatObject combatObject){
+    public static CombatObjectFlags GetBlockingFlags(this ICombatObject combatObject){
         var flags = combatObject.Flags;
         var blockedBy = CombatObjectFlags.Wall;
 
@@ -76,4 +76,5 @@ public static class GridBlockingFlags{
     public const CombatObjectFlags MovementBlocker = CombatObjectFlags.MovementBlocker;
     public const CombatObjectFlags ShootingBlocker = CombatObjectFlags.LoSBlocker;
     public const CombatObjectFlags ThrowBlocker = CombatObjectFlags.Wall;
+    public const CombatObjectFlags ExplosionBlocker = CombatObjectFlags.Wall;
 }
