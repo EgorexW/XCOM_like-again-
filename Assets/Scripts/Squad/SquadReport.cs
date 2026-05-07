@@ -15,7 +15,7 @@ public class SquadReport : MonoBehaviour
             if (member.alive){
                 continue;
             }
-            Debug.Log($"{member.name} is dead.");
+            Debug.Log($"{member.Name} is dead.");
             squadData.RemoveMember(member);
         }
     }

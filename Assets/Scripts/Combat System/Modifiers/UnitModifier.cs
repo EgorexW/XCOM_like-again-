@@ -5,13 +5,13 @@ public abstract class UnitModifier{
     protected Unit target;
 
     public readonly string name;
-    public readonly UnitModifierFactory sourceDefinition; 
+    // public readonly UnitModifierFactory sourceDefinition; 
 
     public UnityEvent<UnitModifier> onRemoved = new UnityEvent<UnitModifier>();
 
     protected UnitModifier(string name, UnitModifierFactory sourceDefinition){
         this.name = name;
-        this.sourceDefinition = sourceDefinition;
+        // this.sourceDefinition = sourceDefinition;
     }
 
     public virtual void OnApplied(Unit targetTmp){

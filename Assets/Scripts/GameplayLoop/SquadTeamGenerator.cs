@@ -16,7 +16,7 @@ public class SquadTeamGenerator : TeamGenerator{
     }
     
     ICombatObject AddTeamMember(SquadMember member){
-        var gameObj = Instantiate(member.combatPrefab, transform);
+        var gameObj = Instantiate(member.CombatPrefab, transform);
         var combatObject = gameObj.GetComponent<ICombatObject>();
         if (combatObject == null){
             Debug.LogError(

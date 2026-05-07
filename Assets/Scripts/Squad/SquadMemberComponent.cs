@@ -10,22 +10,22 @@ public class SquadMemberComponent : CombatComponent
 
     public override void Init(){
         base.Init();
-        CombatObject.Name = member.name;
+        CombatObject.Name = member.Name;
         CombatObject.onRemove.AddListener(OnRemove);
         var unit = CombatObject as Unit;
         if (unit == null){
-            Debug.LogWarning("Object " + member.name + " is not a combat unit");
+            Debug.LogWarning("Object " + member.Name + " is not a combat unit");
             return;
         }
-        foreach (var modifierFactory in member.modifiers){
-            var modifier = modifierFactory.Create();
-            modifier.onRemoved.AddListener(OnModifierRemoved);
+        foreach (var equipment in member.Equipment){
+            var modifier = equipment.GetModifier();
+            modifier.onRemoved.AddListener(_ => RemoveEquipment(equipment));
             unit.ApplyModifier(modifier);
         }
     }
 
-    void OnModifierRemoved(UnitModifier arg0){
-        member.modifiers.Remove(arg0.sourceDefinition);
+    void RemoveEquipment(Equipment equipment){
+        member.RemoveEquipment(equipment);
     }
 
     void OnRemove(ICombatObject arg0){

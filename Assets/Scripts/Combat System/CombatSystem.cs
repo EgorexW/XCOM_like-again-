@@ -66,7 +66,7 @@ public class CombatSystem : MonoBehaviour{
         if (!active){
             return;
         }
-        Debug.Log("Combat state changed!", this);
+        // Debug.Log("Combat state changed!", this);
         onStateChanged.Invoke();
     }
 }

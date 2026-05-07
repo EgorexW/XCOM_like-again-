@@ -150,6 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   squadData: {fileID: 11400000, guid: 39451c121c1f240d7b34d36251ec8d62, type: 2}
   initSquadData: {fileID: 11400000, guid: 38389c55385d64ca8b0cbc26d2af88c8, type: 2}
+  playerResourcesData: {fileID: 11400000, guid: 17c65746be0974f9b89ee0baa80713df, type: 2}
+  initPlayerResourcesData: {fileID: 11400000, guid: ef73dac7c48c9487798acda48c845927, type: 2}
   sceneName: Squad Select
 --- !u!4 &1178191529
 Transform:

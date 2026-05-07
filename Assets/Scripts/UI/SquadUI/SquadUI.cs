@@ -1,20 +1,44 @@
 using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class SquadUI : MonoBehaviour{
-    [BoxGroup("References")][Required][SerializeField] SquadSelection squadSelection;
+public class SquadUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool objectsPool;
+
+    [FoldoutGroup("Events")] public UnityEvent<SquadData, SquadMember> onSquadMemberClicked = new();
+    [FoldoutGroup("Events")] public UnityEvent<SquadData, Equipment, SquadMember> onEquipmentClicked  = new();
     
     SquadData squad;
 
     void Awake(){
-        ShowSquad(squadSelection.GetSquad());
+        objectsPool.onCreateObject.AddListener(OnCreateSquadMemberUI);
+    }
+
+    void OnCreateSquadMemberUI(GameObject arg0){
+        var squadMemberUI = arg0.GetComponent<SquadMemberUI>();
+        squadMemberUI.onClicked.AddListener(OnSquadMemberUIClicked);
+        squadMemberUI.onEquipmentClicked.AddListener(OnSquadMemberUIEquipmentClicked);
+    }
+
+    void OnSquadMemberUIEquipmentClicked(SquadMember arg0, Equipment arg1){
+        onEquipmentClicked.Invoke(squad, arg1, arg0);
+    }
+
+    void OnSquadMemberUIClicked(SquadMember arg0){
+        onSquadMemberClicked.Invoke(squad, arg0);
     }
 
     public void ShowSquad(SquadData squadTmp){
+        base.Show();
+        RemoveSquad();
         squad = squadTmp;
+        squad.onChanged.AddListener(OnSquadChanged);
+        UpdateSquad();
+    }
+
+    void UpdateSquad(){
         var count = squad.SquadMembers.Count;
         objectsPool.SetCount(count);
         for (int i = 0; i < count; i++){
@@ -23,5 +47,19 @@ public class SquadUI : MonoBehaviour{
             var squadSlotUI = obj.GetComponent<SquadMemberUI>();
             squadSlotUI.Show(member);
         }
+    }
+
+    void OnSquadChanged(SquadData arg0){
+        UpdateSquad();
+    }
+
+    public override void Hide(){
+        base.Hide();
+        RemoveSquad();
+    }
+
+    void RemoveSquad(){
+        squad?.onChanged.RemoveListener(OnSquadChanged);
+        squad = null;
     }
 }
