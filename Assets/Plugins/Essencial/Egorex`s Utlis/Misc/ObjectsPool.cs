@@ -83,7 +83,9 @@ public class ObjectsPool : CountUI{
         var newObj = Instantiate(prefab, transform);
         inactiveObjs.Enqueue(newObj);
         onCreateObject.Invoke(newObj);
-        newObj.SendMessage("OnObjectPoolCreate", SendMessageOptions.DontRequireReceiver);
+        if (newObj.TryGetComponent(out IPoolable poolable)){
+            poolable.OnPoolCreate();
+        }
         return newObj;
     }
 
@@ -95,4 +97,5 @@ public class ObjectsPool : CountUI{
 public interface IPoolable{
     void OnPoolActivate();
     void OnPoolDeactivate();
+    void OnPoolCreate();
 }

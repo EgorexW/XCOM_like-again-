@@ -24,12 +24,12 @@ public class ResourcesData : ScriptableObject{
         }
     }
 
-    void AddEquipment(Equipment equipment){
+    public void AddEquipment(Equipment equipment){
         this.equipment.Add(equipment);
         onChanged.Invoke(this);
     }
 
-    void AddMember(SquadMember member){
+    public void AddMember(SquadMember member){
         members.Add(member);
         member.onChanged.AddListener(OnMemberChanged);
         onChanged.Invoke(this);
@@ -40,7 +40,7 @@ public class ResourcesData : ScriptableObject{
     }
 
     void Clear(){
-        foreach (var member in members){
+        foreach (var member in members.Copy()){
             RemoveMember(member);
         }
         equipment.Clear();
@@ -49,6 +49,11 @@ public class ResourcesData : ScriptableObject{
     public void RemoveMember(SquadMember member){
         members.Remove(member);
         member.onChanged.RemoveListener(OnMemberChanged);
+        onChanged.Invoke(this);
+    }
+
+    public void RemoveEquipment(Equipment equipment1){
+        equipment.Remove(equipment1);
         onChanged.Invoke(this);
     }
 }

@@ -270,6 +270,11 @@ MonoBehaviour:
     enabled: 0
     value: {fileID: 647366073}
   async: 0
+--- !u!1 &242114998 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5674638913308416169, guid: fdd5c1ab5a77b4504846a239d9f21a8a, type: 3}
+  m_PrefabInstance: {fileID: 650786930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &318090733
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TeamSelection
   squadData: {fileID: 11400000, guid: 39451c121c1f240d7b34d36251ec8d62, type: 2}
-  playerResourcesData: {fileID: 11400000, guid: 17c65746be0974f9b89ee0baa80713df, type: 2}
+  resourcesData: {fileID: 11400000, guid: 17c65746be0974f9b89ee0baa80713df, type: 2}
 --- !u!4 &359939407
 Transform:
   m_ObjectHideFlags: 0
@@ -1303,6 +1308,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   objectsPool: {fileID: 694933621}
+  onSquadMemberButtonClicked:
+    m_PersistentCalls:
+      m_Calls: []
+  onEquipmentClicked:
+    m_PersistentCalls:
+      m_Calls: []
+  onSquadMemberPortraitClicked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &719925989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,8 +1347,8 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 448778206}
-  - {fileID: 576321701}
   - {fileID: 1291993129}
+  - {fileID: 576321701}
   - {fileID: 1820152061}
   m_Father: {fileID: 694933619}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1363,11 +1377,15 @@ MonoBehaviour:
       m_Calls: []
   nameText: {fileID: 448778208}
   button: {fileID: 576321702}
+  portraitButton: {fileID: 1291993132}
   equipmentUI: {fileID: 1820152064}
-  onClicked:
+  onButtonClicked:
     m_PersistentCalls:
       m_Calls: []
   onEquipmentClicked:
+    m_PersistentCalls:
+      m_Calls: []
+  onPortraitClicked:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &910843528 stripped
@@ -1550,6 +1568,12 @@ MonoBehaviour:
       m_Calls: []
   membersPool: {fileID: 1173684584}
   equipmentUI: {fileID: 973406373}
+  onSquadMemberClicked:
+    m_PersistentCalls:
+      m_Calls: []
+  onEquipmentClicked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1173684581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1605,10 +1629,10 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 4
   m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -1669,8 +1693,8 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1630597612}
-  - {fileID: 519846060}
   - {fileID: 1954276222}
+  - {fileID: 519846060}
   m_Father: {fileID: 1173684582}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1698,11 +1722,15 @@ MonoBehaviour:
       m_Calls: []
   nameText: {fileID: 1630597614}
   button: {fileID: 519846061}
+  portraitButton: {fileID: 1954276225}
   equipmentUI: {fileID: 0}
-  onClicked:
+  onButtonClicked:
     m_PersistentCalls:
       m_Calls: []
   onEquipmentClicked:
+    m_PersistentCalls:
+      m_Calls: []
+  onPortraitClicked:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1291993128
@@ -1716,6 +1744,7 @@ GameObject:
   - component: {fileID: 1291993129}
   - component: {fileID: 1291993131}
   - component: {fileID: 1291993130}
+  - component: {fileID: 1291993132}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -1756,7 +1785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1780,6 +1809,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291993128}
   m_CullTransparentMesh: 1
+--- !u!114 &1291993132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291993128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1291993130}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1382214174
 GameObject:
   m_ObjectHideFlags: 0
@@ -2264,7 +2337,7 @@ MonoBehaviour:
   onUpdate:
     m_PersistentCalls:
       m_Calls: []
-  prefab: {fileID: 0}
+  prefab: {fileID: 242114998}
   onCreateObject:
     m_PersistentCalls:
       m_Calls: []
@@ -2301,6 +2374,7 @@ GameObject:
   - component: {fileID: 1954276222}
   - component: {fileID: 1954276224}
   - component: {fileID: 1954276223}
+  - component: {fileID: 1954276225}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -2341,7 +2415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2365,6 +2439,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954276221}
   m_CullTransparentMesh: 1
+--- !u!114 &1954276225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954276221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 0
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1954276223}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &8097233112909321572
 PrefabInstance:
   m_ObjectHideFlags: 0

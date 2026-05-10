@@ -25,7 +25,7 @@ public class ResourcesUI : UIElement{
 
     void OnCreateSquadMemberUI(GameObject arg0){
         var squadMemberUI = arg0.GetComponent<SquadMemberUI>();
-        squadMemberUI.onClicked.AddListener(OnSquadMemberUIClicked);
+        squadMemberUI.onButtonClicked.AddListener(OnSquadMemberUIClicked);
     }
 
     void OnSquadMemberUIClicked(SquadMember arg0){

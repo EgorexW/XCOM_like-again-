@@ -2,24 +2,31 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class SquadUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool objectsPool;
 
-    [FoldoutGroup("Events")] public UnityEvent<SquadData, SquadMember> onSquadMemberClicked = new();
+    [FormerlySerializedAs("onSquadMemberClicked")] [FoldoutGroup("Events")] public UnityEvent<SquadData, SquadMember> onSquadMemberButtonClicked = new();
     [FoldoutGroup("Events")] public UnityEvent<SquadData, Equipment, SquadMember> onEquipmentClicked  = new();
+    [FoldoutGroup("Events")] public UnityEvent<SquadData, SquadMember> onSquadMemberPortraitClicked = new();
     
     SquadData squad;
 
-    void Awake(){
+    protected void Awake(){
         objectsPool.onCreateObject.AddListener(OnCreateSquadMemberUI);
     }
 
     void OnCreateSquadMemberUI(GameObject arg0){
         var squadMemberUI = arg0.GetComponent<SquadMemberUI>();
-        squadMemberUI.onClicked.AddListener(OnSquadMemberUIClicked);
+        squadMemberUI.onButtonClicked.AddListener(OnSquadMemberUIClicked);
         squadMemberUI.onEquipmentClicked.AddListener(OnSquadMemberUIEquipmentClicked);
+        squadMemberUI.onPortraitClicked.AddListener(OnSquadMemberUIPortraitClicked);
+    }
+
+    void OnSquadMemberUIPortraitClicked(SquadMember arg0){
+        onSquadMemberPortraitClicked.Invoke(squad, arg0);
     }
 
     void OnSquadMemberUIEquipmentClicked(SquadMember arg0, Equipment arg1){
@@ -27,7 +34,8 @@ public class SquadUI : UIElement{
     }
 
     void OnSquadMemberUIClicked(SquadMember arg0){
-        onSquadMemberClicked.Invoke(squad, arg0);
+        // Debug.Log($"Clicked {arg0.Name} in Squad!");
+        onSquadMemberButtonClicked.Invoke(squad, arg0);
     }
 
     public void ShowSquad(SquadData squadTmp){

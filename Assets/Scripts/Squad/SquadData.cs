@@ -66,9 +66,14 @@ public class SquadMember{
 
     [HideInInspector][FoldoutGroup("Events")] public UnityEvent<SquadMember> onChanged = new UnityEvent<SquadMember>();
     
-    public void RemoveEquipment(Equipment equipment){
-        this.equipment.Remove(equipment);
+    public void RemoveEquipment(Equipment equipmentTmp){
+        this.equipment.Remove(equipmentTmp);
         onChanged.Invoke(this);    
+    }
+
+    public void AddEquipment(Equipment equipment1){
+        equipment.Add(equipment1);
+        onChanged.Invoke(this);
     }
 }
 

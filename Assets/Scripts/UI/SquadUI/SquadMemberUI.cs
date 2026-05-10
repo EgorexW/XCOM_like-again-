@@ -9,21 +9,30 @@ using UnityEngine.UI;
 public class SquadMemberUI : UIElement
 {
     [BoxGroup("References")][Required][SerializeField] TextMeshProUGUI nameText;
-    [FormerlySerializedAs("removeButton")] [BoxGroup("References")][Required][SerializeField] Button button;
+    [BoxGroup("References")][Required][SerializeField] Button button;
+    [BoxGroup("References")][Required][SerializeField] Button portraitButton;
     [BoxGroup("References")][SerializeField] EquipmentTypesUI equipmentUI;
     
-    [FoldoutGroup("Events")] public UnityEvent<SquadMember> onClicked;
+    [FormerlySerializedAs("onClicked")] [FoldoutGroup("Events")] public UnityEvent<SquadMember> onButtonClicked;
     [FoldoutGroup("Events")] public UnityEvent<SquadMember, Equipment> onEquipmentClicked;
+    [FoldoutGroup("Events")] public UnityEvent<SquadMember> onPortraitClicked = new();
     
     SquadMember squadMember;
 
     void Awake(){
         button.onClick.AddListener(OnButtonClicked);
+        portraitButton.onClick.AddListener(OnPortraitButtonClicked);
         equipmentUI?.onEquipmentTypeClicked.AddListener(OnEquipmentTypeClicked);
     }
 
+    void OnPortraitButtonClicked(){
+        // Debug.Log($"Clicked {squadMember.Name}'s portrait!");
+        onPortraitClicked.Invoke(squadMember);
+    }
+
     void OnButtonClicked(){
-        onClicked.Invoke(squadMember);
+        // Debug.Log($"Clicked {squadMember.Name}!");
+        onButtonClicked.Invoke(squadMember);
     }
 
     public void Show(SquadMember squadMemberTmp){

@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class TeamsSystem : MonoBehaviour{
-    readonly List<Team> teams = new();
+    [FoldoutGroup("Debug")][ShowInInspector] readonly List<Team> teams = new();
 
     readonly Dictionary<ICombatObject, Team> combatObjectToTeam = new();
     public IReadOnlyList<Team> Teams  => teams.AsReadOnly();
@@ -54,8 +56,9 @@ public class TeamsSystem : MonoBehaviour{
     }
 }
 
+[Serializable]
 public class Team{
-    readonly List<ICombatObject> combatObjects;
+    [ShowInInspector] readonly List<ICombatObject> combatObjects;
 
     public Team(List<ICombatObject> combatObjects){
         this.combatObjects = combatObjects;

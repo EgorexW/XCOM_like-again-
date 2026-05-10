@@ -8,28 +8,45 @@ public class SquadSelectionUI : UIElement{
     [BoxGroup("References")][Required][SerializeField] SquadUI squadUI;
     [BoxGroup("References")][Required][SerializeField] ResourcesUI resourcesUI;
 
+    Equipment pendingEquipment = null; 
+
     void Awake(){
-        squadUI.ShowSquad(squadSelection.Squad);
-        resourcesUI.ShowResources(squadSelection.Resources);
         squadUI.onEquipmentClicked.AddListener(OnSquadUIEquipmentSquadClicked);
-        squadUI.onSquadMemberClicked.AddListener(OnSquadUISquadMemberSquadClicked);
+        squadUI.onSquadMemberButtonClicked.AddListener(OnSquadUISquadMemberSquadClicked);
         resourcesUI.onSquadMemberClicked.AddListener(OnSquadUISquadMemberResourcesClicked);
         resourcesUI.onEquipmentClicked.AddListener(OnSquadUIEquipmentResourcesClicked);
+        squadUI.onSquadMemberPortraitClicked.AddListener(OnSquadUISquadMemberPortraitClicked);
+    }
+
+    void OnSquadUISquadMemberPortraitClicked(SquadData arg0, SquadMember arg1){
+        if (pendingEquipment == null){
+            return;
+        }
+        squadSelection.AddEquipmentToSquadMemeber(arg1, pendingEquipment);
+        pendingEquipment = null;
+    }
+
+    void Start(){
+        squadUI.ShowSquad(squadSelection.Squad);
+        resourcesUI.ShowResources(squadSelection.Resources);
     }
 
     void OnSquadUIEquipmentSquadClicked(SquadData arg0, Equipment arg1, SquadMember arg2){
-        throw new NotImplementedException();
+        squadSelection.RemoveEquipmentFromSquadMemeber(arg2, arg1);
     }
 
     void OnSquadUISquadMemberSquadClicked(SquadData arg0, SquadMember arg1){
-        throw new NotImplementedException();
+        // Debug.Log($"Clicked {arg1.Name} in Squad! Removing from Squad.");
+        squadSelection.RemoveMemberFromSquad(arg1);
     }
 
     void OnSquadUISquadMemberResourcesClicked(ResourcesData arg0, SquadMember arg1){
-        throw new NotImplementedException();
+        squadSelection.AddMemberToSquad(arg1);
     }
 
     void OnSquadUIEquipmentResourcesClicked(ResourcesData arg0, Equipment arg1){
-        throw new NotImplementedException();
+        pendingEquipment = arg1;
+        
+        Debug.Log($"Grabbed {arg1.name}! Now click a Squad Member to equip.");
     }
 }

@@ -62,8 +62,8 @@ public static class MyExtentions{
         Debug.LogWarning("Invalid Weights");
         return default;
     }
-
-    public static List<T> Copy<T>(this List<T> list){
+    
+    public static List<T> Copy<T>(this IReadOnlyList<T> list){
         return new List<T>(list);
     }
     
