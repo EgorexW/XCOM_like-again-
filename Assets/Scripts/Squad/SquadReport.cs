@@ -5,6 +5,7 @@ using UnityEngine;
 public class SquadReport : MonoBehaviour
 {
     [SerializeField] SquadData squadData;
+    [SerializeField] CombatReportData combatReportData;
 
     void Awake(){
         Report();

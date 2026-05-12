@@ -19,6 +19,7 @@ public class ExplosionEffect : CombatEffect{
             if (!node.LineUnobstructed(targetNode, GridBlockingFlags.ExplosionBlocker)){
                 continue;
             }
+            Debug.Log($"ExplosionEffect hitting node {node.GetPos()}");
             foreach (var obj in node.GetCombatObjects()){
                 var health = obj.GetCombatComponent<HealthComponent>();
                 if (health != null){

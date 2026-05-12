@@ -8,6 +8,7 @@ using UnityEngine.Serialization;
 public class ResourcesData : ScriptableObject{
     [SerializeField] List<SquadMember> members;
     [SerializeField] List<Equipment> equipment;
+    [SerializeField] int money;
 
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData> onChanged = new();
 

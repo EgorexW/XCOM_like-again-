@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = StringKeys.AssetMenuEquipmentTypeBasePath)]
 public class Equipment : ScriptableObject{
     [SerializeField] Sprite icon;
+    [SerializeField] int standardPrice = 100;
     
     [SerializeField][InlineEditor] UnitModifierFactory modifierFactory;
     

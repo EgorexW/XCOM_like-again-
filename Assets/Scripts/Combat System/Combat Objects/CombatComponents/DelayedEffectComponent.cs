@@ -26,7 +26,9 @@ public class DelayedEffectComponent : TurnTakerComponent{
         if (durationLeft <= 0){
             Activate();
         }
-        CompleteTurn();
+        else{
+            CompleteTurn();
+        }
     }
 
     void Activate(){
@@ -37,7 +39,7 @@ public class DelayedEffectComponent : TurnTakerComponent{
         onActivate.Invoke();
         TurnSystem.RemoveTurnTaker(this);
         if (destroy){
-            CombatObject?.Remove();
+            CombatObject!.Remove();
             if (CombatObject == null){
                 Destroy(gameObject);
             }

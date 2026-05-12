@@ -49,7 +49,7 @@ public class TurnSystem : MonoBehaviour {
     }
 
     public void AddTurnTaker(ITurnTaker turnTaker, InsertTurnTakerType insertType){
-        Debug.Log($"Adding {turnTaker} to turn system with insert type {insertType}", this);
+        // Debug.Log($"Adding {turnTaker} to turn system with insert type {insertType}", this);
         
         if (!isRunning) {
             if (insertType == InsertTurnTakerType.Next){

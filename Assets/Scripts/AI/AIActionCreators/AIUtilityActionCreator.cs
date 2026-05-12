@@ -36,8 +36,12 @@ public class AIUtilityActionCreator : AITargetedActionCreator{
         return score;
 
         void Score(ICombatObject enemy, float presentScore){
-            var distanceToEnemy = node.GetDistance(enemy.GetCenterNode());
+            var enemyNode = enemy.GetCenterNode();
+            var distanceToEnemy = node.GetDistance(enemyNode);
             if (distanceToEnemy > range){
+                return;
+            }
+            if (!node.LineUnobstructed(enemyNode, GridBlockingFlags.ExplosionBlocker)){
                 return;
             }
             var mult = (spotOnMultiplier - 1) * (1 - distanceToEnemy / range);

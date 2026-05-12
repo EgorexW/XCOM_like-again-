@@ -2,21 +2,21 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class ObjectiveManager : MonoBehaviour {
+public class CombatObjectiveManager : MonoBehaviour {
     [BoxGroup("References")][Required][SerializeField] CombatSystem combatSystem;
     
     [Required][SerializeField] BattleObjective objective;
 
     void Awake() {
         combatSystem.onCombatStarted.AddListener(OnCombatStarted);
-        combatSystem.onStateChanged.AddListener(CheckBattleState);
+        combatSystem.onStateChanged.AddListener(CheckState);
     }
 
     void OnCombatStarted(){
         objective.Init(combatSystem);
     }
 
-    void CheckBattleState() {
+    void CheckState() {
         objective.UpdateObjective(combatSystem);
         if (objective.IsCompleted){
             EndBattle();
