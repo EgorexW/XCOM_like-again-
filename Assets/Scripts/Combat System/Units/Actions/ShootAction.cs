@@ -5,6 +5,8 @@ public class ShootAction : TargetedUnitAction{
     [SerializeField] int damage = 1;
     [SerializeField] List<UnitModifierFactory> appliedStatusEffects;
     [SerializeField] int ammoCost = 1;
+    [SerializeField] bool ignoreCover;
+    
     public float Damage => damage;
 
     protected override void OnExecute(){
@@ -44,7 +46,7 @@ public class ShootAction : TargetedUnitAction{
         if (!foundTarget){
             result |= TargetValidation.NoValidTarget;
         }
-        if (!unit.GetCenterNode().CanShoot(node)){
+        if (!unit.GetCenterNode().CanShoot(node, ignoreCover: ignoreCover)){
             result |= TargetValidation.NoPath;
         }
         return result;

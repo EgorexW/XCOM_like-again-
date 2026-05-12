@@ -14,7 +14,7 @@ class AddActionUnitModifier : UnitModifier {
     
     UnitAction instantiatedAction; 
 
-    public AddActionUnitModifier(string name, UnitModifierFactory sourceDefinition, GameObject actionPrefab) : base(name, sourceDefinition) {
+    public AddActionUnitModifier(string name, UnitModifierFactory sourceDefinition, GameObject actionPrefab) : base(name) {
         this.actionPrefab = actionPrefab;
     }
 
@@ -27,7 +27,7 @@ class AddActionUnitModifier : UnitModifier {
     void OnActionPerformed(UnitAction performedAction) {
         var usesLeft = instantiatedAction.GetUsesLeft();
         if (usesLeft <= 0) {
-            target.RemoveStatus(this);
+            target.RemoveModifier(this);
         }
     }
     

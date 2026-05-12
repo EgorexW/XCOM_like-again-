@@ -9,6 +9,7 @@ public class Unit : CombatObject{
 
     public IReadOnlyList<UnitAction> UnitActions => unitActions.AsReadOnly();
     public int ActionPoints => actionPoints;
+    public IReadOnlyList<UnitModifier> ActiveStatuses => activeStatuses.AsReadOnly();
 
     [ShowInInspector][HideInEditorMode] List<UnitAction> unitActions = new();
     [SerializeField] [HideInEditorMode] int actionPoints;
@@ -47,7 +48,7 @@ public class Unit : CombatObject{
             actionPoints = 0;
             return;
         }
-        actionPoints -= cost;
+        ChangeActionPoints(-cost);
         onActionPerformed.Invoke(action);
     }
 
@@ -57,7 +58,7 @@ public class Unit : CombatObject{
         // Debug.Log($"Applied status {status.name} to unit {name}");
     }
 
-    public void RemoveStatus(UnitModifier status){
+    public void RemoveModifier(UnitModifier status){
         if (!activeStatuses.Contains(status)){
             return;
         }
@@ -107,5 +108,10 @@ public class Unit : CombatObject{
         }
         unitActions.Remove(action);
         Destroy(action.gameObject);
+    }
+
+    public void ChangeActionPoints(int amount){
+        actionPoints += amount;
+        actionPoints = Mathf.Clamp(actionPoints, 0, int.MaxValue);
     }
 }

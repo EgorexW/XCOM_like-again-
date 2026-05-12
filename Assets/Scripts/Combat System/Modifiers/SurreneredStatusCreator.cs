@@ -11,7 +11,7 @@ public class SurrenderedStatusFactory : UnitModifierFactory{
 class SurrenderedStatus : UnitModifier{
     readonly List<UnitAction> allowedActions;
 
-    public SurrenderedStatus(string name, UnitModifierFactory sourceDefinition, List<UnitAction> allowedActions = null) : base(name, sourceDefinition){
+    public SurrenderedStatus(string name, UnitModifierFactory sourceDefinition, List<UnitAction> allowedActions = null) : base(name){
         allowedActions ??= new List<UnitAction>();
         this.allowedActions = allowedActions;
     }

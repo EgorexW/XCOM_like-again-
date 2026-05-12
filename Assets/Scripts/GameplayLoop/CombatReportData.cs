@@ -4,12 +4,12 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuCombatReportDataBasePath)]
 class CombatReportData : ScriptableObject{
-    CombatReport lastCombatReport;
-    
     List<CombatReport> combatReports  = new();
+    
+    public CombatReport LastCombatReport{ get; private set; }
 
     public void AddCombatReport(CombatReport combatReport){
-        lastCombatReport = combatReport;
+        LastCombatReport = combatReport;
         combatReports.Add(combatReport);
     }
 }

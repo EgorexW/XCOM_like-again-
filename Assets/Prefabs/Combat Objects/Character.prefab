@@ -122,6 +122,7 @@ Transform:
   m_Children:
   - {fileID: 8098224136138543524}
   - {fileID: 7618509184750882892}
+  - {fileID: 4305038907350703088}
   - {fileID: 3423303951772694054}
   m_Father: {fileID: 6400889664588949597}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -217,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 1
+  startingHealth: {x: 1, y: 1}
   onDeathEffects: []
   onHealthChanged:
     m_PersistentCalls:
@@ -272,8 +274,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CombatUnit
   flags: 9
   defaultActionPoints: 2
-  unitActions:
-  - {fileID: 4310955059030211448}
   actionPoints: 0
   onStartTurn:
     m_PersistentCalls:
@@ -320,6 +320,68 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!1001 &709426911896099962
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8948908945039809590}
+    m_Modifications:
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -47.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -51
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611426707319941411, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+      propertyPath: m_Name
+      value: Supress
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+--- !u!4 &4305038907350703088 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3631860729330829194, guid: 00a3a3e3c45a94d4e9e91ec6cf234418, type: 3}
+  m_PrefabInstance: {fileID: 709426911896099962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5288969733723083118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -377,17 +439,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c0b3e0eeb5764a6bb2e41f1ac247938, type: 3}
---- !u!114 &4310955059030211448 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8265696560645433878, guid: 3c0b3e0eeb5764a6bb2e41f1ac247938, type: 3}
-  m_PrefabInstance: {fileID: 5288969733723083118}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02ccf754617e4740a722652f569c2226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MoveAction
 --- !u!4 &8098224136138543524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4108578090434887882, guid: 3c0b3e0eeb5764a6bb2e41f1ac247938, type: 3}

@@ -274,7 +274,7 @@ public static class CombatGridExtensions{
 
     public static bool CanShoot(this CombatGridNode attackerNode, CombatGridNode targetNode,
         float range = Mathf.Infinity, CombatObjectFlags blockingFlags = GridBlockingFlags.ShootingBlocker,
-        List<ICombatObject> objectsToIgnore = null){
+        List<ICombatObject> objectsToIgnore = null, bool ignoreCover = false){
         if (attackerNode.GetDistance(targetNode) > range){
             return false;
         }
@@ -282,10 +282,12 @@ public static class CombatGridExtensions{
         var attackDirections = attackerNode.GetDirections(targetNode);
 
         // Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in directions {attackDirections}");
-        
-        foreach (var direction in attackDirections){
-            if (targetNode.IsProtectedFrom(direction.Opposite())){
-                return false;
+
+        if (!ignoreCover){
+            foreach (var direction in attackDirections){
+                if (targetNode.IsProtectedFrom(direction.Opposite())){
+                    return false;
+                }
             }
         }
 

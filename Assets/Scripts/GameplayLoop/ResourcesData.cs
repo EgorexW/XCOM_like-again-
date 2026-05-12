@@ -57,4 +57,9 @@ public class ResourcesData : ScriptableObject{
         equipment.Remove(equipment1);
         onChanged.Invoke(this);
     }
+
+    public void ChangeMoney(int amount){
+        money += amount;
+        onChanged.Invoke(this);
+    }
 }

@@ -2,9 +2,10 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class SquadReport : MonoBehaviour
+public class CombatReportEffect : MonoBehaviour
 {
     [SerializeField] SquadData squadData;
+    [SerializeField] ResourcesData resourcesData;
     [SerializeField] CombatReportData combatReportData;
 
     void Awake(){
@@ -19,5 +20,7 @@ public class SquadReport : MonoBehaviour
             Debug.Log($"{member.Name} is dead.");
             squadData.RemoveMember(member);
         }
+        var lastCombatReport = combatReportData.LastCombatReport;
+        resourcesData.ChangeMoney(lastCombatReport.payout);
     }
 }
