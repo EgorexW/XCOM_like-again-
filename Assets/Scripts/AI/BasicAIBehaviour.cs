@@ -2,15 +2,17 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class BasicAIBehaviour : AIBehaviour{
-    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator moveActionCreator;
-    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator attackActionCreator;
-    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator reloadActionCreator;
-    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator surrenderActionCreator;
-    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator utilityActionCreator;
+    [BoxGroup("References")] [SerializeField] AIActionCreator moveActionCreator;
+[BoxGroup("References")] [Required] [SerializeField] AIActionCreator attackActionCreator;
+    [BoxGroup("References")] [SerializeField] AIActionCreator reloadActionCreator;
+    [BoxGroup("References")] [SerializeField] AIActionCreator surrenderActionCreator;
+    [BoxGroup("References")] [SerializeField] AIActionCreator utilityActionCreator;
+    [BoxGroup("References")] [SerializeField] AIActionCreator suppressActionCreator;
 
     [BoxGroup("Config")] [SerializeField] float minDisToEnemyToAgress = 13f;
     [BoxGroup("Config")] [SerializeField] float attackWhenExposedChance = 0.5f;
     [BoxGroup("Config")] [SerializeField] float moveScoreToMove = 10;
+    [BoxGroup("Config")] [SerializeField] float suppressChance = 0.25f;
     [BoxGroup("Config")] [SerializeField] float utilityChance = 0.25f;
 
     public override AIAction GetAction(AIContext context){
@@ -24,11 +26,12 @@ public class BasicAIBehaviour : AIBehaviour{
         }
 
         // Actions
-        var moveAction = moveActionCreator.CreateAIAction(context);
-        var attackAction = attackActionCreator.CreateAIAction(context);
-        var reloadAction = reloadActionCreator.CreateAIAction(context);
-        var surrenderAction = surrenderActionCreator.CreateAIAction(context);
-        var utilityAction = utilityActionCreator.CreateAIAction(context);
+        var moveAction = moveActionCreator != null ? moveActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        var attackAction = attackActionCreator != null ? attackActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        var reloadAction = reloadActionCreator != null ? reloadActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        var surrenderAction = surrenderActionCreator != null ? surrenderActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        var utilityAction = utilityActionCreator != null ? utilityActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        var suppressAction = suppressActionCreator != null ? suppressActionCreator.CreateAIAction(context) : AIAction.Invalid;
 
         // Resolution
         var exposed = moveAction.ActionFlags.HasFlag(AIActionFlags.SelfExposed);
@@ -36,17 +39,23 @@ public class BasicAIBehaviour : AIBehaviour{
 
         if (exposed){
             if (enemyExposed){
-                if (Random.value < attackWhenExposedChance){
+                if (Random.value < attackWhenExposedChance && attackAction.Valid){
                     return attackAction;
                 }
             }
             return moveAction.Score > 0 ? moveAction : surrenderAction;
         }
-        if (reloadAction.ActionFlags.HasFlag(AIActionFlags.MagazineEmpty)){
+        if (reloadAction.ActionFlags.HasFlag(AIActionFlags.MagazineEmpty) && reloadAction.Valid){
             return reloadAction;
         }
-        if (enemyExposed){
+        if (enemyExposed && attackAction.Valid){
             return attackAction;
+        }
+        if (Random.value < suppressChance){
+            if (suppressAction.Score > 0){
+                // Debug.Log($"[AI] Decided to Suppress. Target Node: {(suppressAction.targetNode != null ? suppressAction.targetNode.GetPos().ToString() : "NULL")}. Score: {suppressAction.Score}");
+                return suppressAction;
+            }
         }
         if (Random.value < utilityChance){
             if (utilityAction.Score > 0){
