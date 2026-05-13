@@ -55,7 +55,7 @@ public enum AIActionFlags{
     TileExposed = 1 << 1,
     EnemyExposed = 1 << 2,
     MagazineEmpty = 1 << 3,
-    SelfExposed = 1 << 4
+    InDanger = 1 << 4
 }
 
 public class AIContext{

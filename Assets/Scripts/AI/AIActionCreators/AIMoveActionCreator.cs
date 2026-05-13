@@ -18,7 +18,7 @@ public class AIMoveActionCreator : AITargetedActionCreator{
         var validation = base.GetAIAction(context, action);
         validation.SetScore(validation.Score - EvaluateNode(context.unit.GetCenterNode(), context, out var flags));
         if (flags.HasFlag(AIActionFlags.TileExposed)){
-            validation.AddFlag(AIActionFlags.SelfExposed);
+            validation.AddFlag(AIActionFlags.InDanger);
         }
         return validation;
     }
@@ -58,6 +58,9 @@ public class AIMoveActionCreator : AITargetedActionCreator{
             var hazardMult = 1f;
             if (aiHazardScoring != null){
                 hazardMult = aiHazardScoring.GetHazardScore(hazard, context);
+            }
+            if (hazard.HazardFlags.HasFlag(HazardFlags.Soon)){
+                flags |= AIActionFlags.InDanger;
             }
             totalHazardPenalty += hazardPenalty * hazardMult;
         }

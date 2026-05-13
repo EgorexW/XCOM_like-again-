@@ -34,7 +34,7 @@ public class BasicAIBehaviour : AIBehaviour{
         var suppressAction = suppressActionCreator != null ? suppressActionCreator.CreateAIAction(context) : AIAction.Invalid;
 
         // Resolution
-        var exposed = moveAction.ActionFlags.HasFlag(AIActionFlags.SelfExposed);
+        var exposed = moveAction.ActionFlags.HasFlag(AIActionFlags.InDanger);
         var enemyExposed = attackAction.ActionFlags.HasFlag(AIActionFlags.EnemyExposed);
 
         if (exposed){
