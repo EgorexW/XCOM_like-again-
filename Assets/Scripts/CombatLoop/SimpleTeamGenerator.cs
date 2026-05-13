@@ -14,7 +14,7 @@ public class SimpleTeamGenerator : TeamGenerator{
         for (var i = 0; i < teamCount; i++){
             combatObjects.Add(AddTeamMember(teamPrefabs.Random()));
         }
-        return new Team(combatObjects);
+        return new Team(combatObjects, teamFlag);
     }
 
     ICombatObject AddTeamMember(GameObject teamPrefab){

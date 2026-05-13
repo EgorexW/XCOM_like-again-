@@ -12,7 +12,7 @@ public class SquadTeamGenerator : TeamGenerator{
         foreach (var member in squadData.SquadMembers){
             combatObjects.Add(AddTeamMember(member));
         }
-        return new Team(combatObjects);
+        return new Team(combatObjects, teamFlag);
     }
     
     ICombatObject AddTeamMember(SquadMember member){

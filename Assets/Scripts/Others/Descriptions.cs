@@ -1,6 +1,7 @@
 public static class Descriptions{
     public static string GetDescription(this UnitAction unitAction){
-        var description = unitAction.ActionInfo.Description;
+        var description = unitAction.ActionInfo.Description.Trim();
+        description += "\n";
         description += $"Cost: {unitAction.GetCost()}";
         if (unitAction is TargetedUnitAction targetedUnitAction){
             description += $" Range: {targetedUnitAction.Range}";

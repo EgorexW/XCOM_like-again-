@@ -4,6 +4,14 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[Flags]
+public enum TeamFlag {
+    None = 0,
+    Player = 1 << 0,
+    Enemy = 1 << 1,
+}
+
+
 public class TeamsSystem : MonoBehaviour{
     [FoldoutGroup("Debug")][ShowInInspector] readonly List<Team> teams = new();
 
@@ -59,9 +67,12 @@ public class TeamsSystem : MonoBehaviour{
 [Serializable]
 public class Team{
     [ShowInInspector] readonly List<ICombatObject> combatObjects;
+    
+    public TeamFlag Flags { get; private set; }
 
-    public Team(List<ICombatObject> combatObjects){
+    public Team(List<ICombatObject> combatObjects, TeamFlag flags = TeamFlag.None){
         this.combatObjects = combatObjects;
+        this.Flags = flags;
     }
 
     public IReadOnlyList<ICombatObject> CombatObjects => combatObjects.AsReadOnly();

@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CombatReportEffect : MonoBehaviour
 {
-    [SerializeField] SquadData squadData;
-    [SerializeField] ResourcesData resourcesData;
-    [SerializeField] CombatReportData combatReportData;
+    [SerializeField][Required] SquadData squadData;
+    [SerializeField][Required] ResourcesData resourcesData;
+    [SerializeField][Required] CombatReportData combatReportData;
 
     void Awake(){
         Report();
