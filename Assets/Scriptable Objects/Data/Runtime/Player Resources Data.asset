@@ -13,7 +13,14 @@ MonoBehaviour:
   m_Name: Player Resources Data
   m_EditorClassIdentifier: Assembly-CSharp::PlayerResourcesData
   members: []
-  equipment: []
+  equipment:
+  - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
+  - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
+  - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
+  - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
+  - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
+  - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
+  money: 99
   onChanged:
     m_PersistentCalls:
       m_Calls: []

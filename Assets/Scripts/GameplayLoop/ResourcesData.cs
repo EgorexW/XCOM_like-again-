@@ -13,6 +13,7 @@ public class ResourcesData : ScriptableObject{
 
     public IReadOnlyList<SquadMember> Members => members;
     public IReadOnlyList<Equipment> Equipment => equipment;
+    public int Money => money;
 
     public void DeepCopy(ResourcesData init){
         Clear();

@@ -9,6 +9,7 @@ public class Equipment : ScriptableObject{
     [SerializeField] [InlineEditor] UnitModifierFactory modifierFactory;
 
     public Sprite Icon => icon;
+    public int StandardPrice => standardPrice;
 
     public UnitModifier GetModifier(){
         return modifierFactory.Create();
