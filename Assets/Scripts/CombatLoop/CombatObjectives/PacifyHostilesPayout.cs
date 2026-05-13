@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PacifyHostilesPayoutObjective : PayoutObjective {
     [SerializeField] private int payoutPerPacifiedHostile = 100;
+    
     [SerializeField] private TeamFlag targetTeamFlag = TeamFlag.Enemy;
 
     public override void UpdateObjective(CombatSystem combatSystem) {
@@ -16,6 +17,6 @@ public class PacifyHostilesPayoutObjective : PayoutObjective {
             }
         }
         
-        Payout = pacifiedCount * payoutPerPacifiedHostile;
+        SetPayout(pacifiedCount * payoutPerPacifiedHostile);
     }
 }

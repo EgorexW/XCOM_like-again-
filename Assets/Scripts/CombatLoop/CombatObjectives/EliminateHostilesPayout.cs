@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EliminateHostilesPayoutObjective : PayoutObjective {
     [SerializeField] private int payoutPerEliminatedHostile = 50;
+    
     [SerializeField] private TeamFlag targetTeamFlag = TeamFlag.Enemy;
 
     private int initialHostileCount;
@@ -30,6 +31,6 @@ public class EliminateHostilesPayoutObjective : PayoutObjective {
         // Ensure we don't drop below zero in case of unexpected additions to enemy teams
         if (eliminatedCount < 0) eliminatedCount = 0;
         
-        Payout = eliminatedCount * payoutPerEliminatedHostile;
+        SetPayout(eliminatedCount * payoutPerEliminatedHostile);
     }
 }

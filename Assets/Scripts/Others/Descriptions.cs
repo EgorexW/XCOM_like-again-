@@ -28,4 +28,10 @@ public static class Descriptions{
         }
         return description.TrimStart();
     }
+
+    public static string GetDescription(this PayoutObjective objective){
+        var description = objective.Description.Trim();
+        description += $": {objective.Payout}";
+        return description.Trim();
+    }
 }

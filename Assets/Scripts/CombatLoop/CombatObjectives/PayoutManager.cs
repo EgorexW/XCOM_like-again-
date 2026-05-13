@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PayoutManager : MonoBehaviour {
     [BoxGroup("References")][Required][SerializeField] CombatSystem combatSystem;
     
     List<PayoutObjective> objectives = new();
+    public IReadOnlyList<PayoutObjective> Objectives => objectives.AsReadOnly();
 
     void Awake() {
         combatSystem.onCombatStarted.AddListener(OnCombatStarted);
@@ -39,11 +41,23 @@ public class PayoutManager : MonoBehaviour {
 }
 
 public abstract class PayoutObjective : MonoBehaviour{
-    public int Payout { get; protected set; }
+    [SerializeField] private string description;
+    
+    public string Description => description;
+    
+    [FoldoutGroup("Events")] public UnityEvent<int> onPayoutChanged = new();
+    
+    private int payout;
+    public int Payout => payout;
     
     public virtual void Init(CombatSystem combatSystem){
         
     }
 
     public abstract void UpdateObjective(CombatSystem combatSystem);
+    
+    protected void SetPayout(int newPayout){
+        payout = newPayout;
+        onPayoutChanged.Invoke(payout);
+    }
 }
