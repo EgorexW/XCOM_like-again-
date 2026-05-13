@@ -10,11 +10,11 @@ class CombatUnitUI : CombatObjectUI{
     }
 
     public override void SetCombatObject(ICombatObject combatObject){
-            if (combatObject is Unit unit){
-                Show(unit);
-            }
-            else{
-                Hide();
-            }
+        if (combatObject is Unit unit){
+            Show(unit);
+        }
+        else{
+            Hide();
+        }
     }
 }

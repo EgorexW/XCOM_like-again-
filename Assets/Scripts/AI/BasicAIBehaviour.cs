@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BasicAIBehaviour : AIBehaviour{
     [BoxGroup("References")] [SerializeField] AIActionCreator moveActionCreator;
-[BoxGroup("References")] [Required] [SerializeField] AIActionCreator attackActionCreator;
+    [BoxGroup("References")] [Required] [SerializeField] AIActionCreator attackActionCreator;
     [BoxGroup("References")] [SerializeField] AIActionCreator reloadActionCreator;
     [BoxGroup("References")] [SerializeField] AIActionCreator surrenderActionCreator;
     [BoxGroup("References")] [SerializeField] AIActionCreator utilityActionCreator;
@@ -29,9 +29,15 @@ public class BasicAIBehaviour : AIBehaviour{
         var moveAction = moveActionCreator != null ? moveActionCreator.CreateAIAction(context) : AIAction.Invalid;
         var attackAction = attackActionCreator != null ? attackActionCreator.CreateAIAction(context) : AIAction.Invalid;
         var reloadAction = reloadActionCreator != null ? reloadActionCreator.CreateAIAction(context) : AIAction.Invalid;
-        var surrenderAction = surrenderActionCreator != null ? surrenderActionCreator.CreateAIAction(context) : AIAction.Invalid;
-        var utilityAction = utilityActionCreator != null ? utilityActionCreator.CreateAIAction(context) : AIAction.Invalid;
-        var suppressAction = suppressActionCreator != null ? suppressActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        var surrenderAction = surrenderActionCreator != null
+            ? surrenderActionCreator.CreateAIAction(context)
+            : AIAction.Invalid;
+        var utilityAction = utilityActionCreator != null
+            ? utilityActionCreator.CreateAIAction(context)
+            : AIAction.Invalid;
+        var suppressAction = suppressActionCreator != null
+            ? suppressActionCreator.CreateAIAction(context)
+            : AIAction.Invalid;
 
         // Resolution
         var exposed = moveAction.ActionFlags.HasFlag(AIActionFlags.InDanger);

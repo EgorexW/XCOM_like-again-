@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Nrjwolf.Tools.AttachAttributes;
 using Sirenix.OdinInspector;
@@ -10,7 +9,7 @@ public abstract class CombatObjectUI : UIElement{
 
 class MainCombatObjectUI : CombatObjectUI{
     [BoxGroup("References")] [GetComponent] [SerializeField] RectTransform rectTransform;
-    
+
     List<CombatObjectUI> uiChildren;
 
     void Awake(){
@@ -21,8 +20,6 @@ class MainCombatObjectUI : CombatObjectUI{
     public override void SetCombatObject(ICombatObject combatObject){
         var screenPos = Camera.main.WorldToScreenPoint(combatObject.GetCenter());
         rectTransform.position = screenPos;
-        foreach (var ui in uiChildren){
-            ui.SetCombatObject(combatObject);
-        }
+        foreach (var ui in uiChildren) ui.SetCombatObject(combatObject);
     }
 }

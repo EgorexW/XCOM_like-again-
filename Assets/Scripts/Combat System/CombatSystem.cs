@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,11 +13,11 @@ public class CombatSystem : MonoBehaviour{
 
     [FoldoutGroup("Events")] public UnityEvent onCombatStarted;
     [FoldoutGroup("Events")] public UnityEvent onCombatEnded;
-    
+
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onCombatObjectAdded;
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onCombatObjectRemoved;
 
-    [FoldoutGroup("Events")] public UnityEvent onStateChanged; 
+    [FoldoutGroup("Events")] public UnityEvent onStateChanged;
 
     public IReadOnlyList<ICombatObject> CombatObjects => combatObjects.AsReadOnly();
     public CombatGrid CombatGrid => combatGrid;

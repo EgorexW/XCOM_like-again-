@@ -237,7 +237,7 @@ public static class CombatGridExtensions{
 
         return primaryGrid;
     }
-    
+
     public static CombatSystem CombatSystem(this CombatGridNode node){
         return node.grid.combatSystem;
     }
@@ -284,19 +284,17 @@ public static class CombatGridExtensions{
         // Debug.Log($"Attacking from {attackerNode.x},{attackerNode.y} to {targetNode.x},{targetNode.y} in directions {attackDirections}");
 
         if (!ignoreCover){
-            foreach (var direction in attackDirections){
+            foreach (var direction in attackDirections)
                 if (targetNode.IsProtectedFrom(direction.Opposite())){
                     return false;
                 }
-            }
         }
 
         var nodesInBetween = targetNode.GetNodesInBetween(attackerNode);
-        foreach (var node in nodesInBetween){
+        foreach (var node in nodesInBetween)
             if (node.HasFlag(blockingFlags, objectsToIgnore)){
                 return false;
             }
-        }
 
         return true;
     }
@@ -315,7 +313,8 @@ public static class CombatGridExtensions{
         }
         var prefabCombatObject = prefabToSpawn.GetComponent<ICombatObject>();
         if (!node.CanAcceptObject(prefabCombatObject)){
-            Debug.LogWarning($"Cannot spawn {prefabCombatObject.Name} at node {node.x},{node.y} because it cannot accept the object.",
+            Debug.LogWarning(
+                $"Cannot spawn {prefabCombatObject.Name} at node {node.x},{node.y} because it cannot accept the object.",
                 prefabToSpawn);
             return null;
         }
@@ -326,7 +325,7 @@ public static class CombatGridExtensions{
         }
         var spawnedObj = Object.Instantiate(prefabToSpawn, spawnParent);
         var combatObject = spawnedObj.GetComponent<ICombatObject>();
-        node.CombatSystem().AddCombatObject(combatObject, new List<CombatGridNode>(){ node });
+        node.CombatSystem().AddCombatObject(combatObject, new List<CombatGridNode>{ node });
         return combatObject;
     }
 }

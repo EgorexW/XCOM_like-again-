@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class SquadSelection : MonoBehaviour {
+public class SquadSelection : MonoBehaviour{
     [SerializeField] SquadData squadData;
     [FormerlySerializedAs("playerResourcesData")] [SerializeField] ResourcesData resourcesData;
 
@@ -17,9 +17,7 @@ public class SquadSelection : MonoBehaviour {
     }
 
     void EmptyMember(SquadMember member){
-        foreach (var equipment in member.Equipment.Copy()){
-            RemoveEquipmentFromSquadMemeber(member, equipment);
-        }
+        foreach (var equipment in member.Equipment.Copy()) RemoveEquipmentFromSquadMemeber(member, equipment);
     }
 
     public SquadData Squad => squadData;

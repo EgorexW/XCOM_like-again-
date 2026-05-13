@@ -1,4 +1,3 @@
-using System;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -6,17 +5,16 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class SquadMemberUI : UIElement
-{
-    [BoxGroup("References")][Required][SerializeField] TextMeshProUGUI nameText;
-    [BoxGroup("References")][Required][SerializeField] Button button;
-    [BoxGroup("References")][Required][SerializeField] Button portraitButton;
-    [BoxGroup("References")][SerializeField] EquipmentTypesUI equipmentUI;
-    
+public class SquadMemberUI : UIElement{
+    [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI nameText;
+    [BoxGroup("References")] [Required] [SerializeField] Button button;
+    [BoxGroup("References")] [Required] [SerializeField] Button portraitButton;
+    [BoxGroup("References")] [SerializeField] EquipmentTypesUI equipmentUI;
+
     [FormerlySerializedAs("onClicked")] [FoldoutGroup("Events")] public UnityEvent<SquadMember> onButtonClicked;
     [FoldoutGroup("Events")] public UnityEvent<SquadMember, Equipment> onEquipmentClicked;
     [FoldoutGroup("Events")] public UnityEvent<SquadMember> onPortraitClicked = new();
-    
+
     SquadMember squadMember;
 
     void Awake(){
@@ -58,7 +56,7 @@ public class SquadMemberUI : UIElement
     }
 
     void UpdateSquadMember(SquadMember arg0){
-        UpdateSquadMember();        
+        UpdateSquadMember();
     }
 
     void UpdateSquadMember(){

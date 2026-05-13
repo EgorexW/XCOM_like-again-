@@ -23,10 +23,10 @@ public enum CombatObjectFlags{
     Wall = 1 << 1,
     [InspectorName("LoS Blocker")] LoSBlocker = 1 << 2,
     MovementBlocker = 1 << 3,
-    Pacified =  1 << 4,
+    Pacified = 1 << 4,
 
     [InspectorName("Presets/Standard Wall")] StandardWall = Object | Wall | LoSBlocker | MovementBlocker,
-    [InspectorName("Presets/Standard Object")] StandardObject = Object | LoSBlocker | MovementBlocker,
+    [InspectorName("Presets/Standard Object")] StandardObject = Object | LoSBlocker | MovementBlocker
 }
 
 

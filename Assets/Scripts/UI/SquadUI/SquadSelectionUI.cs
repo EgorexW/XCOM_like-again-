@@ -1,14 +1,13 @@
-using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class SquadSelectionUI : UIElement{
-    [BoxGroup("References")][Required][SerializeField] SquadSelection squadSelection;
-    
-    [BoxGroup("References")][Required][SerializeField] SquadUI squadUI;
-    [BoxGroup("References")][Required][SerializeField] ResourcesUI resourcesUI;
+    [BoxGroup("References")] [Required] [SerializeField] SquadSelection squadSelection;
 
-    Equipment pendingEquipment = null; 
+    [BoxGroup("References")] [Required] [SerializeField] SquadUI squadUI;
+    [BoxGroup("References")] [Required] [SerializeField] ResourcesUI resourcesUI;
+
+    Equipment pendingEquipment;
 
     void Awake(){
         squadUI.onEquipmentClicked.AddListener(OnSquadUIEquipmentSquadClicked);
@@ -46,7 +45,7 @@ public class SquadSelectionUI : UIElement{
 
     void OnSquadUIEquipmentResourcesClicked(ResourcesData arg0, Equipment arg1){
         pendingEquipment = arg1;
-        
+
         Debug.Log($"Grabbed {arg1.name}! Now click a Squad Member to equip.");
     }
 }

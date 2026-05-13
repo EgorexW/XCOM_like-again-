@@ -4,25 +4,21 @@ using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuSquadDataBasePath)]
-public class SquadData : ScriptableObject {
-    [SerializeField] List<SquadMember> squadMembers = new List<SquadMember>();
+public class SquadData : ScriptableObject{
+    [SerializeField] List<SquadMember> squadMembers = new();
 
-    [FoldoutGroup("Events")]
-    public UnityEvent<SquadData> onChanged;
+    [FoldoutGroup("Events")] public UnityEvent<SquadData> onChanged;
 
     public IReadOnlyList<SquadMember> SquadMembers => squadMembers.AsReadOnly();
-    
-    public void Clear() {
-        foreach (var squadMember in squadMembers.Copy()){
-            RemoveMember(squadMember);
-        }
+
+    public void Clear(){
+        foreach (var squadMember in squadMembers.Copy()) RemoveMember(squadMember);
         onChanged.Invoke(this);
     }
-    
-    public void AddMember(SquadMember member) {
+
+    public void AddMember(SquadMember member){
         squadMembers.Add(member);
         member.onChanged.AddListener(OnMemberChanged);
         onChanged.Invoke(this);
@@ -34,9 +30,7 @@ public class SquadData : ScriptableObject {
 
     public void DeepCopy(SquadData initSquadData){
         Clear();
-        foreach (var member in initSquadData.SquadMembers){
-            AddMember(member.Copy());
-        }
+        foreach (var member in initSquadData.SquadMembers) AddMember(member.Copy());
     }
 
     public void RemoveMember(SquadMember member){
@@ -51,24 +45,24 @@ public class SquadMember{
     [SerializeField] string name;
     [SerializeField] GameObject combatPrefab;
     [SerializeField] List<Equipment> equipment;
-    
+
     [HideInEditorMode] public bool alive = true;
-    
+
     public SquadMember(string name, GameObject combatPrefabTmp, List<Equipment> equipmentTmp){
         this.name = name;
-        this.combatPrefab = combatPrefabTmp;
+        combatPrefab = combatPrefabTmp;
         equipment = equipmentTmp;
     }
-    
+
     public string Name => name;
     public GameObject CombatPrefab => combatPrefab;
     public IReadOnlyList<Equipment> Equipment => equipment;
 
-    [HideInInspector][FoldoutGroup("Events")] public UnityEvent<SquadMember> onChanged = new UnityEvent<SquadMember>();
-    
+    [HideInInspector] [FoldoutGroup("Events")] public UnityEvent<SquadMember> onChanged = new();
+
     public void RemoveEquipment(Equipment equipmentTmp){
-        this.equipment.Remove(equipmentTmp);
-        onChanged.Invoke(this);    
+        equipment.Remove(equipmentTmp);
+        onChanged.Invoke(this);
     }
 
     public void AddEquipment(Equipment equipment1){

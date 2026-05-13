@@ -25,7 +25,7 @@ public class AIAction{
         this.action = action;
         this.targetNode = targetNode;
         this.score = score;
-        this.ActionFlags = actionFlags;
+        ActionFlags = actionFlags;
     }
 
     public void SetScore(float newScore){

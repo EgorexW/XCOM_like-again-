@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
 public abstract class UnitModifier{
@@ -6,10 +5,10 @@ public abstract class UnitModifier{
 
     public readonly string Name;
 
-    public UnityEvent<UnitModifier> onRemoved = new UnityEvent<UnitModifier>();
+    public UnityEvent<UnitModifier> onRemoved = new();
 
     protected UnitModifier(string name){
-        this.Name = name;
+        Name = name;
     }
 
     public virtual void OnApplied(Unit targetTmp){

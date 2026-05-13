@@ -1,14 +1,11 @@
-using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class ResourcesUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool membersPool;
     [BoxGroup("References")] [Required] [SerializeField] EquipmentTypesUI equipmentUI;
-    
+
     ResourcesData resources;
 
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData, SquadMember> onSquadMemberClicked = new();
@@ -41,7 +38,7 @@ public class ResourcesUI : UIElement{
     void UpdateResources(){
         var count = resources.Members.Count;
         membersPool.SetCount(count);
-        for (int i = 0; i < count; i++){
+        for (var i = 0; i < count; i++){
             var member = resources.Members[i];
             var obj = membersPool.GetActiveObject(i);
             var resourcesSlotUI = obj.GetComponent<SquadMemberUI>();

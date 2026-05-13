@@ -62,11 +62,11 @@ public static class MyExtentions{
         Debug.LogWarning("Invalid Weights");
         return default;
     }
-    
+
     public static List<T> Copy<T>(this IReadOnlyList<T> list){
         return new List<T>(list);
     }
-    
+
     public static float Random(this Vector2 vector){
         return UnityEngine.Random.Range(vector.x, vector.y);
     }

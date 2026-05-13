@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public static class General{
     public const int Iterationlimit = 10;
@@ -40,7 +41,7 @@ public static class General{
     }
 
     public static Vector2 RandomPointOnCircle(){
-        var angle = UnityEngine.Random.value * 2 * Mathf.PI;
+        var angle = Random.value * 2 * Mathf.PI;
         return new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
     }
 
@@ -191,8 +192,8 @@ public static class General{
         Vector2 pos = collider2D.bounds.center;
         for (var i = 0; i < Iterationlimit; i++){
             var posTmp = new Vector2(
-                UnityEngine.Random.Range(collider2D.bounds.min.x, collider2D.bounds.max.x),
-                UnityEngine.Random.Range(collider2D.bounds.min.y, collider2D.bounds.max.y)
+                Random.Range(collider2D.bounds.min.x, collider2D.bounds.max.x),
+                Random.Range(collider2D.bounds.min.y, collider2D.bounds.max.y)
             );
             if (!collider2D.OverlapPoint(posTmp)){
                 continue;

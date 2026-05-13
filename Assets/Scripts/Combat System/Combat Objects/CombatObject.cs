@@ -11,7 +11,7 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     public GameObject GameObject => gameObject;
     public CombatObjectFlags Flags => flags;
 
-    public string Name { get; set; }
+    public string Name{ get; set; }
 
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
 
@@ -49,8 +49,8 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     public void RemoveFlag(CombatObjectFlags flagsToRemove){
         flags &= ~flagsToRemove;
     }
-    
-     public void AddFlag(CombatObjectFlags flagsToAdd){
-         flags |= flagsToAdd;
-     }
+
+    public void AddFlag(CombatObjectFlags flagsToAdd){
+        flags |= flagsToAdd;
+    }
 }

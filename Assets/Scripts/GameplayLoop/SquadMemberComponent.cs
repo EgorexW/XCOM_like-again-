@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class SquadMemberComponent : CombatComponent
-{
+public class SquadMemberComponent : CombatComponent{
     SquadMember member;
 
     public void SetMember(SquadMember member){

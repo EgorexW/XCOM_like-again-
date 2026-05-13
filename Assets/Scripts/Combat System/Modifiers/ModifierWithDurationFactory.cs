@@ -12,7 +12,7 @@ public class ModifierWithDuration : UnitModifier{
     protected ModifierWithDuration(string name, int durationTmp) : base(name){
         duration = durationTmp;
     }
-    
+
 
     public override void OnApplied(Unit targetTmp){
         base.OnApplied(targetTmp);

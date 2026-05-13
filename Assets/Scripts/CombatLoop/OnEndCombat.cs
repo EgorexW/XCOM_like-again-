@@ -2,13 +2,12 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class OnEndCombat : MonoBehaviour
-{
-    [BoxGroup("References")][Required][SerializeField] CombatSystem combatSystem;
+public class OnEndCombat : MonoBehaviour{
+    [BoxGroup("References")] [Required] [SerializeField] CombatSystem combatSystem;
     [BoxGroup("References")] [Required] [SerializeField] CombatReportCreator combatReportCreator;
     [SerializeField] string afterCombatScene;
-    
-    void Awake() {
+
+    void Awake(){
         combatSystem.onCombatEnded.AddListener(OnCombatEnded);
     }
 
@@ -16,5 +15,5 @@ public class OnEndCombat : MonoBehaviour
         Debug.Log("Combat Ended!");
         combatReportCreator.CreateReport();
         SceneManager.LoadScene(afterCombatScene);
-    }  
+    }
 }

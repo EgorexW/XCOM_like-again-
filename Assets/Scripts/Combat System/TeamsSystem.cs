@@ -5,18 +5,18 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Flags]
-public enum TeamFlag {
+public enum TeamFlag{
     None = 0,
     Player = 1 << 0,
-    Enemy = 1 << 1,
+    Enemy = 1 << 1
 }
 
 
 public class TeamsSystem : MonoBehaviour{
-    [FoldoutGroup("Debug")][ShowInInspector] readonly List<Team> teams = new();
+    [FoldoutGroup("Debug")] [ShowInInspector] readonly List<Team> teams = new();
 
     readonly Dictionary<ICombatObject, Team> combatObjectToTeam = new();
-    public IReadOnlyList<Team> Teams  => teams.AsReadOnly();
+    public IReadOnlyList<Team> Teams => teams.AsReadOnly();
 
     public void AddTeam(Team team){
         teams.Add(team);
@@ -49,7 +49,7 @@ public class TeamsSystem : MonoBehaviour{
         var team = GetTeam(combatObject);
         return GetEnemies(team);
     }
-    
+
     public List<ICombatObject> GetEnemies(Team team){
         var enemyTeams = GetEnemyTeams(team);
         var enemies = new List<ICombatObject>();
@@ -67,16 +67,16 @@ public class TeamsSystem : MonoBehaviour{
 [Serializable]
 public class Team{
     [ShowInInspector] readonly List<ICombatObject> combatObjects;
-    
-    public TeamFlag Flags { get; private set; }
+
+    public TeamFlag Flags{ get; private set; }
 
     public Team(List<ICombatObject> combatObjects, TeamFlag flags = TeamFlag.None){
         this.combatObjects = combatObjects;
-        this.Flags = flags;
+        Flags = flags;
     }
 
     public IReadOnlyList<ICombatObject> CombatObjects => combatObjects.AsReadOnly();
-    public bool Empty  => combatObjects.Count == 0;
+    public bool Empty => combatObjects.Count == 0;
 
     public void RemoveCombatObject(ICombatObject arg0){
         combatObjects.Remove(arg0);

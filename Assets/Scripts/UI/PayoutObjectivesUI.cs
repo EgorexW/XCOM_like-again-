@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class PayoutObjectivesUI : UIElement {
+public class PayoutObjectivesUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] PayoutManager payoutManager;
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool objectsPool;
 
@@ -12,11 +9,11 @@ public class PayoutObjectivesUI : UIElement {
         Show();
     }
 
-    public override void Show() {
+    public override void Show(){
         base.Show();
         var objectives = payoutManager.Objectives;
         objectsPool.SetCount(objectives.Count);
-        for (var i = 0; i < objectives.Count; i++) {
+        for (var i = 0; i < objectives.Count; i++){
             var objectiveUI = objectsPool.GetActiveObject(i).GetComponent<PayoutObjectiveUI>();
             objectiveUI.Show(objectives[i]);
         }

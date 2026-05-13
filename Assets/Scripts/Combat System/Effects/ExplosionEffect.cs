@@ -6,7 +6,7 @@ public class ExplosionEffect : CombatEffect{
     [SerializeField] float range = 1;
     [SerializeField] int damage = 1;
     [SerializeField] List<UnitModifierFactory> statusEffects;
-    [SerializeField][BoxGroup("Spawn Settings")] GameObject prefabToSpawn;
+    [SerializeField] [BoxGroup("Spawn Settings")] GameObject prefabToSpawn;
 
     public float Range => range;
 

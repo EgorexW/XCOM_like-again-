@@ -5,9 +5,9 @@ using UnityEngine;
 public class Equipment : ScriptableObject{
     [SerializeField] Sprite icon;
     [SerializeField] int standardPrice = 100;
-    
-    [SerializeField][InlineEditor] UnitModifierFactory modifierFactory;
-    
+
+    [SerializeField] [InlineEditor] UnitModifierFactory modifierFactory;
+
     public Sprite Icon => icon;
 
     public UnitModifier GetModifier(){

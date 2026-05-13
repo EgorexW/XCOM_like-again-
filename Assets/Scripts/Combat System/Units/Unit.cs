@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -12,7 +11,7 @@ public class Unit : CombatObject{
     public int ActionPoints => actionPoints;
     public IReadOnlyList<UnitModifier> ActiveStatuses => activeStatuses.AsReadOnly();
 
-    [ShowInInspector][HideInEditorMode] List<UnitAction> unitActions = new();
+    [ShowInInspector] [HideInEditorMode] List<UnitAction> unitActions = new();
     [SerializeField] [HideInEditorMode] int actionPoints;
 
     readonly List<UnitModifier> activeStatuses = new();
@@ -25,9 +24,7 @@ public class Unit : CombatObject{
         base.Init();
         unitActions.Clear();
         var actionsTmp = GetComponentsInChildren<UnitAction>().ToList();
-        foreach (var action in actionsTmp){
-            AddAction(action);
-        }
+        foreach (var action in actionsTmp) AddAction(action);
         onActionPerformed.AddListener(_ => CombatSystem.StateChanged());
     }
 

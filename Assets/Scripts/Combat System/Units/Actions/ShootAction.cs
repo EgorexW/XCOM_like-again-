@@ -6,7 +6,7 @@ public class ShootAction : TargetedUnitAction{
     [SerializeField] List<UnitModifierFactory> appliedStatusEffects;
     [SerializeField] int ammoCost = 1;
     [SerializeField] bool ignoreCover;
-    
+
     public float Damage => damage;
 
     protected override void OnExecute(){

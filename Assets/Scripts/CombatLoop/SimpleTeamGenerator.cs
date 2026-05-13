@@ -11,9 +11,7 @@ public class SimpleTeamGenerator : TeamGenerator{
 
     public override Team GenerateTeam(){
         var combatObjects = new List<ICombatObject>();
-        for (var i = 0; i < teamCount; i++){
-            combatObjects.Add(AddTeamMember(teamPrefabs.Random()));
-        }
+        for (var i = 0; i < teamCount; i++) combatObjects.Add(AddTeamMember(teamPrefabs.Random()));
         return new Team(combatObjects, teamFlag);
     }
 

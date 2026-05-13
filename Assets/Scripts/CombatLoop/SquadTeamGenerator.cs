@@ -3,18 +3,16 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class SquadTeamGenerator : TeamGenerator{
-    [BoxGroup("References")][Required][SerializeField] SquadData squadData;
-    
+    [BoxGroup("References")] [Required] [SerializeField] SquadData squadData;
+
     [SerializeField] UnitsTurnTaker turnTaker;
-    
+
     public override Team GenerateTeam(){
         var combatObjects = new List<ICombatObject>();
-        foreach (var member in squadData.SquadMembers){
-            combatObjects.Add(AddTeamMember(member));
-        }
+        foreach (var member in squadData.SquadMembers) combatObjects.Add(AddTeamMember(member));
         return new Team(combatObjects, teamFlag);
     }
-    
+
     ICombatObject AddTeamMember(SquadMember member){
         var gameObj = Instantiate(member.CombatPrefab, transform);
         var combatObject = gameObj.GetComponent<ICombatObject>();

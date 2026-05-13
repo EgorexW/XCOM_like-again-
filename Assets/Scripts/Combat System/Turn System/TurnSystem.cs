@@ -1,30 +1,28 @@
-using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TurnSystem : MonoBehaviour {
-    
-    private readonly List<ITurnTaker> turnTakers = new();
-    
-    private int currentIndex = 0;
-    private bool isRunning = false;   
-    private bool isTurnActive = false; 
+public class TurnSystem : MonoBehaviour{
+    readonly List<ITurnTaker> turnTakers = new();
+
+    int currentIndex;
+    bool isRunning;
+    bool isTurnActive;
 
     public int TurnTakersCount => turnTakers.Count;
 
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn;
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn;
 
-    private void Update() {
-        if (isRunning && !isTurnActive && TurnTakersCount > 0) {
+    void Update(){
+        if (isRunning && !isTurnActive && TurnTakersCount > 0){
             NextTurn();
         }
     }
 
-    public void StartSystem() {
-        if (TurnTakersCount == 0) {
+    public void StartSystem(){
+        if (TurnTakersCount == 0){
             Debug.LogWarning("Tried to start battle with 0 turn takers.", this);
             return;
         }
@@ -32,16 +30,16 @@ public class TurnSystem : MonoBehaviour {
         StartTurn();
     }
 
-    public void Stop() {
-        if (isTurnActive) {
+    public void Stop(){
+        if (isTurnActive){
             EndTurn();
         }
-        
+
         isRunning = false;
     }
 
-    public ITurnTaker GetCurrentTurnTaker() {
-        if (isRunning && currentIndex >= 0 && currentIndex < turnTakers.Count) {
+    public ITurnTaker GetCurrentTurnTaker(){
+        if (isRunning && currentIndex >= 0 && currentIndex < turnTakers.Count){
             return turnTakers[currentIndex];
         }
         Debug.LogWarning("GetCurrentTurnTaker called but turn system is not running or index is out of range.", this);
@@ -50,20 +48,22 @@ public class TurnSystem : MonoBehaviour {
 
     public void AddTurnTaker(ITurnTaker turnTaker, InsertTurnTakerType insertType){
         // Debug.Log($"Adding {turnTaker} to turn system with insert type {insertType}", this);
-        
-        if (!isRunning) {
+
+        if (!isRunning){
             if (insertType == InsertTurnTakerType.Next){
                 turnTakers.Insert(0, turnTaker);
             }
             else if (insertType == InsertTurnTakerType.Last){
                 turnTakers.Add(turnTaker);
             }
-        } else {
-            if (insertType == InsertTurnTakerType.Next) {
+        }
+        else{
+            if (insertType == InsertTurnTakerType.Next){
                 turnTakers.Insert(currentIndex + 1, turnTaker);
-            } else if (insertType == InsertTurnTakerType.Last) {
+            }
+            else if (insertType == InsertTurnTakerType.Last){
                 turnTakers.Insert(currentIndex, turnTaker);
-                currentIndex++; 
+                currentIndex++;
             }
         }
 
@@ -71,53 +71,54 @@ public class TurnSystem : MonoBehaviour {
         turnTaker.TurnSystem = this;
     }
 
-    public void RemoveTurnTaker(ITurnTaker turnTaker) {
-        int removedIndex = turnTakers.IndexOf(turnTaker);
-        
-        if (removedIndex == -1) {
+    public void RemoveTurnTaker(ITurnTaker turnTaker){
+        var removedIndex = turnTakers.IndexOf(turnTaker);
+
+        if (removedIndex == -1){
             Debug.LogWarning($"Attempted to remove turn taker {turnTaker} but it was not found.", this);
             return;
         }
 
         Debug.Log($"Removing {turnTaker}", this);
 
-        if (TurnTakersCount < 2) {
+        if (TurnTakersCount < 2){
             Stop();
             turnTakers.Clear();
             return;
         }
 
-        if (removedIndex == currentIndex) {
+        if (removedIndex == currentIndex){
             EndTurn();
         }
 
         turnTakers.RemoveAt(removedIndex);
 
-        if (removedIndex <= currentIndex) {
+        if (removedIndex <= currentIndex){
             currentIndex--;
         }
     }
 
-    private void TurnCompleted(ITurnTaker turnTaker) {
-        if (GetCurrentTurnTaker() != turnTaker || !isTurnActive) {
-            Debug.LogWarning($"TurnCompleted called by {turnTaker} but it's not their turn or turn is not active.", this);
+    void TurnCompleted(ITurnTaker turnTaker){
+        if (GetCurrentTurnTaker() != turnTaker || !isTurnActive){
+            Debug.LogWarning($"TurnCompleted called by {turnTaker} but it's not their turn or turn is not active.",
+                this);
             return;
         }
         EndTurn();
     }
 
-    void NextTurn() {
-        if (isTurnActive) {
+    void NextTurn(){
+        if (isTurnActive){
             Debug.LogWarning($"NextTurn called early! Ending current turn for {GetCurrentTurnTaker()}", this);
             EndTurn();
         }
-        
+
         currentIndex++;
         StartTurn();
     }
 
-    private void StartTurn() {
-        if (currentIndex >= TurnTakersCount) {
+    void StartTurn(){
+        if (currentIndex >= TurnTakersCount){
             currentIndex = 0;
         }
 
@@ -126,32 +127,32 @@ public class TurnSystem : MonoBehaviour {
             return;
         }
         isTurnActive = true;
-        
+
         Debug.Log($"Starting turn for {current}", this);
         current.StartTurn();
         onStartTurn.Invoke(current);
     }
 
-    private void EndTurn() {
+    void EndTurn(){
         isTurnActive = false;
         var current = GetCurrentTurnTaker();
-        
+
         Debug.Log($"Ending turn for {current}", this);
         current?.EndTurn();
         onEndTurn.Invoke(current);
     }
 }
 
-public enum InsertTurnTakerType {
+public enum InsertTurnTakerType{
     Next,
     Last
 }
 
-public interface ITurnTaker {
-    public UnityAction<ITurnTaker> OnTurnCompleted { get; set; }
+public interface ITurnTaker{
+    public UnityAction<ITurnTaker> OnTurnCompleted{ get; set; }
     void EndTurn();
     void StartTurn();
-    public TurnSystem TurnSystem { get; set; }
-    public UnityEvent<ITurnTaker> onStartTurn { get; }
-    public UnityEvent<ITurnTaker> onEndTurn { get; }
+    public TurnSystem TurnSystem{ get; set; }
+    public UnityEvent<ITurnTaker> onStartTurn{ get; }
+    public UnityEvent<ITurnTaker> onEndTurn{ get; }
 }

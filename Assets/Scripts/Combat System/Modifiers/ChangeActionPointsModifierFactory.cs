@@ -17,7 +17,8 @@ public class ChangeActionPointsModifier : ModifierWithDuration{
     readonly bool instant;
     readonly int maxStack;
 
-    public ChangeActionPointsModifier(string name, int durationTmp, int actionPointsChange, bool instant, int maxStack) : base(name, durationTmp){
+    public ChangeActionPointsModifier(string name, int durationTmp, int actionPointsChange, bool instant, int maxStack)
+        : base(name, durationTmp){
         this.actionPointsChange = actionPointsChange;
         this.instant = instant;
         this.maxStack = maxStack;
@@ -39,7 +40,7 @@ public class ChangeActionPointsModifier : ModifierWithDuration{
     void OnStartTurn(Unit arg0){
         target.ChangeActionPoints(actionPointsChange);
     }
-    
+
     public override void OnRemoved(){
         base.OnRemoved();
         target.onStartTurn.RemoveListener(OnStartTurn);

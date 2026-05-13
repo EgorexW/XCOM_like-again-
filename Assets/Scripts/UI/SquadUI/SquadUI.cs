@@ -1,17 +1,17 @@
-using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class SquadUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool objectsPool;
 
-    [FormerlySerializedAs("onSquadMemberClicked")] [FoldoutGroup("Events")] public UnityEvent<SquadData, SquadMember> onSquadMemberButtonClicked = new();
-    [FoldoutGroup("Events")] public UnityEvent<SquadData, Equipment, SquadMember> onEquipmentClicked  = new();
+    [FormerlySerializedAs("onSquadMemberClicked")] [FoldoutGroup("Events")]
+    public UnityEvent<SquadData, SquadMember> onSquadMemberButtonClicked = new();
+
+    [FoldoutGroup("Events")] public UnityEvent<SquadData, Equipment, SquadMember> onEquipmentClicked = new();
     [FoldoutGroup("Events")] public UnityEvent<SquadData, SquadMember> onSquadMemberPortraitClicked = new();
-    
+
     SquadData squad;
 
     protected void Awake(){
@@ -49,7 +49,7 @@ public class SquadUI : UIElement{
     void UpdateSquad(){
         var count = squad.SquadMembers.Count;
         objectsPool.SetCount(count);
-        for (int i = 0; i < count; i++){
+        for (var i = 0; i < count; i++){
             var member = squad.SquadMembers[i];
             var obj = objectsPool.GetActiveObject(i);
             var squadSlotUI = obj.GetComponent<SquadMemberUI>();
