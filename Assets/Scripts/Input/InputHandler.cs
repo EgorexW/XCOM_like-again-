@@ -43,10 +43,17 @@ public class InputHandler : MonoBehaviour{
             case "Cancel":
                 OnCancelPerformed();
                 break;
+            case "Cycle":
+                OnCyclePerformed();
+                break;
             default:
                 Debug.LogWarning("Unhandled action: " + obj.action.name);
                 break;
         }
+    }
+
+    void OnCyclePerformed(){
+        turnUI.OnCycle();
     }
 
     void OnCancelPerformed(){

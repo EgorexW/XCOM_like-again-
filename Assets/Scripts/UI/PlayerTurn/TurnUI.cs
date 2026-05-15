@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class TurnUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] TurnSystem turnSystem;
+    [BoxGroup("References")][Required][SerializeField] CameraMovement cameraMovement;
 
     [FormerlySerializedAs("actionsUI")] [BoxGroup("Internal References")] [Required] [SerializeField]
     UnitActionsSelectionUI unitActionsSelectionUI;
@@ -98,6 +99,7 @@ public class TurnUI : UIElement{
         selectedUnitHighlight.position = selectedUnit.transform.position;
         selectedUnitHighlight.localScale = selectedUnit.transform.lossyScale;
         selectedUnitHighlight.gameObject.SetActive(true);
+        cameraMovement.MoveTo(selectedUnit.transform.position);
         unitActionsSelectionUI.Show(unit);
     }
 
@@ -140,5 +142,14 @@ public class TurnUI : UIElement{
         else{
             DeselectUnit();
         }
+    }
+
+    public void OnCycle(){
+        var units = currentTurnTaker.Units.ToList();
+        var nextIndex = units.IndexOf(selectedUnit) + 1;
+        if (nextIndex >= units.Count){
+            nextIndex = 0;
+        }
+        SelectUnit(units[nextIndex]);
     }
 }

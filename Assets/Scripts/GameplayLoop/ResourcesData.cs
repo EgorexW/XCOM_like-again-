@@ -19,6 +19,7 @@ public class ResourcesData : ScriptableObject{
         Clear();
         foreach (var member in init.Members) AddMember(member);
         foreach (var equipmentPiece in init.Equipment) AddEquipment(equipmentPiece);
+        money = init.Money;
     }
 
     public void AddEquipment(Equipment equipment){

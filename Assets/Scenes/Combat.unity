@@ -3980,6 +3980,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   turnSystem: {fileID: 655440598}
+  cameraMovement: {fileID: 371968269}
   unitActionsSelectionUI: {fileID: 77012225}
   actionTargetingUI: {fileID: 376676569}
   endTurnButton: {fileID: 554200389}
