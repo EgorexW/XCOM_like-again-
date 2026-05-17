@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class HealthComponent : CombatComponent{
     [SerializeField] int maxHealth = 1;
@@ -18,12 +20,15 @@ public class HealthComponent : CombatComponent{
         Health = Random.Range(startingHealth.x, startingHealth.y + 1);
     }
 
-    public void TakeDamage(int damage){
+    public Damage LastDamage { get; private set; }
+
+    public void TakeDamage(Damage damage){
         if (IsDead){
             Debug.LogWarning($"{CombatObject.Name} is already dead and cannot take more damage.", this);
             return;
         }
-        Health -= damage;
+        Health -= damage.value;
+        LastDamage = damage;
         onHealthChanged?.Invoke(this);
         if (Health <= 0){
             Die();
@@ -38,4 +43,10 @@ public class HealthComponent : CombatComponent{
         }
         CombatObject.Remove();
     }
+}
+
+[Serializable]
+public struct Damage{
+    public int value;
+    public ICombatObject source;
 }

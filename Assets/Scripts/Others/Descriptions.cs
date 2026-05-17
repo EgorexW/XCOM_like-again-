@@ -7,7 +7,7 @@ public static class Descriptions{
             description += $" Range: {targetedUnitAction.Range}";
         }
         if (unitAction is ShootAction attackAction){
-            description += $" Damage: {attackAction.Damage}";
+            description += $" Damage: {attackAction.DamageValue}";
         }
         if (unitAction is SpawnAction spawnAction){
             // actionDescription += $" Spawned Unit: {spawnAction.PrefabToSpawn.GetComponent<ICombatObject>().GetDescription()}";

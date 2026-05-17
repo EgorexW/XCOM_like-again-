@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ShootAction : TargetedUnitAction{
-    [SerializeField] int damage = 1;
+    [FormerlySerializedAs("damage")] [SerializeField] int damageValue = 1;
     [SerializeField] List<UnitModifierFactory> appliedStatusEffects;
     [SerializeField] int ammoCost = 1;
     [SerializeField] bool ignoreCover;
 
-    public float Damage => damage;
+    public float DamageValue => damageValue;
 
     protected override void OnExecute(){
         if (ammoCost > 0){
@@ -17,6 +18,10 @@ public class ShootAction : TargetedUnitAction{
             }
         }
 
+        var damage = new Damage(){
+            value = this.damageValue,
+            source = unit
+        };
         var targetObjects = targetNode.GetCombatObjects();
         foreach (var targetObj in (IReadOnlyList<ICombatObject>)targetObjects.AsReadOnly()){
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();

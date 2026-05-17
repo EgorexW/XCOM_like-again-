@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ExplosionEffect : CombatEffect{
     [SerializeField] float range = 1;
-    [SerializeField] int damage = 1;
+    [FormerlySerializedAs("damage")] [SerializeField] int damageValue = 1;
     [SerializeField] List<UnitModifierFactory> statusEffects;
     [SerializeField] [BoxGroup("Spawn Settings")] GameObject prefabToSpawn;
 
@@ -15,6 +16,10 @@ public class ExplosionEffect : CombatEffect{
             Debug.LogWarning("ExplosionEffect executed without a target node.");
             return;
         }
+        var damage = new Damage(){
+            value = this.damageValue,
+            source = sourceObject
+        };
         foreach (var node in targetNode.GetNodesInRadius(range)){
             if (!node.LineUnobstructed(targetNode, GridBlockingFlags.ExplosionBlocker)){
                 continue;
