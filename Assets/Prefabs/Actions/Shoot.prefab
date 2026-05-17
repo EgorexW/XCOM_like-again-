@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3631860729330829194}
   - component: {fileID: 4011586103964397983}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: Shoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
   actionInfo:
     actionName: Shoot
-    description: 
+    description: Fire at a target.
     actionFlags: 10
   cost: 1
   usesLeft:
@@ -54,5 +54,7 @@ MonoBehaviour:
     value: 0
   unit: {fileID: 0}
   range: 10
-  damage: 1
+  damageValue: 1
+  appliedStatusEffects: []
   ammoCost: 1
+  ignoreCover: 0

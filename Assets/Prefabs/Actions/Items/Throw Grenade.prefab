@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnAction
   actionInfo:
     actionName: Throw Grenade
-    description: 
+    description: Throws an explosive that detonates at the start of your next turn
+      in a 1.5-tile radius, dealing 4 damage to everyone inside the area.
     actionFlags: 12
   cost: 1
   usesLeft:
@@ -55,4 +56,3 @@ MonoBehaviour:
   unit: {fileID: 0}
   range: 7
   prefabToSpawn: {fileID: 9098700461190151436, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
-  insertTurnTakerType: 1

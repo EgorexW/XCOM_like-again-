@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SurrenderAction
   actionInfo:
     actionName: Surrender
-    description: 
+    description: The unit ceases fighting entirely. They are removed from combat
+      but remain alive.
     actionFlags: 3
   cost: 1
   usesLeft:

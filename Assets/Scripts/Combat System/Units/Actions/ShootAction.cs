@@ -8,7 +8,8 @@ public class ShootAction : TargetedUnitAction{
     [SerializeField] int ammoCost = 1;
     [SerializeField] bool ignoreCover;
 
-    public float DamageValue => damageValue;
+    public int DamageValue => damageValue;
+    public int AmmoCost  => ammoCost;
 
     protected override void OnExecute(){
         if (ammoCost > 0){

@@ -46,7 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnAction
   actionInfo:
     actionName: Throw Flashbang
-    description: 
+    description: Throws a device that detonates at the end of your turn in a 1.5-tile
+      radius. Applies the Flashed status, preventing affected units from shooting
+      on their next turn.
     actionFlags: 12
   cost: 1
   usesLeft:
@@ -55,4 +57,3 @@ MonoBehaviour:
   unit: {fileID: 0}
   range: 7
   prefabToSpawn: {fileID: 5712773426039571822, guid: 6a013f3c024ec4e6d8a6d991de425680, type: 3}
-  insertTurnTakerType: 0

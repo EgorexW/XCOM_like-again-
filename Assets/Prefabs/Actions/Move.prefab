@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveAction
   actionInfo:
     actionName: Move
-    description: 
+    description: Move in a straight line
     actionFlags: 1
   cost: 1
   usesLeft:

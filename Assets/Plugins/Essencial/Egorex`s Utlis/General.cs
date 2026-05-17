@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
@@ -43,19 +41,6 @@ public static class General{
     public static Vector2 RandomPointOnCircle(){
         var angle = Random.value * 2 * Mathf.PI;
         return new Vector2(Mathf.Sin(angle), Mathf.Cos(angle));
-    }
-
-    static IEnumerator StartAfterSecondsCoroutine(MonoBehaviour monoBehaviour, IEnumerator coroutine, float seconds){
-        yield return new WaitForSeconds(seconds);
-        if (monoBehaviour == null || !monoBehaviour.gameObject.activeInHierarchy){
-            yield break;
-        }
-        monoBehaviour.StartCoroutine(coroutine);
-    }
-
-    static IEnumerator CallAfterSecondsCoroutine(UnityAction action, float seconds){
-        yield return new WaitForSeconds(seconds);
-        action.Invoke();
     }
 
     public static string TimeToString(float nr){
@@ -110,30 +95,6 @@ public static class General{
         Object.Destroy(gameObject, time);
     }
 
-    public static TComponent GetRootComponent<TComponent>(GameObject gameObject, bool mustBeFound = true){
-        return GetRootComponent<TComponent>(gameObject.transform, mustBeFound);
-    }
-
-    public static TComponent GetRootComponent<TComponent>(Transform transform, bool mustBeFound = true){
-        var objectRoot = GetObjectRoot(transform, false);
-        if (objectRoot == null){
-            var localComponent = transform.GetComponent<TComponent>();
-            Debug.Assert(!mustBeFound || localComponent != null, typeof(TComponent) + " is null", transform);
-            return localComponent;
-        }
-        var component = objectRoot.GetRootComponent<TComponent>();
-        Debug.Assert(!mustBeFound || component != null, typeof(TComponent) + " is null", transform);
-        return component;
-    }
-
-    public static ObjectRoot GetObjectRoot(Transform transform, bool mustBeFound = true){
-        var root = transform.GetComponentInParent<ObjectRoot>();
-        if (mustBeFound && root == null){
-            Debug.LogError("Object Root not found", transform);
-        }
-        return root;
-    }
-
     public static Vector2 GetClosestPos(Vector2 centerPos, List<Vector2> poses){
         var closestPos = Vector2.zero;
         var smallestDis = Mathf.Infinity;
@@ -154,17 +115,6 @@ public static class General{
 
     public static bool IsMouseOverUI(){
         return EventSystem.current.IsPointerOverGameObject();
-    }
-
-    public static HashSet<T> GetUniqueRootComponents<T>(Collider[] colliders){
-        var components = new HashSet<T>();
-        foreach (var obj in colliders){
-            var component = GetRootComponent<T>(obj.gameObject, false);
-            if (component != null){
-                components.Add(component);
-            }
-        }
-        return components;
     }
 
     public static Quaternion RotateLeftOrRight(Quaternion rotation, Quaternion targetRotation, float delta){

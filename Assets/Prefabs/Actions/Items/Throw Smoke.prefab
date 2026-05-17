@@ -46,7 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnAction
   actionInfo:
     actionName: Throw Smoke
-    description: 
+    description: Throws a device that detonates at the end of your turn, creating
+      a smoke cloud in a 2-tile radius that blocks line of sight.
     actionFlags: 12
   cost: 1
   usesLeft:
@@ -55,4 +56,3 @@ MonoBehaviour:
   unit: {fileID: 0}
   range: 7
   prefabToSpawn: {fileID: 7765059316594059909, guid: 16d8ee82cd523408ea6c3dd6745c6d12, type: 3}
-  insertTurnTakerType: 0

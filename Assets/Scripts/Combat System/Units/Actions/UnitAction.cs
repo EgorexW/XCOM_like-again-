@@ -64,7 +64,7 @@ public enum UnitActionValidation{
 [HideLabel]
 public class ActionInfo{
     [SerializeField] string actionName;
-    [SerializeField] string description;
+    [SerializeField][TextArea] string description;
     [FormerlySerializedAs("actionType")] [SerializeField] ActionFlags actionFlags;
 
     public ActionFlags ActionFlags => actionFlags;
