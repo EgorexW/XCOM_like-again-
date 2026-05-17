@@ -11,7 +11,7 @@ public class ResourcesUI : UIElement{
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData, SquadMember> onSquadMemberClicked = new();
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData, Equipment> onEquipmentClicked = new();
 
-    void Awake(){
+    protected void Awake(){
         membersPool.onCreateObject.AddListener(OnCreateSquadMemberUI);
         equipmentUI.onEquipmentTypeClicked.AddListener(OnEquipmentTypeClicked);
     }

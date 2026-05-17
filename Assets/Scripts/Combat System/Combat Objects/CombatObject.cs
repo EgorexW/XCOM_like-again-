@@ -14,8 +14,8 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     public string Name{ get; set; }
 
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
-
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onInit{ get; } = new();
+    [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onMove{ get; }  = new();
 
     public T GetCombatComponent<T>() where T : CombatComponent{
         var component = GetComponentInChildren<T>();
@@ -25,6 +25,7 @@ public class CombatObject : MonoBehaviour, ICombatObject{
     public void MoveTo(List<CombatGridNode> targetNodes){
         targetNodes.PrimaryGrid().PlaceCombatObject(this, targetNodes);
         transform.position = targetNodes.GetCenter();
+        onMove.Invoke(this);
     }
 
     public virtual void Remove(){
@@ -42,7 +43,7 @@ public class CombatObject : MonoBehaviour, ICombatObject{
         onInit.Invoke(this);
     }
 
-    void OnValidate(){
+    protected void OnValidate(){
         this.Validate();
     }
 

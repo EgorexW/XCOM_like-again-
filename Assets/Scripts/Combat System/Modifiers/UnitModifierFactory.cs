@@ -5,7 +5,7 @@ public abstract class UnitModifierFactory : ScriptableObject{
 
     public abstract UnitModifier Create();
 
-    void OnValidate(){
+    protected void OnValidate(){
         if (string.IsNullOrEmpty(statusName)){
             statusName = name;
         }

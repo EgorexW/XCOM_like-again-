@@ -5,7 +5,7 @@ public class PayoutObjectivesUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] PayoutManager payoutManager;
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool objectsPool;
 
-    void Start(){
+    protected void Start(){
         Show();
     }
 

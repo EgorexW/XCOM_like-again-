@@ -10,7 +10,7 @@ public class PayoutManager : MonoBehaviour{
     List<PayoutObjective> objectives = new();
     public IReadOnlyList<PayoutObjective> Objectives => objectives.AsReadOnly();
 
-    void Awake(){
+    protected void Awake(){
         combatSystem.onCombatStarted.AddListener(OnCombatStarted);
         combatSystem.onStateChanged.AddListener(UpdateObjectives);
         objectives = GetComponentsInChildren<PayoutObjective>().ToList();

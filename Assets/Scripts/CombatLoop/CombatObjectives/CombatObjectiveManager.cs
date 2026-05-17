@@ -6,7 +6,7 @@ public class CombatObjectiveManager : MonoBehaviour{
 
     [Required] [SerializeField] BattleObjective objective;
 
-    void Awake(){
+    protected void Awake(){
         combatSystem.onCombatStarted.AddListener(OnCombatStarted);
         combatSystem.onStateChanged.AddListener(CheckState);
     }

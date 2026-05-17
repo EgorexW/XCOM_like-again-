@@ -15,7 +15,7 @@ class UnitActionWorldUI : UIElement{
     Color startColor;
     float startTime;
 
-    void Awake(){
+    protected void Awake(){
         startColor = actionNameText.color;
     }
 
@@ -27,7 +27,7 @@ class UnitActionWorldUI : UIElement{
         startTime = Time.time;
     }
 
-    void Update(){
+    protected void Update(){
         if (!IsVisible){
             return;
         }

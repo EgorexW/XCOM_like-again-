@@ -21,6 +21,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: damageValue
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
       propertyPath: statusEffects.Array.size
       value: 1
       objectReference: {fileID: 0}

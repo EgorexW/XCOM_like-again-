@@ -7,7 +7,7 @@ public class CombatReportEffect : MonoBehaviour{
     [SerializeField] [Required] ResourcesData resourcesData;
     [SerializeField] [Required] CombatReportData combatReportData;
 
-    void Awake(){
+    protected void Awake(){
         Report();
     }
 

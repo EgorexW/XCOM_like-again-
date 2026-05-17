@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class CreateExplosionHazardZone : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] ExplosionEffect explosionEffect;
+    
+    [Required][SerializeField] GameObject hazardPrefab;
     [SerializeField] HazardSettings hazardSettings;
 
-    CombatObject hazardCombatObject;
+    ICombatObject hazardCombatObject;
 
-    void Awake(){
+    protected void Awake(){
         var combatObject = GetComponent<ICombatObject>();
         combatObject.onInit.AddListener(CreateHazard);
         combatObject.onRemove.AddListener(RemoveHazard);
@@ -20,14 +22,11 @@ public class CreateExplosionHazardZone : MonoBehaviour{
     }
 
     public void CreateHazard(ICombatObject combatObject){
-        var range = explosionEffect.Range;
-        var center = combatObject.GetCenter();
-        var nodes = combatObject.Grid().GetNodesInRadius(center, range);
-        var gameObj = new GameObject("Hazard Zone");
-        gameObj.transform.SetParent(transform);
-        hazardCombatObject = gameObj.AddComponent<CombatObject>();
-        var hazardComponent = gameObj.AddComponent<HazardComponent>();
+        var centerNode = combatObject.GetCenterNode();
+        var nodes = explosionEffect.GetAffectedNodes(centerNode);
+        hazardCombatObject = centerNode.Spawn(hazardPrefab);
+        hazardCombatObject.MoveTo(nodes);
+        var hazardComponent = hazardCombatObject.GetCombatComponent<HazardComponent>();
         hazardComponent.settings = hazardSettings;
-        combatObject.CombatSystem.AddCombatObject(hazardCombatObject, nodes);
     }
 }

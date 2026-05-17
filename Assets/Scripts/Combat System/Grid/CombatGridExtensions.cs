@@ -309,7 +309,7 @@ public static class CombatGridExtensions{
 
     public static ICombatObject Spawn(this CombatGridNode node, GameObject prefabToSpawn){
         if (spawnParent == null){
-            spawnParent = new GameObject("Spawn Parent").transform;
+            spawnParent = new GameObject("Combat Objects Spawn Parent").transform;
         }
         var prefabCombatObject = prefabToSpawn.GetComponent<ICombatObject>();
         if (!node.CanAcceptObject(prefabCombatObject)){

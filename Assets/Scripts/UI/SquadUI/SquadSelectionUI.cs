@@ -9,7 +9,7 @@ public class SquadSelectionUI : UIElement{
 
     Equipment pendingEquipment;
 
-    void Awake(){
+    protected void Awake(){
         squadUI.onEquipmentClicked.AddListener(OnSquadUIEquipmentSquadClicked);
         squadUI.onSquadMemberButtonClicked.AddListener(OnSquadUISquadMemberSquadClicked);
         resourcesUI.onSquadMemberClicked.AddListener(OnSquadUISquadMemberResourcesClicked);
@@ -25,7 +25,7 @@ public class SquadSelectionUI : UIElement{
         pendingEquipment = null;
     }
 
-    void Start(){
+    protected void Start(){
         squadUI.ShowSquad(squadSelection.Squad);
         resourcesUI.ShowResources(squadSelection.Resources);
     }

@@ -12,7 +12,7 @@ class MainCombatObjectUI : CombatObjectUI{
 
     List<CombatObjectUI> uiChildren;
 
-    void Awake(){
+    protected void Awake(){
         uiChildren = new List<CombatObjectUI>(GetComponentsInChildren<CombatObjectUI>(true));
         uiChildren.Remove(this);
     }

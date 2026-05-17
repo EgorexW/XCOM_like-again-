@@ -25,7 +25,7 @@ public class SuspectComponent : CombatComponent{
         suspectState = newState;
     }
 
-    void OnDestroy(){
+    protected void OnDestroy(){
         if (CombatObject is Unit combatUnit){
             combatUnit.onActionPerformed.RemoveListener(OnActionPerformed);
         }

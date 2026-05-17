@@ -17,7 +17,7 @@ public class SquadMemberUI : UIElement{
 
     SquadMember squadMember;
 
-    void Awake(){
+    protected void Awake(){
         button.onClick.AddListener(OnButtonClicked);
         portraitButton.onClick.AddListener(OnPortraitButtonClicked);
         equipmentUI?.onEquipmentTypeClicked.AddListener(OnEquipmentTypeClicked);

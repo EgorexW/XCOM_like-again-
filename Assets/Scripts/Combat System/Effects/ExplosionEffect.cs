@@ -9,7 +9,7 @@ public class ExplosionEffect : CombatEffect{
     [SerializeField] List<UnitModifierFactory> statusEffects;
     [SerializeField] [BoxGroup("Spawn Settings")] GameObject prefabToSpawn;
 
-    public float Range => range;
+    // public float Range => range;
 
     public override void Execute(){
         if (!HasNode){
@@ -20,10 +20,7 @@ public class ExplosionEffect : CombatEffect{
             value = this.damageValue,
             source = sourceObject
         };
-        foreach (var node in targetNode.GetNodesInRadius(range)){
-            if (!node.LineUnobstructed(targetNode, GridBlockingFlags.ExplosionBlocker)){
-                continue;
-            }
+        foreach (var node in GetAffectedNodes(targetNode)){
             // Debug.Log($"ExplosionEffect hitting node {node.GetPos()}");
             foreach (var obj in node.GetCombatObjects()){
                 var health = obj.GetCombatComponent<HealthComponent>();
@@ -38,5 +35,15 @@ public class ExplosionEffect : CombatEffect{
                 node.Spawn(prefabToSpawn);
             }
         }
+    }
+
+    public List<CombatGridNode> GetAffectedNodes(CombatGridNode targetNodeTmp){
+        var nodes = targetNodeTmp.GetNodesInRadius(range);
+        foreach (var node in nodes.Copy()){
+            if (!node.LineUnobstructed(targetNodeTmp, GridBlockingFlags.ExplosionBlocker)){
+                nodes.Remove(node);
+            }
+        }
+        return nodes;
     }
 }

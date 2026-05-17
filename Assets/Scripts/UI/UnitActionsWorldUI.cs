@@ -5,7 +5,7 @@ public class UnitActionsWorldUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] CombatSystem combatSystem;
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool objectsPool;
 
-    void Awake(){
+    protected void Awake(){
         combatSystem.onCombatObjectAdded.AddListener(OnCombatObjectAdded);
         combatSystem.onCombatObjectRemoved.AddListener(OnCombatObjectRemoved);
         objectsPool.onCreateObject.AddListener(OnCreateObject);

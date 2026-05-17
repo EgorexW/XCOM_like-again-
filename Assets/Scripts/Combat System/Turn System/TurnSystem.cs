@@ -15,7 +15,7 @@ public class TurnSystem : MonoBehaviour{
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn;
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn;
 
-    void Update(){
+    protected void Update(){
         if (isRunning && !isTurnActive && TurnTakersCount > 0){
             NextTurn();
         }

@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6400889664588949597}
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579098e593ff43bd84fb065bb2d7d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatObject
-  gridOccupancyType: 2
+  flags: 0
 --- !u!114 &1265413614643043436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,9 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d804eea415b14f89b83a3a44d1ee875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  turnsToActivate: 1
+  insertType: 1
+  startDurationLeft: {x: 1, y: 1}
   destroy: 1
-  owner: {fileID: 650386395851376932}
   effects:
   - {fileID: 4861380369685027142}
   onActivate:
@@ -173,8 +173,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosionEffect
   range: 1.5
-  damage: 4
+  damageValue: 4
   statusEffects: []
+  prefabToSpawn: {fileID: 0}
 --- !u!114 &5318544543648846847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreateHazardZone
   explosionEffect: {fileID: 4861380369685027142}
+  hazardPrefab: {fileID: 8063462280418770562, guid: c9e24f7e6158546f980291871ff8406d, type: 3}
   hazardSettings:
     hazardFlags: 1
     intensity: 1

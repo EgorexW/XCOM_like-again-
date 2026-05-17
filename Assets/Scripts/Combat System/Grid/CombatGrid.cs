@@ -30,7 +30,10 @@ public class CombatGrid : MonoBehaviour{
         var node = Grid.GetGridObject(e.x, e.y);
         onCombatGridNodeChanged.Invoke(node);
     }
-
+    
+    /// <summary>
+    /// Use combatObject.MoveTo instead!!!
+    /// </summary>
     public void PlaceCombatObject(ICombatObject combatObject, List<CombatGridNode> newNodes){
         foreach (var node in combatObject.Nodes) node.RemoveCombatObject(combatObject);
 

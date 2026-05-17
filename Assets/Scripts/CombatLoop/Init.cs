@@ -11,7 +11,7 @@ public class Init : MonoBehaviour{
 
     [SerializeField] [SceneObjectsOnly] protected string sceneName;
 
-    void Awake(){
+    protected void Awake(){
         squadData.DeepCopy(initSquadData);
         resourcesData.DeepCopy(initResourcesData);
         SceneManager.LoadScene(sceneName);

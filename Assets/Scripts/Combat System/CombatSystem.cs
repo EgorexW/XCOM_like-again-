@@ -26,7 +26,7 @@ public class CombatSystem : MonoBehaviour{
 
     bool active;
 
-    void Awake(){
+    protected void Awake(){
         onCombatObjectAdded.AddListener(_ => StateChanged());
         onCombatObjectRemoved.AddListener(_ => StateChanged());
         turnSystem.onEndTurn.AddListener(_ => StateChanged());

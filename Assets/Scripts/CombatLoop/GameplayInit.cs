@@ -6,7 +6,7 @@ public class GameplayInit : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] LevelInit levelInit;
     [BoxGroup("References")] [Required] [SerializeField] CombatContentInit contentInit;
 
-    void Start(){
+    protected void Start(){
         var content = contentInit.Init();
         levelInit.InitLevel(content);
         combatInit.InitCombatSystem(content);

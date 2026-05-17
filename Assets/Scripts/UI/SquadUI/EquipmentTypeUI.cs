@@ -11,7 +11,7 @@ public class EquipmentTypeUI : UIElement{
 
     [FoldoutGroup("Events")] public UnityEvent<Equipment> onClicked;
 
-    void Awake(){
+    protected void Awake(){
         button.onClick.AddListener(OnButtonClicked);
     }
 

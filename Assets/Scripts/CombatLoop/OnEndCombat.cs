@@ -7,7 +7,7 @@ public class OnEndCombat : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] CombatReportCreator combatReportCreator;
     [SerializeField] string afterCombatScene;
 
-    void Awake(){
+    protected void Awake(){
         combatSystem.onCombatEnded.AddListener(OnCombatEnded);
     }
 
