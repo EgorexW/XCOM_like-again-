@@ -44,8 +44,8 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         TooltipSystem.Hide();
     }
 
-    public void SetMessage(Message message, bool enable = true){
-        this.message = message;
+    public void SetMessage(Message messageTmp, bool enable = true){
+        this.message = messageTmp;
         if (enable){
             Enable();
         }

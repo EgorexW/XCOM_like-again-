@@ -24,14 +24,22 @@ public static class Descriptions{
         var description = "";
         var healthComponent = combatObject.GetCombatComponent<HealthComponent>();
         if (healthComponent != null){
-            description += $" Health: {healthComponent.Health}/{healthComponent.MaxHealth}";
+            description += $" Health: {healthComponent.Health}/{healthComponent.MaxHealth}\n";
         }
         var ammoComponent = combatObject.GetCombatComponent<AmmoComponent>();
         if (ammoComponent != null){
             description +=
-                $" Ammo: {ammoComponent.CurrentLoadedAmmo}/{ammoComponent.MagazineSize}, {ammoComponent.Magazines} magazines";
+                $" Ammo: {ammoComponent.CurrentLoadedAmmo}/{ammoComponent.MagazineSize}, {ammoComponent.Magazines} magazines\n";
         }
         return description.TrimStart();
+    }
+
+    public static Message GetMessage(this ICombatObject combatObject){
+        var message = new Message(){
+            header = combatObject.Name,
+            description = combatObject.GetDescription(),
+        };
+        return message;
     }
 
     public static string GetDescription(this PayoutObjective objective){

@@ -9,6 +9,7 @@ public abstract class CombatObjectUI : UIElement{
 
 class MainCombatObjectUI : CombatObjectUI{
     [BoxGroup("References")] [GetComponent] [SerializeField] RectTransform rectTransform;
+    [SerializeField] TooltipTrigger tooltipTrigger;
 
     List<CombatObjectUI> uiChildren;
 
@@ -21,5 +22,6 @@ class MainCombatObjectUI : CombatObjectUI{
         var screenPos = Camera.main.WorldToScreenPoint(combatObject.GetCenter());
         rectTransform.position = screenPos;
         foreach (var ui in uiChildren) ui.SetCombatObject(combatObject);
+        tooltipTrigger?.SetMessage(combatObject.GetMessage());
     }
 }

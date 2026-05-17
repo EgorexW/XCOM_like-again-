@@ -6,18 +6,23 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(LayoutElement))]
-public class Tooltip : MonoBehaviour{
+public class Tooltip : UIElement{
     [SerializeField] [GetComponent] LayoutElement layoutElement;
     [SerializeField] [GetComponent] RectTransform rectTransform;
     [SerializeField] [Required] TextMeshProUGUI headerText;
     [SerializeField] [Required] TextMeshProUGUI descriptionText;
+
+    [SerializeField] bool moveToMouse;
 
     protected void Awake(){
         Hide();
     }
 
     protected void Update(){
-        transform.position = Input.mousePosition;
+        if (!moveToMouse){
+            return;
+        }
+        transform.position = General.GetMousePos();
 
         var desiredWidth = Mathf.Max(headerText.preferredWidth, descriptionText.preferredWidth);
         layoutElement.enabled = desiredWidth > layoutElement.preferredWidth;
@@ -28,14 +33,10 @@ public class Tooltip : MonoBehaviour{
     }
 
     void Show(string header, string description){
-        gameObject.SetActive(true);
+        base.Show();
         headerText.text = header;
         descriptionText.text = description;
         Update();
-    }
-
-    public void Hide(){
-        gameObject.SetActive(false);
     }
 
     public void Show(Message message){
