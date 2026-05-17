@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6416dcb63d240b5b897ecdb9d309fc4, type: 3}
   m_Name: Flashed
   m_EditorClassIdentifier: Assembly-CSharp::SupressStatusCreator
-  statusName: 
-  supressedFlags: 2
+  modifierInfo:
+    modifierName: Flashed
+    description: '
+
+'
   duration:
     enabled: 1
     value: 1
+  supressedFlags: 2

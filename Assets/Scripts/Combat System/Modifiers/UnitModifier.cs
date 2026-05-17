@@ -1,14 +1,17 @@
+using System;
+using Sirenix.OdinInspector;
+using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class UnitModifier{
     protected Unit target;
 
-    public readonly string Name;
+    public ModifierInfo Info{ get; }
 
     public UnityEvent<UnitModifier> onRemoved = new();
 
-    protected UnitModifier(string name){
-        Name = name;
+    protected UnitModifier(ModifierInfo info){
+        this.Info = info;
     }
 
     public virtual void OnApplied(Unit targetTmp){
@@ -22,4 +25,14 @@ public abstract class UnitModifier{
     public virtual bool CanExecuteAction(UnitAction action){
         return true;
     }
+}
+
+[Serializable]
+[HideLabel]
+public class ModifierInfo{
+    [SerializeField] string modifierName;
+    [SerializeField] [TextArea] string description;
+
+    public string Name => modifierName;
+    public string Description => description;
 }

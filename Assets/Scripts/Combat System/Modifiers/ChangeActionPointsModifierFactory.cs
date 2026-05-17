@@ -7,7 +7,7 @@ public class ChangeActionPointsModifierFactory : ModifierWithDurationFactory{
     [SerializeField] int maxStack = 1;
 
     public override UnitModifier Create(){
-        var status = new ChangeActionPointsModifier(statusName, DurationValue, actionPointsChange, instant, maxStack);
+        var status = new ChangeActionPointsModifier(modifierInfo, DurationValue, actionPointsChange, instant, maxStack);
         return status;
     }
 }
@@ -17,8 +17,8 @@ public class ChangeActionPointsModifier : ModifierWithDuration{
     readonly bool instant;
     readonly int maxStack;
 
-    public ChangeActionPointsModifier(string name, int durationTmp, int actionPointsChange, bool instant, int maxStack)
-        : base(name, durationTmp){
+    public ChangeActionPointsModifier(ModifierInfo info, int durationTmp, int actionPointsChange, bool instant, int maxStack)
+        : base(info, durationTmp){
         this.actionPointsChange = actionPointsChange;
         this.instant = instant;
         this.maxStack = maxStack;

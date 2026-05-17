@@ -1,13 +1,10 @@
+using System;
+using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 
 public abstract class UnitModifierFactory : ScriptableObject{
-    [SerializeField] protected string statusName;
+    [SerializeField] protected ModifierInfo modifierInfo;
 
     public abstract UnitModifier Create();
-
-    protected void OnValidate(){
-        if (string.IsNullOrEmpty(statusName)){
-            statusName = name;
-        }
-    }
 }

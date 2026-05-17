@@ -5,7 +5,7 @@ public class SupressActionsStatusFactory : ModifierWithDurationFactory{
     [SerializeField] ActionFlags supressedFlags;
 
     public override UnitModifier Create(){
-        var status = new SupressActionsStatus(statusName, supressedFlags, DurationValue);
+        var status = new SupressActionsStatus(modifierInfo, supressedFlags, DurationValue);
         return status;
     }
 }
@@ -13,7 +13,7 @@ public class SupressActionsStatusFactory : ModifierWithDurationFactory{
 public class SupressActionsStatus : ModifierWithDuration{
     readonly ActionFlags supressedFlags;
 
-    public SupressActionsStatus(string name, ActionFlags flags, int durationTmp) : base(name, durationTmp){
+    public SupressActionsStatus(ModifierInfo info, ActionFlags flags, int durationTmp) : base(info, durationTmp){
         supressedFlags = flags;
     }
 

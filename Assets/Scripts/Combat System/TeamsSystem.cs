@@ -32,7 +32,7 @@ public class TeamsSystem : MonoBehaviour{
     }
 
     public Team GetTeam(ICombatObject combatObject){
-        return combatObjectToTeam[combatObject];
+        return combatObjectToTeam.GetValueOrDefault(combatObject);
     }
 
     public List<Team> GetEnemyTeams(ICombatObject combatObject){

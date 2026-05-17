@@ -5,7 +5,7 @@ public class AddActionUnitModifierFactory : UnitModifierFactory{
     [SerializeField] GameObject relatedAction;
 
     public override UnitModifier Create(){
-        return new AddActionUnitModifier(statusName, this, relatedAction);
+        return new AddActionUnitModifier(modifierInfo, relatedAction);
     }
 }
 
@@ -14,8 +14,7 @@ class AddActionUnitModifier : UnitModifier{
 
     UnitAction instantiatedAction;
 
-    public AddActionUnitModifier(string name, UnitModifierFactory sourceDefinition, GameObject actionPrefab) :
-        base(name){
+    public AddActionUnitModifier(ModifierInfo info, GameObject actionPrefab) : base(info){
         this.actionPrefab = actionPrefab;
     }
 

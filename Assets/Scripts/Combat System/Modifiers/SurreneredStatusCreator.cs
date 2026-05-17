@@ -4,15 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = StringKeys.AssetMenuModifierBasePath + "Surrendered Status")]
 public class SurrenderedStatusFactory : UnitModifierFactory{
     public override UnitModifier Create(){
-        return new SurrenderedStatus(statusName, this);
+        return new SurrenderedStatus(modifierInfo);
     }
 }
 
 class SurrenderedStatus : UnitModifier{
     readonly List<UnitAction> allowedActions;
 
-    public SurrenderedStatus(string name, UnitModifierFactory sourceDefinition, List<UnitAction> allowedActions = null)
-        : base(name){
+    public SurrenderedStatus(ModifierInfo info, List<UnitAction> allowedActions = null) : base(info){
         allowedActions ??= new List<UnitAction>();
         this.allowedActions = allowedActions;
     }

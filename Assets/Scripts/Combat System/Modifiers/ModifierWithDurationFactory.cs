@@ -9,10 +9,9 @@ public abstract class ModifierWithDurationFactory : UnitModifierFactory{
 public class ModifierWithDuration : UnitModifier{
     protected int duration;
 
-    protected ModifierWithDuration(string name, int durationTmp) : base(name){
+    protected ModifierWithDuration(ModifierInfo info, int durationTmp) : base(info){
         duration = durationTmp;
     }
-
 
     public override void OnApplied(Unit targetTmp){
         base.OnApplied(targetTmp);
