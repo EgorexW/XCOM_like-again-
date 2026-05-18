@@ -11,6 +11,6 @@ public class CombatUI : MonoBehaviour{
     }
 
     void Init(){
-        gridUI.ShowGrid(combatSystem.CombatGrid.Grid);
+        gridUI.MarkPositons(combatSystem.CombatGrid.Grid.GetAllNodes());
     }
 }

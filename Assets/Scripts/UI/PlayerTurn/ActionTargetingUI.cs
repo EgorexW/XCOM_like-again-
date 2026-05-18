@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ActionTargetingUI : UIElement{
@@ -10,10 +11,9 @@ public class ActionTargetingUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI descriptionText;
     [BoxGroup("References")] [Required] [SerializeField] Button confirmButton;
     [BoxGroup("References")] [Required] [SerializeField] Button cancelButton;
-    [BoxGroup("References")] [Required] [SerializeField] GridUI gridUI;
-
-    [BoxGroup("Config")] [SerializeField] Color validTargetsColor = Color.white;
-    [BoxGroup("Config")] [SerializeField] Color invalidTargetsColor = Color.gray3;
+    
+    [BoxGroup("References")] [Required] [SerializeField] GridUI validTargetsUI;
+    [BoxGroup("References")] [Required] [SerializeField] GridUI invalidTargetsUI;
 
     UnitAction action;
 
@@ -39,7 +39,7 @@ public class ActionTargetingUI : UIElement{
     public void Show(UnitAction action){
         base.Show();
         this.action = action;
-        gridUI.ClearMarks();
+        validTargetsUI.ClearMarks();
         if (action is TargetedUnitAction targetedAction){
             var allTargets = targetedAction.GetAllTargets();
             var validTargets = new List<CombatGridNode>();
@@ -54,8 +54,8 @@ public class ActionTargetingUI : UIElement{
                     nonValidTargetsToShow.Add(target);
                 }
             }
-            gridUI.ShowMarks(action.unit.Grid().Grid, validTargets, validTargetsColor);
-            gridUI.ShowMarks(action.unit.Grid().Grid, nonValidTargetsToShow, invalidTargetsColor);
+            validTargetsUI.MarkPositons(validTargets);
+            invalidTargetsUI.MarkPositons(nonValidTargetsToShow);
         }
 
         confirmButton.interactable = action.ValidateAction() == UnitActionValidation.Valid;
@@ -73,6 +73,6 @@ public class ActionTargetingUI : UIElement{
 
     public override void Hide(){
         base.Hide();
-        gridUI.ClearMarks();
+        validTargetsUI.ClearMarks();
     }
 }

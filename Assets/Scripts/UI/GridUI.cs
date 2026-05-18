@@ -4,34 +4,19 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public class GridUI : UIElement{
-    [FormerlySerializedAs("objectsPool")] [BoxGroup("References")] [Required] [SerializeField] ObjectsPool squaresPool;
-    [BoxGroup("References")] [Required] [SerializeField] ObjectsPool marksPool;
+    [FormerlySerializedAs("squaresPool")] [FormerlySerializedAs("objectsPool")] [BoxGroup("References")] [Required] [SerializeField] ObjectsPool pool;
 
-    public void ShowGrid<T>(Grid<T> grid){
-        ;
-        var count = grid.width * grid.height;
-        squaresPool.SetCount(count);
-        var i = 0;
-        for (var x = 0; x < grid.width; x++)
-        for (var y = 0; y < grid.height; y++){
-            var cellObj = squaresPool.GetActiveObject(i);
-            cellObj.transform.position = grid.GetWorldPosition(x, y);
-            cellObj.transform.localScale = Vector3.one * grid.cellSize;
-            i++;
-        }
-    }
-
-    public void ShowMarks<T>(Grid<T> grid, List<T> positions, Color color) where T : GridNode{
-        for (var i = 0; i < positions.Count; i++){
-            var pos = positions[i];
-            var cellObj = marksPool.AddObject();
-            cellObj.transform.position = grid.GetWorldPosition(pos.x, pos.y);
-            cellObj.transform.localScale = Vector3.one * grid.cellSize;
-            cellObj.GetComponent<SpriteRenderer>().color = color;
+    public void MarkPositons(List<CombatGridNode> nodes){
+        var count = nodes.Count;
+        pool.SetCount(count);
+        for (int i = 0; i < count; i++){
+            var node = nodes[i];
+            var obj = pool.GetActiveObject(i);
+            obj.transform.position = (Vector2)node.GetPos();
         }
     }
 
     public void ClearMarks(){
-        marksPool.Clear();
+        pool.Clear();
     }
 }

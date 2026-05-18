@@ -194,4 +194,31 @@ public static class General{
 
         return sb.ToString().TrimEnd();
     }
+    
+    /// <summary>
+    /// Checks if the pointer is over any UI element that should block clicks.
+    /// UI elements with the IIgnorePointerOverUI component will not block clicks.
+    /// </summary>
+    public static bool IsPointerOverUI(){
+        if (!EventSystem.current.IsPointerOverGameObject()){
+            return false;
+        }
+
+        PointerEventData eventData = new PointerEventData(EventSystem.current){
+            position = Mouse.current != null ? Mouse.current.position.ReadValue() : Input.mousePosition
+        };
+    
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (RaycastResult result in results){
+            // If the hit UI object does NOT have the IIgnorePointerOverUI component,
+            // then it's a valid UI element that should block the click.
+            if (result.gameObject.GetComponentInParent<IIgnorePointerOverUI>() == null){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

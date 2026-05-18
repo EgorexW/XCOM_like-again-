@@ -19,8 +19,7 @@ class MainCombatObjectUI : CombatObjectUI{
     }
 
     public override void SetCombatObject(ICombatObject combatObject){
-        var screenPos = Camera.main.WorldToScreenPoint(combatObject.GetCenter());
-        rectTransform.position = screenPos;
+        rectTransform.position = combatObject.GetCenter();
         foreach (var ui in uiChildren) ui.SetCombatObject(combatObject);
         tooltipTrigger?.SetMessage(combatObject.GetMessage());
     }

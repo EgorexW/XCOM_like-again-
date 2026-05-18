@@ -83,7 +83,7 @@ public class InputHandler : MonoBehaviour{
     protected void Update(){
         if (_selectTriggeredThisFrame){
             _selectTriggeredThisFrame = false;
-            if (EventSystem.current.IsPointerOverGameObject()){
+            if (General.IsPointerOverUI()){
                 return;
             }
             turnUI.OnSelect();

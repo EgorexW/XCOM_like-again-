@@ -532,6 +532,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.4528302
       objectReference: {fileID: 0}
+    - target: {fileID: 5063755154068636706, guid: b9b146c7e054e4150b3570aa7c815697, type: 3}
+      propertyPath: name
+      value: Bandit
+      objectReference: {fileID: 0}
     - target: {fileID: 6400889664588949597, guid: b9b146c7e054e4150b3570aa7c815697, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8

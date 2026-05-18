@@ -1,7 +1,8 @@
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler{
+public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IIgnorePointerOverUI{
     [SerializeField] Message message;
 
     [SerializeField] float delay = 0.5f;
@@ -13,14 +14,6 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
 
     protected void OnDisable(){
-        Deactivate();
-    }
-
-    protected void OnMouseEnter(){
-        Activate();
-    }
-
-    protected void OnMouseExit(){
         Deactivate();
     }
 
@@ -44,9 +37,12 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         TooltipSystem.Hide();
     }
 
-    public void SetMessage(Message messageTmp, bool enable = true){
+    public void SetMessage(Message messageTmp){
         this.message = messageTmp;
-        if (enable){
+        if (message.header.IsNullOrWhitespace()){
+            Disable();
+        }
+        else{
             Enable();
         }
     }

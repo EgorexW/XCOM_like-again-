@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class CombatObject : MonoBehaviour, ICombatObject{
+    [SerializeField] new string name; 
     [SerializeField] CombatObjectFlags flags = CombatObjectFlags.None;
 
     [ShowInInspector] [HideInEditorMode] [FoldoutGroup("Debug")] public List<CombatGridNode> Nodes{ get; set; } = new();
     [ShowInInspector] [HideInEditorMode] [FoldoutGroup("Debug")] public CombatSystem CombatSystem{ get; set; }
-    public GameObject GameObject => gameObject;
-    public CombatObjectFlags Flags => flags;
 
-    public string Name{ get; set; }
+    public CombatObjectFlags Flags => flags;
+    public string Name { get => name; set => name = value; }
 
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onRemove{ get; } = new();
     [FoldoutGroup("Events")] public UnityEvent<ICombatObject> onInit{ get; } = new();
