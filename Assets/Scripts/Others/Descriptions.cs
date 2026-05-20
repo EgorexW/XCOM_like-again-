@@ -1,3 +1,5 @@
+using Sirenix.Utilities;
+
 public static class Descriptions{
     public static string GetDescription(this UnitAction unitAction){
         var description = unitAction.ActionInfo.Description.Trim();
@@ -34,7 +36,10 @@ public static class Descriptions{
         description += combatObject.GetDelayedEffectDescription();
         return description.TrimStart();
     }
-    public static Message GetMessage(this ICombatObject combatObject){
+    public static Message? GetMessage(this ICombatObject combatObject){
+        if (combatObject.Name.IsNullOrWhitespace()){
+            return null;
+        }
         var message = new Message(){
             header = combatObject.Name,
             description = combatObject.GetDescription(),
@@ -100,7 +105,7 @@ public static class Descriptions{
     static string GetDelayedEffectDescription(this ICombatObject combatObject){
         var delayed = combatObject.GetCombatComponent<DelayedEffectComponent>();
         if (delayed == null) return "";
-        return $"Activates in: {delayed.DurationLeft} turn(s)\n";
+        return $"{delayed.DurationLeft} turn(s)\n";
     }
 
 

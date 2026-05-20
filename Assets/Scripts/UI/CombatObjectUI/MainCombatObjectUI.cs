@@ -3,13 +3,21 @@ using Nrjwolf.Tools.AttachAttributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+/// <summary>
+/// Base class for all sub-UIs that belong to a single combat object card.
+/// </summary>
 public abstract class CombatObjectUI : UIElement{
     public abstract void SetCombatObject(ICombatObject combatObject);
 }
 
+/// <summary>
+/// Legacy container kept for backward-compat with old prefabs.
+/// New setups should use CombatObjectCard instead.
+/// The TooltipTrigger dependency has been removed — use CombatObjectCard
+/// events (onPointerEnter / onPointerExit) for hover behaviour.
+/// </summary>
 class MainCombatObjectUI : CombatObjectUI{
     [BoxGroup("References")] [GetComponent] [SerializeField] RectTransform rectTransform;
-    [SerializeField] TooltipTrigger tooltipTrigger;
 
     List<CombatObjectUI> uiChildren;
 
@@ -21,6 +29,5 @@ class MainCombatObjectUI : CombatObjectUI{
     public override void SetCombatObject(ICombatObject combatObject){
         rectTransform.position = combatObject.GetCenter();
         foreach (var ui in uiChildren) ui.SetCombatObject(combatObject);
-        tooltipTrigger?.SetMessage(combatObject.GetMessage());
     }
 }

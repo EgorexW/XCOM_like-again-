@@ -1156,9 +1156,6 @@ GameObject:
   - component: {fileID: 359120357}
   - component: {fileID: 359120358}
   - component: {fileID: 359120359}
-  - component: {fileID: 359120361}
-  - component: {fileID: 359120360}
-  - component: {fileID: 359120362}
   m_Layer: 5
   m_Name: Combat Object UI
   m_TagString: Untagged
@@ -1208,48 +1205,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   rectTransform: {fileID: 359120357}
-  tooltipTrigger: {fileID: 359120359}
---- !u!114 &359120359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 359120356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6040a4ec73c94f34b348a657123f07b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Essencial::TooltipTrigger
-  message:
-    header: Combat Object UI
-    description: 
-  delay: 0.5
---- !u!114 &359120360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 359120356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d8a6c113d54a299b18ab141134fbed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Essencial::NonDrawingGraphic
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &359120361
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 359120356}
-  m_CullTransparentMesh: 1
---- !u!225 &359120362
+--- !u!225 &359120359
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1259,7 +1215,7 @@ CanvasGroup:
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 0
-  m_BlocksRaycasts: 1
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &371968268
 GameObject:
@@ -3394,7 +3350,7 @@ RectTransform:
   - {fileID: 471713097}
   - {fileID: 1237976160}
   - {fileID: 1646046789}
-  - {fileID: 1388390497}
+  - {fileID: 1982847422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3411,10 +3367,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1116794041}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81337e2861a49444ea00a63fff5a4482, type: 3}
+  m_Script: {fileID: 11500000, guid: d59d014d9dc6b4d13a0e8b395be311f5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Essencial::TooltipSystem
-  tooltip: {fileID: 1388390499}
+  m_EditorClassIdentifier: Assembly-CSharp::TileHoverContext
+  combatGrid: {fileID: 1325963468}
+  delay: 1
+  onHoverTile:
+    m_PersistentCalls:
+      m_Calls: []
+  onHoverClear:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1235642124
 GameObject:
   m_ObjectHideFlags: 0
@@ -3858,8 +3821,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1388390497}
-  - component: {fileID: 1388390500}
+  - component: {fileID: 1388390498}
   - component: {fileID: 1388390499}
+  - component: {fileID: 1388390500}
   m_Layer: 5
   m_Name: Tooltip
   m_TagString: Untagged
@@ -3874,7 +3838,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1388390496}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -3882,14 +3846,14 @@ RectTransform:
   - {fileID: 291139111}
   - {fileID: 1545594820}
   - {fileID: 1974696199}
-  m_Father: {fileID: 1116794045}
+  m_Father: {fileID: 1982847422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -300.0299, y: -400.03003}
-  m_SizeDelta: {x: 500.06, y: 700.06}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1388390499
+--- !u!114 &1388390498
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3898,21 +3862,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1388390496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1714fae7e2ad044379de964879fb2c53, type: 3}
+  m_Script: {fileID: 11500000, guid: 23c0d19878d884ea5aa71d3d2b5d06cf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Essencial::Tooltip
+  m_EditorClassIdentifier: '::'
   onShow:
     m_PersistentCalls:
       m_Calls: []
   onHide:
     m_PersistentCalls:
       m_Calls: []
-  layoutElement: {fileID: 1388390500}
-  rectTransform: {fileID: 1388390497}
   headerText: {fileID: 1974696200}
   descriptionText: {fileID: 1545594821}
-  moveToMouse: 0
---- !u!114 &1388390500
+--- !u!114 &1388390499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3925,13 +3886,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
   m_IgnoreLayout: 0
-  m_MinWidth: -1
-  m_MinHeight: -1
-  m_PreferredWidth: -1
+  m_MinWidth: 100
+  m_MinHeight: 200
+  m_PreferredWidth: 1000
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1388390500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388390496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc5db34b9117345ed95f2bf51996c26c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleMessageHeightFitter
+  offset: 120
+  text: {fileID: 1545594821}
 --- !u!1 &1505838069
 GameObject:
   m_ObjectHideFlags: 0
@@ -4101,7 +4076,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4147,7 +4122,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
@@ -5500,6 +5475,116 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974696198}
   m_CullTransparentMesh: 1
+--- !u!1 &1982847421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1982847422}
+  - component: {fileID: 1982847423}
+  - component: {fileID: 1982847424}
+  - component: {fileID: 1982847425}
+  m_Layer: 5
+  m_Name: Tooltips
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1982847422
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982847421}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1388390497}
+  m_Father: {fileID: 1116794045}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -299.82373, y: -746.626}
+  m_SizeDelta: {x: 500.06006, y: 1394.146}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1982847423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982847421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 2
+  m_Spacing: 50
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &1982847424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982847421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9acfe8824d36d49f5a988ffdb2bce12c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  onShow:
+    m_PersistentCalls:
+      m_Calls: []
+  onHide:
+    m_PersistentCalls:
+      m_Calls: []
+  tileHoverContext: {fileID: 1116794046}
+  pool: {fileID: 1982847425}
+--- !u!114 &1982847425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982847421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2062d398baf34060ae5629748bfec4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Essencial::ObjectsPool
+  onShow:
+    m_PersistentCalls:
+      m_Calls: []
+  onHide:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  prefab: {fileID: 1388390496}
+  onCreateObject:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2038649319
 GameObject:
   m_ObjectHideFlags: 0

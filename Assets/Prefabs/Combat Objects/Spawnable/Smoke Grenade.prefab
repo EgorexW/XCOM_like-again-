@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 650386395851376932, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: name
+      value: Smoke Grenade
+      objectReference: {fileID: 0}
     - target: {fileID: 1050595686570496982, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -26,6 +30,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
       propertyPath: damage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: damageValue
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4861380369685027142, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
