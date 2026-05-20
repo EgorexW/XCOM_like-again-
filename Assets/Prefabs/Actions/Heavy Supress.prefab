@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3631860729330829194}
   - component: {fileID: 4011586103964397983}
   m_Layer: 0
-  m_Name: Supress
+  m_Name: Heavy Supress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,18 +45,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackAction
   actionInfo:
-    actionName: Supress
-    description: Reduces the target's action points by 1 on their next turn. Can
+    actionName: Heavy Supress
+    description: Reduces the target's action points by 2 on their next turn. Can
       target units behind cover. This effect does not stack.
     actionFlags: 10
-  cost: 1
+  cost: 2
   usesLeft:
     enabled: 0
     value: 0
   unit: {fileID: 0}
-  range: 10
+  range: 5
   damageValue: 0
   appliedStatusEffects:
-  - {fileID: 11400000, guid: b9034023ae42340e5801bb9fdaa9265d, type: 2}
+  - {fileID: 11400000, guid: 921bac0fbe9534a959b258b2cf46f0c7, type: 2}
   ammoCost: 1
   ignoreCover: 1
