@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: 'unitActions.Array.data[1]'
       value: 
       objectReference: {fileID: 216399388424802810}
+    - target: {fileID: 1760186521328549159, guid: ee852e7dfd119405fb36cebe68b4b762, type: 3}
+      propertyPath: suppressChance
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6209925376355333637, guid: ee852e7dfd119405fb36cebe68b4b762, type: 3}
       propertyPath: m_Name
       value: Basic Enemy

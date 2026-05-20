@@ -3424,7 +3424,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SimpleTeamGenerator
   teamFlag: 2
   teamPrefabs:
-  - {fileID: 6209925376355333637, guid: ee852e7dfd119405fb36cebe68b4b762, type: 3}
+  - {fileID: 6155321779156121815, guid: 425eb1f3ff7eb4154a88b38c0655348b, type: 3}
+  - {fileID: 6155321779156121815, guid: 662e785cb562e489684c9b6d81db0c87, type: 3}
   turnTaker: {fileID: 1835195250}
   teamCount: 3
 --- !u!1 &1237976159
@@ -3821,9 +3822,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1388390497}
-  - component: {fileID: 1388390498}
   - component: {fileID: 1388390499}
   - component: {fileID: 1388390500}
+  - component: {fileID: 1388390501}
   m_Layer: 5
   m_Name: Tooltip
   m_TagString: Untagged
@@ -3853,26 +3854,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1388390498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388390496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23c0d19878d884ea5aa71d3d2b5d06cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  onShow:
-    m_PersistentCalls:
-      m_Calls: []
-  onHide:
-    m_PersistentCalls:
-      m_Calls: []
-  headerText: {fileID: 1974696200}
-  descriptionText: {fileID: 1545594821}
 --- !u!114 &1388390499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3907,6 +3888,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SimpleMessageHeightFitter
   offset: 120
   text: {fileID: 1545594821}
+--- !u!114 &1388390501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388390496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f6c299995b41f2ad004798d4c097fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Essencial::MessageUI
+  onShow:
+    m_PersistentCalls:
+      m_Calls: []
+  onHide:
+    m_PersistentCalls:
+      m_Calls: []
+  headerText: {fileID: 1974696200}
+  descriptionText: {fileID: 1545594821}
 --- !u!1 &1505838069
 GameObject:
   m_ObjectHideFlags: 0

@@ -74,5 +74,6 @@ public class ActionTargetingUI : UIElement{
     public override void Hide(){
         base.Hide();
         validTargetsUI.ClearMarks();
+        invalidTargetsUI.ClearMarks();
     }
 }

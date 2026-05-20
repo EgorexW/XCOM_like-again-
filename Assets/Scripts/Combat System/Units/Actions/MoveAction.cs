@@ -11,7 +11,7 @@ public class MoveAction : TargetedUnitAction{
         if (node.Contains(unit)){
             result |= TargetValidation.InvalidTarget;
         }
-        if (!unit.GetCenterNode().LineUnobstructed(node, unit.GetBlockingFlags())){
+        if (!unit.GetCenterNode().LineUnobstructed(node, CombatObjectFlags.MovementBlocker)){
             result |= TargetValidation.NoPath;
         }
         return result;

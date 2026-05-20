@@ -40,21 +40,19 @@ public class BasicAIBehaviour : AIBehaviour{
             : AIAction.Invalid;
 
         // Resolution
-        var exposed = moveAction.ActionFlags.HasFlag(AIActionFlags.InDanger);
-        var enemyExposed = attackAction.ActionFlags.HasFlag(AIActionFlags.EnemyExposed);
+        var canHide = moveAction.ActionFlags.HasFlag(AIActionFlags.InDanger) && !moveAction.ActionFlags.HasFlag(AIActionFlags.TileExposed);
+        var enemyExposed = attackAction.ActionFlags.HasFlag(AIActionFlags.EnemyExposed) && attackAction.Valid;
 
-        if (exposed){
-            if (enemyExposed){
-                if (Random.value < attackWhenExposedChance && attackAction.Valid){
-                    return attackAction;
-                }
+        if (canHide){
+            if (enemyExposed && Random.value < attackWhenExposedChance){
+                return attackAction;
             }
             return moveAction.Score > 0 ? moveAction : surrenderAction;
         }
         if (reloadAction.ActionFlags.HasFlag(AIActionFlags.MagazineEmpty) && reloadAction.Valid){
             return reloadAction;
         }
-        if (enemyExposed && attackAction.Valid){
+        if (enemyExposed){
             return attackAction;
         }
         if (Random.value < suppressChance){
@@ -73,6 +71,9 @@ public class BasicAIBehaviour : AIBehaviour{
         }
         if (attackAction.Score > 0){
             return attackAction;
+        }
+        if (moveAction.Score > 0){
+            return moveAction;
         }
         return AIAction.Invalid;
     }

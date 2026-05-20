@@ -5,37 +5,41 @@ using UnityEngine.Serialization;
 
 class CameraMovement : MonoBehaviour{
     [FormerlySerializedAs("speed")] [SerializeField] float inputMovementSpeed = 5f;
-    [SerializeField] float moveToMovementSpeed = 15f;
+    [SerializeField] float moveToTime = 0.5f;
 
     Vector2 movement = Vector2.zero;
-    Vector2? targetPosition;
 
     [FoldoutGroup("Events")] public UnityEvent onMove;
 
     protected void Update(){
-        Vector2 move;
-        if (targetPosition.HasValue){
-            var nextStep = Vector2.MoveTowards(transform.position, targetPosition.Value, moveToMovementSpeed * Time.deltaTime);
-            move = nextStep - (Vector2)transform.position;
-        }
-        else{
-            move = movement * (inputMovementSpeed * Time.deltaTime);
-        }
+        Vector2 move = movement * (inputMovementSpeed * Time.deltaTime);
+        
         if (move.sqrMagnitude > 0){
             onMove.Invoke();
+            transform.Translate(move);
         }
-        transform.Translate(move);
     }
 
     public void SetMovementInput(Vector2 inputVector){
         movement = inputVector.normalized;
         if (movement != Vector2.zero){
-            targetPosition = null;
+            LeanTween.cancel(gameObject);
         }
     }
 
     public void MoveTo(Vector2 position){
-        targetPosition = position;
-        SetMovementInput(Vector2.zero);
+        if (movement != Vector2.zero){
+            return;
+        }
+        
+        float distance = Vector2.Distance(transform.position, position);
+        if (distance <= 0.001f) return;
+        
+        LeanTween.cancel(gameObject);
+        LeanTween.move(gameObject, new Vector3(position.x, position.y, transform.position.z), moveToTime)
+            .setEase(LeanTweenType.easeInOutSine)
+            .setOnUpdate((float val) => {
+                onMove.Invoke();
+            });
     }
 }
