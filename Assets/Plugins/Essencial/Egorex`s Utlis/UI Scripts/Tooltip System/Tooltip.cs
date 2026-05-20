@@ -6,22 +6,15 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(LayoutElement))]
-public class Tooltip : UIElement{
+public class Tooltip : MessageUI{
     [SerializeField] [GetComponent] LayoutElement layoutElement;
     [SerializeField] [GetComponent] RectTransform rectTransform;
-    [SerializeField] [Required] TextMeshProUGUI headerText;
-    [SerializeField] [Required] TextMeshProUGUI descriptionText;
-
-    [SerializeField] bool moveToMouse;
 
     protected void Awake(){
         Hide();
     }
 
     protected void Update(){
-        if (!moveToMouse){
-            return;
-        }
         transform.position = General.GetMousePos();
 
         var desiredWidth = Mathf.Max(headerText.preferredWidth, descriptionText.preferredWidth);
@@ -32,14 +25,8 @@ public class Tooltip : UIElement{
                 Mathf.Max(rectTransform.sizeDelta.y, rectTransform.anchoredPosition.y));
     }
 
-    void Show(string header, string description){
+    public override void Show(){
         base.Show();
-        headerText.text = header;
-        descriptionText.text = description;
         Update();
-    }
-
-    public void Show(Message message){
-        Show(message.header, message.description);
     }
 }
