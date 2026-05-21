@@ -12,6 +12,7 @@ public class ResourcesUI : UIElement{
     SquadData squad;
 
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData, SquadMember> onSquadMemberClicked = new();
+    [FoldoutGroup("Events")] public UnityEvent<ResourcesData, SquadMember> onSquadMemberPortraitClicked = new();
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData, Equipment> onEquipmentClicked = new();
 
     protected void Awake(){
@@ -26,10 +27,15 @@ public class ResourcesUI : UIElement{
     void OnCreateSquadMemberUI(GameObject arg0){
         var squadMemberUI = arg0.GetComponent<SquadMemberUI>();
         squadMemberUI.onButtonClicked.AddListener(OnSquadMemberUIClicked);
+        squadMemberUI.onPortraitClicked.AddListener(OnSquadMemberPortraitClicked);
     }
 
     void OnSquadMemberUIClicked(SquadMember arg0){
         onSquadMemberClicked.Invoke(resources, arg0);
+    }
+
+    void OnSquadMemberPortraitClicked(SquadMember arg0){
+        onSquadMemberPortraitClicked.Invoke(resources, arg0);
     }
 
     public void ShowResources(ResourcesData resourcesData, SquadData squadData = null){

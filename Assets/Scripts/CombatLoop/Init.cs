@@ -5,15 +5,23 @@ using UnityEngine.Serialization;
 
 public class Init : MonoBehaviour{
     [SerializeField] SquadData squadData;
-    [SerializeField] SquadData initSquadData;
     [FormerlySerializedAs("playerResourcesData")] [SerializeField] ResourcesData resourcesData;
     [FormerlySerializedAs("initPlayerResourcesData")] [SerializeField] ResourcesData initResourcesData;
 
     [SerializeField] [SceneObjectsOnly] protected string sceneName;
 
+    [Title("Initial Squad Generation")]
+    [SerializeField] RecruitIntakeData recruitIntakeData;
+    [SerializeField] int startingSquadSize = 5;
+
     protected void Awake(){
-        squadData.DeepCopy(initSquadData);
+        squadData.Clear();
         resourcesData.DeepCopy(initResourcesData);
+        
+        if (recruitIntakeData != null && startingSquadSize > 0){
+            recruitIntakeData.GenerateRecruits(resourcesData, startingSquadSize);
+        }
+
         SceneManager.LoadScene(sceneName);
     }
 }

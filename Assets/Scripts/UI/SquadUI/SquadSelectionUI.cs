@@ -13,6 +13,7 @@ public class SquadSelectionUI : UIElement{
         squadUI.onEquipmentClicked.AddListener(OnSquadUIEquipmentSquadClicked);
         squadUI.onSquadMemberButtonClicked.AddListener(OnSquadUISquadMemberSquadClicked);
         resourcesUI.onSquadMemberClicked.AddListener(OnSquadUISquadMemberResourcesClicked);
+        resourcesUI.onSquadMemberPortraitClicked.AddListener(OnSquadUISquadMemberPortraitResourcesClicked);
         resourcesUI.onEquipmentClicked.AddListener(OnSquadUIEquipmentResourcesClicked);
         squadUI.onSquadMemberPortraitClicked.AddListener(OnSquadUISquadMemberPortraitClicked);
     }
@@ -40,6 +41,12 @@ public class SquadSelectionUI : UIElement{
     }
 
     void OnSquadUISquadMemberResourcesClicked(ResourcesData arg0, SquadMember arg1){
+        // The main button (remove button) now fires them completely
+        arg0.FireMember(arg1);
+    }
+
+    void OnSquadUISquadMemberPortraitResourcesClicked(ResourcesData arg0, SquadMember arg1){
+        // The portrait puts them into the squad
         squadSelection.AddMemberToSquad(arg1);
     }
 

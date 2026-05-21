@@ -30,7 +30,13 @@ public class RecruitIntakeData : ScriptableObject{
     }
 
     void DeliverRecruits(ResourcesData resourcesData){
-for (int i = 0; i < recruitsPerDelivery; i++){
+        GenerateRecruits(resourcesData, recruitsPerDelivery);
+    }
+
+    public void GenerateRecruits(ResourcesData resourcesData, int amount){
+        if (possibleTemplates.Count == 0) return;
+
+        for (int i = 0; i < amount; i++){
             string randomName = NameGenerator.RandomName();
             RecruitTemplate randomTemplate = possibleTemplates.Random();
     
@@ -42,7 +48,7 @@ for (int i = 0; i < recruitsPerDelivery; i++){
             );
             
             resourcesData.AddMember(newRecruit);
-}
+        }
     }
     
     public void ResetData(){
