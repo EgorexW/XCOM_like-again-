@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 3576879103779986612}
   - component: {fileID: 7931171033296651014}
   - component: {fileID: 245124333257379108}
+  - component: {fileID: 238793328287325770}
   m_Layer: 0
   m_Name: Exploding Barrel
   m_TagString: Untagged
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 579098e593ff43bd84fb065bb2d7d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatObject
+  name: Exploding Barrel
   flags: 13
 --- !u!114 &3576879103779986612
 MonoBehaviour:
@@ -154,8 +156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   maxHealth: 3
   startingHealth: {x: 3, y: 3}
-  onDeathEffects:
-  - {fileID: 7931171033296651014}
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -192,3 +192,17 @@ MonoBehaviour:
   hazardSettings:
     hazardFlags: 2
     intensity: 1
+--- !u!114 &238793328287325770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456766478168322322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c7d93e84f705484ea16c2ed73fb23bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnDeathTriggersComponent
+  onDeathEffects:
+  - {fileID: 7931171033296651014}

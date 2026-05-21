@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 public class HealthComponent : CombatComponent{
     [SerializeField] int maxHealth = 1;
     [SerializeField] Vector2Int startingHealth = Vector2Int.one;
-    [SerializeField] List<CombatEffect> onDeathEffects;
 
     [FoldoutGroup("Events")] public UnityEvent<HealthComponent> onHealthChanged;
     public int Health{ get; private set; }
@@ -41,10 +40,6 @@ public class HealthComponent : CombatComponent{
         // }
 
         Debug.Log($"{CombatObject.Name} died.", this);
-        foreach (var effect in onDeathEffects){
-            effect.targetNode = CombatObject.GetCenterNode();
-            effect.Execute();
-        }
         CombatObject.Remove();
     }
 }
