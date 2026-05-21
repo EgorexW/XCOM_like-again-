@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DelayedEffectComponent : TurnTakerComponent{
+public class DelayedEffectComponent : TurnTakerComponentBase{
     [SerializeField] Vector2Int startDurationLeft = Vector2Int.one;
     [SerializeField] bool destroy = true;
     [SerializeField] List<CombatEffect> effects;
@@ -17,14 +17,10 @@ public class DelayedEffectComponent : TurnTakerComponent{
         durationLeft = startDurationLeft.Random();
     }
 
-    public override void StartTurn(){
-        base.StartTurn();
+    protected override void OnStartTurn(){
         durationLeft -= 1;
         if (durationLeft <= 0){
             Activate();
-        }
-        else{
-            CompleteTurn();
         }
     }
 
@@ -34,13 +30,14 @@ public class DelayedEffectComponent : TurnTakerComponent{
             effect.Execute();
         }
         onActivate.Invoke();
-        TurnSystem.RemoveTurnTaker(this);
-        if (destroy){
-            CombatObject!.Remove();
-            if (CombatObject == null){
-                Destroy(gameObject);
-            }
+        active = false;
+        if (!destroy){
+            return;
         }
+        CombatObject!.Remove();
+        // if (CombatObject == null){
+        //     Destroy(gameObject);
+        // }
     }
 
     protected void Reset(){

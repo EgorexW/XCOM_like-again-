@@ -238,7 +238,7 @@ MonoBehaviour:
   insertType: 1
   killChance: 0.5
   bleedOutTurnsRange: {x: 2, y: 4}
-  statusToApply: {fileID: 0}
+  statusToApply: {fileID: 11400000, guid: 2885883e97fc34331b61d3275637fddf, type: 2}
 --- !u!1 &9098700461190151436
 GameObject:
   m_ObjectHideFlags: 0

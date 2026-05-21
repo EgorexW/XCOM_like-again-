@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-public class BleedOutComponent : TurnTakerComponent{
+public class BleedOutComponent : TurnTakerComponentBase{
     [SerializeField] float killChance = 0.5f;
     [SerializeField] Vector2Int bleedOutTurnsRange = new Vector2Int(2, 4);
     [SerializeField] UnitModifierFactory statusToApply;
@@ -24,19 +24,12 @@ public class BleedOutComponent : TurnTakerComponent{
         }
     }
 
-    public override void StartTurn(){
-        base.StartTurn();
+    protected override void OnStartTurn(){
         if (IsBleedingOut){
             TurnsLeft -= 1;
             if (TurnsLeft <= 0){
                 Die();
             }
-            else{
-                CompleteTurn();
-            }
-        }
-        else{
-            CompleteTurn();
         }
     }
 
