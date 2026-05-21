@@ -49,6 +49,14 @@ public class ResourcesData : ScriptableObject{
         onChanged.Invoke(this);
     }
 
+    public void FireMember(SquadMember member){
+        foreach (var equipmentPiece in new List<Equipment>(member.Equipment)){
+            member.RemoveEquipment(equipmentPiece);
+            AddEquipment(equipmentPiece);
+        }
+        RemoveMember(member);
+    }
+
     public void RemoveEquipment(Equipment equipment1){
         equipment.Remove(equipment1);
         onChanged.Invoke(this);

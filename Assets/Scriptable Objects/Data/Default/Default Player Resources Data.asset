@@ -12,18 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86eeb8c435414dcc8981f7d8b594f77e, type: 3}
   m_Name: Default Player Resources Data
   m_EditorClassIdentifier: Assembly-CSharp::PlayerResourcesData
-  members:
-  - name: AAA
-    combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
-    equipment:
-    - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
-    alive: 0
-    onChanged:
-      m_PersistentCalls:
-        m_Calls: []
+  members: []
   equipment:
   - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
   - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
+  money: 500
   onChanged:
     m_PersistentCalls:
       m_Calls: []

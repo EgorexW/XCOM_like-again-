@@ -7,12 +7,12 @@ public class SquadSelection : MonoBehaviour{
 
     public void AddMemberToSquad(SquadMember member){
         squadData.AddMember(member);
-        resourcesData.RemoveMember(member);
+        // Do not remove from resourcesData anymore
     }
 
     public void RemoveMemberFromSquad(SquadMember member){
         squadData.RemoveMember(member);
-        resourcesData.AddMember(member);
+        // Do not add to resourcesData anymore, they never left
         EmptyMember(member);
     }
 

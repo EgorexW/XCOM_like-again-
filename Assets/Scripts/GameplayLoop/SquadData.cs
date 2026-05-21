@@ -45,18 +45,21 @@ public class SquadMember{
     [SerializeField] string name;
     [SerializeField] GameObject combatPrefab;
     [SerializeField] List<Equipment> equipment;
+    [SerializeField] int upkeepCost;
 
     [HideInEditorMode] public bool alive = true;
 
-    public SquadMember(string name, GameObject combatPrefabTmp, List<Equipment> equipmentTmp){
+    public SquadMember(string name, GameObject combatPrefabTmp, List<Equipment> equipmentTmp, int upkeepCost = 10){
         this.name = name;
         combatPrefab = combatPrefabTmp;
         equipment = equipmentTmp;
+        this.upkeepCost = upkeepCost;
     }
 
     public string Name => name;
     public GameObject CombatPrefab => combatPrefab;
     public IReadOnlyList<Equipment> Equipment => equipment;
+    public int UpkeepCost => upkeepCost;
 
     [HideInInspector] [FoldoutGroup("Events")] public UnityEvent<SquadMember> onChanged = new();
 
@@ -73,7 +76,7 @@ public class SquadMember{
 
 public static class SquadExtensions{
     public static SquadMember Copy(this SquadMember member){
-        return new SquadMember(member.Name, member.CombatPrefab, member.Equipment.ToList()){
+        return new SquadMember(member.Name, member.CombatPrefab, member.Equipment.ToList(), member.UpkeepCost){
             alive = member.alive
         };
     }

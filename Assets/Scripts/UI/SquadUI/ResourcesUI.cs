@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,6 +9,7 @@ public class ResourcesUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] EquipmentTypesUI equipmentUI;
 
     ResourcesData resources;
+    SquadData squad;
 
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData, SquadMember> onSquadMemberClicked = new();
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData, Equipment> onEquipmentClicked = new();
@@ -29,17 +32,29 @@ public class ResourcesUI : UIElement{
         onSquadMemberClicked.Invoke(resources, arg0);
     }
 
-    public void ShowResources(ResourcesData resourcesData){
+    public void ShowResources(ResourcesData resourcesData, SquadData squadData = null){
         resources = resourcesData;
+        squad = squadData;
         resources.onChanged.AddListener(OnResourcesChanged);
+        if (squad != null) squad.onChanged.AddListener(OnSquadChanged);
+        UpdateResources();
+    }
+
+    void OnSquadChanged(SquadData data){
         UpdateResources();
     }
 
     void UpdateResources(){
-        var count = resources.Members.Count;
-        membersPool.SetCount(count);
-        for (var i = 0; i < count; i++){
-            var member = resources.Members[i];
+        var availableMembers = new List<SquadMember>();
+        foreach (var member in resources.Members){
+            if (squad == null || !squad.SquadMembers.Contains(member)){
+                availableMembers.Add(member);
+            }
+        }
+
+        membersPool.SetCount(availableMembers.Count);
+        for (var i = 0; i < availableMembers.Count; i++){
+            var member = availableMembers[i];
             var obj = membersPool.GetActiveObject(i);
             var resourcesSlotUI = obj.GetComponent<SquadMemberUI>();
             resourcesSlotUI.Show(member);
@@ -54,6 +69,8 @@ public class ResourcesUI : UIElement{
     public override void Hide(){
         base.Hide();
         resources?.onChanged.RemoveListener(OnResourcesChanged);
+        squad?.onChanged.RemoveListener(OnSquadChanged);
         resources = null;
+        squad = null;
     }
 }

@@ -166,6 +166,7 @@ MonoBehaviour:
   squadData: {fileID: 11400000, guid: 39451c121c1f240d7b34d36251ec8d62, type: 2}
   resourcesData: {fileID: 11400000, guid: 17c65746be0974f9b89ee0baa80713df, type: 2}
   combatReportData: {fileID: 11400000, guid: 106d9c354c1e54f52a13a784c5cd3db4, type: 2}
+  recruitIntakeData: {fileID: 11400000, guid: 8d21b16f4239642a7bbf09b69de5f4e5, type: 2}
 --- !u!1 &848699775
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,4 +5,5 @@ public static class StringKeys{
     public const string AssetMenuSquadDataBasePath = "Data/Squad";
     public const string AssetMenuCombatReportDataBasePath = "Data/Combat Report";
     public const string AssetMenuShopDataBasePath = "Data/Shop Data";
+    public const string AssetMenuRecruitIntakeDataBasePath = "Data/Recruit Intake";
 }

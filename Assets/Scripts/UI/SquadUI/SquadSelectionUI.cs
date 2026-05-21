@@ -27,7 +27,7 @@ public class SquadSelectionUI : UIElement{
 
     protected void Start(){
         squadUI.ShowSquad(squadSelection.Squad);
-        resourcesUI.ShowResources(squadSelection.Resources);
+        resourcesUI.ShowResources(squadSelection.Resources, squadSelection.Squad);
     }
 
     void OnSquadUIEquipmentSquadClicked(SquadData arg0, Equipment arg1, SquadMember arg2){
