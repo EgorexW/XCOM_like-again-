@@ -55,4 +55,4 @@ MonoBehaviour:
     value: 0
   unit: {fileID: 0}
   statusEffectCreators:
-  - {fileID: 11400000, guid: 2885883e97fc34331b61d3275637fddf, type: 2}
+  - {fileID: 11400000, guid: fe7f55d35311f44dc82309fa0a8dcb05, type: 2}

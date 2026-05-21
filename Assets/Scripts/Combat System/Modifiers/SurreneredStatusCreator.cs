@@ -1,23 +1,19 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuModifierBasePath + "Surrendered Status")]
-public class SurrenderedStatusFactory : UnitModifierFactory{
+public class PacifiedStatusFactory : UnitModifierFactory{
+    bool surrendered;
+    
     public override UnitModifier Create(){
-        return new SurrenderedStatus(modifierInfo);
+        return new PacifiedStatus(modifierInfo, surrendered);
     }
 }
 
-class SurrenderedStatus : UnitModifier{
-    readonly List<UnitAction> allowedActions;
+class PacifiedStatus : UnitModifier{
+    readonly bool surrendered;
 
-    public SurrenderedStatus(ModifierInfo info, List<UnitAction> allowedActions = null) : base(info){
-        allowedActions ??= new List<UnitAction>();
-        this.allowedActions = allowedActions;
-    }
-
-    public override bool CanExecuteAction(UnitAction action){
-        return allowedActions.Contains(action);
+    public PacifiedStatus(ModifierInfo info, bool surrendered) : base(info){
+        this.surrendered = surrendered;
     }
 
     public override void OnApplied(Unit targetTmp){
@@ -25,7 +21,7 @@ class SurrenderedStatus : UnitModifier{
         targetTmp.RemoveFlag(CombatObjectFlags.MovementBlocker | CombatObjectFlags.LoSBlocker);
         targetTmp.AddFlag(CombatObjectFlags.Pacified);
         var suspectComponent = targetTmp.GetCombatComponent<SuspectComponent>();
-        if (suspectComponent != null){
+        if (surrendered && suspectComponent != null){
             suspectComponent.ChangeState(SuspectState.Surrendered);
         }
         else{
