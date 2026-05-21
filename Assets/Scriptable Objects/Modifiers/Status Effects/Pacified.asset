@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4234eb1117d144cbb6e081f2690e3817, type: 3}
-  m_Name: Surrendered
+  m_Name: Pacified
   m_EditorClassIdentifier: Assembly-CSharp::SurrenderedStatusCreator
   modifierInfo:
-    modifierName: Surrendered
+    modifierName: Pacified
     description: 
