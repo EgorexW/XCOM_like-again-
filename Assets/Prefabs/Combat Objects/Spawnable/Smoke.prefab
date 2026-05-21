@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 1722028004418123444}
   - component: {fileID: 3575634181915816088}
   - component: {fileID: 7794174844992942151}
+  - component: {fileID: 2820300323239499450}
   m_Layer: 0
   m_Name: Smoke
   m_TagString: Untagged
@@ -151,10 +152,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d804eea415b14f89b83a3a44d1ee875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grenade
-  insertType: 1
   startDurationLeft: {x: 2, y: 3}
   destroy: 1
   effects: []
   onActivate:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2820300323239499450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456766478168322322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd48a9113f8140479b9219d1f6ebc0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnTakerComponent
+  insertType: 1

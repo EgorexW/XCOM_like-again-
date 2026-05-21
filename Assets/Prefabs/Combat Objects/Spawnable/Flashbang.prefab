@@ -76,6 +76,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6786057673061434979, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
+      propertyPath: insertType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9098700461190151436, guid: 6db0989bd6cf6416fa677badf9c5db20, type: 3}
       propertyPath: m_Name
       value: Flashbang

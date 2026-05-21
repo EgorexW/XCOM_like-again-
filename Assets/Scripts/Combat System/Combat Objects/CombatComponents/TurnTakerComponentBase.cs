@@ -34,7 +34,9 @@ public abstract class TurnTakerComponentBase : CombatComponent{
     }
 
     private void OnUnitEndTurn(Unit unit) {
-        
+        if (active){
+            OnEndTurn();
+        }
     }
 
     private void OnTurnTakerStartTurn(ITurnTaker tt) {
@@ -44,9 +46,12 @@ public abstract class TurnTakerComponentBase : CombatComponent{
     }
 
     private void OnTurnTakerEndTurn(ITurnTaker tt) {
+        if (active){
+            OnEndTurn();
+        }
     }
 
-    protected abstract void OnStartTurn();
+    protected virtual void OnStartTurn() {}
 
-    // public virtual void EndTurn() { }
+    protected virtual void OnEndTurn() {}
 }

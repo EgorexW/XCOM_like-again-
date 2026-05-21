@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 1265413614643043436}
   - component: {fileID: 4861380369685027142}
   - component: {fileID: 5318544543648846847}
+  - component: {fileID: 6786057673061434979}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
@@ -153,7 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d804eea415b14f89b83a3a44d1ee875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  insertType: 1
   startDurationLeft: {x: 1, y: 1}
   destroy: 1
   effects:
@@ -194,3 +194,16 @@ MonoBehaviour:
   hazardSettings:
     hazardFlags: 1
     intensity: 1
+--- !u!114 &6786057673061434979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9098700461190151436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd48a9113f8140479b9219d1f6ebc0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TurnTakerComponent
+  insertType: 1
