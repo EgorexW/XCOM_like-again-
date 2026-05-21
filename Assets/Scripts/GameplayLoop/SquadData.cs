@@ -46,20 +46,37 @@ public class SquadMember{
     [SerializeField] GameObject combatPrefab;
     [SerializeField] List<Equipment> equipment;
     [SerializeField] int upkeepCost;
+    [SerializeField] int missionsCompleted = 0;
+    [SerializeField] int retirementThreshold = 20;
 
     [HideInEditorMode] public bool alive = true;
 
-    public SquadMember(string name, GameObject combatPrefabTmp, List<Equipment> equipmentTmp, int upkeepCost = 10){
+    public SquadMember(string name, GameObject combatPrefabTmp, List<Equipment> equipmentTmp, int upkeepCost = 10, int retirementThreshold = 20){
         this.name = name;
         combatPrefab = combatPrefabTmp;
         equipment = equipmentTmp;
         this.upkeepCost = upkeepCost;
+        this.retirementThreshold = retirementThreshold;
+        this.missionsCompleted = 0;
     }
 
     public string Name => name;
     public GameObject CombatPrefab => combatPrefab;
     public IReadOnlyList<Equipment> Equipment => equipment;
     public int UpkeepCost => upkeepCost;
+
+    public int MissionsCompleted => missionsCompleted;
+    public int RetirementThreshold => retirementThreshold;
+    
+    public void SetMissionsCompleted(int value){
+        missionsCompleted = value;
+        onChanged.Invoke(this);
+    }
+
+    public void SetRetirementThreshold(int value){
+        retirementThreshold = value;
+        onChanged.Invoke(this);
+    }
 
     [HideInInspector] [FoldoutGroup("Events")] public UnityEvent<SquadMember> onChanged = new();
 
@@ -72,12 +89,19 @@ public class SquadMember{
         equipment.Add(equipment1);
         onChanged.Invoke(this);
     }
+
+    public void IncrementMissionsCompleted(){
+        missionsCompleted++;
+        onChanged.Invoke(this);
+    }
 }
 
 public static class SquadExtensions{
     public static SquadMember Copy(this SquadMember member){
-        return new SquadMember(member.Name, member.CombatPrefab, member.Equipment.ToList(), member.UpkeepCost){
+        var copy = new SquadMember(member.Name, member.CombatPrefab, member.Equipment.ToList(), member.UpkeepCost, member.RetirementThreshold){
             alive = member.alive
         };
+        copy.SetMissionsCompleted(member.MissionsCompleted);
+        return copy;
     }
 }

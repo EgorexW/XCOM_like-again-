@@ -14,12 +14,18 @@ public class CombatReportEffect : MonoBehaviour{
 
     void Report(){
         foreach (var member in squadData.SquadMembers.ToList()){
-            if (member.alive){
-                continue;
+            if (!member.alive){
+                Debug.Log($"{member.Name} is dead.");
+                squadData.RemoveMember(member);
+                resourcesData.RemoveMember(member);
+            } else {
+                member.IncrementMissionsCompleted();
+                if (member.MissionsCompleted >= member.RetirementThreshold){
+                    Debug.Log($"{member.Name} has completed {member.MissionsCompleted} missions and automatically retires!");
+                    squadData.RemoveMember(member);
+                    resourcesData.RetireMember(member);
+                }
             }
-            Debug.Log($"{member.Name} is dead.");
-            squadData.RemoveMember(member);
-            resourcesData.RemoveMember(member);
         }
         int totalUpkeep = 0;
         foreach (var rosterMember in resourcesData.Members){
