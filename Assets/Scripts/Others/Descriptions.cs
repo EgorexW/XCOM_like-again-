@@ -27,6 +27,7 @@ public static class Descriptions{
     public static string GetDescription(this ICombatObject combatObject){
         var description = "";
         description += combatObject.GetHealthDescription();
+        description += combatObject.GetBleedOutDescription();
         description += combatObject.GetAmmoDescription();
         description += combatObject.GetActionPointsDescription();
         description += combatObject.GetActionsDescription();
@@ -35,6 +36,12 @@ public static class Descriptions{
         description += combatObject.GetTeamDescription();
         description += combatObject.GetDelayedEffectDescription();
         return description.TrimStart();
+    }
+
+    static string GetBleedOutDescription(this ICombatObject combatObject){
+        var bleedOut = combatObject.GetCombatComponent<BleedOutComponent>();
+        if (bleedOut == null || !bleedOut.IsBleedingOut) return "";
+        return $"Bleed Out: {bleedOut.TurnsLeft} turn(s) remaining\n";
     }
     public static Message? GetMessage(this ICombatObject combatObject){
         if (combatObject.Name.IsNullOrWhitespace()){
@@ -49,7 +56,7 @@ public static class Descriptions{
     static string GetHealthDescription(this ICombatObject combatObject){
         var health = combatObject.GetCombatComponent<HealthComponent>();
         if (health == null) return "";
-        var bar = health.IsDead ? "DEAD" : $"{health.Health}/{health.MaxHealth}";
+        var bar = $"{health.Health}/{health.MaxHealth}";
         return $"Health: {bar}\n";
     }
 

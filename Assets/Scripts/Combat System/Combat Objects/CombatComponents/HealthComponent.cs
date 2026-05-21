@@ -13,7 +13,6 @@ public class HealthComponent : CombatComponent{
     [FoldoutGroup("Events")] public UnityEvent<HealthComponent> onHealthChanged;
     public int Health{ get; private set; }
     public int MaxHealth => maxHealth;
-    public bool IsDead => Health <= 0;
 
 
     protected void Start(){
@@ -23,11 +22,8 @@ public class HealthComponent : CombatComponent{
     public Damage LastDamage { get; private set; }
 
     public void TakeDamage(Damage damage){
-        if (IsDead){
-            Debug.LogWarning($"{CombatObject.Name} is already dead and cannot take more damage.", this);
-            return;
-        }
         Health -= damage.value;
+        Health = Mathf.Clamp(Health, 0, MaxHealth);
         LastDamage = damage;
         onHealthChanged?.Invoke(this);
         if (Health <= 0){
@@ -35,7 +31,15 @@ public class HealthComponent : CombatComponent{
         }
     }
 
-    void Die(){
+    public void Die(bool ignoreBleedOut = false){
+        // if (!ignoreBleedOut){
+            var bleedOut = CombatObject.GetCombatComponent<BleedOutComponent>();
+            if (bleedOut != null){
+                bleedOut.BleedOut();
+                return;
+            }
+        // }
+
         Debug.Log($"{CombatObject.Name} died.", this);
         foreach (var effect in onDeathEffects){
             effect.targetNode = CombatObject.GetCenterNode();

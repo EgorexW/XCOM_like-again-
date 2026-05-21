@@ -20,7 +20,7 @@ public abstract class ObjectRoot<T> : MonoBehaviour, IObjectRoot<T> where T : cl
         return componentsList[0];
     }
     
-    public new List<T1> GetComponents<T1>() where T1 : T
+    public new virtual List<T1> GetComponents<T1>() where T1 : T
     {
         Type type = typeof(T1);
         if (_componentsCache.TryGetValue(type, out var cachedObject))
