@@ -11,9 +11,11 @@ public class TurnSystem : MonoBehaviour{
     bool isTurnActive;
 
     public int TurnTakersCount => turnTakers.Count;
+    public int RoundCount { get; private set; }
 
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onStartTurn;
     [FoldoutGroup("Events")] public UnityEvent<ITurnTaker> onEndTurn;
+    [FoldoutGroup("Events")] public UnityEvent<int> onRoundPassed = new();
 
     protected void Update(){
         if (isRunning && !isTurnActive && TurnTakersCount > 0){
@@ -27,6 +29,7 @@ public class TurnSystem : MonoBehaviour{
             return;
         }
         isRunning = true;
+        RoundCount = 1;
         StartTurn();
     }
 
@@ -120,6 +123,8 @@ public class TurnSystem : MonoBehaviour{
     void StartTurn(){
         if (currentIndex >= TurnTakersCount){
             currentIndex = 0;
+            RoundCount++;
+            onRoundPassed.Invoke(RoundCount);
         }
 
         var current = GetCurrentTurnTaker();
