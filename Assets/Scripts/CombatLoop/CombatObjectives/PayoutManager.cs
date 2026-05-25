@@ -24,6 +24,11 @@ public class PayoutManager : MonoBehaviour{
         foreach (var objective in objectives) objective.UpdateObjective(combatSystem);
     }
 
+    public void AddObjective(PayoutObjective objective){
+        if (!objectives.Contains(objective))
+            objectives.Add(objective);
+    }
+
     public int GetPayout(){
         UpdateObjectives();
         var payout = 0;

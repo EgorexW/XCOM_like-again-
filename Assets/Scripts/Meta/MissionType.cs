@@ -1,0 +1,11 @@
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "Mission/MissionType")]
+public class MissionType : ScriptableObject
+{
+    public string missionName;
+    [TextArea] public string description;
+    
+    [Tooltip("The MissionInit prefab to spawn when this mission starts.")]
+    public MissionInit missionInitPrefab;
+}

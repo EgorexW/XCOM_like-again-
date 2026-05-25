@@ -15,19 +15,27 @@ public class Level : MonoBehaviour{
         return combatObjectSpawns;
     }
 
-    public List<Vector2> GetSpawnPoints(int team){
-        if (team >= spawnPointsParent.childCount){
-            Debug.LogError($"Team {team} does not have a spawn point defined.");
-            return new List<Vector2>();
+    public List<MapNode> GetNodes(MapNodeType type, string group){
+        var allNodes = GetComponentsInChildren<MapNode>();
+        var result = new List<MapNode>();
+        foreach(var node in allNodes){
+            if (node.nodeType == type && node.nodeGroup == group) {
+                result.Add(node);
+            }
         }
-        var spawnPoints = spawnPointsParent.GetChild(team);
-        var poses = new List<Vector2>();
-        for (var i = 0; i < spawnPoints.childCount; i++) poses.Add(spawnPoints.GetChild(i).position);
-        poses.Shuffle();
-        return poses;
+        return result;
     }
 
-    public List<ITurnTaker> GetTurnTakers(){
-        return new List<ITurnTaker>(GetComponentsInChildren<ITurnTaker>());
+    public List<string> GetAvailableGroups(MapNodeType type){
+        var allNodes = GetComponentsInChildren<MapNode>();
+        var groups = new System.Collections.Generic.HashSet<string>();
+        foreach(var node in allNodes){
+            if (node.nodeType == type){
+                groups.Add(node.nodeGroup);
+            }
+        }
+        var list = new List<string>(groups);
+        list.Shuffle();
+        return list;
     }
 }
