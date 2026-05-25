@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuModifierBasePath + "Surrendered Status")]
 public class PacifiedStatusFactory : UnitModifierFactory{
-    bool surrendered;
+    [SerializeField] bool surrendered;
     
     public override UnitModifier Create(){
         return new PacifiedStatus(modifierInfo, surrendered);
@@ -27,5 +27,9 @@ class PacifiedStatus : UnitModifier{
         else{
             Debug.LogWarning("SuspectComponent is null (Surrendered Status)");
         }
+    }
+
+    public override bool CanExecuteAction(UnitAction action){
+        return false;
     }
 }

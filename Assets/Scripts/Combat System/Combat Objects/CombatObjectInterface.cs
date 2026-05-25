@@ -14,6 +14,8 @@ public interface ICombatObject{
     void Init();
     UnityEvent<ICombatObject> onRemove{ get; }
     UnityEvent<ICombatObject> onInit{ get; }
+    void AddFlag(CombatObjectFlags flagsToAdd);
+    void RemoveFlag(CombatObjectFlags flagsToRemove);
 }
 
 [Flags]
@@ -24,6 +26,7 @@ public enum CombatObjectFlags{
     [InspectorName("LoS Blocker")] LoSBlocker = 1 << 2,
     MovementBlocker = 1 << 3,
     Pacified = 1 << 4,
+    Dead = 1 << 5,
 
     [InspectorName("Presets/Standard Wall")] StandardWall = Object | Wall | LoSBlocker | MovementBlocker,
     [InspectorName("Presets/Standard Object")] StandardObject = Object | LoSBlocker | MovementBlocker

@@ -26,20 +26,18 @@ public class BasicAIBehaviour : AIBehaviour{
         }
 
         // Actions
+        var attackAction = attackActionCreator.CreateAIAction(context);
         var moveAction = moveActionCreator != null ? moveActionCreator.CreateAIAction(context) : AIAction.Invalid;
-        var attackAction = attackActionCreator != null ? attackActionCreator.CreateAIAction(context) : AIAction.Invalid;
         var reloadAction = reloadActionCreator != null ? reloadActionCreator.CreateAIAction(context) : AIAction.Invalid;
-        var surrenderAction = surrenderActionCreator != null
-            ? surrenderActionCreator.CreateAIAction(context)
-            : AIAction.Invalid;
-        var utilityAction = utilityActionCreator != null
-            ? utilityActionCreator.CreateAIAction(context)
-            : AIAction.Invalid;
-        var suppressAction = suppressActionCreator != null
-            ? suppressActionCreator.CreateAIAction(context)
-            : AIAction.Invalid;
-
+        var surrenderAction = surrenderActionCreator != null ? surrenderActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        var utilityAction = utilityActionCreator != null ? utilityActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        var suppressAction = suppressActionCreator != null ? suppressActionCreator.CreateAIAction(context) : AIAction.Invalid;
+        
         // Resolution
+        if (surrenderAction.Valid && surrenderAction.Score > 0){
+            return surrenderAction;
+        }
+
         var canHide = moveAction.ActionFlags.HasFlag(AIActionFlags.InDanger) && !moveAction.ActionFlags.HasFlag(AIActionFlags.TileExposed);
         var enemyExposed = attackAction.ActionFlags.HasFlag(AIActionFlags.EnemyExposed) && attackAction.Valid;
 

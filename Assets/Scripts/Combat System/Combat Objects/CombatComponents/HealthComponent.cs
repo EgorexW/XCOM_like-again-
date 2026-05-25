@@ -30,15 +30,14 @@ public class HealthComponent : CombatComponent{
         }
     }
 
-    public void Die(bool ignoreBleedOut = false){
-        // if (!ignoreBleedOut){
-            var bleedOut = CombatObject.GetCombatComponent<BleedOutComponent>();
-            if (bleedOut != null){
-                bleedOut.BleedOut();
-                return;
-            }
-        // }
+    public void Die(){
+        var bleedOut = CombatObject.GetCombatComponent<BleedOutComponent>();
+        if (bleedOut != null){
+            bleedOut.BleedOut();
+            return;
+        }
 
+        CombatObject.AddFlag(CombatObjectFlags.Dead);
         Debug.Log($"{CombatObject.Name} died.", this);
         CombatObject.Remove();
     }

@@ -34,6 +34,7 @@ public class BleedOutComponent : TurnTakerComponentBase{
     }
 
     void Die(){
+        CombatObject.AddFlag(CombatObjectFlags.Dead);
         CombatObject.Remove();
     }
 }
