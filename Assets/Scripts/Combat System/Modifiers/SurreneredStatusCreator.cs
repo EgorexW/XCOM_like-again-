@@ -21,11 +21,8 @@ class PacifiedStatus : UnitModifier{
         targetTmp.RemoveFlag(CombatObjectFlags.MovementBlocker | CombatObjectFlags.LoSBlocker);
         targetTmp.AddFlag(CombatObjectFlags.Pacified);
         var suspectComponent = targetTmp.GetCombatComponent<SuspectComponent>();
-        if (surrendered && suspectComponent != null){
-            suspectComponent.ChangeState(SuspectState.Surrendered);
-        }
-        else{
-            Debug.LogWarning("SuspectComponent is null (Surrendered Status)");
+        if (suspectComponent != null){
+            suspectComponent.ChangeState(SuspectState.Pacified);
         }
     }
 

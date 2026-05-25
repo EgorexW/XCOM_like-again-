@@ -1019,7 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0537c39aec47bba9ad907a60804790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraMovement
-  inputMovementSpeed: 5
+  inputMovementSpeed: 8
   moveToTime: 0.5
   onMove:
     m_PersistentCalls:

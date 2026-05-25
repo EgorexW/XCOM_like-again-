@@ -35,5 +35,5 @@ public class SuspectComponent : CombatComponent{
 public enum SuspectState{
     Docile, // Hands in pockets, walking around, running away. (Shooting = Penalty)
     Hostile, // Weapon drawn or actively attacking. (Shooting = Legal)
-    Surrendered // Hands up, dropped weapon. (Shooting = Massive Penalty)
+    Pacified // Hands up, dropped weapon. (Shooting = Massive Penalty)
 }

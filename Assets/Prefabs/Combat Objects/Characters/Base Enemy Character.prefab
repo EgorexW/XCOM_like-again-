@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7058503426227982562}
-  - component: {fileID: 3057410326975558901}
+  - component: {fileID: 4583049408233108247}
   m_Layer: 0
   m_Name: AI Surrender
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2438600814162373264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3057410326975558901
+--- !u!114 &4583049408233108247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +41,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1205281592849856474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc599a87275e42c1a0461098c9db4171, type: 3}
+  m_Script: {fileID: 11500000, guid: 82250f8dffd144f80bd5809c1b945efa, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BasicAIActionCreator
+  m_EditorClassIdentifier: Assembly-CSharp::AISurrenderActionCreator
   unitActions:
   - {fileID: 7582279008868887966}
+  baseSurrenderScore: -60
+  outnumberModifier: 20
+  pacifiedTeammateModifier: 5
+  characterModifierRange: {x: -25, y: 25}
 --- !u!1 &2663123644022523197
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,7 +165,7 @@ MonoBehaviour:
   moveActionCreator: {fileID: 6356027462811808188}
   attackActionCreator: {fileID: 4127198261635684400}
   reloadActionCreator: {fileID: 4676458533113706944}
-  surrenderActionCreator: {fileID: 3057410326975558901}
+  surrenderActionCreator: {fileID: 4583049408233108247}
   utilityActionCreator: {fileID: 1446667153579654917}
   suppressActionCreator: {fileID: 3484074430374304186}
   minDisToEnemyToAgress: 999
