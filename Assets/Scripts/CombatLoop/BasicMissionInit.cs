@@ -7,7 +7,8 @@ public class BasicMissionInit : MissionInit
     [Required] [SerializeField] SpawnTable mapSpawnTable;
     [SerializeField] Vector2 levelSpawnPos = new(50, 50);
     [SerializeField] List<TeamGenerator> teamGenerators;
-    [SerializeField] List<PayoutObjective> payoutObjectivesPrefabs;
+    [SerializeField] List<PayoutObjective> payoutObjectives;
+    [SerializeField] List<TurnTaker> turnTakers;
 
     public override void InitMission(CombatContent content)
     {
@@ -49,6 +50,7 @@ public class BasicMissionInit : MissionInit
         content.combatObjects.AddRange(combatObjects);
         
         // 3. Objectives
-        content.payoutObjectives.AddRange(payoutObjectivesPrefabs);
+        content.payoutObjectives.AddRange(payoutObjectives);
+        content.turnTakers.AddRange(turnTakers);
     }
 }

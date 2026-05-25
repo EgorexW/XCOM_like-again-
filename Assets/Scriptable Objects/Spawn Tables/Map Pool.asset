@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2835842289e224d2ba35422c2d9487ce, type: 3}
+  m_Name: Map Pool
+  m_EditorClassIdentifier: Essencial::SpawnTable
+  gameObjects:
+  - value: 0
+    Object: {fileID: 3458473026220131282, guid: 0d6bfb07391d74990906364673a64934, type: 3}
+  - value: 0
+    Object: {fileID: 3645417660107622782, guid: ae5ba2433434a4f58a773ff65170b51b, type: 3}
+  - value: 0
+    Object: {fileID: 3888477427664790082, guid: 6e55d8e0c96c1483886b0b12a533af93, type: 3}
+  - value: 0
+    Object: {fileID: 3888477427664790082, guid: 200bd255747014945a65ee7a7b7185ec, type: 3}

@@ -19,9 +19,8 @@ public class GameplayInit : MonoBehaviour{
         
         missionInit.InitMission(content);
         
-        foreach(var objPrefab in content.payoutObjectives){
-            var spawnedObj = Instantiate(objPrefab, payoutManager.transform);
-            payoutManager.AddObjective(spawnedObj);
+        foreach(var obj in content.payoutObjectives){
+            payoutManager.AddObjective(obj);
         }
         
         combatInit.InitCombatSystem(content);
