@@ -15,7 +15,13 @@ public class Level : MonoBehaviour{
         return combatObjectSpawns;
     }
 
-    public List<MapNode> GetNodes(MapNodeType type, string group){
+    public List<MapNode> GetNodes(MapNodeType type, string group = null){
+        if (string.IsNullOrEmpty(group)) {
+            var availableGroups = GetAvailableGroups(type);
+            if (availableGroups.Count > 0) {
+                group = availableGroups[0];
+            }
+        }
         var allNodes = GetComponentsInChildren<MapNode>();
         var result = new List<MapNode>();
         foreach(var node in allNodes){

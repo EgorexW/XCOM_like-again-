@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GameRunState", menuName = "Meta/GameRunState")]
+[CreateAssetMenu(menuName = StringKeys.AssetMenuGameRunStateBasePath)]
 public class GameRunState : ScriptableObject
 {
     [Header("Current Run Data")]

@@ -9,7 +9,7 @@ public class BasicMissionInit : MissionInit
     [SerializeField] List<TeamGenerator> teamGenerators;
     [SerializeField] List<PayoutObjective> payoutObjectivesPrefabs;
 
-    public override void InitMission(CombatContent content, PayoutManager payoutManager)
+    public override void InitMission(CombatContent content)
     {
         // 1. Generate Map
         var mapPrefab = mapSpawnTable.GetGameObject();
@@ -30,21 +30,13 @@ public class BasicMissionInit : MissionInit
             var team = teamGen.GenerateTeam();
             content.teams.Add(team);
 
-            var nodeType = team.Flags.HasFlag(TeamFlag.Player) ? MapNodeType.FriendlySpawn : MapNodeType.EnemySpawn;
-            var availableGroups = currentLevel.GetAvailableGroups(nodeType);
-            
-            if (availableGroups.Count == 0) {
-                Debug.LogError($"No available map node groups found for {nodeType}!");
-                continue;
-            }
-            
-            string selectedGroup = availableGroups[0];
-            var nodes = currentLevel.GetNodes(nodeType, selectedGroup);
+            var nodeType = teamGen.targetNodeType;
+            var nodes = currentLevel.GetNodes(nodeType); // Automatically picks a random group
             nodes.Shuffle();
             
             for (var j = 0; j < team.CombatObjects.Count; j++){
                 if (j >= nodes.Count){
-                    Debug.LogWarning($"Team {team.Flags} does not have enough spawn points in group {selectedGroup}.");
+                    Debug.LogWarning($"Team {team.Flags} does not have enough spawn points for node type {nodeType}.");
                     break;
                 }
                 var unit = team.CombatObjects[j];
@@ -57,10 +49,6 @@ public class BasicMissionInit : MissionInit
         content.combatObjects.AddRange(combatObjects);
         
         // 3. Objectives
-        foreach (var objPrefab in payoutObjectivesPrefabs)
-        {
-            var spawnedObj = Instantiate(objPrefab, transform);
-            payoutManager.AddObjective(spawnedObj);
-        }
+        content.payoutObjectives.AddRange(payoutObjectivesPrefabs);
     }
 }

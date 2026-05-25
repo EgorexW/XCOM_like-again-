@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class MissionInit : MonoBehaviour
 {
-    public abstract void InitMission(CombatContent content, PayoutManager payoutManager);
+    public abstract void InitMission(CombatContent content);
 }

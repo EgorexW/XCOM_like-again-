@@ -21,6 +21,7 @@ public class CombatContent{
     public List<ITurnTaker> turnTakers = new();
     public List<Team> teams = new();
     public GameObject levelPrefab;
+    public List<PayoutObjective> payoutObjectives = new();
 }
 
 public class CombatObjectSpawn{
