@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 163669d28e6f04b1ba063edec317cfb5, type: 3}
   m_Name: Game Run State Data
   m_EditorClassIdentifier: Assembly-CSharp::GameRunState
-  selectedMissionType: {fileID: 0}
+  selectedMissionType: {fileID: 11400000, guid: 3f12170547d174d58bcdb57bcb288426, type: 2}
