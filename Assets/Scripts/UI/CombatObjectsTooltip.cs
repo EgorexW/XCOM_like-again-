@@ -7,7 +7,7 @@ public class CombatObjectsTooltip : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] TileHoverContext tileHoverContext;
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool pool;
 
-    void Awake(){
+    protected void Awake(){
         tileHoverContext.onHoverTile.AddListener(OnHoverTile);
         tileHoverContext.onHoverClear.AddListener(OnHoverClear);
     }

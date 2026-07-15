@@ -40,10 +40,15 @@ public class ResourcesData : ScriptableObject{
         onChanged.Invoke(this);
     }
 
-    void Clear(){
+    public void Clear(){
         foreach (var member in members.Copy()) RemoveMember(member);
         equipment.Clear();
         retiredMembers.Clear();
+        onChanged.Invoke(this);
+    }
+
+    public void SetMoney(int amount){
+        money = amount;
         onChanged.Invoke(this);
     }
 

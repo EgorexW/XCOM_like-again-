@@ -55,6 +55,11 @@ public class RecruitIntakeData : ScriptableObject{
         missionsCompletedSinceLastDelivery = 0;
         onChanged.Invoke(this);
     }
+
+    public void SetMissionsCompletedSinceLastDelivery(int value){
+        missionsCompletedSinceLastDelivery = value;
+        onChanged.Invoke(this);
+    }
 }
 
 [Serializable]

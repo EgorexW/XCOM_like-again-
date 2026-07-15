@@ -8,7 +8,7 @@ class EquipmentTypesUI : UIElement{
 
     [FoldoutGroup("Events")] public UnityEvent<Equipment> onEquipmentTypeClicked;
 
-    void Awake(){
+    protected void Awake(){
         objectsPool.onCreateObject.AddListener(OnCreateObject);
     }
 

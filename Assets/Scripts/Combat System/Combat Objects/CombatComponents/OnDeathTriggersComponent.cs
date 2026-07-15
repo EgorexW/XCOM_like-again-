@@ -10,7 +10,7 @@ public class OnDeathTriggersComponent : CombatComponent{
         CombatObject.onRemove.AddListener(OnCombatObjectRemoved);
     }
 
-    void OnDestroy(){
+    protected void OnDestroy(){
         CombatObject.onRemove.RemoveListener(OnCombatObjectRemoved);
     }
 

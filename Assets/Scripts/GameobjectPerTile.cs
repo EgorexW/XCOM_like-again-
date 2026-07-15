@@ -7,7 +7,7 @@ public class GameobjectPerTile : MonoBehaviour
     [BoxGroup("References")][Required][SerializeField] CombatObject targetObject;
     [BoxGroup("References")][Required][SerializeField] ObjectsPool objectsPool;
 
-    void Awake(){
+    protected void Awake(){
         targetObject.onInit.AddListener(OnInit);
         targetObject.onMove.AddListener(OnMove);
     }

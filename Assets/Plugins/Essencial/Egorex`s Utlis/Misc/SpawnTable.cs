@@ -29,9 +29,9 @@ public class SpawnTable : ScriptableObject
         Debug.LogError("Object is not GameObject or another SpawnTable is " + name, this);
         return null;
     }
-    
+
 #if UNITY_EDITOR
-    void OnValidate()
+    protected void OnValidate()
     {
         possibleGameObjects.Clear();
         Queue<ObjectWithValue<Object>> toProcess = new(gameObjects);
