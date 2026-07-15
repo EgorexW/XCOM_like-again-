@@ -13,6 +13,38 @@ MonoBehaviour:
   m_Name: Player Resources Data
   m_EditorClassIdentifier: Assembly-CSharp::PlayerResourcesData
   members: []
+  retiredMembers:
+  - name: 
+    combatPrefab: {fileID: 0}
+    equipment: []
+    upkeepCost: 0
+    missionsCompleted: 0
+    retirementThreshold: 0
+    alive: 0
+    onChanged:
+      m_PersistentCalls:
+        m_Calls: []
+  - name: 
+    combatPrefab: {fileID: 0}
+    equipment: []
+    upkeepCost: 0
+    missionsCompleted: 0
+    retirementThreshold: 0
+    alive: 0
+    onChanged:
+      m_PersistentCalls:
+        m_Calls: []
+  deadMembers:
+  - name: 
+    combatPrefab: {fileID: 0}
+    equipment: []
+    upkeepCost: 0
+    missionsCompleted: 0
+    retirementThreshold: 0
+    alive: 0
+    onChanged:
+      m_PersistentCalls:
+        m_Calls: []
   equipment:
   - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
   - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
@@ -20,6 +52,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
   - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
   - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
+  - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
+  - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
+  - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
+  - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
   money: 99
   onChanged:
     m_PersistentCalls:

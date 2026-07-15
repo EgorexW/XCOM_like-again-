@@ -17,7 +17,7 @@ public class CombatReportEffect : MonoBehaviour{
             if (!member.alive){
                 Debug.Log($"{member.Name} is dead.");
                 squadData.RemoveMember(member);
-                resourcesData.RemoveMember(member);
+                resourcesData.DieMember(member);
             } else {
                 member.IncrementMissionsCompleted();
                 if (member.MissionsCompleted >= member.RetirementThreshold){

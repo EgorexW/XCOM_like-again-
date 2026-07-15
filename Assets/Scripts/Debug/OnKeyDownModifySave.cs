@@ -4,17 +4,10 @@ using System.IO;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-public class OnKeyDownModifySave : MonoBehaviour{
-    [SerializeField] KeyCode key = KeyCode.F9;
+public class OnKeyDownModifySave : OnKeyDownTrigger{
     [SerializeField] ModifySaveEffect effect;
 
-    protected void Update(){
-        if (Input.GetKeyDown(key)){
-            Trigger();
-        }
-    }
-
-    void Trigger(){
+    protected override void Trigger(){
         var path = SaveSystem.GetPath();
 
         if (!File.Exists(path)){

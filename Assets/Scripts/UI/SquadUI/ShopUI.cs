@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class ShopUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool shopItemsPool;
-    [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI moneyText;
     [BoxGroup("References")] [Required] [SerializeField] ShopLogic shopLogic;
-
-    ResourcesData ResourcesData => shopLogic.ResourcesData;
     
     protected void Awake(){
         shopItemsPool.onCreateObject.AddListener(OnCreateShopItemUI);
     }
 
     protected void Start(){
-        ResourcesData.onChanged.AddListener(OnResourcesChanged);
-        UpdateMoneyUI();
         UpdateShopItems();
     }
 
@@ -40,23 +35,8 @@ public class ShopUI : UIElement{
         }
     }
 
-    void UpdateMoneyUI(){
-        moneyText.text = $"Money: ${ResourcesData.Money}";
-    }
-
-    void OnResourcesChanged(ResourcesData arg0){
-        UpdateMoneyUI();
-    }
-
     public override void Show(){
         base.Show();
-        UpdateMoneyUI();
         UpdateShopItems();
-    }
-
-    protected void OnDestroy() {
-        if (ResourcesData != null) {
-            ResourcesData.onChanged.RemoveListener(OnResourcesChanged);
-        }
     }
 }

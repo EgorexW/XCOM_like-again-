@@ -5,24 +5,32 @@ using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuPlayerResourcesDataBasePath)]
 public class ResourcesData : ScriptableObject{
-    [SerializeField] List<SquadMember> members;
+    [SerializeField] List<SquadMember> members = new();
     [SerializeField] List<SquadMember> retiredMembers = new();
-    [SerializeField] List<Equipment> equipment;
+    [SerializeField] List<SquadMember> deadMembers = new();
+    [SerializeField] List<Equipment> equipment= new();
     [SerializeField] int money;
 
     [FoldoutGroup("Events")] public UnityEvent<ResourcesData> onChanged = new();
 
     public IReadOnlyList<SquadMember> Members => members;
     public IReadOnlyList<SquadMember> RetiredMembers => retiredMembers;
+    public IReadOnlyList<SquadMember> DeadMembers =>  deadMembers;
     public IReadOnlyList<Equipment> Equipment => equipment;
     public int Money => money;
 
     public void DeepCopy(ResourcesData init){
         Clear();
-        foreach (var member in init.Members) AddMember(member);
+        foreach (var member in init.Members) AddMember(member.Copy());
         foreach (var member in init.RetiredMembers) AddRetiredMember(member);
+        foreach (var member in init.DeadMembers) AddDeadMember(member);
         foreach (var equipmentPiece in init.Equipment) AddEquipment(equipmentPiece);
         money = init.Money;
+    }
+
+    void AddDeadMember(SquadMember member){
+        deadMembers.Add(member);
+        onChanged.Invoke(this);
     }
 
     public void AddEquipment(Equipment equipment){
@@ -53,16 +61,16 @@ public class ResourcesData : ScriptableObject{
     }
 
     public void RemoveMember(SquadMember member){
+        foreach (var equipmentPiece in new List<Equipment>(member.Equipment)){
+            member.RemoveEquipment(equipmentPiece);
+            AddEquipment(equipmentPiece);
+        }
         members.Remove(member);
         member.onChanged.RemoveListener(OnMemberChanged);
         onChanged.Invoke(this);
     }
 
     public void FireMember(SquadMember member){
-        foreach (var equipmentPiece in new List<Equipment>(member.Equipment)){
-            member.RemoveEquipment(equipmentPiece);
-            AddEquipment(equipmentPiece);
-        }
         RemoveMember(member);
     }
 
@@ -72,12 +80,13 @@ public class ResourcesData : ScriptableObject{
     }
 
     public void RetireMember(SquadMember member){
-        foreach (var equipmentPiece in new List<Equipment>(member.Equipment)){
-            member.RemoveEquipment(equipmentPiece);
-            AddEquipment(equipmentPiece);
-        }
         RemoveMember(member);
         AddRetiredMember(member);
+    }
+
+    public void DieMember(SquadMember member){
+        RemoveMember(member);
+        AddDeadMember(member);
     }
 
     public void RemoveEquipment(Equipment equipment1){
