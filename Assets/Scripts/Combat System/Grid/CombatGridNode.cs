@@ -23,7 +23,7 @@ public class CombatGridNode : GridNode{
         grid.TriggerGridObjectChanged(this);
     }
 
-    public List<ICombatObject> GetCombatObjects(){
+    public IReadOnlyList<ICombatObject> GetCombatObjects(){
         return new List<ICombatObject>(combatObjects);
     }
 

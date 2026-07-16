@@ -7,6 +7,7 @@ public class ShootAction : TargetedUnitAction{
     [SerializeField] List<UnitModifierFactory> appliedStatusEffects;
     [SerializeField] int ammoCost = 1;
     [SerializeField] bool ignoreCover;
+    [SerializeField] bool hitAll;
 
     public int DamageValue => damageValue;
     public int AmmoCost  => ammoCost;
@@ -24,7 +25,11 @@ public class ShootAction : TargetedUnitAction{
             source = unit
         };
         var targetObjects = targetNode.GetCombatObjects();
-        foreach (var targetObj in (IReadOnlyList<ICombatObject>)targetObjects.AsReadOnly()){
+        if (!hitAll){
+            var targetObject = targetObjects.Random(); 
+            targetObjects = new[] { targetObject };
+        }
+        foreach (var targetObj in targetObjects){
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();
             if (healthComp != null){
                 healthComp.TakeDamage(damage);
