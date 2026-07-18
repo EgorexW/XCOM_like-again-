@@ -8,14 +8,16 @@ using UnityEngine.UI;
 public class ShopItemUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] Button button;
     [BoxGroup("References")] [Required] [SerializeField] Image singleIcon;
-    [BoxGroup("References")] [Required] [SerializeField] List<Image> multipleIcons;
+    [BoxGroup("References")] [Required] [DisableInPlayMode][SerializeField] Transform multipleIconsParent;
     [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI priceText;
 
     ShopItem shopItem;
 
     [FoldoutGroup("Events")] public UnityEvent<ShopItem> onClicked;
+    List<Image> multipleIcons;
 
     protected void Awake(){
+        multipleIcons = new List<Image>(multipleIconsParent.GetComponentsInChildren<Image>());
         button.onClick.AddListener(OnButtonClicked);
     }
 

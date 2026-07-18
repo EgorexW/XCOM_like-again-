@@ -34,8 +34,10 @@ public class ShopLogic : MonoBehaviour{
         }
         resourcesData.ChangeMoney(-shopItem.price);
         resourcesData.AddEquipment(shopItem.items);
+        shop.ItemPurchased(shopItem);
         Debug.Log($"Purchased {shopItem}");
     }
+
 
     public void GenerateShop(){
         shop = new Shop();
@@ -73,9 +75,22 @@ public class Shop{
     public void AddItem(ShopItem shopItem){
         shopItems.Add(shopItem);
     }
+
+    public void RemoveItem(ShopItem shopItem){
+        shopItems.Remove(shopItem);
+    }
+
+    public void ItemPurchased(ShopItem shopItem){
+        if (shopItem.stock.HasValue){
+            shopItem.stock -= 1;
+            if (shopItem.stock.Value <= 0){
+                RemoveItem(shopItem);
+            }
+        }
+    }
 }
 
-public struct ShopItem{
+public class ShopItem{
     public readonly int price;
     public readonly List<Equipment> items;
     public int? stock;
