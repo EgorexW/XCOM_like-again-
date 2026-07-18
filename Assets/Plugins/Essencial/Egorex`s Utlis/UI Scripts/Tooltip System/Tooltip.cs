@@ -1,6 +1,4 @@
 using Nrjwolf.Tools.AttachAttributes;
-using Sirenix.OdinInspector;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 

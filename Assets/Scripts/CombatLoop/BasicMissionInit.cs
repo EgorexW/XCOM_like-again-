@@ -18,7 +18,7 @@ public class BasicMissionInit : MissionInit
         var spawnedLevelObj = Instantiate(mapPrefab, levelSpawnPos, Quaternion.identity);
         var currentLevel = spawnedLevelObj.GetComponent<Level>();
         if (currentLevel == null){
-            Debug.LogError("Spawned map is missing Level component.");
+            Debug.LogError("Spawned map is missing ILevel component.");
             return;
         }
 

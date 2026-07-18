@@ -1,8 +1,5 @@
 using UnityEngine;
 
-public class IgnorePointerOverUI : MonoBehaviour, IIgnorePointerOverUI{
-    
-}
+public class IgnorePointerOverUI : MonoBehaviour, IIgnorePointerOverUI{ }
 
-public interface IIgnorePointerOverUI{
-}
+public interface IIgnorePointerOverUI{ }

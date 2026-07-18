@@ -38,7 +38,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     }
 
     public void SetMessage(Message messageTmp){
-        this.message = messageTmp;
+        message = messageTmp;
         if (message.header.IsNullOrWhitespace()){
             Disable();
         }

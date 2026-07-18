@@ -5,6 +5,7 @@ using UnityEngine;
 public class MessageUI : UIElement{
     [SerializeField] [Required] protected TextMeshProUGUI headerText;
     [SerializeField] [Required] protected TextMeshProUGUI descriptionText;
+
     void Show(string header, string description){
         base.Show();
         headerText.text = header;
