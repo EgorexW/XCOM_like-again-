@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,15 +43,21 @@ public class PayoutManager : MonoBehaviour{
 }
 
 public abstract class PayoutObjective : MonoBehaviour{
+    [InfoBox("Empty description means the objective is hidden", InfoMessageType.Info, "IsHidden")]
     [SerializeField] string description;
 
+    protected CombatSystem CombatSystem { get; private set; }
+    
     public string Description => description;
+    public bool IsHidden => description.IsNullOrWhitespace();
 
     [FoldoutGroup("Events")] public UnityEvent<int> onPayoutChanged = new();
 
     public int Payout{ get; private set; }
 
-    public virtual void Init(CombatSystem combatSystem){ }
+    public virtual void Init(CombatSystem combatSystem){
+        this.CombatSystem = combatSystem;
+    }
 
     public abstract void UpdateObjective(CombatSystem combatSystem);
 

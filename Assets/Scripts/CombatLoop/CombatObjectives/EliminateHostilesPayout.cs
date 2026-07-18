@@ -1,36 +1,32 @@
 using UnityEngine;
 
-public class EliminateHostilesPayoutObjective : PayoutObjective{
+public class EliminatePayoutObjective : PayoutObjective{
     [SerializeField] int payoutPerEliminatedHostile = 50;
 
     [SerializeField] TeamFlag targetTeamFlag = TeamFlag.Enemy;
+    [SerializeField] bool signPositive = true;
 
-    int initialHostileCount;
+    int eliminatedCount = 0;
+    public int PayoutSign => signPositive ? 1 : -1;
 
-    public override void Init(CombatSystem combatSystem){
-        base.Init(combatSystem);
+    public override void Init(CombatSystem CombatSystem){
+        base.Init(CombatSystem);
+        
+        CombatSystem.onCombatObjectRemoved.AddListener(OnCombatObjectRemoved);
+    }
 
-        initialHostileCount = 0;
-        foreach (var team in combatSystem.TeamsSystem.Teams)
+    void OnCombatObjectRemoved(ICombatObject combatObject){
+        
+            var team = CombatSystem.TeamsSystem.GetTeam(combatObject);
+            if (team == null){
+                return;
+            }
             if (team.Flags.HasFlag(targetTeamFlag)){
-                initialHostileCount += team.CombatObjects.Count;
+                eliminatedCount++;
             }
     }
 
     public override void UpdateObjective(CombatSystem combatSystem){
-        var currentHostileCount = 0;
-        foreach (var team in combatSystem.TeamsSystem.Teams)
-            if (team.Flags.HasFlag(targetTeamFlag)){
-                currentHostileCount += team.CombatObjects.Count;
-            }
-
-        var eliminatedCount = initialHostileCount - currentHostileCount;
-
-        // Ensure we don't drop below zero in case of unexpected additions to enemy teams
-        if (eliminatedCount < 0){
-            eliminatedCount = 0;
-        }
-
-        SetPayout(eliminatedCount * payoutPerEliminatedHostile);
+        SetPayout(eliminatedCount * payoutPerEliminatedHostile * PayoutSign);
     }
 }
