@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d4227e555af243ae9f5ef0b01ebbc28, type: 3}
-  m_Name: Supressed
-  m_EditorClassIdentifier: Assembly-CSharp::SuppressionModifierFactory
+  m_Script: {fileID: 11500000, guid: 37e72887dfdf446e79d0d53887299f64, type: 3}
+  m_Name: Adrenaline
+  m_EditorClassIdentifier: Assembly-CSharp::ClearModifiersModifierFactory
   modifierInfo:
-    modifierName: Supressed
+    modifierName: Adrenaline
     description: 
-    modifierFlags: 2
-  duration:
-    enabled: 1
-    value: 1
-  instant: 0
-  actionPointsChange: -1
+    modifierFlags: 1
+  clearFlags: 2

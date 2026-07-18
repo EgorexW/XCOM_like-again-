@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e504c8da5d3e444bb2c7c538e2fbb64f, type: 3}
   m_Name: Flashbang Item
   m_EditorClassIdentifier: Assembly-CSharp::AddActionUnitModifierFactory
-  statusName: Flashbang Item
+  modifierInfo:
+    modifierName: 
+    description: 
+    modifierFlags: 4
   relatedAction: {fileID: 7259602901416666776, guid: ca87b7335b77e4eb8a869f4b83b5bb2a, type: 3}
-  consumable: 1

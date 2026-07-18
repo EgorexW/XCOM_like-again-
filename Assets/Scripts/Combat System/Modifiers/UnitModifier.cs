@@ -32,7 +32,16 @@ public abstract class UnitModifier{
 public class ModifierInfo{
     [SerializeField] string modifierName;
     [SerializeField] [TextArea] string description;
+    [SerializeField] ModifierFlags modifierFlags;
 
     public string Name => modifierName;
     public string Description => description;
+    public ModifierFlags ModifierFlags => modifierFlags;
+}
+
+[Flags]
+public enum ModifierFlags{
+    Buff = 1 << 0,
+    Debuff = 1 << 1,
+    Item = 1 << 2
 }

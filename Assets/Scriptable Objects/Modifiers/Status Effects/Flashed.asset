@@ -17,6 +17,7 @@ MonoBehaviour:
     description: '
 
 '
+    modifierFlags: 2
   duration:
     enabled: 1
     value: 1

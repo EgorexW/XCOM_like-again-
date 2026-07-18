@@ -16,3 +16,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e039504840e90499ba59f4670b871341, type: 2}
   - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
   - {fileID: 11400000, guid: e20fbf996b07f445a9dddfb4ae1b8e6b, type: 2}
+  - {fileID: 11400000, guid: e69dd4669002b47c3bddc16de00a84b7, type: 2}
+  bundlesNr: 1
+  bundleItemCount: {x: 3, y: 3}
+  bundleDiscount: {x: 0.5, y: 0.5}

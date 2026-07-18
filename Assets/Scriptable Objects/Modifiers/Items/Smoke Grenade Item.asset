@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e504c8da5d3e444bb2c7c538e2fbb64f, type: 3}
   m_Name: Smoke Grenade Item
   m_EditorClassIdentifier: Assembly-CSharp::AddActionUnitModifierFactory
-  statusName: Smoke Grenade Item
+  modifierInfo:
+    modifierName: 
+    description: 
+    modifierFlags: 4
   relatedAction: {fileID: 7259602901416666776, guid: d1ce3df05932c43e6a6cc2a57139133b, type: 3}
-  consumable: 1
