@@ -98,4 +98,10 @@ public class ResourcesData : ScriptableObject{
         money += amount;
         onChanged.Invoke(this);
     }
+
+    public void AddEquipment(List<Equipment> equipments){
+        foreach (var equipmentPiece in equipments){
+            AddEquipment(equipmentPiece);
+        }
+    }
 }

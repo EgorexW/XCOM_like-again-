@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -6,25 +7,40 @@ using UnityEngine.UI;
 
 public class ShopItemUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] Button button;
-    [BoxGroup("References")] [Required] [SerializeField] Image icon;
+    [BoxGroup("References")] [Required] [SerializeField] Image singleIcon;
+    [BoxGroup("References")] [Required] [SerializeField] List<Image> multipleIcons;
     [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI priceText;
 
-    Equipment equipment;
+    ShopItem shopItem;
 
-    [FoldoutGroup("Events")] public UnityEvent<Equipment> onClicked;
+    [FoldoutGroup("Events")] public UnityEvent<ShopItem> onClicked;
 
     protected void Awake(){
         button.onClick.AddListener(OnButtonClicked);
     }
 
-    public void Show(Equipment equipmentTmp){
-        equipment = equipmentTmp;
+    public void Show(ShopItem shopItemTmp){
+        this.shopItem = shopItemTmp;
         base.Show();
-        icon.sprite = equipment.Icon;
-        priceText.text = $"{equipment.StandardPrice}$";
+        if (shopItem.items.Count == 1){
+            singleIcon.gameObject.SetActive(true);
+            multipleIcons.ForEach(icon => icon.gameObject.SetActive(false));
+            singleIcon.sprite = shopItem.items[0].Icon;
+        } else {
+            singleIcon.gameObject.SetActive(false);
+            for (var i = 0; i < multipleIcons.Count; i++){
+                if (i < shopItem.items.Count){
+                    multipleIcons[i].gameObject.SetActive(true);
+                    multipleIcons[i].sprite = shopItem.items[i].Icon;
+                } else {
+                    multipleIcons[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        priceText.text = $"{shopItem.price}$";
     }
 
     void OnButtonClicked(){
-        onClicked.Invoke(equipment);
+        onClicked.Invoke(shopItem);
     }
 }

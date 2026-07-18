@@ -19,16 +19,16 @@ public class ShopUI : UIElement{
         shopItemUI.onClicked.AddListener(OnShopItemClicked);
     }
 
-    void OnShopItemClicked(Equipment arg0){
-        shopLogic.PurchaseItem(arg0);
+    void OnShopItemClicked(ShopItem shopItem){
+        shopLogic.PurchaseItem(shopItem);
     }
 
     void UpdateShopItems(){
-        var itemsForSale = shopLogic.ShopData.ItemsForSale;
-        var count = itemsForSale.Count;
+        var shop = shopLogic.Shop;
+        var count = shop.Count;
         shopItemsPool.SetCount(count);
         for (var i = 0; i < count; i++){
-            var item = itemsForSale[i];
+            var item = shop.ShopItems[i];
             var obj = shopItemsPool.GetActiveObject(i);
             var shopItemUI = obj.GetComponent<ShopItemUI>();
             shopItemUI.Show(item);
