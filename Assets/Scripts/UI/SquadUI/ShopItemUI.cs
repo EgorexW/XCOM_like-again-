@@ -28,6 +28,9 @@ public class ShopItemUI : UIElement{
             singleIcon.sprite = shopItem.items[0].Icon;
         } else {
             singleIcon.gameObject.SetActive(false);
+            if (shopItem.items.Count > multipleIcons.Count){
+                Debug.LogWarning($"Bundle size ({shopItem.items.Count}) exceeds available UI slots ({multipleIcons.Count}) for {shopItem}!");
+            }
             for (var i = 0; i < multipleIcons.Count; i++){
                 if (i < shopItem.items.Count){
                     multipleIcons[i].gameObject.SetActive(true);

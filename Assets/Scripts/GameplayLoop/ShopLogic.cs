@@ -18,22 +18,29 @@ public class ShopLogic : MonoBehaviour{
 
     Shop shop;
     // public ResourcesData ResourcesData => resourcesData;
-    public Shop Shop => shop;
+    public Shop Shop {
+        get {
+            if (shop == null){
+                Debug.LogWarning($"Shop is null!");
+            }
+            return shop;
+        }
+    }
 
     public void PurchaseItem(ShopItem shopItem){
         if (resourcesData.Money < shopItem.price){
-            Debug.LogWarning($"Not enough money to purchase {shopItem}! Need {shopItem.price}, have {resourcesData.Money}.");
+            Debug.LogWarning($"Not enough money to purchase {shopItem}! Have {resourcesData.Money}.");
             return;
         }
         resourcesData.ChangeMoney(-shopItem.price);
         resourcesData.AddEquipment(shopItem.items);
-        Debug.Log($"Purchased {shopItem} for {shopItem.price}!");
+        Debug.Log($"Purchased {shopItem}");
     }
 
     public void GenerateShop(){
         shop = new Shop();
         foreach (var item in shopLogicData.ItemsForSale){
-            shop.AddItem(item.StandardPrice, item);
+            shop.AddItem(item.ToShopItem());
         }
         GenerateBundles();
     }
@@ -53,7 +60,7 @@ public class ShopLogic : MonoBehaviour{
             standardPrice += items[i].StandardPrice;
         }
         int price = Mathf.RoundToInt(standardPrice * shopLogicData.BundleDiscount.Random());
-        shop.AddItem(price, items);
+        shop.AddItem(new ShopItem(price, items, 1));
     }
 }
 
@@ -63,15 +70,7 @@ public class Shop{
     public IReadOnlyList<ShopItem> ShopItems => shopItems.AsReadOnly();
     public int Count => shopItems.Count;
 
-    public void AddItem(int price, Equipment item){
-        AddItem(new ShopItem(price, new List<Equipment>{item}));
-    }
-    
-    public void AddItem(int price, List<Equipment> items){
-        AddItem(new ShopItem(price, items));
-    }
-
-    void AddItem(ShopItem shopItem){
+    public void AddItem(ShopItem shopItem){
         shopItems.Add(shopItem);
     }
 }
@@ -79,9 +78,30 @@ public class Shop{
 public struct ShopItem{
     public readonly int price;
     public readonly List<Equipment> items;
+    public int? stock;
 
-    public ShopItem(int price, List<Equipment> items){
+    public ShopItem(int price, List<Equipment> items, int? stock = null){
         this.price = price;
         this.items = items;
+        this.stock = stock;
+    }
+
+    public override string ToString(){
+        if (items == null || items.Count == 0) return $"Empty Item ({price}$)";
+        var names = new List<string>();
+        foreach (var item in items){
+            if (item != null) names.Add(item.name);
+        }
+        return $"{string.Join(", ", names)} ({price}$)";
+    }
+}
+
+public static class ShopLogicExtensions{
+    public static ShopItem ToShopItem(this Equipment equipment){
+        return new ShopItem(equipment.StandardPrice, new List<Equipment>{equipment});
+    }
+
+    public static ShopItem ToShopItem(this Equipment equipment, int price){
+        return new ShopItem(price, new List<Equipment>{equipment});
     }
 }
