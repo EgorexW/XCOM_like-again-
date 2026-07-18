@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class ShopLogic : MonoBehaviour{
@@ -16,7 +17,7 @@ public class ShopLogic : MonoBehaviour{
         }
     }
 
-    Shop shop;
+    [FoldoutGroup("Debug")][ShowInInspector] Shop shop;
     // public ResourcesData ResourcesData => resourcesData;
     public Shop Shop {
         get {
@@ -67,26 +68,32 @@ public class ShopLogic : MonoBehaviour{
 }
 
 public class Shop{
-    List<ShopItem> shopItems  = new();
+    [ShowInInspector] List<ShopItem> shopItems  = new();
     
     public IReadOnlyList<ShopItem> ShopItems => shopItems.AsReadOnly();
     public int Count => shopItems.Count;
 
+    [FoldoutGroup("Events")] public UnityEvent onUpdate = new();
+
     public void AddItem(ShopItem shopItem){
         shopItems.Add(shopItem);
+        onUpdate.Invoke();
     }
 
     public void RemoveItem(ShopItem shopItem){
         shopItems.Remove(shopItem);
+        onUpdate.Invoke();
     }
 
     public void ItemPurchased(ShopItem shopItem){
-        if (shopItem.stock.HasValue){
-            shopItem.stock -= 1;
-            if (shopItem.stock.Value <= 0){
-                RemoveItem(shopItem);
-            }
+        if (!shopItem.stock.HasValue){
+            return;
         }
+        shopItem.stock -= 1;
+        if (shopItem.stock.Value <= 0){
+            RemoveItem(shopItem);
+        }
+        onUpdate.Invoke();
     }
 }
 

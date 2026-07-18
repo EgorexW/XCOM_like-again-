@@ -6,7 +6,7 @@ public class Equipment : ScriptableObject{
     [SerializeField] Sprite icon;
     [SerializeField] int standardPrice = 100;
 
-    [SerializeField] [InlineEditor] UnitModifierFactory modifierFactory;
+    [InlineEditor][Required][SerializeField] UnitModifierFactory modifierFactory;
 
     public Sprite Icon => icon;
     public int StandardPrice => standardPrice;

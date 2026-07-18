@@ -11,6 +11,7 @@ public class ShopUI : UIElement{
     }
 
     protected void Start(){
+        shopLogic.Shop.onUpdate.AddListener(UpdateShopItems);
         UpdateShopItems();
     }
 

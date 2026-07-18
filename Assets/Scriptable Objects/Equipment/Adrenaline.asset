@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
   icon: {fileID: 21300000, guid: 8e5efa8d10fa84c3a8d31e0a25624b38, type: 3}
   standardPrice: 50
-  modifierFactory: {fileID: 0}
+  modifierFactory: {fileID: 11400000, guid: 4b463d3a4553e43dbacac67458f4365c, type: 2}
