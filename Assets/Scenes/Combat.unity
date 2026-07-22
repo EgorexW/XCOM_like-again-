@@ -2961,6 +2961,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   payoutManager: {fileID: 2102339011}
+  combatSystem: {fileID: 1846269858}
   objectsPool: {fileID: 69618619}
 --- !u!1 &1262446366
 GameObject:

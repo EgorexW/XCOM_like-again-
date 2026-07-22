@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class CoverComponent : CombatComponent{
+public class CoverComponent : CombatComponent, IGeneratable{
     [SerializeField] Direction direction;
     [SerializeField] Transform coverSprite;
 
@@ -71,4 +71,8 @@ public class CoverComponent : CombatComponent{
         EditorUtility.SetDirty(coverSprite);
     }
 #endif
+    public void OnGenerate(){
+        direction = Direction.Random();
+        UpdateVisuals();
+    }
 }

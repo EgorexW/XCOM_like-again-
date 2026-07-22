@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 315688596437005073}
   - component: {fileID: 5847777938143102783}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac4c51829ed3446cc9179534cc845944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  bounds: {x: 13, y: 13}
+  spawnTable: {fileID: 11400000, guid: 031a1660641f7471881330a56c1570da, type: 2}
 --- !u!1001 &520542414506655483
 PrefabInstance:
   m_ObjectHideFlags: 0

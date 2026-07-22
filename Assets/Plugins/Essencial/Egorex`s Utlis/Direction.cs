@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum Direction{
@@ -35,6 +36,16 @@ public static class DirectionExtensions{
             Direction.Up => Direction.Down,
             Direction.Down => Direction.Up,
             _ => direction
+        };
+    }
+    
+    public static Direction Random(this Direction direction){
+        return (UnityEngine.Random.Range(0, 4)) switch{
+            0 => Direction.Left,
+            1 => Direction.Right,
+            2 => Direction.Up,
+            3 => Direction.Down,
+            _ => throw new ArgumentOutOfRangeException()
         };
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Sirenix.Utilities;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -16,9 +17,13 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnPoint(Vector2Int point){
         var spawnable = spawnTable.GetGameObject();
-        if (spawnable != null){
-            Instantiate(spawnable, new Vector3(point.x, point.y, 0), Quaternion.identity, transform);
+        if (spawnable == null){
+            return;
         }
+        
+        var obj = Instantiate(spawnable, new Vector3(point.x, point.y, 0), Quaternion.identity, transform);
+
+        obj.GetComponents<IGeneratable>().ForEach(x => x.OnGenerate());
     }
 
     public List<Vector2Int> GetNodesInBoundingBox()
@@ -47,4 +52,8 @@ public class LevelGenerator : MonoBehaviour
 
         return points;
     }
+}
+
+interface IGeneratable{
+    void OnGenerate();
 }

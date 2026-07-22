@@ -1,12 +1,14 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class PayoutObjectivesUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] PayoutManager payoutManager;
+    [BoxGroup("References")] [Required] [SerializeField] CombatSystem combatSystem;
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool objectsPool;
 
-    protected void Start(){
-        Show();
+    void Awake(){
+        combatSystem.onCombatStarted.AddListener(Show);
     }
 
     public override void Show(){

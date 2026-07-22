@@ -6,6 +6,7 @@ using UnityEngine;
 [InlineEditor]
 public class SpawnTable : ScriptableObject{
     [SerializeField] List<ObjectWithValue<Object>> gameObjects;
+    [SerializeField] bool allowEmpty = false;
 
     [ShowInInspector]
     [ReadOnly]
@@ -41,7 +42,9 @@ public class SpawnTable : ScriptableObject{
         if (rolledObj.Object is SpawnTable nestedTable){
             return nestedTable.GetAsset<T>();
         }
-        Debug.LogError($"Object is not {typeof(T).Name} or another SpawnTable in {name}", this);
+        if (!allowEmpty){
+            Debug.LogError($"Object is not {typeof(T).Name} or another SpawnTable in {name}", this);
+        }
         return null;
     }
 

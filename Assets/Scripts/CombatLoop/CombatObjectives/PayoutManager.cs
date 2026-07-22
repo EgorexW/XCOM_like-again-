@@ -34,10 +34,10 @@ public class PayoutManager : MonoBehaviour{
         UpdateObjectives();
         var payout = 0;
         foreach (var objective in objectives){
-            // Debug.Log($"Objective: {objective.name}, Payout: {objective.Payout}");
+            Debug.Log($"Objective: {objective.name}, Payout: {objective.Payout}");
             payout += objective.Payout;
         }
-        // Debug.Log("Total Payout: " + payout);
+        Debug.Log("Total Payout: " + payout);
         return payout;
     }
 }

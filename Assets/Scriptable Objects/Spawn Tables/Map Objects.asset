@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2835842289e224d2ba35422c2d9487ce, type: 3}
+  m_Name: Map Objects
+  m_EditorClassIdentifier: Essencial::SpawnTable
+  gameObjects:
+  - value: 82
+    Object: {fileID: 0}
+  - value: 10
+    Object: {fileID: 7086092485035440313, guid: a1111a98338dd420aae8010231069c4c, type: 3}
+  - value: 5
+    Object: {fileID: 9178923487929054879, guid: ae52e4a739d804a8baa8d63e02d3f7ff, type: 3}
+  - value: 1
+    Object: {fileID: 5456766478168322322, guid: 34a763b0daff445a6a603a08b4500cc4, type: 3}
+  - value: 2
+    Object: {fileID: 6650459503787928037, guid: c5803df62b5a24178b22eb0cc57e7ee4, type: 3}
+  allowEmpty: 1
