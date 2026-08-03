@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuMissionTypeBasePath)]
-public class MissionType : ScriptableObject
+public class  Mission : ScriptableObject
 {
     public string missionName;
     [TextArea] public string description;

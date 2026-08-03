@@ -1,17 +1,19 @@
+using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class SimpleTeamGenerator : TeamGenerator{
-    [BoxGroup("References")] [Required] [SerializeField] List<GameObject> teamPrefabs;
+public class MissionTeamGenerator : TeamGenerator{
+    [FormerlySerializedAs("missionConfig")] [FormerlySerializedAs("teamConfig")] [BoxGroup("References")][Required][SerializeField] MissionInitConfig missionInitConfig;
 
     [SerializeField] UnitsTurnTaker turnTaker;
 
-    [SerializeField] int teamCount = 3;
-
     public override Team GenerateTeam(){
         var combatObjects = new List<ICombatObject>();
-        for (var i = 0; i < teamCount; i++) combatObjects.Add(AddTeamMember(teamPrefabs.Random()));
+        foreach (var prefab in missionInitConfig.Prefabs){
+            combatObjects.Add(AddTeamMember(prefab));
+        }
         return new Team(combatObjects, teamFlag);
     }
 

@@ -54,7 +54,6 @@ public class Level : MonoBehaviour{
             }
         }
         var list = new List<string>(groups);
-        list.Shuffle();
         return list;
     }
 }

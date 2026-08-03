@@ -146,11 +146,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SimpleTeamGenerator
   teamFlag: 2
   targetNodeType: 1
-  teamPrefabs:
-  - {fileID: 6155321779156121815, guid: 425eb1f3ff7eb4154a88b38c0655348b, type: 3}
-  - {fileID: 6155321779156121815, guid: 662e785cb562e489684c9b6d81db0c87, type: 3}
+  missionConfig: {fileID: 786309066379094887}
   turnTaker: {fileID: 162711034066592924}
-  teamCount: 3
 --- !u!1 &2475340168656325137
 GameObject:
   m_ObjectHideFlags: 0
@@ -161,6 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8200287904963730563}
   - component: {fileID: 8972487270658172065}
+  - component: {fileID: 786309066379094887}
   m_Layer: 0
   m_Name: Basic Mission Init
   m_TagString: Untagged
@@ -198,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6fe2070a40534ee790ea8a51980cc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicMissionInit
-  mapSpawnTable: {fileID: 11400000, guid: 7777eeffdac0d4e1db938ceddba5a7c1, type: 2}
+  config: {fileID: 786309066379094887}
   levelSpawnPos: {x: 50, y: 50}
   teamGenerators:
   - {fileID: 3262908408828691881}
@@ -208,9 +206,25 @@ MonoBehaviour:
   - {fileID: 3905931016146511683}
   - {fileID: 3803297563405089739}
   - {fileID: 6409706722511528941}
+  - {fileID: 1743371522411969684}
   turnTakers:
   - {fileID: 7231747205711564845}
   - {fileID: 162711034066592924}
+--- !u!114 &786309066379094887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2475340168656325137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3461551287040b28a863811499987fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeamConfig
+  mapSpawnTable: {fileID: 11400000, guid: 7777eeffdac0d4e1db938ceddba5a7c1, type: 2}
+  prefabs:
+  - {fileID: 6155321779156121815, guid: 425eb1f3ff7eb4154a88b38c0655348b, type: 3}
 --- !u!1 &2522833068190893003
 GameObject:
   m_ObjectHideFlags: 0

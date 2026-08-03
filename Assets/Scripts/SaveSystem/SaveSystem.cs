@@ -1,17 +1,21 @@
 using System.IO;
+using Nrjwolf.Tools.AttachAttributes;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuSaveSystemBasePath)]
 public class SaveSystem : ScriptableObject{
-    [BoxGroup("References")] [Required] [SerializeField] ResourcesData resourcesData;
-    [BoxGroup("References")] [Required] [SerializeField] RecruitIntakeData recruitIntakeData;
+    [BoxGroup("References")][GetComponent][SerializeField] StartSave startSave;
+    
+    // [BoxGroup("References")] [Required] [SerializeField] ResourcesData resourcesData;
+    // [BoxGroup("References")] [Required] [SerializeField] RecruitIntakeData recruitIntakeData;
+    
     [BoxGroup("References")] [Required] [SerializeField] EquipmentAssetRegistry equipmentRegistry;
     [BoxGroup("References")] [Required] [SerializeField] UnitPrefabAssetRegistry unitRegistry;
 
-    [Title("Default Save")]
-    [BoxGroup("References")] [Required] [SerializeField] ResourcesData initResourcesData;
-    [SerializeField] int startingSquadSize = 5;
+    // [Title("Default Save")]
+    // [BoxGroup("References")] [Required] [SerializeField] ResourcesData initResourcesData;
+    // [SerializeField] int startingSquadSize = 5;
 
     public SaveData Data{ get; private set; } = new();
 
@@ -23,12 +27,19 @@ public class SaveSystem : ScriptableObject{
 
     public void Load(){
         var path = GetPath();
-        Data = File.Exists(path) ? JsonUtility.FromJson<SaveData>(File.ReadAllText(path)) : CreateDefaultSaveData();
-        resourcesData.LoadFrom(Data.resources, equipmentRegistry, unitRegistry);
-        recruitIntakeData.SetMissionsCompletedSinceLastDelivery(Data.recruitIntake.missionsCompletedSinceLastDelivery);
+        Data = File.Exists(path) ? JsonUtility.FromJson<SaveData>(File.ReadAllText(path)) : startSave.CreateDefaultSaveData();
+        // resourcesData.LoadFrom(Data.resources, equipmentRegistry, unitRegistry);
+        // recruitIntakeData.SetMissionsCompletedSinceLastDelivery(Data.recruitIntake.missionsCompletedSinceLastDelivery);
+        
     }
 
-    SaveData CreateDefaultSaveData(){
+    public static string GetPath(){
+        return $"{Application.persistentDataPath}/{Application.productName} save {SaveProfile.CurrentProfile:00}.json";
+    }
+}
+
+public class StartSave : MonoBehaviour{
+    public SaveData CreateDefaultSaveData(){
         var defaultResources = CreateInstance<ResourcesData>();
         defaultResources.DeepCopy(initResourcesData);
 
@@ -41,9 +52,5 @@ public class SaveSystem : ScriptableObject{
         };
         Destroy(defaultResources);
         return defaultData;
-    }
-
-    public static string GetPath(){
-        return $"{Application.persistentDataPath}/{Application.productName} save {SaveProfile.CurrentProfile:00}.json";
     }
 }

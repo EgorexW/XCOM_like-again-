@@ -1,18 +1,19 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameplayInit : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] CombatInit combatInit;
-    [BoxGroup("References")] [Required] [SerializeField] GameRunState gameRunState;
+    [FormerlySerializedAs("gameRunState")] [BoxGroup("References")] [Required] [SerializeField] CampaingState campaingState;
     [BoxGroup("References")] [Required] [SerializeField] PayoutManager payoutManager;
 
     protected void Start(){
-        if (gameRunState.selectedMissionType == null) {
+        if (campaingState.selectedMission == null) {
             Debug.LogError("No selectedMissionType provided to GameplayInit!");
             return;
         }
 
-        var missionType = gameRunState.selectedMissionType;
+        var missionType = campaingState.selectedMission;
 
         var missionInit = Instantiate(missionType.missionInitPrefab);
         var content = new CombatContent();

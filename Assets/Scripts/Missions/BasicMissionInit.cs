@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class BasicMissionInit : MissionInit
-{
-    [Required] [SerializeField] SpawnTable mapSpawnTable;
+public class BasicMissionInit : MissionInit{
+    [FormerlySerializedAs("config")] [BoxGroup("References")] [Required] [SerializeField] MissionInitConfig initConfig;
     [SerializeField] Vector2 levelSpawnPos = new(50, 50);
     [SerializeField] List<TeamGenerator> teamGenerators;
     [SerializeField] List<PayoutObjective> payoutObjectives;
@@ -13,7 +13,7 @@ public class BasicMissionInit : MissionInit
     public override void InitMission(CombatContent content)
     {
         // 1. Generate Map
-        var mapPrefab = mapSpawnTable.GetGameObject();
+        var mapPrefab = initConfig.GetMapPrefab();
 
         var spawnedLevelObj = Instantiate(mapPrefab, levelSpawnPos, Quaternion.identity);
         var currentLevel = spawnedLevelObj.GetComponent<Level>();
