@@ -7,12 +7,12 @@ public class SquadUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool objectsPool;
 
     [FormerlySerializedAs("onSquadMemberClicked")] [FoldoutGroup("Events")]
-    public UnityEvent<SquadData, SquadMember> onSquadMemberButtonClicked = new();
+    public UnityEvent<CampaignState, SquadMember> onSquadMemberButtonClicked = new();
 
-    [FoldoutGroup("Events")] public UnityEvent<SquadData, Equipment, SquadMember> onEquipmentClicked = new();
-    [FoldoutGroup("Events")] public UnityEvent<SquadData, SquadMember> onSquadMemberPortraitClicked = new();
+    [FoldoutGroup("Events")] public UnityEvent<CampaignState, Equipment, SquadMember> onEquipmentClicked = new();
+    [FoldoutGroup("Events")] public UnityEvent<CampaignState, SquadMember> onSquadMemberPortraitClicked = new();
 
-    SquadData squad;
+    CampaignState campaignState;
 
     protected void Awake(){
         objectsPool.onCreateObject.AddListener(OnCreateSquadMemberUI);
@@ -26,39 +26,39 @@ public class SquadUI : UIElement{
     }
 
     void OnSquadMemberUIPortraitClicked(SquadMember arg0){
-        onSquadMemberPortraitClicked.Invoke(squad, arg0);
+        onSquadMemberPortraitClicked.Invoke(campaignState, arg0);
     }
 
     void OnSquadMemberUIEquipmentClicked(SquadMember arg0, Equipment arg1){
-        onEquipmentClicked.Invoke(squad, arg1, arg0);
+        onEquipmentClicked.Invoke(campaignState, arg1, arg0);
     }
 
     void OnSquadMemberUIClicked(SquadMember arg0){
         // Debug.Log($"Clicked {arg0.Name} in Squad!");
-        onSquadMemberButtonClicked.Invoke(squad, arg0);
+        onSquadMemberButtonClicked.Invoke(campaignState, arg0);
     }
 
-    public void ShowSquad(SquadData squadTmp){
+    public void ShowSquad(CampaignState squadTmp){
         base.Show();
         RemoveSquad();
-        squad = squadTmp;
-        squad.onChanged.AddListener(OnSquadChanged);
-        UpdateSquad();
+        campaignState = squadTmp;
+        campaignState.onChanged += UpdateCampaignState;
+        UpdateCampaignState();
     }
 
-    void UpdateSquad(){
-        var count = squad.SquadMembers.Count;
+    void UpdateCampaignState(){
+        var count = campaignState.Squad.Members.Count;
         objectsPool.SetCount(count);
         for (var i = 0; i < count; i++){
-            var member = squad.SquadMembers[i];
+            var member = campaignState.Squad.Members[i];
             var obj = objectsPool.GetActiveObject(i);
             var squadSlotUI = obj.GetComponent<SquadMemberUI>();
             squadSlotUI.Show(member);
         }
     }
 
-    void OnSquadChanged(SquadData arg0){
-        UpdateSquad();
+    void OnSquadChanged(CampaignState arg0){
+        UpdateCampaignState();
     }
 
     public override void Hide(){
@@ -67,7 +67,9 @@ public class SquadUI : UIElement{
     }
 
     void RemoveSquad(){
-        squad?.onChanged.RemoveListener(OnSquadChanged);
-        squad = null;
+        if (campaignState != null){
+            campaignState.onChanged -= UpdateCampaignState;
+        }
+        campaignState = null;
     }
 }

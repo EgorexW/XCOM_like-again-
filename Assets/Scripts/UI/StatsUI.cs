@@ -4,23 +4,23 @@ using TMPro;
 using UnityEngine;
 
 public class StatsUI : UIElement{
-    [BoxGroup("References")][Required][SerializeField] ResourcesData resourcesData;
+    [BoxGroup("References")][Required][SerializeField] CampaignState CampaignState;
     
     [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI moneyText;
-    [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI retirementRateText;
+    // [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI retirementRateText;
     
     
     void UpdateUI(){
-        moneyText.text = $"Money: ${resourcesData.Money}";
-        retirementRateText.text = $"Retirement Rate: {resourcesData.RetirementRate():P1}";
+        moneyText.text = $"Money: ${CampaignState.Money}";
+        // retirementRateText.text = $"Retirement Rate: {CampaignState.RetirementRate():P1}";
     }
 
     void Start(){
-        resourcesData.onChanged.AddListener(OnResourcesChanged);
+        CampaignState.onChanged  += UpdateUI;
         UpdateUI();
     }
 
-    void OnResourcesChanged(ResourcesData arg0){
+    void OnResourcesChanged(CampaignState arg0){
         UpdateUI();
     }
 
@@ -30,8 +30,8 @@ public class StatsUI : UIElement{
     }
     
     protected void OnDestroy() {
-        if (resourcesData != null) {
-            resourcesData.onChanged.RemoveListener(OnResourcesChanged);
+        if (CampaignState != null) {
+            CampaignState.onChanged  -= UpdateUI;
         }
     }
 }

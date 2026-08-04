@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 
 public class ShopLogic : MonoBehaviour{
     [FormerlySerializedAs("shopData")] [BoxGroup("Data")] [Required] [SerializeField] ShopLogicData shopLogicData;
-    [BoxGroup("Data")] [Required] [SerializeField] ResourcesData resourcesData;
+    [BoxGroup("References")][Required][SerializeField] CampaignStateHolder  campaignStateHolder;
     
     [SerializeField] bool generateOnAwake = true;
 
@@ -18,7 +18,7 @@ public class ShopLogic : MonoBehaviour{
     }
 
     [FoldoutGroup("Debug")][ShowInInspector] Shop shop;
-    // public ResourcesData ResourcesData => resourcesData;
+    // public CampaignState CampaignState => CampaignState;
     public Shop Shop {
         get {
             if (shop == null){
@@ -29,12 +29,12 @@ public class ShopLogic : MonoBehaviour{
     }
 
     public void PurchaseItem(ShopItem shopItem){
-        if (resourcesData.Money < shopItem.price){
-            Debug.LogWarning($"Not enough money to purchase {shopItem}! Have {resourcesData.Money}.");
+        if (campaignStateHolder.State.Money.Value < shopItem.price){
+            Debug.LogWarning($"Not enough money to purchase {shopItem}! Have {campaignStateHolder.State.Money.Value}.");
             return;
         }
-        resourcesData.ChangeMoney(-shopItem.price);
-        resourcesData.AddEquipment(shopItem.items);
+        campaignStateHolder.State.Money.ChangeValue(-shopItem.price);
+        campaignStateHolder.State.Equipment.AddEquipment(shopItem.items);
         shop.ItemPurchased(shopItem);
         Debug.Log($"Purchased {shopItem}");
     }

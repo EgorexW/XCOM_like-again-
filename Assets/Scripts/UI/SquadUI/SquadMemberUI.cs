@@ -37,7 +37,7 @@ public class SquadMemberUI : UIElement{
         base.Show();
         RemoveSquadMember();
         squadMember = squadMemberTmp;
-        squadMember.onChanged.AddListener(UpdateSquadMember);
+        squadMember.onChanged  += UpdateSquadMember;
         UpdateSquadMember();
     }
 
@@ -51,7 +51,9 @@ public class SquadMemberUI : UIElement{
     }
 
     void RemoveSquadMember(){
-        squadMember?.onChanged.RemoveListener(UpdateSquadMember);
+        if (squadMember != null){
+            squadMember.onChanged -= UpdateSquadMember;
+        }
         squadMember = null;
     }
 

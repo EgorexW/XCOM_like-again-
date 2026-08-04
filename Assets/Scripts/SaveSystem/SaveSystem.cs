@@ -5,52 +5,40 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuSaveSystemBasePath)]
 public class SaveSystem : ScriptableObject{
-    [BoxGroup("References")][GetComponent][SerializeField] StartSave startSave;
+    [BoxGroup("References")][Required][SerializeField] CampaignStateHolder campaignStateHolder;
     
-    // [BoxGroup("References")] [Required] [SerializeField] ResourcesData resourcesData;
-    // [BoxGroup("References")] [Required] [SerializeField] RecruitIntakeData recruitIntakeData;
-    
-    [BoxGroup("References")] [Required] [SerializeField] EquipmentAssetRegistry equipmentRegistry;
+    [BoxGroup("References")] [Required] [SerializeField] EquipmentAssetRegistry equipmentRegistry; //TODO
     [BoxGroup("References")] [Required] [SerializeField] UnitPrefabAssetRegistry unitRegistry;
+    
+    [SerializeField] CampaignState defaultState;
 
-    // [Title("Default Save")]
-    // [BoxGroup("References")] [Required] [SerializeField] ResourcesData initResourcesData;
-    // [SerializeField] int startingSquadSize = 5;
-
-    public SaveData Data{ get; private set; } = new();
-
-    public void Save(){
-        Data.resources = resourcesData.ToSaveData(equipmentRegistry, unitRegistry);
-        Data.recruitIntake.missionsCompletedSinceLastDelivery = recruitIntakeData.MissionsCompletedSinceLastDelivery;
-        File.WriteAllText(GetPath(), JsonUtility.ToJson(Data, true));
+    public void Save(CampaignState campaign){
+        File.WriteAllText(GetPath(), JsonUtility.ToJson(campaign, true));
     }
 
-    public void Load(){
+    CampaignState InnerLoad(){
         var path = GetPath();
-        Data = File.Exists(path) ? JsonUtility.FromJson<SaveData>(File.ReadAllText(path)) : startSave.CreateDefaultSaveData();
-        // resourcesData.LoadFrom(Data.resources, equipmentRegistry, unitRegistry);
-        // recruitIntakeData.SetMissionsCompletedSinceLastDelivery(Data.recruitIntake.missionsCompletedSinceLastDelivery);
-        
+        if (File.Exists(path))
+        {
+            return JsonUtility.FromJson<CampaignState>(File.ReadAllText(path));
+        }
+        Save(defaultState);
+        Debug.LogWarning($"No save data found at {path}. Creating a new save with default state.");
+        return Load();
+    }
+
+    public CampaignState Load(){
+        // var state = InnerLoad();
+        var state = defaultState;
+        campaignStateHolder.SetCampaignState(state);
+        return state;
     }
 
     public static string GetPath(){
         return $"{Application.persistentDataPath}/{Application.productName} save {SaveProfile.CurrentProfile:00}.json";
     }
-}
 
-public class StartSave : MonoBehaviour{
-    public SaveData CreateDefaultSaveData(){
-        var defaultResources = CreateInstance<ResourcesData>();
-        defaultResources.DeepCopy(initResourcesData);
-
-        if (startingSquadSize > 0){
-            recruitIntakeData.GenerateRecruits(defaultResources, startingSquadSize);
-        }
-
-        var defaultData = new SaveData{
-            resources = defaultResources.ToSaveData(equipmentRegistry, unitRegistry)
-        };
-        Destroy(defaultResources);
-        return defaultData;
+    public void Save(){
+        Save(campaignStateHolder.State);
     }
 }

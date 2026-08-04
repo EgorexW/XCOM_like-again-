@@ -8,12 +8,11 @@ public class ResourcesUI : UIElement{
     [BoxGroup("References")] [Required] [SerializeField] ObjectsPool membersPool;
     [BoxGroup("References")] [Required] [SerializeField] EquipmentTypesUI equipmentUI;
 
-    ResourcesData resources;
-    SquadData squad;
+    CampaignState campaignState;
 
-    [FoldoutGroup("Events")] public UnityEvent<ResourcesData, SquadMember> onSquadMemberClicked = new();
-    [FoldoutGroup("Events")] public UnityEvent<ResourcesData, SquadMember> onSquadMemberPortraitClicked = new();
-    [FoldoutGroup("Events")] public UnityEvent<ResourcesData, Equipment> onEquipmentClicked = new();
+    [FoldoutGroup("Events")] public UnityEvent<CampaignState, SquadMember> onSquadMemberClicked = new();
+    [FoldoutGroup("Events")] public UnityEvent<CampaignState, SquadMember> onSquadMemberPortraitClicked = new();
+    [FoldoutGroup("Events")] public UnityEvent<CampaignState, Equipment> onEquipmentClicked = new();
 
     protected void Awake(){
         membersPool.onCreateObject.AddListener(OnCreateSquadMemberUI);
@@ -21,7 +20,7 @@ public class ResourcesUI : UIElement{
     }
 
     void OnEquipmentTypeClicked(Equipment arg0){
-        onEquipmentClicked.Invoke(resources, arg0);
+        onEquipmentClicked.Invoke(campaignState, arg0);
     }
 
     void OnCreateSquadMemberUI(GameObject arg0){
@@ -31,29 +30,23 @@ public class ResourcesUI : UIElement{
     }
 
     void OnSquadMemberUIClicked(SquadMember arg0){
-        onSquadMemberClicked.Invoke(resources, arg0);
+        onSquadMemberClicked.Invoke(campaignState, arg0);
     }
 
     void OnSquadMemberPortraitClicked(SquadMember arg0){
-        onSquadMemberPortraitClicked.Invoke(resources, arg0);
+        onSquadMemberPortraitClicked.Invoke(campaignState, arg0);
     }
 
-    public void ShowResources(ResourcesData resourcesData, SquadData squadData = null){
-        resources = resourcesData;
-        squad = squadData;
-        resources.onChanged.AddListener(OnResourcesChanged);
-        if (squad != null) squad.onChanged.AddListener(OnSquadChanged);
-        UpdateResources();
-    }
-
-    void OnSquadChanged(SquadData data){
+    public void ShowResources(CampaignState campaignStateTmp){
+        campaignState = campaignStateTmp;
+        campaignState.onChanged += OnCampaignStateChanged;
         UpdateResources();
     }
 
     void UpdateResources(){
         var availableMembers = new List<SquadMember>();
-        foreach (var member in resources.Members){
-            if (squad == null || !squad.SquadMembers.Contains(member)){
+        foreach (var member in campaignState.Members.ActiveMembers){
+            if (!campaignState.Squad.Members.Contains(member)){
                 availableMembers.Add(member);
             }
         }
@@ -65,18 +58,18 @@ public class ResourcesUI : UIElement{
             var resourcesSlotUI = obj.GetComponent<SquadMemberUI>();
             resourcesSlotUI.Show(member);
         }
-        equipmentUI.Show(resources.Equipment);
+        equipmentUI.Show(campaignState.Equipment.Equipment);
     }
 
-    void OnResourcesChanged(ResourcesData arg0){
+    void OnCampaignStateChanged(){
         UpdateResources();
     }
 
     public override void Hide(){
         base.Hide();
-        resources?.onChanged.RemoveListener(OnResourcesChanged);
-        squad?.onChanged.RemoveListener(OnSquadChanged);
-        resources = null;
-        squad = null;
+        if (campaignState != null){
+            campaignState.onChanged -= OnCampaignStateChanged;
+        }
+        campaignState = null;
     }
 }

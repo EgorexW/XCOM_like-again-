@@ -18,7 +18,7 @@ public class SquadSelectionUI : UIElement{
         squadUI.onSquadMemberPortraitClicked.AddListener(OnSquadUISquadMemberPortraitClicked);
     }
 
-    void OnSquadUISquadMemberPortraitClicked(SquadData arg0, SquadMember arg1){
+    void OnSquadUISquadMemberPortraitClicked(CampaignState arg0, SquadMember arg1){
         if (pendingEquipment == null){
             return;
         }
@@ -27,30 +27,30 @@ public class SquadSelectionUI : UIElement{
     }
 
     protected void Start(){
-        squadUI.ShowSquad(squadSelection.Squad);
-        resourcesUI.ShowResources(squadSelection.Resources, squadSelection.Squad);
+        squadUI.ShowSquad(squadSelection.CampaignState);
+        resourcesUI.ShowResources(squadSelection.CampaignState);
     }
 
-    void OnSquadUIEquipmentSquadClicked(SquadData arg0, Equipment arg1, SquadMember arg2){
+    void OnSquadUIEquipmentSquadClicked(CampaignState arg0, Equipment arg1, SquadMember arg2){
         squadSelection.RemoveEquipmentFromSquadMemeber(arg2, arg1);
     }
 
-    void OnSquadUISquadMemberSquadClicked(SquadData arg0, SquadMember arg1){
+    void OnSquadUISquadMemberSquadClicked(CampaignState arg0, SquadMember arg1){
         // Debug.Log($"Clicked {arg1.Name} in Squad! Removing from Squad.");
         squadSelection.RemoveMemberFromSquad(arg1);
     }
 
-    void OnSquadUISquadMemberResourcesClicked(ResourcesData arg0, SquadMember arg1){
+    void OnSquadUISquadMemberResourcesClicked(CampaignState arg0, SquadMember arg1){
         // The main button (remove button) now fires them completely
         arg0.FireMember(arg1);
     }
 
-    void OnSquadUISquadMemberPortraitResourcesClicked(ResourcesData arg0, SquadMember arg1){
+    void OnSquadUISquadMemberPortraitResourcesClicked(CampaignState arg0, SquadMember arg1){
         // The portrait puts them into the squad
         squadSelection.AddMemberToSquad(arg1);
     }
 
-    void OnSquadUIEquipmentResourcesClicked(ResourcesData arg0, Equipment arg1){
+    void OnSquadUIEquipmentResourcesClicked(CampaignState arg0, Equipment arg1){
         pendingEquipment = arg1;
 
         Debug.Log($"Grabbed {arg1.name}! Now click a Squad Member to equip.");

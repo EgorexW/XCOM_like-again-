@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Init : MonoBehaviour{
-    // [SerializeField] SquadData squadData;
+    [BoxGroup("References")] [Required] [SerializeField] CampaignStateHolder campaignStateHolder;
     [BoxGroup("References")] [Required] [SerializeField] SaveSystem saveSystem;
 
     [SerializeField] [SceneObjectsOnly] protected string sceneName;
 
     protected void Awake(){
-        saveSystem.Load();
+        var campaignState = saveSystem.Load();
+        campaignStateHolder.SetCampaignState(campaignState);
         SceneManager.LoadScene(sceneName);
     }
 }
