@@ -3661,7 +3661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameplayInit
   combatInit: {fileID: 1575406001}
-  gameRunState: {fileID: 11400000, guid: e7659cc5e26a04a41ad03de901c5aea9, type: 2}
+  campaingStateHolder: {fileID: 11400000, guid: 094cec65e739a4310a2ccdfa783b315d, type: 2}
   payoutManager: {fileID: 2102339011}
 --- !u!1 &1645644889
 GameObject:

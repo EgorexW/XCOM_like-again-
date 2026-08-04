@@ -148,7 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789464678a7a34028a094a76ea239d04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  squadData: {fileID: 11400000, guid: 39451c121c1f240d7b34d36251ec8d62, type: 2}
   saveSystem: {fileID: 11400000, guid: 7f0462620b2a44db3b1eded0a489a3a0, type: 2}
   sceneName: Squad Select
 --- !u!4 &1178191529

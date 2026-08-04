@@ -12,9 +12,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1e7cbb83176c43cb9ab1b02f566d69c, type: 3}
   m_Name: Save System
   m_EditorClassIdentifier: Assembly-CSharp::SaveSystem
-  resourcesData: {fileID: 11400000, guid: 17c65746be0974f9b89ee0baa80713df, type: 2}
-  recruitIntakeData: {fileID: 11400000, guid: 8d21b16f4239642a7bbf09b69de5f4e5, type: 2}
+  campaignStateHolder: {fileID: 11400000, guid: 094cec65e739a4310a2ccdfa783b315d, type: 2}
   equipmentRegistry: {fileID: 11400000, guid: 69192555067034a69814449af5bde096, type: 2}
   unitRegistry: {fileID: 11400000, guid: b7ad5b2a9acc644379ab143e52f42c82, type: 2}
-  initResourcesData: {fileID: 11400000, guid: ef73dac7c48c9487798acda48c845927, type: 2}
-  startingSquadSize: 5
+  defaultState:
+    membersState:
+      activeMembers:
+      - name: 
+        combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
+        equipment: []
+        upkeepCost: 0
+        missionsCompleted: 0
+        retirementThreshold: 0
+        alive: 0
+      - name: 
+        combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
+        equipment: []
+        upkeepCost: 0
+        missionsCompleted: 0
+        retirementThreshold: 0
+        alive: 0
+      - name: 
+        combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
+        equipment: []
+        upkeepCost: 0
+        missionsCompleted: 0
+        retirementThreshold: 0
+        alive: 0
+      - name: 
+        combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
+        equipment: []
+        upkeepCost: 0
+        missionsCompleted: 0
+        retirementThreshold: 0
+        alive: 0
+      retiredMembers: []
+      deadMembers: []
+    equipmentState:
+      equipmentList:
+      - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
+      - {fileID: 11400000, guid: e20fbf996b07f445a9dddfb4ae1b8e6b, type: 2}
+      - {fileID: 11400000, guid: 9a7351f001bbe47279fd52fc03d93370, type: 2}
+    moneyState:
+      value: 1000
+    squadState:
+      squadMembers: []
+    missionsState:
+      selectedMission: {fileID: 11400000, guid: 6238d2f0d6f54448781fcea9a3a8c05f, type: 2}

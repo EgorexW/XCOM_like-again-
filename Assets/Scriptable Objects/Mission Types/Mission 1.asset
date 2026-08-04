@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8cd757deca3b54dd0834213eb182731e, type: 3}
-  m_Name: Shooting
+  m_Name: Mission 1
   m_EditorClassIdentifier: Assembly-CSharp::MissionType
-  missionName: Shooting
+  missionName: Mission 1
   description: 
-  missionInitPrefab: {fileID: 8972487270658172065, guid: 188e31412a4eb4ffab2bc670b8c5b181, type: 3}
+  missionInitPrefab: {fileID: 5982363175277456753, guid: f4f982be4ba8f4cd7adc65bfbeacbda0, type: 3}

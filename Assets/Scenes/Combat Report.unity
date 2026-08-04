@@ -163,10 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5c450b60ec04db28c1e96e84214d6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  squadData: {fileID: 11400000, guid: 39451c121c1f240d7b34d36251ec8d62, type: 2}
-  resourcesData: {fileID: 11400000, guid: 17c65746be0974f9b89ee0baa80713df, type: 2}
+  campaignStateHolder: {fileID: 11400000, guid: 094cec65e739a4310a2ccdfa783b315d, type: 2}
   combatReportData: {fileID: 11400000, guid: 106d9c354c1e54f52a13a784c5cd3db4, type: 2}
-  recruitIntakeData: {fileID: 11400000, guid: 8d21b16f4239642a7bbf09b69de5f4e5, type: 2}
 --- !u!1 &395870731
 GameObject:
   m_ObjectHideFlags: 0

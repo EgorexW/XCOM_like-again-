@@ -146,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SimpleTeamGenerator
   teamFlag: 2
   targetNodeType: 1
-  missionConfig: {fileID: 786309066379094887}
+  missionInitConfig: {fileID: 786309066379094887}
   turnTaker: {fileID: 162711034066592924}
 --- !u!1 &2475340168656325137
 GameObject:
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6fe2070a40534ee790ea8a51980cc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicMissionInit
-  config: {fileID: 786309066379094887}
+  initConfig: {fileID: 786309066379094887}
   levelSpawnPos: {x: 50, y: 50}
   teamGenerators:
   - {fileID: 3262908408828691881}
@@ -366,7 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SquadTeamGenerator
   teamFlag: 1
   targetNodeType: 0
-  squadData: {fileID: 11400000, guid: 39451c121c1f240d7b34d36251ec8d62, type: 2}
+  campaignStateHolder: {fileID: 11400000, guid: 094cec65e739a4310a2ccdfa783b315d, type: 2}
   turnTaker: {fileID: 7231747205711564845}
 --- !u!1 &5323823687398522492
 GameObject:
