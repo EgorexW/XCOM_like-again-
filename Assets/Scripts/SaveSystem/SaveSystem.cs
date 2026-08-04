@@ -7,29 +7,30 @@ using UnityEngine;
 public class SaveSystem : ScriptableObject{
     [BoxGroup("References")][Required][SerializeField] CampaignStateHolder campaignStateHolder;
     
-    [BoxGroup("References")] [Required] [SerializeField] EquipmentAssetRegistry equipmentRegistry; //TODO
+    [BoxGroup("References")] [Required] [SerializeField] EquipmentAssetRegistry equipmentRegistry;
     [BoxGroup("References")] [Required] [SerializeField] UnitPrefabAssetRegistry unitRegistry;
-    
+
     [SerializeField] CampaignState defaultState;
 
     public void Save(CampaignState campaign){
-        File.WriteAllText(GetPath(), JsonUtility.ToJson(campaign, true));
+        var saveData = campaign.ToSaveData(equipmentRegistry, unitRegistry);
+        File.WriteAllText(GetPath(), JsonUtility.ToJson(saveData, true));
     }
 
     CampaignState InnerLoad(){
         var path = GetPath();
         if (File.Exists(path))
         {
-            return JsonUtility.FromJson<CampaignState>(File.ReadAllText(path));
+            var saveData = JsonUtility.FromJson<CampaignSaveData>(File.ReadAllText(path));
+            return saveData.ToCampaignState(equipmentRegistry, unitRegistry);
         }
         Save(defaultState);
         Debug.LogWarning($"No save data found at {path}. Creating a new save with default state.");
-        return Load();
+        return InnerLoad();
     }
 
     public CampaignState Load(){
-        // var state = InnerLoad();
-        var state = defaultState;
+        var state = InnerLoad();
         campaignStateHolder.SetCampaignState(state);
         return state;
     }

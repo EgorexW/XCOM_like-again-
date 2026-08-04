@@ -4,14 +4,15 @@ using TMPro;
 using UnityEngine;
 
 public class StatsUI : UIElement{
-    [BoxGroup("References")][Required][SerializeField] CampaignState CampaignState;
-    
+    [BoxGroup("References")][Required][SerializeField] CampaignStateHolder campaignStateHolder;
+    public CampaignState CampaignState => campaignStateHolder.State;
+
     [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI moneyText;
     // [BoxGroup("References")] [Required] [SerializeField] TextMeshProUGUI retirementRateText;
-    
-    
+
+
     void UpdateUI(){
-        moneyText.text = $"Money: ${CampaignState.Money}";
+        moneyText.text = $"Money: ${CampaignState.Money.Value}";
         // retirementRateText.text = $"Retirement Rate: {CampaignState.RetirementRate():P1}";
     }
 
