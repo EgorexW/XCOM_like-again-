@@ -4011,19 +4011,7 @@ MonoBehaviour:
   onHide:
     m_PersistentCalls:
       m_Calls: []
-  CampaignState:
-    membersState:
-      activeMembers: []
-      retiredMembers: []
-      deadMembers: []
-    equipmentState:
-      equipmentList: []
-    moneyState:
-      value: 0
-    squadState:
-      squadMembers: []
-    missionsState:
-      selectedMission: {fileID: 0}
+  campaignStateHolder: {fileID: 11400000, guid: 094cec65e739a4310a2ccdfa783b315d, type: 2}
   moneyText: {fileID: 2121957037}
 --- !u!1 &2094067984
 GameObject:
