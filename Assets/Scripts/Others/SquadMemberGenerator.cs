@@ -32,4 +32,4 @@ public struct RecruitTemplate{
     public int upkeepCost;
 }
 
-    }
+    
