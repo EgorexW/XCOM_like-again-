@@ -26,7 +26,7 @@ public static class CampaignStateConverter{
     }
 
     public static CampaignSaveData ToSaveData(this CampaignState state, EquipmentAssetRegistry equipmentRegistry,
-        UnitPrefabAssetRegistry unitRegistry){
+        UnitPrefabAssetRegistry unitRegistry, MissionAssetRegistry missionRegistry){
         var save = new CampaignSaveData{
             money = state.Money.Value,
             members = new MembersSaveData{
@@ -36,7 +36,8 @@ public static class CampaignStateConverter{
             },
             equipment = new EquipmentSaveData{
                 equipmentGuids = state.Equipment.Equipment.Select(equipmentRegistry.GetGuid).ToList()
-            }
+            },
+            selectedMissionGuid = missionRegistry.GetGuid(state.Missions.SelectedMission)
         };
         var activeMembersList = state.Members.ActiveMembers.ToList();
         save.squad.activeMemberIndices = state.Squad.Members
@@ -47,7 +48,7 @@ public static class CampaignStateConverter{
     }
 
     public static CampaignState ToCampaignState(this CampaignSaveData save, EquipmentAssetRegistry equipmentRegistry,
-        UnitPrefabAssetRegistry unitRegistry){
+        UnitPrefabAssetRegistry unitRegistry, MissionAssetRegistry missionRegistry){
         var state = new CampaignState();
 
         state.Money.SetValue(save.money);
@@ -60,6 +61,8 @@ public static class CampaignStateConverter{
         foreach (var memberSave in save.members.deadMembers) state.Members.DieMember(memberSave.ToSquadMember(equipmentRegistry, unitRegistry));
 
         foreach (var index in save.squad.activeMemberIndices) state.Squad.AddMember(activeMembers[index]);
+
+        state.Missions.SetSelectedMission(missionRegistry.GetAsset(save.selectedMissionGuid));
 
         return state;
     }

@@ -8,4 +8,9 @@ public class MissionsState{
     public Mission SelectedMission => selectedMission;
     
     public event Action onChanged;
+
+    public void SetSelectedMission(Mission mission){
+        selectedMission = mission;
+        onChanged?.Invoke();
+    }
 }

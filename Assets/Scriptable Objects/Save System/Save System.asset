@@ -15,6 +15,7 @@ MonoBehaviour:
   campaignStateHolder: {fileID: 11400000, guid: 094cec65e739a4310a2ccdfa783b315d, type: 2}
   equipmentRegistry: {fileID: 11400000, guid: 69192555067034a69814449af5bde096, type: 2}
   unitRegistry: {fileID: 11400000, guid: b7ad5b2a9acc644379ab143e52f42c82, type: 2}
+  missionRegistry: {fileID: 11400000, guid: 8e26b71a7bf145b7847188c4617fdacc, type: 2}
   defaultState:
     membersState:
       activeMembers:
@@ -24,28 +25,28 @@ MonoBehaviour:
         upkeepCost: 0
         missionsCompleted: 0
         retirementThreshold: 0
-        alive: 0
+        alive: 1
       - name: 
         combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
         equipment: []
         upkeepCost: 0
         missionsCompleted: 0
         retirementThreshold: 0
-        alive: 0
+        alive: 1
       - name: 
         combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
         equipment: []
         upkeepCost: 0
         missionsCompleted: 0
         retirementThreshold: 0
-        alive: 0
+        alive: 1
       - name: 
         combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
         equipment: []
         upkeepCost: 0
         missionsCompleted: 0
         retirementThreshold: 0
-        alive: 0
+        alive: 1
       retiredMembers: []
       deadMembers: []
     equipmentState:

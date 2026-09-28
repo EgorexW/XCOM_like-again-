@@ -9,11 +9,12 @@ public class SaveSystem : ScriptableObject{
     
     [BoxGroup("References")] [Required] [SerializeField] EquipmentAssetRegistry equipmentRegistry;
     [BoxGroup("References")] [Required] [SerializeField] UnitPrefabAssetRegistry unitRegistry;
+    [BoxGroup("References")] [Required] [SerializeField] MissionAssetRegistry missionRegistry;
 
     [SerializeField] CampaignState defaultState;
 
     public void Save(CampaignState campaign){
-        var saveData = campaign.ToSaveData(equipmentRegistry, unitRegistry);
+        var saveData = campaign.ToSaveData(equipmentRegistry, unitRegistry, missionRegistry);
         File.WriteAllText(GetPath(), JsonUtility.ToJson(saveData, true));
     }
 
@@ -22,7 +23,7 @@ public class SaveSystem : ScriptableObject{
         if (File.Exists(path))
         {
             var saveData = JsonUtility.FromJson<CampaignSaveData>(File.ReadAllText(path));
-            return saveData.ToCampaignState(equipmentRegistry, unitRegistry);
+            return saveData.ToCampaignState(equipmentRegistry, unitRegistry, missionRegistry);
         }
         Save(defaultState);
         Debug.LogWarning($"No save data found at {path}. Creating a new save with default state.");

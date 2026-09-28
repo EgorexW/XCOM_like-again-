@@ -7,6 +7,7 @@ public class CampaignSaveData{
     public EquipmentSaveData equipment = new();
     public int money;
     public SquadSaveData squad = new();
+    public string selectedMissionGuid;
 }
 
 [Serializable]
