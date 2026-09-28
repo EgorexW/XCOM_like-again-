@@ -19,28 +19,28 @@ MonoBehaviour:
   defaultState:
     membersState:
       activeMembers:
-      - name: 
+      - name: Drifter
         combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
         equipment: []
         upkeepCost: 0
         missionsCompleted: 0
         retirementThreshold: 0
         alive: 1
-      - name: 
+      - name: Leeson
         combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
         equipment: []
         upkeepCost: 0
         missionsCompleted: 0
         retirementThreshold: 0
         alive: 1
-      - name: 
+      - name: Kitten
         combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
         equipment: []
         upkeepCost: 0
         missionsCompleted: 0
         retirementThreshold: 0
         alive: 1
-      - name: 
+      - name: Codex
         combatPrefab: {fileID: 7377588309643001049, guid: 5911d0333204a4baaa7103699ad494fa, type: 3}
         equipment: []
         upkeepCost: 0
