@@ -1,0 +1,9 @@
+- Info which tiles does the cover protect against when hovered, maybe also line of sight tool
+- **The Demolition Expert** - Demolition expert unit, bomb planting, attached mobile bombs, dead-man switches, or trigger detonators exist.
+- **Afflictions & Injuries** - for bleedout
+- **Exfiltration**
+- **Public Trust, Precinct Level**
+- Items
+	- Heavy suppression utility, 
+	- trait-clearing meds
+	- AP-transfer abilities

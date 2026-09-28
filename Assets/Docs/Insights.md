@@ -1,0 +1,7 @@
+- Instead of hand-placing exact enemies, build a system where the level designer places generic **"Smart Points"** on the grid. Give these points a bitwise flag enum: `AttackerSpawn`, `DefenderSpawn`, `Objective`, `Hazard`.
+- **The Bitwise Flag Limit:** Standard `[Flags] enum` in C# is limited to 32 bits.
+	- _Fix 1:_ Use `: ulong` to expand to 64 bits.
+	- _Fix 2 (Better):_ Compartmentalize. Don't use a God Enum. Use `PhysicalFlags`, `MentalFlags`, and `StatusFlags` separately.
+- **Event Bubbling is Okay:** Passing `UnityEvents` up a UI chain (e.g., SquadSlot -> SquadUI -> GameManager) "smells" like boilerplate, but for solo developers, it is completely fine.
+- **State-Driven, Not Index-Driven:** Never use `-1` as an index to imply "the game hasn't started." Use explicit state booleans (`isRunning`, `isTurnActive`) and let the index start cleanly at `0`.
+- **Opt-In Subscriptions:** If using a shared base class for Modifiers, use protected boolean flags (`subscribesToStartTurn = false`). The child class sets the boolean to `true` in its constructor, and the base class only hooks up the listener if the boolean is true.
