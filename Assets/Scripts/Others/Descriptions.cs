@@ -38,11 +38,6 @@ public static class Descriptions{
         return description.TrimStart();
     }
 
-    static string GetBleedOutDescription(this ICombatObject combatObject){
-        var bleedOut = combatObject.GetCombatComponent<BleedOutComponent>();
-        if (bleedOut == null || !bleedOut.IsBleedingOut) return "";
-        return $"Bleed Out: {bleedOut.TurnsLeft} turn(s) remaining\n";
-    }
     public static Message? GetMessage(this ICombatObject combatObject){
         if (combatObject.Name.IsNullOrWhitespace()){
             return null;
@@ -52,6 +47,11 @@ public static class Descriptions{
             description = combatObject.GetDescription(),
         };
         return message;
+    }
+    static string GetBleedOutDescription(this ICombatObject combatObject){
+        var bleedOut = combatObject.GetCombatComponent<BleedOutComponent>();
+        if (bleedOut == null || !bleedOut.IsBleedingOut) return "";
+        return $"Bleed Out: {bleedOut.TurnsLeft} turn(s) remaining\n";
     }
     static string GetHealthDescription(this ICombatObject combatObject){
         var health = combatObject.GetCombatComponent<HealthComponent>();

@@ -25,17 +25,18 @@ public class ShootAction : TargetedUnitAction{
             source = unit
         };
         var targetObjects = targetNode.GetCombatObjects();
-        if (!hitAll){
-            var targetObject = targetObjects.Random(); 
-            targetObjects = new[] { targetObject };
-        }
         foreach (var targetObj in targetObjects){
+            Debug.Log($"Unit {this} is shooting {targetObj.Name} for {damage.value} damage!");
             var healthComp = targetObj.GetCombatComponent<HealthComponent>();
-            if (healthComp != null){
-                healthComp.TakeDamage(damage);
+            if (healthComp == null){
+                continue;
             }
+            healthComp.TakeDamage(damage);
             if (targetObj is Unit unit){
                 foreach (var statusEffect in appliedStatusEffects) unit.ApplyModifier(statusEffect.Create());
+            }
+            if (!hitAll){
+                break;
             }
         }
     }
