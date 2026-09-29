@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -55,6 +56,10 @@ public class SquadMemberUI : UIElement{
             squadMember.onChanged -= UpdateSquadMember;
         }
         squadMember = null;
+    }
+
+    protected void OnDestroy(){
+        RemoveSquadMember();
     }
 
     void UpdateSquadMember(SquadMember arg0){

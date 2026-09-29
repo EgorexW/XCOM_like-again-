@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -71,5 +72,9 @@ public class SquadUI : UIElement{
             campaignState.onChanged -= UpdateCampaignState;
         }
         campaignState = null;
+    }
+
+    protected void OnDestroy(){
+        RemoveSquad();
     }
 }

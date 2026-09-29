@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
@@ -67,9 +68,17 @@ public class ResourcesUI : UIElement{
 
     public override void Hide(){
         base.Hide();
+        RemoveCampaignState();
+    }
+
+    void RemoveCampaignState(){
         if (campaignState != null){
             campaignState.onChanged -= OnCampaignStateChanged;
         }
         campaignState = null;
+    }
+
+    protected void OnDestroy(){
+        RemoveCampaignState();
     }
 }

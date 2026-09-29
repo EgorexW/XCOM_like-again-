@@ -206,7 +206,7 @@ MonoBehaviour:
   - {fileID: 3905931016146511683}
   - {fileID: 3803297563405089739}
   - {fileID: 6409706722511528941}
-  - {fileID: 1743371522411969684}
+  - {fileID: 0}
   turnTakers:
   - {fileID: 7231747205711564845}
   - {fileID: 162711034066592924}
@@ -225,57 +225,6 @@ MonoBehaviour:
   mapSpawnTable: {fileID: 11400000, guid: 7777eeffdac0d4e1db938ceddba5a7c1, type: 2}
   prefabs:
   - {fileID: 6155321779156121815, guid: 425eb1f3ff7eb4154a88b38c0655348b, type: 3}
---- !u!1 &2522833068190893003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5913264500547857610}
-  - component: {fileID: 1743371522411969684}
-  m_Layer: 0
-  m_Name: Dead Officer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5913264500547857610
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2522833068190893003}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 8921695179748670027}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1743371522411969684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2522833068190893003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ccf69d083f554022b9249c62473a63f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EliminateHostilesPayoutObjective
-  description: Keep Officers Alive
-  onPayoutChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  payoutPerEliminatedHostile: 500
-  targetTeamFlag: 1
-  signPositive: 0
 --- !u!1 &2532120822772278779
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +445,6 @@ Transform:
   - {fileID: 8033364389020667435}
   - {fileID: 4111445834666778537}
   - {fileID: 1600698078144553797}
-  - {fileID: 5913264500547857610}
   m_Father: {fileID: 8200287904963730563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8448355683147132306
