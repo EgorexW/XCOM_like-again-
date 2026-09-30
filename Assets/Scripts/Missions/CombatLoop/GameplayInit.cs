@@ -4,16 +4,15 @@ using UnityEngine.Serialization;
 
 public class GameplayInit : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] CombatInit combatInit;
-    [BoxGroup("References")] [Required] [SerializeField] CampaignStateHolder campaingStateHolder;
+    [BoxGroup("References")] [Required] [SerializeField] CampaignManager campaignManager;
     [BoxGroup("References")] [Required] [SerializeField] PayoutManager payoutManager;
 
     protected void Start(){
-        if (campaingStateHolder.State.Missions.SelectedMission == null) {
+        var mission = campaignManager.GetCurrentMission();
+        if (mission == null) {
             Debug.LogError("No selectedMissionType provided to GameplayInit!");
             return;
         }
-
-        var mission = campaingStateHolder.State.Missions.SelectedMission;
 
         var missionInit = Instantiate(mission.missionInitPrefab);
         var content = new CombatContent();

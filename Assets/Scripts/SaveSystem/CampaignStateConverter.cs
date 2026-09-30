@@ -37,7 +37,7 @@ public static class CampaignStateConverter{
             equipment = new EquipmentSaveData{
                 equipmentGuids = state.Equipment.Equipment.Select(equipmentRegistry.GetGuid).ToList()
             },
-            selectedMissionGuid = missionRegistry.GetGuid(state.Missions.SelectedMission)
+            // selectedMissionGuid = missionRegistry.GetGuid(state.Missions.SelectedMission)
         };
         var activeMembersList = state.Members.ActiveMembers.ToList();
         save.squad.activeMemberIndices = state.Squad.Members
@@ -62,7 +62,7 @@ public static class CampaignStateConverter{
 
         foreach (var index in save.squad.activeMemberIndices) state.Squad.AddMember(activeMembers[index]);
 
-        state.Missions.SetSelectedMission(missionRegistry.GetAsset(save.selectedMissionGuid));
+        // state.Missions.SetSelectedMission(missionRegistry.GetAsset(save.selectedMissionGuid));
 
         return state;
     }
