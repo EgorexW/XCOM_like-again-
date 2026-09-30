@@ -20,11 +20,13 @@ public class CombatReportEffect : MonoBehaviour{
             Debug.Log($"{member.Name} is dead.");
             campaignStateHolder.State.DieMember(member);
         }
-        int totalUpkeep = 0;
+        int totalUpkeep = 0; // TODO Remove
         foreach (var rosterMember in campaignStateHolder.State.Members.ActiveMembers){
             totalUpkeep += rosterMember.UpkeepCost;
         }
 
+        campaignStateHolder.State.Progression.IncrementStep();
+        
         var lastCombatReport = combatReportData.LastCombatReport;
         int netPayout = lastCombatReport.payout - totalUpkeep;
         

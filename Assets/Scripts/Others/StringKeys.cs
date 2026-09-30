@@ -11,6 +11,6 @@ public static class StringKeys{
     public const string AssetMenuUnitPrefabAssetRegistryBasePath = "Data/Save/Unit Prefab Asset Registry";
     public const string AssetMenuMissionAssetRegistryBasePath = "Data/Save/Mission Asset Registry";
     public const string AssetMenuSaveSystemBasePath = "Data/Save/Save System";
-    public const string AssetMenuCampaignSequenceBasePath = "Data/Config/Campaign Sequence";
-    public const string AssetMenuCampaignStateBasePath = "Data/Runtime/Campaign State";
+    public const string AssetMenuCampaignSequenceBasePath = "Data/Campaign/Campaign Sequence";
+    public const string AssetMenuCampaignStateBasePath = "Data/Campaign/Campaign State";
 }

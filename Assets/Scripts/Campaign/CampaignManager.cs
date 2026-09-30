@@ -6,6 +6,7 @@ class CampaignManager : MonoBehaviour{
     [BoxGroup("References")][Required][SerializeField] CampaignStateHolder campaingStateHolder;
 
     public Mission GetCurrentMission(){
-        throw new System.NotImplementedException();
+        var day = campaingSequence.GetStep(campaingStateHolder.State.Progression.Step);
+        return day.Mission;
     }
 }

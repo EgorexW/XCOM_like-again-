@@ -11,7 +11,7 @@ public class CampaignState
     [SerializeField] EquipmentState equipmentState;
     [FormerlySerializedAs("currencyState")] [SerializeField] CurrencyState moneyState;
     [SerializeField] SquadState squadState;
-    // [SerializeField] MissionsState missionsState;
+    [FormerlySerializedAs("missionsState")] [SerializeField] ProgressionState progressionState;
 
     public event Action onChanged;
     
@@ -19,14 +19,14 @@ public class CampaignState
     public EquipmentState Equipment => equipmentState;
     public CurrencyState Money => moneyState;
     public SquadState Squad => squadState;
-    // public MissionsState Missions  => missionsState;
+    public ProgressionState Progression  => progressionState;
 
     public CampaignState(){
         membersState = new MembersState();
         equipmentState = new EquipmentState();
         moneyState = new CurrencyState();
         squadState = new SquadState();
-        // missionsState = new MissionsState();
+        progressionState = new ProgressionState();
         Init();
     }
 
@@ -35,7 +35,7 @@ public class CampaignState
         equipmentState!.onChanged += () => onChanged?.Invoke();
         moneyState!.onChanged += () => onChanged?.Invoke();
         squadState!.onChanged += () => onChanged?.Invoke();
-        // missionsState!.onChanged += () => onChanged?.Invoke();
+        progressionState!.onChanged += () => onChanged?.Invoke();
     }
 
     public void DieMember(SquadMember member){

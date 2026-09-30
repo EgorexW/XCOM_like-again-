@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e3635b6f1bd454c8d2470a0e0911329, type: 3}
+  m_Name: Campaing Sequence
+  m_EditorClassIdentifier: Assembly-CSharp::CampaingSequence
+  steps:
+  - mission: {fileID: 11400000, guid: 6238d2f0d6f54448781fcea9a3a8c05f, type: 2}
+  - mission: {fileID: 11400000, guid: fb374a8b1d96d495d8e00fcf0a140b12, type: 2}
