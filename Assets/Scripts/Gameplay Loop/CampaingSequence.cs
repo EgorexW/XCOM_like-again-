@@ -1,9 +1,16 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuCampaignSequenceBasePath)]
 public class CampaingSequence : ScriptableObject{
-    [SerializeField] List<Mission> missions;
+    [SerializeField] List<CampaignStep> steps;
+}
+
+// DAY
+[Serializable]
+class CampaignStep{
+    public Mission mission;
     
-    // For now only that
+    // TODO Shop Unlocks
 }
