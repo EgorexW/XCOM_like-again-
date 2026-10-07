@@ -1,9 +1,11 @@
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CombatReportEffect : MonoBehaviour{
-    [BoxGroup("References")] [Required] [SerializeField] CampaignStateHolder campaignStateHolder; 
+    // [BoxGroup("References")] [Required] [SerializeField] CampaignStateHolder campaignStateHolder; 
+    [BoxGroup("References")][Required][SerializeField] CampaignManager campaignManager;
     
     [SerializeField] [Required] CombatReportData combatReportData;
     // [SerializeField] RecruitIntakeData recruitIntakeData; // Optional reference, but if assigned it triggers intake
@@ -13,28 +15,29 @@ public class CombatReportEffect : MonoBehaviour{
     }
 
     void Report(){
-        foreach (var member in campaignStateHolder.State.Squad.Members.ToList()){
+        foreach (var member in campaignManager.State.Squad.Members.ToList()){
             if (member.alive){
                 continue;
             }
             Debug.Log($"{member.Name} is dead.");
-            campaignStateHolder.State.DieMember(member);
+            campaignManager.State.DieMember(member);
         }
         int totalUpkeep = 0; // TODO Remove
-        foreach (var rosterMember in campaignStateHolder.State.Members.ActiveMembers){
+        foreach (var rosterMember in campaignManager.State.Members.ActiveMembers){
             totalUpkeep += rosterMember.UpkeepCost;
         }
-
-        campaignStateHolder.State.Progression.IncrementStep();
+        
+        campaignManager.IncrementStep();
         
         var lastCombatReport = combatReportData.LastCombatReport;
         int netPayout = lastCombatReport.payout - totalUpkeep;
         
         Debug.Log($"Mission Payout: {lastCombatReport.payout}, Total Upkeep: {totalUpkeep}, Net: {netPayout}");
-        campaignStateHolder.State.Money.ChangeValue(netPayout);
+        campaignManager.State.Money.ChangeValue(netPayout);
 
-        // if (recruitIntakeData != null){
-        //     recruitIntakeData.OnMissionCompleted(CampaignState);
-        // }
+        //TODO temporary
+        if (campaignManager.State.Progression.State == CampaignProgressionState.Completed){
+            SceneManager.LoadScene("End Campaign");
+        }
     }
 }

@@ -6,6 +6,8 @@ using UnityEngine;
 public class CampaingSequence : ScriptableObject{
     [SerializeField] List<CampaignStep> steps;
 
+    public int Lenght => steps.Count;
+    
     public CampaignStep GetStep(int progressionStep){
         if (progressionStep >= 0 && progressionStep < steps.Count){
             return steps[progressionStep];
