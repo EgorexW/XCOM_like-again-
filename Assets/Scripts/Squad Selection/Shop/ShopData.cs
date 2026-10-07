@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = StringKeys.AssetMenuShopDataBasePath)]
-public class ShopLogicData : ScriptableObject{
+public class ShopData : ScriptableObject{
     [SerializeField] List<Equipment> itemsForSale;
     [SerializeField] int bundlesNr = 1;
     [SerializeField] Vector2Int bundleItemCount = new Vector2Int(3, 3);

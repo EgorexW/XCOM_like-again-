@@ -11,7 +11,7 @@ public class ShopUI : UIElement{
     }
 
     protected void Start(){
-        shopLogic.Shop.onUpdate.AddListener(UpdateShopItems);
+        shopLogic.GetShop().onUpdate.AddListener(UpdateShopItems);
         UpdateShopItems();
     }
 
@@ -25,7 +25,7 @@ public class ShopUI : UIElement{
     }
 
     void UpdateShopItems(){
-        var shop = shopLogic.Shop;
+        var shop = shopLogic.GetShop();
         var count = shop.Count;
         shopItemsPool.SetCount(count);
         for (var i = 0; i < count; i++){

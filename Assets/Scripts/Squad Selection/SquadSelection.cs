@@ -3,15 +3,15 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 public class SquadSelection : MonoBehaviour{
-    [BoxGroup("References")][Required][SerializeField] CampaignStateHolder  campaignStateHolder;
-    public CampaignState CampaignState => campaignStateHolder.State;
+    [BoxGroup("References")][Required][SerializeField] CampaignManager campaignManager;
+    public CampaignState CampaignState => campaignManager.State;
 
     public void AddMemberToSquad(SquadMember member){
-        campaignStateHolder.State.Squad.AddMember(member);
+        CampaignState.Squad.AddMember(member);
     }
 
     public void RemoveMemberFromSquad(SquadMember member){ 
-        campaignStateHolder.State.Squad.RemoveMember(member);
+        CampaignState.Squad.RemoveMember(member);
         EmptyMember(member);
     }
 
@@ -21,11 +21,11 @@ public class SquadSelection : MonoBehaviour{
     
     public void RemoveEquipmentFromSquadMemeber(SquadMember squadMember, Equipment equipment){
         squadMember.RemoveEquipment(equipment);
-        campaignStateHolder.State.Equipment.AddEquipment(equipment);
+        CampaignState.Equipment.AddEquipment(equipment);
     }
     
     public void AddEquipmentToSquadMemeber(SquadMember squadMember, Equipment equipment){
         squadMember.AddEquipment(equipment);
-        campaignStateHolder.State.Equipment.RemoveEquipment(equipment);
+        CampaignState.Equipment.RemoveEquipment(equipment);
     }
 }
