@@ -249,13 +249,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 87968560}
-        m_TargetAssemblyTypeName: PlayButton, Essencial
-        m_MethodName: Play
-        m_Mode: 0
+      - m_Target: {fileID: 1009138830}
+        m_TargetAssemblyTypeName: Embark, Assembly-CSharp
+        m_MethodName: TryEmbark
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -308,14 +308,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 87968555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02f11cc7505b04246b8dec9302f52612, type: 3}
+  m_Script: {fileID: 11500000, guid: 410114a6ea5ff419695d61c21212274e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Essencial::PlayButton
-  sceneName: Combat
-  levelName:
-    enabled: 0
-    value: {fileID: 647366073}
-  async: 0
+  m_EditorClassIdentifier: '::'
+  embarkButton: {fileID: 87968557}
+  squadSelectionEmbark: {fileID: 1009138830}
 --- !u!1 &205297495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,6 +2385,52 @@ MonoBehaviour:
   onEquipmentClicked:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1009138828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1009138829}
+  - component: {fileID: 1009138830}
+  m_Layer: 0
+  m_Name: Embark
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1009138829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009138828}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2085648019}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1009138830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009138828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3454e846cd1a47039f6b59f5af5967e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  campaignManager: {fileID: 1736795232}
+  sceneName: Combat
 --- !u!1 &1173684581
 GameObject:
   m_ObjectHideFlags: 0
@@ -4044,6 +4087,7 @@ Transform:
   - {fileID: 75242707}
   - {fileID: 359939407}
   - {fileID: 1341661986}
+  - {fileID: 1009138829}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2094067984
