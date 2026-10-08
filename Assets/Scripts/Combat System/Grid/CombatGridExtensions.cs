@@ -147,6 +147,11 @@ public static class CombatGridExtensions{
 
         // Square the radius once to avoid running Mathf.Sqrt inside the loop
         var radiusSqr = radius * radius;
+        
+        minX = Mathf.Max(minX, 0);
+        minY = Mathf.Max(minY, 0);
+        maxX = Mathf.Min(maxX, grid.Width - 1);
+        maxY = Mathf.Min(maxY, grid.Height - 1);
 
         for (var x = minX; x <= maxX; x++)
         for (var y = minY; y <= maxY; y++){

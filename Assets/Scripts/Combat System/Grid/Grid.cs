@@ -64,10 +64,23 @@ public class Grid<TGridObject>{
 
     public TGridObject GetGridObject(Vector2 worldPosition){
         int x, y;
-        // Debug.Log($"Getting grid object at world position: {worldPosition}");
         GetXY(worldPosition, out x, out y);
-        // Debug.Log($"Calculated grid coordinates: X: {x}, Y: {y}");
         return GetGridObject(x, y);
+    }
+    
+    public bool TryGetGridObject(Vector2 worldPosition, out TGridObject gridObject){
+        int x, y;
+        GetXY(worldPosition, out x, out y);
+        return TryGetGridObject(x, y, out gridObject);
+    }
+    
+    public bool TryGetGridObject(int x, int y, out TGridObject gridObject){
+        gridObject = default;
+        if (x >= 0 && y >= 0 && x < width && y < height){
+            gridObject = gridArray[x, y];
+            return true;
+        }
+        return false;
     }
 
     public List<TGridObject> GetAllNodes(){

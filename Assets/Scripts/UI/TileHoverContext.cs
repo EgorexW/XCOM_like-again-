@@ -20,7 +20,7 @@ public class TileHoverContext : MonoBehaviour{
     
     protected void Update(){
         var worldPos = General.GetMouseWorldPos();
-        var node     = combatGrid.GetNode(worldPos);
+        combatGrid.TryGetNode(worldPos, out var node);
         if (node != _pendingNode){
             _pendingNode = node;
             _hoverTimer  = 0f;

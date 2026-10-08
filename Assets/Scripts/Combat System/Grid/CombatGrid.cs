@@ -8,6 +8,9 @@ public class CombatGrid : MonoBehaviour{
     [HideInInspector] public CombatSystem combatSystem;
 
     [FoldoutGroup("Events")] public UnityEvent<CombatGridNode> onCombatGridNodeChanged = new();
+    
+    public int Width => Grid.width;
+    public int Height => Grid.height;
 
     public void Init(Vector2Int size){
         Grid = new Grid<CombatGridNode>(size.x, size.y, 1f, Vector3.zero,
@@ -47,6 +50,10 @@ public class CombatGrid : MonoBehaviour{
 
     public CombatGridNode GetNode(Vector2 pos){
         return Grid.GetGridObject(pos);
+    }
+    
+    public bool TryGetNode(Vector2 pos, out CombatGridNode node){
+        return Grid.TryGetGridObject(pos, out node);
     }
 
     public void RemoveCombatObject(ICombatObject combatObject){
