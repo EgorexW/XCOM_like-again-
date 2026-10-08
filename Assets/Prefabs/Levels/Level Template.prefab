@@ -867,7 +867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9f96333a7c4ce0b5fd2c0d898cd47b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level
-  spawnPointsParent: {fileID: 0}
+  mapSize: {x: 50, y: 50}
 --- !u!1 &8235420528171263374
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,7 +5,6 @@ using UnityEngine.Serialization;
 
 public class BasicMissionInit : MissionInit{
     [FormerlySerializedAs("config")] [BoxGroup("References")] [Required] [SerializeField] MissionInitConfig initConfig;
-    [SerializeField] Vector2 levelSpawnPos = new(50, 50);
     [SerializeField] List<TeamGenerator> teamGenerators;
     [SerializeField] List<PayoutObjective> payoutObjectives;
     [SerializeField] List<TurnTaker> turnTakers;
@@ -14,15 +13,18 @@ public class BasicMissionInit : MissionInit{
     {
         // 1. Generate Map
         var mapPrefab = initConfig.GetMapPrefab();
+        content.levelSize = mapPrefab.GetComponent<Level>().GetMapSize();
+        var initPos = new Vector3Int(Mathf.CeilToInt(content.levelSize.x / 2f), Mathf.CeilToInt(content.levelSize.y / 2f), 0);
+        // TODO ideally all levels expand to the right and up, so we can just spawn at (0,0) and not worry about the size of the map. For now, we spawn at the center of the map to avoid negative coordinates.
 
-        var spawnedLevelObj = Instantiate(mapPrefab, levelSpawnPos, Quaternion.identity);
+        var spawnedLevelObj = Instantiate(mapPrefab, initPos, Quaternion.identity);
         var currentLevel = spawnedLevelObj.GetComponent<Level>();
         if (currentLevel == null){
             Debug.LogError("Spawned map is missing ILevel component.");
             return;
         }
 
-        content.levelPrefab = mapPrefab; 
+        // content.levelPrefab = mapPrefab; 
         var combatObjects = currentLevel.GetCombatObjectSpawns();
 
         // 2. Team Spawning

@@ -58,7 +58,7 @@ public class Grid<TGridObject>{
         if (x >= 0 && y >= 0 && x < width && y < height){
             return gridArray[x, y];
         }
-        Debug.LogWarning("Trying to get grid object out of bounds");
+        Debug.LogWarning($"GetGridObject: Coordinates out of bounds. X: {x}, Y: {y}");
         return default;
     }
 

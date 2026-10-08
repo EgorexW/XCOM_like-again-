@@ -3664,6 +3664,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -2
       objectReference: {fileID: 0}
+    - target: {fileID: 7552876058669035780, guid: 9b6fb883756d64b00aaca3e55416dc2d, type: 3}
+      propertyPath: mapSize.x
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552876058669035780, guid: 9b6fb883756d64b00aaca3e55416dc2d, type: 3}
+      propertyPath: mapSize.y
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 7866517998092090712, guid: 9b6fb883756d64b00aaca3e55416dc2d, type: 3}
       propertyPath: m_Name
       value: Blacksite

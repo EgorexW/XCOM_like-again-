@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Level : MonoBehaviour{
+    [SerializeField] Vector2Int mapSize;
+    
     bool generated;
     
     void Generate(){
@@ -55,5 +57,9 @@ public class Level : MonoBehaviour{
         }
         var list = new List<string>(groups);
         return list;
+    }
+
+    public Vector2Int GetMapSize(){
+        return mapSize;
     }
 }

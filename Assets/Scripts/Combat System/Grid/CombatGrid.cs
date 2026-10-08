@@ -4,18 +4,17 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class CombatGrid : MonoBehaviour{
-    [SerializeField] int width = 100;
-    [SerializeField] int height = 100;
-
     public Grid<CombatGridNode> Grid{ get; private set; }
-    public CombatSystem combatSystem;
+    [HideInInspector] public CombatSystem combatSystem;
 
     [FoldoutGroup("Events")] public UnityEvent<CombatGridNode> onCombatGridNodeChanged = new();
 
-    protected void Awake(){
-        Grid = new Grid<CombatGridNode>(width, height, 1f, Vector3.zero,
+    public void Init(Vector2Int size){
+        Grid = new Grid<CombatGridNode>(size.x, size.y, 1f, Vector3.zero,
             (g, x, y) => new CombatGridNode(this, x, y)
         );
+
+        Debug.Log($"CombatGrid initialized with size: {size.x}x{size.y}");
 
         Grid.OnGridObjectChanged += Grid_OnGridObjectChanged;
     }

@@ -6,6 +6,7 @@ public class CombatInit : MonoBehaviour{
     [BoxGroup("References")] [Required] [SerializeField] CombatSystem combatSystem;
 
     public void InitCombatSystem(CombatContent content){
+        combatSystem.CombatGrid.Init(content.levelSize);
         foreach (var turnTaker in content.turnTakers)
             combatSystem.TurnSystem.AddTurnTaker(turnTaker, InsertTurnTakerType.Last);
         foreach (var combatObj in content.combatObjects)
@@ -20,8 +21,9 @@ public class CombatContent{
     public List<CombatObjectSpawn> combatObjects = new();
     public List<ITurnTaker> turnTakers = new();
     public List<Team> teams = new();
-    public GameObject levelPrefab;
+    // public GameObject levelPrefab;
     public List<PayoutObjective> payoutObjectives = new();
+    public Vector2Int levelSize;
 }
 
 public class CombatObjectSpawn{
