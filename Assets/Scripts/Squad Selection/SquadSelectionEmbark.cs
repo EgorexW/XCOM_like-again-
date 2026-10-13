@@ -19,6 +19,9 @@ public class SquadSelectionEmbark : MonoBehaviour{
         if (squadSize < 1){
             validation |= EmbrakValidation.NoSquadMembers;
         }
+        if (squadSize > campaignManager.GetCurrentMission().maxSquadSize){
+            validation |= EmbrakValidation.OverMaxSquadSize;
+        }
         return validation;
     }
 }
@@ -27,4 +30,5 @@ public class SquadSelectionEmbark : MonoBehaviour{
 public enum EmbrakValidation{
     Valid = 0,
     NoSquadMembers = 1 << 0,
+    OverMaxSquadSize = 1 << 1
 }

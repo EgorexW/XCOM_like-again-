@@ -8,4 +8,6 @@ public class  Mission : ScriptableObject
     
     [Tooltip("The MissionInit prefab to spawn when this mission starts.")]
     public MissionInit missionInitPrefab;
+
+    public int maxSquadSize = 4;
 }
