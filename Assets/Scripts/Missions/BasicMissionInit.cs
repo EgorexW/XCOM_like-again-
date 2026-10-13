@@ -14,10 +14,8 @@ public class BasicMissionInit : MissionInit{
         // 1. Generate Map
         var mapPrefab = initConfig.GetMapPrefab();
         content.levelSize = mapPrefab.GetComponent<Level>().GetMapSize();
-        var initPos = new Vector3Int(Mathf.CeilToInt(content.levelSize.x / 2f), Mathf.CeilToInt(content.levelSize.y / 2f), 0);
-        // TODO ideally all levels expand to the right and up, so we can just spawn at (0,0) and not worry about the size of the map. For now, we spawn at the center of the map to avoid negative coordinates.
 
-        var spawnedLevelObj = Instantiate(mapPrefab, initPos, Quaternion.identity);
+        var spawnedLevelObj = Instantiate(mapPrefab, Vector2.zero, Quaternion.identity);
         var currentLevel = spawnedLevelObj.GetComponent<Level>();
         if (currentLevel == null){
             Debug.LogError("Spawned map is missing ILevel component.");
@@ -43,6 +41,9 @@ public class BasicMissionInit : MissionInit{
                     break;
                 }
                 var unit = team.CombatObjects[j];
+
+                Debug.Log($"Spawning unit {unit.Name} of team {team.Flags} at node", nodes[j]);
+                
                 combatObjects.Add(new CombatObjectSpawn{
                     combatObject = unit,
                     position = Vector2Int.RoundToInt(nodes[j].transform.position)

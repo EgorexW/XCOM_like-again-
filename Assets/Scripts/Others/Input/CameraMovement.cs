@@ -5,7 +5,8 @@ using UnityEngine.Serialization;
 
 class CameraMovement : MonoBehaviour{
     [FormerlySerializedAs("speed")] [SerializeField] float inputMovementSpeed = 5f;
-    [SerializeField] float moveToTime = 0.5f;
+    [SerializeField] bool moveTo;
+    [SerializeField][ShowIf("moveTo")] float moveToTime = 0.5f;
 
     Vector2 movement = Vector2.zero;
 
@@ -28,6 +29,11 @@ class CameraMovement : MonoBehaviour{
     }
 
     public void MoveTo(Vector2 position){
+        if (!moveTo){
+            Debug.Log("CameraMovement: MoveTo is disabled. Enable it in the inspector to use this feature.", this);
+            return;
+        }
+
         if (movement != Vector2.zero){
             return;
         }
